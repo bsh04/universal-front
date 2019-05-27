@@ -4,14 +4,18 @@
 import React from 'react';
 import AbstractForm from '../../abstract/form';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { loginUrl, clientId, clientSecret } from '../../../services/parameters';
+import request from "../../../services/ajaxManager";
 
 class LoginForm extends AbstractForm {
     constructor(props)
     {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateUser = this.updateUser.bind(this);
+        this.updateFavorites = this.updateFavorites.bind(this);
     }
 
     handleSubmit(e)
@@ -35,16 +39,50 @@ class LoginForm extends AbstractForm {
             {},
             function (response)
             {
-                _this.props.onAddToken(response.access_token);
+                _this.updateUser(response.access_token, () => _this.props.onAddToken(response.access_token));
+                _this.updateFavorites(response.access_token);
             },
             this.state.errorCallback
         );
     }
 
+    updateUser(token, callback)
+    {
+        let _this = this;
+
+        request(
+            'user/get',
+            'GET',
+            null,
+            {"Authorization": 'Bearer ' + token},
+            function (response)
+            {
+                _this.props.onAddUser(response);
+                callback();
+            },
+            this.state.errorCallback
+        );
+    }
+
+    updateFavorites(token) {
+        let _this = this;
+
+        request(
+            'product/favorite',
+            'GET',
+            null,
+            {"Authorization": 'Bearer ' + token},
+            function (response)
+            {
+                _this.props.onAddFav(response);
+            },
+        );
+    }
+
     viewForm() {
         return (
-            <div className="">
-                <h4 className="text-center">Sign In</h4>
+            <div className="w-75">
+                <h4 className="text-center">Войти</h4>
                 <form onSubmit={this.handleSubmit}>
                     <input
                         name="email"
@@ -58,14 +96,20 @@ class LoginForm extends AbstractForm {
                         name="pass"
                         type="password"
                         required={true}
-                        placeholder={"Password:*"}
+                        placeholder={"Пароль:*"}
                         className={'form-control '}
                         ref={(input) => {this.passInput = input}}
                     />
+                    <br/>
                     <p className="text-center">
-                        <button type="submit" className="btn btn-success">Sign In</button>
+                        <button type="submit" className="btn btn-success">
+                            <i className={'fa fa-sign-in'}> Войти</i>
+                        </button>
                     </p>
                 </form>
+                <Link to={'/register'} className="btn btn-primary">
+                    <i className={'fa fa-user-plus'}> Регистрация</i>
+                </Link>
             </div>
         );
     }
@@ -78,6 +122,12 @@ export default connect(
     dispatch => ({
         onAddToken: (token) => {
             dispatch({ type: 'ADD_TOKEN', payload: token })
-        }
+        },
+        onAddUser: (user) => {
+            dispatch({ type: 'ADD_USER', payload: user })
+        },
+        onAddFav: (products) => {
+            dispatch({ type: 'ADD_FAVORITE', payload: products })
+        },
     })
 )(LoginForm);

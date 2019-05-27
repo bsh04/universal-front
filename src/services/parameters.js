@@ -10,9 +10,9 @@
 // export let clientSecret = '1tg914i7xtc0408wggosgs4gk4o0k8oso88884w4kgo8kc8kso';
 
 //Prod
-export let serverUrl = 'https://ts2.vladimirov-mv.name/api/';
+export let serverUrl = 'https://ts.vladimirov-mv.name/api/';
 // export let serverImages = 'https://api.compliance-expert.com/uploads/images/';
-export let regUrl = 'https://ts2.vladimirov-mv.name/security/register';
-export let loginUrl = 'https://ts2.vladimirov-mv.name/oauth/v2/token';
-export let clientId = '2_1o8wu64jh7oggcsoc8k4gssk0g4s048wwcgwkocckg8w4co4cc';
-export let clientSecret = '4kop1l831awwswo444s88ko8skwgo8oogg4k8cwkcgk0owg4g8';
+export let regUrl = 'https://ts.vladimirov-mv.name/security/register';
+export let loginUrl = 'https://ts.vladimirov-mv.name/oauth/v2/token';
+export let clientId = '4_40k9x7384ick4skwgc8w4ocg4888wog4gc84wkos004400kkck';
+export let clientSecret = '5pxzsnovdvgg8o0ookk0ogc0ksog8ssgoggsw88ogko0cos0g8';

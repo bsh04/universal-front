@@ -15,24 +15,25 @@ export default function request(
         path = serverUrl + path;
     }
 
-    headers["Content-type"] = "application/json";
+
+    headers["Content-Type"] = data instanceof FormData ? "multipart/form-data" : "application/json";
     if (window.store.store.getState().token !== false) {
         headers["Authorization"] = 'Bearer ' + window.store.store.getState().token;
     }
 
     let options = {
         method: method,
-        mode: 'cors',
+        // mode: 'cors',
         headers: headers,
     };
-    if (method !== 'GET') options.body = JSON.stringify(data);
+    if (method !== 'GET') options.body = data instanceof FormData ? data : JSON.stringify(data);
 
-    /*
-    Callback example:
-     function(rd) {
-        console.log(rd); _this.setState({loading: false});
-     }
-     */
+    if (data instanceof FormData) {
+        options.headers = {
+            'Access-Control-Allow-Headers': window.location.hostname,
+            'Authorization': 'Bearer ' + window.store.store.getState().token,
+        };
+    }
 
     fetch(path, options)
         .then(processResponse)
@@ -77,8 +78,9 @@ export default function request(
 function processResponse(response) {
     const statusCode = response.status;
     const data = response.text();
+
     return Promise.all([statusCode, data]).then(res => ({
         statusCode: res[0],
-        data: JSON.parse(res[1]),
+        data: (typeof (JSON.parse(res[1])) === 'object' ? JSON.parse(res[1]) : JSON.parse(JSON.parse(res[1]))),
     }));
 }

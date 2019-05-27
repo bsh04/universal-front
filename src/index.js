@@ -35,19 +35,3 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-let h_hght = $(window).height() * 0.5 + 56; // высота шапки
-let h_mrg = 0;     // отступ когда шапка уже не видна
-$(function(){
-    $(window).scroll(function(){
-        let top = $(this).scrollTop();
-        let elem = $('nav.fixed');
-        if (top+h_mrg < h_hght) {
-            elem.css('top', (h_hght-top));
-        } else {
-            elem.css('top', h_mrg);
-        }
-    });
-
-    window.scroll(0, $(window).height() + 1);
-});

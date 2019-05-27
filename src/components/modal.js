@@ -48,7 +48,7 @@ class Modal extends Component {
                             <p>{this.state.modal.content}</p>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={() => this.props.onClear()}>
+                            <button type="button" className="btn btn-success" onClick={() => this.props.onClear()}>
                                 {this.state.modal.btnText}
                             </button>
                         </div>

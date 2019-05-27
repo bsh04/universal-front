@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import './App.css';
 import PublicLayout from './components/public/layout';
-import PrivateLayout from './components/private/layout';
+import PrivateLayout from './components/admin/layout';
+import UserLayout from './components/private/layout';
 import ErrorBoundary from './components/errorBoundary';
 import Modal from './components/modal';
 
@@ -15,7 +16,8 @@ class App extends Component {
                 <ErrorBoundary>
                     <Router>
                         <Switch>
-                            <Route path="/my" component={PrivateLayout}/>
+                            <Route path="/admin" component={PrivateLayout}/>
+                            <Route path="/user" component={UserLayout}/>
                             <Route path="/" component={PublicLayout}/>
                         </Switch>
                     </Router>

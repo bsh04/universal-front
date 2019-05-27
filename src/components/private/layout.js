@@ -6,8 +6,16 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Menu from '../menu';
+import Favorite from './favorite';
+import Basket from './basket';
+import PassChange from './change_pass';
+import DataChange from './change_data';
+import OrderAdd from './order_add';
+import Orders from './orders';
+import CategoryList from "../public/parts/category_list";
+import Footer from "../public/footer";
 
-class PrivateLayout extends Component {
+class UserLayout extends Component {
     componentDidUpdate() {
         if (this.props.token === false)
         {
@@ -20,22 +28,21 @@ class PrivateLayout extends Component {
             <div>
                 <Menu />
                 <div className="row content">
-                    <div className='col-md-2'></div>
-                    <div className='col-md-8'>
+                    <div className='col-md-3'>
+                        <CategoryList/>
+                    </div>
+                    <div className='col-md-9'>
                         <Switch>
-                            {/* <Route exact path="/my/subscribers" component={SubscriberList}/>
-                            <Route exact path="/my/orders" component={OrderList}/>
-                            <Route exact path="/my/pages" component={PageList}/>
-                            <Route exact path="/my/news" component={NewsList}/>
-                            <Route exact path="/my/pages/add" component={PageSettings}/>
-                            <Route exact path="/my/pages/edit/:id" component={PageSettings}/>
-                            <Route exact path="/my/news/add" component={NewsSettings}/>
-                            <Route exact path="/my/contact/messages" component={ContactMessageList}/> */}
+                            <Route exact path="/user/favorite" component={Favorite}/>
+                            <Route exact path="/user/order/add" component={OrderAdd}/>
+                            <Route exact path="/user/order" component={Orders}/>
+                            <Route exact path="/user/data/change" component={DataChange}/>
+                            <Route exact path="/user/basket" component={Basket}/>
+                            <Route exact path="/user/password/change" component={PassChange}/>
                         </Switch>
                     </div>
-                    <div className='col-md-2'>
-                    </div>
                 </div>
+                <Footer />
             </div>
         );
     }
@@ -46,4 +53,4 @@ export default withRouter(connect(
         token: state.token
     }),
     dispatch => ({})
-)(PrivateLayout));
+)(UserLayout));

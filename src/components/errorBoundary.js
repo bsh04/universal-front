@@ -21,8 +21,8 @@ class ErrorBoundary extends Component {
         // Вы можете отрисовать любой резервный UI
         return (
             <div>
-                <h1>Error...</h1>
-                <p>Please call us ;-)</p>
+                <h1>Ошибка...</h1>
+                <p>Пожалуйста, свяжитесь с нами ;-)</p>
             </div>
         );
       }

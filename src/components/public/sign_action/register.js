@@ -2,9 +2,12 @@
  * Created by misha on 27.01.19.
  */
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import AbstractForm from '../../abstract/form';
 
 import { regUrl } from '../../../services/parameters';
+import {Link} from "react-router-dom";
 
 class RegForm extends AbstractForm {
     constructor(props)
@@ -31,8 +34,9 @@ class RegForm extends AbstractForm {
             email: this.emailInput.value,
             pass: this.passInput.value,
             confirmPass: this.cpassInput.value,
-            first_name: this.nameInput.value,
-            last_name: this.snameInput.value,
+            fio: this.nameInput.value,
+            phone: this.phoneInput.value,
+            address: this.addressInput.value,
         };
 
         this.state.request(regUrl, 'POST', data, {},
@@ -58,20 +62,28 @@ class RegForm extends AbstractForm {
                         ref={(input) => {this.emailInput = input}}
                     />
                     <input
-                        name="sname"
-                        type="text"
-                        required={true}
-                        placeholder={"Фамилия:*"}
-                        className={'form-control '}
-                        ref={(input) => {this.snameInput = input}}
-                    />
-                    <input
-                        name="name"
+                        name="fio"
                         type="text"
                         required={true}
                         placeholder={"Имя:*"}
                         className={'form-control '}
                         ref={(input) => {this.nameInput = input}}
+                    />
+                    <input
+                        name="sname"
+                        type="text"
+                        required={true}
+                        placeholder={"Телефон:*"}
+                        className={'form-control '}
+                        ref={(input) => {this.phoneInput = input}}
+                    />
+                    <input
+                        name="fname"
+                        type="text"
+                        required={true}
+                        placeholder={"Адрес:*"}
+                        className={'form-control '}
+                        ref={(input) => {this.addressInput = input}}
                     />
                     <input
                         name="pass"
@@ -90,13 +102,24 @@ class RegForm extends AbstractForm {
                         className={'form-control '}
                         ref={(input) => {this.cpassInput = input}}
                     />
+                    <br/>
                     <p className="text-center">
-                        <button type="submit" className="btn btn-success">Зарегистрироваться</button>
+                        <button type="submit" className="btn btn-success">
+                            <i className={'fa fa-user-plus'}> Зарегистрироваться</i>
+                        </button>
                     </p>
                 </form>
+                <Link to={'/login'} className="btn btn-primary">
+                    <i className={'fa fa-sign-in'}> Вход</i>
+                </Link>
             </div>
         );
     }
 }
 
-export default RegForm;
+export default withRouter(connect(
+    (state, ownProps) => ({
+
+    }),
+    dispatch => ({})
+)(RegForm));
