@@ -16,6 +16,7 @@ class ProductList extends Component {
         this.state = {
             products: [],
             favorites: [],
+            viewCount: 50,
         };
     }
 
@@ -38,6 +39,7 @@ class ProductList extends Component {
     }
 
     componentWillReceiveProps(props) {
+        this.setState({viewCount: 50});
         this.handleGet(props.match.params.category);
     }
 
@@ -86,13 +88,23 @@ class ProductList extends Component {
             <div>
                 <h1>Товары:</h1>
                 <div className="card-columns">
-                    {this.state.products.map((item) => {
-                        return (
-                            <Card item={item} key={item.id} update={this.updateFav}
-                                  favorite={this.isFavorite(item) ? true : false}/>
-                        );
+                    {this.state.products.map((item, key) => {
+                        if (key < this.state.viewCount) {
+                            return (
+                                <Card item={item} key={item.id} update={this.updateFav}
+                                      favorite={this.isFavorite(item) ? true : false}/>
+                            );
+                        }
+                        else {
+                            return;
+                        }
                     })}
                 </div>
+                { this.state.viewCount < this.state.products.length ?
+                    <button className={'btn btn-outline-success'}
+                            onClick={() => {this.setState({viewCount: (this.state.viewCount + 25)})}}>
+                        <i className={'fa fa-cloud-download-alt'}> <span>Загрузить еще</span></i>
+                    </button> : null }
             </div>
         );
     }

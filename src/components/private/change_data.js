@@ -84,7 +84,7 @@ class DataChange extends AbstractForm {
                     <br/>
                     <p className="text-center">
                         <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-edit'}> Изменить данные</i>
+                            <i className={'fa fa-edit'}> <span>Изменить данные</span></i>
                         </button>
                     </p>
                 </form>

@@ -133,7 +133,7 @@ class Basket extends Component {
                                     <td>
                                         <button className={'btn btn-danger'}
                                                 onClick={() => this.handleDelete(key)}>
-                                            <i className={'fa fa-trash'}> Удалить</i>
+                                            <i className={'fa fa-trash'}> <span>Удалить</span></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -147,7 +147,7 @@ class Basket extends Component {
                             </td>
                             <td>
                                 <Link to={'/user/order/add'} className={'btn btn-success'}>
-                                    <i className={'fa fa-check'}> Оформить заказ</i>
+                                    <i className={'fa fa-check'}> <span>Оформить заказ</span></i>
                                 </Link>
                             </td>
                         </tr> : null}

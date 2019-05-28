@@ -21,8 +21,14 @@ class PublicLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirectUrl: '/user/basket',
+            redirectUrl: '/',
         };
+    }
+
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (this.props.location.pathname !== nextProps.location.pathname) {
+            this.props.updateFrom(this.props.location.pathname);
+        }
     }
 
     render() {
@@ -42,11 +48,11 @@ class PublicLayout extends Component {
                             <Route exact path={'/catalog/:category'} component={ProductList}/>
                             <Route exact path={'/about'} component={About}/>
                             <Route exact path="/register" render={() => (this.props.token !== false ?
-                                (<Redirect to={this.state.redirectUrl}/>) :
+                                (<Redirect to={'/login'}/>) :
                                 (<RegForm/>)
                             )}/>
                             <Route exact path="/login" render={() => (this.props.token !== false ?
-                                (<Redirect to={this.state.redirectUrl}/>) :
+                                (<Redirect to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
                                 (<LoginForm/>)
                             )}/>
                         </Switch>

@@ -70,7 +70,7 @@ class PassChange extends AbstractForm {
                     <br/>
                     <p className="text-center">
                         <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-edit'}> Сменить пароль</i>
+                            <i className={'fa fa-edit'}> <span>Сменить пароль</span></i>
                         </button>
                     </p>
                 </form>

@@ -23,6 +23,12 @@ class UserLayout extends Component {
         }
     }
 
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (this.props.location.pathname !== nextProps.location.pathname) {
+            this.props.updateFrom(this.props.location.pathname);
+        }
+    }
+
     render() {
         return (
             <div>

@@ -14,9 +14,9 @@ class Menu extends Component {
             redirect: null,
             leftItems: [
                 {title: 'Главная', path: '/'},
-                {title: 'О Компании', path: '/about'},
+                // {title: 'О Компании', path: '/about'},
                 {title: 'Новости', path: '/news'},
-                {title: 'Каталог', path: '/catalog'},
+                // {title: 'Каталог', path: '/catalog'},
                 {title: 'Контакты', path: '/contact'},
             //     {
             //         title: 'About us', items: [
@@ -161,7 +161,7 @@ class Menu extends Component {
                     <div></div>
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
-                <nav className="navbar navbar-dark bg-dark navbar-expand-lg fixed">
+                <nav className="navbar navbar-dark navbar-expand-lg fixed" style={{backgroundColor: '#28a745'}}>
                     <a className="navbar-brand" href="#">"Компания Универсал"</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

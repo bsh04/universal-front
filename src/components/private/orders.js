@@ -51,12 +51,15 @@ class Orders extends Component {
                                 <tr key={key}>
                                     <td>{key + 1}</td>
                                     <td colSpan={2}>
+                                        <div data-toggle="collapse" data-target={"#collapseExample" + key} aria-expanded="false" aria-controls={"collapseExample" + key}>
+                                            <p><b>Заказ</b></p>
+                                        </div>
                                         {order.items.map((item, key2) => {
                                             let isNew = Math.ceil(Math.abs(((new Date()) - (new Date(item.product.updated))) / (1000 * 60 * 60 * 24))) < 14;
                                             sum += item.count * item.product.price;
 
                                             return(
-                                                <div key={key2}>
+                                                <div key={key2} className="collapse" id={"collapseExample" + key}>
                                                     <h5 className={'text-left'}>{item.product.title}</h5>
                                                     <p className="card-text">
                                                         <small className="text-muted">Код товара: {item.product.id} </small> {isNew ? <span className="badge badge-success">Новинка!</span> : ''}<br/>

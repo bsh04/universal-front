@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import request from "../../../services/ajaxManager";
 import {connect} from "react-redux";
 
@@ -24,8 +24,8 @@ class Card extends Component {
             if (!this.props.token) {
                 this.props.onError({
                     show: true,
-                    title: 'Необходимо войти в систему',
-                    content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в систему.',
+                    title: 'Необходимо войти в личный кабинет',
+                    content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в личный кабинет.',
                     btnText: 'OK'
                 });
             }
@@ -55,8 +55,8 @@ class Card extends Component {
             if (!this.props.token) {
                 this.props.onError({
                     show: true,
-                    title: 'Необходимо войти в систему',
-                    content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в систему.',
+                    title: 'Необходимо войти в личный кабинет',
+                    content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в личный кабинет.',
                     btnText: 'OK'
                 });
             }
@@ -87,8 +87,8 @@ class Card extends Component {
         if (!this.props.token) {
             this.props.onError({
                 show: true,
-                title: 'Необходимо войти в систему',
-                content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в систему.',
+                title: 'Необходимо войти в личный кабинет',
+                content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в личный кабинет.',
                 btnText: 'OK'
             });
         }
@@ -122,7 +122,7 @@ class Card extends Component {
                 <div className="card-body">
                     <h5 className="card-title">{this.props.item.title}</h5>
                     <p className="card-text">
-                        <small className="text-muted">Код товара: {this.props.item.id} </small> {isNew ? <span className="badge badge-success">Новинка!</span> : ''}<br/>
+                        <small className="text-muted">Код товара: {this.props.item.id} </small> {isNew ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''}<br/>
                         Цена: {this.props.item.price} р.
                     </p>
                     <p>

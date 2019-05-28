@@ -4,7 +4,7 @@
 import React from 'react';
 import AbstractForm from '../../abstract/form';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { loginUrl, clientId, clientSecret } from '../../../services/parameters';
 import request from "../../../services/ajaxManager";
@@ -15,7 +15,6 @@ class LoginForm extends AbstractForm {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateUser = this.updateUser.bind(this);
-        this.updateFavorites = this.updateFavorites.bind(this);
     }
 
     handleSubmit(e)
@@ -40,7 +39,6 @@ class LoginForm extends AbstractForm {
             function (response)
             {
                 _this.updateUser(response.access_token, () => _this.props.onAddToken(response.access_token));
-                _this.updateFavorites(response.access_token);
             },
             this.state.errorCallback
         );
@@ -61,21 +59,6 @@ class LoginForm extends AbstractForm {
                 callback();
             },
             this.state.errorCallback
-        );
-    }
-
-    updateFavorites(token) {
-        let _this = this;
-
-        request(
-            'product/favorite',
-            'GET',
-            null,
-            {"Authorization": 'Bearer ' + token},
-            function (response)
-            {
-                _this.props.onAddFav(response);
-            },
         );
     }
 
@@ -103,19 +86,19 @@ class LoginForm extends AbstractForm {
                     <br/>
                     <p className="text-center">
                         <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-sign-in'}> Войти</i>
+                            <i className={'fa fa-sign-in'}> <span>Войти</span></i>
                         </button>
                     </p>
                 </form>
                 <Link to={'/register'} className="btn btn-primary">
-                    <i className={'fa fa-user-plus'}> Регистрация</i>
+                    <i className={'fa fa-user-plus'}> <span>Регистрация</span></i>
                 </Link>
             </div>
         );
     }
 }
 
-export default connect(
+export default withRouter(connect(
     state => ({
         store: state,
     }),
@@ -126,8 +109,5 @@ export default connect(
         onAddUser: (user) => {
             dispatch({ type: 'ADD_USER', payload: user })
         },
-        onAddFav: (products) => {
-            dispatch({ type: 'ADD_FAVORITE', payload: products })
-        },
     })
-)(LoginForm);
+)(LoginForm));

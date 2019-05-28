@@ -130,14 +130,14 @@ class Favorite extends Component {
                                                 </div>
                                             </form> :
                                             <div className="alert alert-success" role="alert">
-                                                <i className={'fa fa-check'}> {this.state.message}</i>
+                                                <i className={'fa fa-check'}> <span>{this.state.message}</span></i>
                                             </div>
                                         }
                                     </td>
                                     <td>
                                         <button className={'btn btn-danger'}
                                                 onClick={() => this.handleDelete(key)}>
-                                            <i className={'fa fa-trash'}> Удалить</i>
+                                            <i className={'fa fa-trash'}> <span>Удалить</span></i>
                                         </button>
                                     </td>
                                 </tr>

@@ -21,7 +21,7 @@ class OrderAdd extends AbstractForm {
         let data = {
             'address': this.addressInput.value,
             'phone': this.phoneInput.value,
-            'pay_type': this.typeSelect.value,
+            'pay_type': 'money', //this.typeSelect.value,
         };
 
         this.state.request(
@@ -71,15 +71,15 @@ class OrderAdd extends AbstractForm {
                         Доставка по области Х руб/км.<br/>
                         Доставка до терминала указанной покупателем транспортной компании (почтовой службы) бесплатна
                     </p>
-                    <label>Способ оплаты</label>
-                    <select className={'form-control'} ref={(input) => {this.typeSelect = input}}>
-                        <option value={'card'}>Картой курьеру</option>
-                        <option value={'money'}>Наличными курьеру</option>
-                    </select>
+                    {/*<label>Способ оплаты</label>*/}
+                    {/*<select className={'form-control'} ref={(input) => {this.typeSelect = input}}>*/}
+                    {/*    <option value={'card'}>Картой курьеру</option>*/}
+                    {/*    <option value={'money'}>Наличными курьеру</option>*/}
+                    {/*</select>*/}
                     <br/>
                     <p className="text-center">
                         <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-check'}> Оформить заказ</i>
+                            <i className={'fa fa-check'}> <span>Оформить заказ</span></i>
                         </button>
                     </p>
                 </form>

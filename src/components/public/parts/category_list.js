@@ -55,7 +55,7 @@ class CategoryList extends Component {
                           role="button"
                           aria-expanded="false"
                           aria-controls={"collapseExample" + item.id}>
-                        <i className={'fa ' + (this.state.open.indexOf(item.id) === -1 ? 'fa-caret-right' : 'fa-caret-down')}>  {item.title}</i>
+                        <i className={'fa ' + (this.state.open.indexOf(item.id) === -1 ? 'fa-caret-right' : 'fa-caret-down')}>  <span>{item.title}</span></i>
                     </a>
                     <div className="collapse" id={"collapseExample" + item.id}>
                         <div className=" card-body">
@@ -74,7 +74,7 @@ class CategoryList extends Component {
             <div key={item.id} className={'text-left'}>
                 <Link to={'/catalog/' + item.id}
                       className={'alert-link' + (window.location.pathname === ('/catalog/' + item.id) ? ' active' : '')}>
-                    <i className={'fa fa-caret-right'}> {item.title}</i>
+                    <i className={'fa fa-caret-right'}> <span>{item.title}</span></i>
                 </Link>
             </div>
         );
@@ -82,7 +82,7 @@ class CategoryList extends Component {
 
     render() {
         return (
-            <div className="alert alert-secondary">
+            <div className="alert alert-success">
                 <div className="input-group mb-2">
                     <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="Поиск"/>
                     <div className="input-group-prepend">
@@ -91,14 +91,13 @@ class CategoryList extends Component {
                         </div>
                     </div>
                 </div>
+                { this.itemView({id: 'new', children: [], title: 'Новые товары'}) }
                 <hr/>
                 {this.state.categories.map((item) => {
                     return(
                         this.itemView(item)
                     );
                 })}
-                <hr/>
-                { this.itemView({id: 'new', children: [], title: 'Новые товары'}) }
             </div>
         );
     }

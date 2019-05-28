@@ -105,12 +105,12 @@ class RegForm extends AbstractForm {
                     <br/>
                     <p className="text-center">
                         <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-user-plus'}> Зарегистрироваться</i>
+                            <i className={'fa fa-user-plus'}> <span>Зарегистрироваться</span></i>
                         </button>
                     </p>
                 </form>
                 <Link to={'/login'} className="btn btn-primary">
-                    <i className={'fa fa-sign-in'}> Вход</i>
+                    <i className={'fa fa-sign-in'}> <span>Вход</span></i>
                 </Link>
             </div>
         );

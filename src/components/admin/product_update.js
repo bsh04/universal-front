@@ -52,7 +52,7 @@ class ProductUpdate extends AbstractForm {
                     <br/>
                     <p className="text-center">
                         <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-upload'}> Загрузить файл</i>
+                            <i className={'fa fa-upload'}> <span>Загрузить файл</span></i>
                         </button>
                     </p>
                 </form>
