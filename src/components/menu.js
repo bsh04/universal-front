@@ -1,77 +1,30 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import request from "../services/ajaxManager";
 
 class Menu extends Component {
     constructor(props) {
         super(props);
 
         this.menuItemRender = this.menuItemRender.bind(this);
-        this.handleGoTo = this.handleGoTo.bind(this);
+        this.handleGet = this.handleGet.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
 
         this.state = {
             redirect: null,
+            like: [],
+            basket: [],
             leftItems: [
                 {title: 'Главная', path: '/'},
-                // {title: 'О Компании', path: '/about'},
                 {title: 'Новости', path: '/news'},
-                // {title: 'Каталог', path: '/catalog'},
                 {title: 'Контакты', path: '/contact'},
-            //     {
-            //         title: 'About us', items: [
-            //         {title: 'The Academy', path: '/page/academy'},
-            //         {title: 'History', path: '/page/history'},
-            //         {title: 'Florence’s branch', path: '/page/branch'},
-            //         {title: 'Disciplines & Method', path: '/page/methods'},
-            //     ]
-            //     },
-            //     {
-            //         title: 'Certificate programs', path: '/programs', items: [
-            //         {title: 'Certification', path: '#certifications'},
-            //         {title: 'Bachelor degree', path: '#bdprogram'},
-            //         {title: 'Post-graduate second level Master', path: '#propram2level'},
-            //         {title: 'Phd', path: '#phdprogram'},
-            //         {title: 'Part-time', path: '#ptprogram'},
-            //         {title: 'Evening courses', path: '#evources'},
-            //         {title: 'Summer courses', path: '#scources'},
-            //         {title: 'Exchange students programs', path: '#esprograms'},
-            //         {title: 'Study modes for the programs', path: '#stydymodes'},
-            //         {title: 'How to apply?', path: '#apply'},
-            //     ]
-            //     },
-            //     {
-            //         title: 'Admissions & Aid', path: '/admissions', items: [
-            //         {title: 'Schedule of Academic year', path: '#scheduleofyear'},
-            //         {title: 'Payement & fees', path: '#payment'},
-            //         {title: 'Financial aid', path: '#finaid'},
-            //         {title: 'Visa', path: '#visa'},
-            //         {title: 'Housing', path: '#housing'},
-            //         // {title: 'Academy policies', path: '/page/polices'},
-            //         {title: 'Application forms', path: '#forms'},
-            //     ]
-            //     },
-            //     {
-            //         title: 'Events', items: [
-            //         {title: 'Collaborations', path: '/events/collaborations'},
-            //         {title: 'Exhibitions', path: '/events/exhibitions'},
-            //         {title: 'Masterclass', path: '/events/mc'},
-            //         {title: 'Calendar', path: '/calendar'},
-            //         // {title: 'Our professors', path: '/events/professors'},
-            //     ]
-            //     },
-            //     {
-            //         title: 'Gallery', items: [
-            //         {title: 'Our works', path: '/gallery'},
-            //         {title: 'Videos', path: '/videos'},
-            //     ]
-            //     },
-            //     {title: 'Contact', path: '/contact'},
             ],
             rightItems: [
                 {
                     title: 'Админка', permission: 'admin', items: [
                         {title: 'Обновление товаров', path: '/admin/product/update'},
+                        {title: 'Список товаров без изображения', path: '/admin/product/image'},
                         {title: 'Управление новостями', path: '/admin/news'},
                     ]
                 },
@@ -88,13 +41,38 @@ class Menu extends Component {
         }
     };
 
+    componentDidMount() {
+        this.handleGet();
+    }
+
     handleLogout() {
         this.props.onDeleteUser();
         this.props.onDeleteToken();
     }
 
-    handleGoTo(path) {
-        console.log(path);
+    handleGet() {
+        let _this = this;
+        request(
+            'product/basket',
+            'GET',
+            null,
+            {},
+            function (response)
+            {
+                _this.setState({basket: response});
+            },
+        );
+
+        request(
+            'product/favorite',
+            'GET',
+            null,
+            {},
+            function (response)
+            {
+                _this.setState({like: response});
+            },
+        );
     }
 
     menuItemRender(item, key) {
@@ -177,6 +155,18 @@ class Menu extends Component {
                         </ul>
 
                         <ul className="navbar-nav ml-auto">
+                            { this.props.token ? <li className={"nav-item"}>
+                                <Link className="nav-link" to='/user/basket'>
+                                    <i className={'fa fa-shopping-cart'}> </i>
+                                    <span className={'inRound'}>{this.state.basket.length}</span>
+                                </Link>
+                            </li> : '' }
+                            { this.props.token ? <li className={"nav-item"}>
+                                <Link className="nav-link" to='/user/favorite'>
+                                    <i className={'fa fa-heart'}> </i>
+                                    <span className={'inRound'}>{this.state.like.length}</span>
+                                </Link>
+                            </li> : '' }
                             { this.props.token ? (
                                     this.state.rightItems.map((item, key) => {
                                         return this.menuItemRender(item, key)

@@ -92,6 +92,7 @@ class CategoryList extends Component {
                     </div>
                 </div>
                 { this.itemView({id: 'new', children: [], title: 'Новые товары'}) }
+                { this.itemView({id: 'stock', children: [], title: 'Товары по акции'}) }
                 <hr/>
                 {this.state.categories.map((item) => {
                     return(

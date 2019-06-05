@@ -75,6 +75,14 @@ nav {
       left: unset;
     }
   }
+
+  .nav-link {
+    font-size: 18px;
+
+    .inRound {
+      padding: 5px;
+    }
+  }
 }
 
 .news {

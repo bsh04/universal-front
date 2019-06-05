@@ -5,7 +5,7 @@ class Footer extends Component {
         return (
             <div className='footer'>
                 <hr/>
-                <p>ООО "Компания Универсал"</p>
+                <p>ООО "Универсал Томск"</p>
                 <p>
                     <a href='https://vladimirov-mv.name'>Сайт разработан командой "Unicorn Project"</a>
                 </p>

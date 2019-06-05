@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import Menu from '../menu';
 import ProductUpdate from './product_update';
+import NoImageList from './products_no_image_list';
 import NewsList from './news/news';
 
 class PrivateLayout extends Component {
@@ -32,6 +33,7 @@ class PrivateLayout extends Component {
                     <div className='col-md-8'>
                         <Switch>
                             <Route exact path="/admin/product/update" component={ProductUpdate}/>
+                            <Route exact path="/admin/product/image" component={NoImageList}/>
                             <Route exact path="/admin/news" component={NewsList}/>
                         </Switch>
                     </div>

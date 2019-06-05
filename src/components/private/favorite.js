@@ -15,7 +15,7 @@ class Favorite extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.handleGet();
     }
 
@@ -95,18 +95,16 @@ class Favorite extends Component {
                     </thead>
                     <tbody>
                         { this.state.products.length > 0 ? this.state.products.map((item, key) => {
-                            let isNew = Math.ceil(Math.abs(((new Date()) - (new Date(item.updated))) / (1000 * 60 * 60 * 24))) < 14;
-
                             return (
                                 <tr key={key}>
                                     <td>{key + 1}</td>
                                     <td>
-                                        <img className="fav-img" src={item.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : '' } alt="Card image cap"/>
+                                        <img className="fav-img" src={item.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://ts.vladimirov-mv.name/uploads/products/' + item.photo } alt="Card image cap"/>
                                     </td>
                                     <td>
                                         <h5 className={'text-left'}>{item.title}</h5>
                                         <p className="card-text">
-                                            <small className="text-muted">Код товара: {item.id} </small> {isNew ? <span className="badge badge-success">Новинка!</span> : ''}<br/>
+                                            <small className="text-muted">Код товара: {item.id} </small> {item.new ? <span className="badge badge-success">Новинка!</span> : ''} {item.stock ? <span className="badge badge-danger">Акция!</span> : ''}<br/>
                                             Цена: {item.price} р.
                                         </p>
                                         {this.state.form.indexOf(item.id) === -1 ?

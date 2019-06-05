@@ -7,12 +7,15 @@ class Orders extends Component {
     constructor(props) {
         super(props);
 
+        this.handleDuplicate = this.handleDuplicate.bind(this);
+
         this.state = {
             orders: [],
+            message: [],
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.handleGet();
     }
 
@@ -31,6 +34,22 @@ class Orders extends Component {
         );
     }
 
+    handleDuplicate(id) {
+        let _this = this;
+        request(
+            'order/duplicate',
+            'POST',
+            {id: id},
+            {},
+            function (response)
+            {
+                let arr = _this.state.message;
+                arr[id] = response.message;
+                _this.setState({message: arr});
+            },
+        );
+    }
+
     render() {
         return (
             <div>
@@ -39,20 +58,21 @@ class Orders extends Component {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th></th>
                             <th>Описание</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         { this.state.orders.length > 0 ? this.state.orders.map((order, key) => {
                             let sum = 0;
+                            let date =  new Date(order.date);
 
                             return (
                                 <tr key={key}>
                                     <td>{key + 1}</td>
-                                    <td colSpan={2}>
+                                    <td>
                                         <div data-toggle="collapse" data-target={"#collapseExample" + key} aria-expanded="false" aria-controls={"collapseExample" + key}>
-                                            <p><b>Заказ</b></p>
+                                            <p><b>Заказ от {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</b></p>
                                         </div>
                                         {order.items.map((item, key2) => {
                                             let isNew = Math.ceil(Math.abs(((new Date()) - (new Date(item.product.updated))) / (1000 * 60 * 60 * 24))) < 14;
@@ -62,17 +82,27 @@ class Orders extends Component {
                                                 <div key={key2} className="collapse" id={"collapseExample" + key}>
                                                     <h5 className={'text-left'}>{item.product.title}</h5>
                                                     <p className="card-text">
-                                                        <small className="text-muted">Код товара: {item.product.id} </small> {isNew ? <span className="badge badge-success">Новинка!</span> : ''}<br/>
+                                                        <small className="text-muted">Код товара: {item.product.id} </small> {item.product.new ? <span className="badge badge-success">Новинка!</span> : ''} {item.product.stock ? <span className="badge badge-danger">Акция!</span> : ''}<br/>
                                                         Цена: {item.product.price} * {item.count} = {item.product.price * item.count} р.
                                                     </p>
                                                     <br/>
                                                 </div>
                                             );
                                         })}
-                                        <br/>
                                         <p>
                                             <b>Итого: {sum} рублей.</b>
                                         </p>
+                                    </td>
+                                    <td>
+                                        {!this.state.message[order.id] ?
+                                            <button className={'btn btn-success'}
+                                                    onClick={() => this.handleDuplicate(order.id)}>
+                                                <i className={'fa fa-copy'}> Повторить заказ</i>
+                                            </button> :
+                                            <div className="alert alert-success" role="alert">
+                                                <i className={'fa fa-check'}> {this.state.message[order.id]}</i>
+                                            </div>
+                                        }
                                     </td>
                                 </tr>
                             );

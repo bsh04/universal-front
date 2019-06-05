@@ -114,15 +114,13 @@ class Card extends Component {
     }
 
     render() {
-        let isNew = Math.ceil(Math.abs(((new Date()) - (new Date(this.props.item.updated))) / (1000 * 60 * 60 * 24))) < 14;
-
         return (
             <div className="card">
-                <img className="card-img-top" src={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : '' } alt="Card image cap"/>
+                <img className="card-img-top" src={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://ts.vladimirov-mv.name/uploads/products/' + this.props.item.photo } alt="Card image cap"/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.item.title}</h5>
                     <p className="card-text">
-                        <small className="text-muted">Код товара: {this.props.item.id} </small> {isNew ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''}<br/>
+                        <small className="text-muted">Код товара: {this.props.item.id} </small> {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''} {this.props.item.stock ? (<Link to={'/catalog/new'}><span className="badge badge-danger">Акция!</span></Link>) : ''}<br/>
                         Цена: {this.props.item.price} р.
                     </p>
                     <p>
