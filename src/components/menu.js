@@ -18,6 +18,7 @@ class Menu extends Component {
             leftItems: [
                 {title: 'Главная', path: '/'},
                 {title: 'Новости', path: '/news'},
+                {title: 'Швейный цех', path: '/workshop'},
                 {title: 'Контакты', path: '/contact'},
             ],
             rightItems: [
