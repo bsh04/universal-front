@@ -16,6 +16,7 @@ import CategoryList from './parts/category_list';
 import Menu from '../menu';
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
+import ResetForm from './sign_action/reset_pass';
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -50,6 +51,10 @@ class PublicLayout extends Component {
                             <Route exact path="/register" render={() => (this.props.token !== false ?
                                 (<Redirect to={'/login'}/>) :
                                 (<RegForm/>)
+                            )}/>
+                            <Route exact path="/password/reset" render={() => (this.props.token !== false ?
+                                (<Redirect to={'/login'}/>) :
+                                (<ResetForm/>)
                             )}/>
                             <Route exact path="/login" render={() => (this.props.token !== false ?
                                 (<Redirect to={this.props.from !== '/login' ? this.props.from : '/'}/>) :

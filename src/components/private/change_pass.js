@@ -31,8 +31,8 @@ class PassChange extends AbstractForm {
             {},
             function (response)
             {
-                _this.updateUser(response.access_token, () => _this.props.onAddToken(response.access_token));
-                _this.updateFavorites(response.access_token);
+                _this.setState({loading: false});
+                _this.props.history.push('/');
             },
             this.state.errorCallback
         );

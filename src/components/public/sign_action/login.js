@@ -90,6 +90,8 @@ class LoginForm extends AbstractForm {
                         </button>
                     </p>
                 </form>
+                <Link to={'/password/reset'}>Восстановить пароль</Link>
+                <br/><br/>
                 <Link to={'/register'} className="btn btn-primary">
                     <i className={'fa fa-user-plus'}> <span>Регистрация</span></i>
                 </Link>

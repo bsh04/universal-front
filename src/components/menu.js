@@ -25,6 +25,7 @@ class Menu extends Component {
                     title: 'Админка', permission: 'admin', items: [
                         {title: 'Обновление товаров', path: '/admin/product/update'},
                         {title: 'Список товаров без изображения', path: '/admin/product/image'},
+                        {title: 'Управление швейным цехом', path: '/admin/workshop'},
                         {title: 'Управление новостями', path: '/admin/news'},
                     ]
                 },
@@ -52,27 +53,30 @@ class Menu extends Component {
 
     handleGet() {
         let _this = this;
-        request(
-            'product/basket',
-            'GET',
-            null,
-            {},
-            function (response)
-            {
-                _this.setState({basket: response});
-            },
-        );
 
-        request(
-            'product/favorite',
-            'GET',
-            null,
-            {},
-            function (response)
-            {
-                _this.setState({like: response});
-            },
-        );
+        if (this.props.token) {
+            request(
+                'product/basket',
+                'GET',
+                null,
+                {},
+                function (response)
+                {
+                    _this.setState({basket: response});
+                },
+            );
+
+            request(
+                'product/favorite',
+                'GET',
+                null,
+                {},
+                function (response)
+                {
+                    _this.setState({like: response});
+                },
+            );
+        }
     }
 
     menuItemRender(item, key) {
@@ -140,7 +144,7 @@ class Menu extends Component {
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
                 <nav className="navbar navbar-dark navbar-expand-lg fixed" style={{backgroundColor: '#28a745'}}>
-                    <a className="navbar-brand" href="#">"Компания Универсал"</a>
+                    <a className="navbar-brand" href="#">"Универсал Томск"</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
