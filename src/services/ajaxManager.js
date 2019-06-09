@@ -17,13 +17,15 @@ export default function request(
 
 
     headers["Content-Type"] = data instanceof FormData ? "multipart/form-data" : "application/json";
+    headers["Access-Control-Request-Headers"] = "*";
+    headers["Access-Control-Request-Method"] = "*";
     if (window.store.store.getState().token !== false) {
         headers["Authorization"] = 'Bearer ' + window.store.store.getState().token;
     }
 
     let options = {
         method: method,
-        // mode: 'cors',
+        mode: 'cors',
         headers: headers,
     };
     if (method !== 'GET') options.body = data instanceof FormData ? data : JSON.stringify(data);

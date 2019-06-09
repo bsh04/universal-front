@@ -10,10 +10,10 @@
 // export let clientSecret = '1tg914i7xtc0408wggosgs4gk4o0k8oso88884w4kgo8kc8kso';
 
 //Prod
-export let serverUrl = 'http://api.universal.tom.ru/api/';
+export let serverUrl = 'https://api.universal.tom.ru/api/';
 // export let serverImages = 'https://api.compliance-expert.com/uploads/images/';
-export let regUrl = 'http://api.universal.tom.ru/security/register';
-export let resetUrl = 'http://api.universal.tom.ru/security/resetpassword/';
-export let loginUrl = 'http://api.universal.tom.ru/oauth/v2/token';
+export let regUrl = 'https://api.universal.tom.ru/security/register';
+export let resetUrl = 'https://api.universal.tom.ru/security/resetpassword/';
+export let loginUrl = 'https://api.universal.tom.ru/oauth/v2/token';
 export let clientId = '1_4ks7w5c3rmkgw00sckwow04c884w8wgw8kc48k8skw4g80s8k8';
 export let clientSecret = '104knitpf57kgk80kks0g80gow8s0csw0g8g8cs4s0ggwg4c0w';
