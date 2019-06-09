@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import request from "../../services/ajaxManager";
 import {connect} from "react-redux";
 import { withRouter } from "react-router";
+import {Helmet} from "react-helmet";
 
 import Card from './parts/card';
 
@@ -46,16 +47,28 @@ class ProductList extends Component {
     handleGet(cat)
     {
         let _this = this;
-        request(
-            'product/' + cat,
-            'GET',
-            null,
-            {},
-            function (response)
-            {
-                _this.setState({products: response});
-            },
-        );
+        if (cat === 'search') {
+            request(
+                'product/search',
+                'POST',
+                {data: this.props.location.search.substr(3)},
+                {},
+                function (response) {
+                    _this.setState({products: response});
+                },
+            );
+        }
+        else {
+            request(
+                'product/' + cat,
+                'GET',
+                null,
+                {},
+                function (response) {
+                    _this.setState({products: response});
+                },
+            );
+        }
     }
 
     updateFav(obj) {
@@ -86,9 +99,22 @@ class ProductList extends Component {
     render() {
         return (
             <div>
+                <Helmet>
+                    <meta charSet="utf-8"/>
+                    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                    <meta name="theme-color" content="#000000"/>
+                    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+                    <title>Каталог - Универсал</title>
+                    <meta name="keywords" content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
+                    <meta name="description" content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
+                    <meta property="og:description" content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
+                    <meta property="og:title" content="Каталог"/>
+                    <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
+                </Helmet>
                 <h1>Товары:</h1>
                 <div className="card-columns">
-                    {this.state.products.map((item, key) => {
+                    {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                         if (key < this.state.viewCount) {
                             return (
                                 <Card item={item} key={item.id} update={this.updateFav}
@@ -98,7 +124,7 @@ class ProductList extends Component {
                         else {
                             return;
                         }
-                    })}
+                    }) : <p className={'text-center'}>Товары не найдены</p>}
                 </div>
                 { this.state.viewCount < this.state.products.length ?
                     <button className={'btn btn-outline-success'}

@@ -84,9 +84,13 @@ class CategoryList extends Component {
         return (
             <div className="alert alert-success">
                 <div className="input-group mb-2">
-                    <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="Поиск"/>
+                    <input type="text"
+                           className="form-control"
+                           id="inlineFormInputGroup"
+                           ref={(input) => this.search = input}
+                           placeholder="Поиск"/>
                     <div className="input-group-prepend">
-                        <div className="input-group-text btn btn-success">
+                        <div className="input-group-text btn btn-success" onClick={() => {this.props.history.push('/catalog/search?q=' + this.search.value)}}>
                             <i className={'fa fa-search'}></i>
                         </div>
                     </div>

@@ -15,5 +15,5 @@ export let serverUrl = 'https://ts.vladimirov-mv.name/api/';
 export let regUrl = 'https://ts.vladimirov-mv.name/security/register';
 export let resetUrl = 'https://ts.vladimirov-mv.name/security/resetpassword/';
 export let loginUrl = 'https://ts.vladimirov-mv.name/oauth/v2/token';
-export let clientId = '4_40k9x7384ick4skwgc8w4ocg4888wog4gc84wkos004400kkck';
-export let clientSecret = '5pxzsnovdvgg8o0ookk0ogc0ksog8ssgoggsw88ogko0cos0g8';
+export let clientId = '1_4ks7w5c3rmkgw00sckwow04c884w8wgw8kc48k8skw4g80s8k8';
+export let clientSecret = '104knitpf57kgk80kks0g80gow8s0csw0g8g8cs4s0ggwg4c0w';

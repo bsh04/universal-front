@@ -52,6 +52,13 @@ class Menu extends Component {
         this.props.onDeleteToken();
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.reload.reload) {
+            nextProps.onReloadedMenu();
+            this.handleGet();
+        }
+    }
+
     handleGet() {
         let _this = this;
 
@@ -145,7 +152,7 @@ class Menu extends Component {
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
                 <nav className="navbar navbar-dark navbar-expand-lg fixed" style={{backgroundColor: '#28a745'}}>
-                    <a className="navbar-brand" href="#">"Универсал Томск"</a>
+                    <a className="navbar-brand" href="#">Универсал</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -199,6 +206,7 @@ export default withRouter(connect(
     (state) => ({
         token: state.token,
         user: state.user,
+        reload: state.reload,
     }),
     dispatch => ({
         onDeleteToken: (token) => {
@@ -206,6 +214,9 @@ export default withRouter(connect(
         },
         onDeleteUser: (user) => {
             dispatch({type: 'DELETE_USER', payload: user})
+        },
+        onReloadedMenu: () => {
+            dispatch({ type: 'RELOADED', payload: true })
         },
     })
 )(Menu));

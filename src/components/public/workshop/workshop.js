@@ -38,9 +38,9 @@ class Workshop extends Component {
 
     render() {
         return (
-            <div>
-                <h1>{this.state.article ? this.state.article.title : ''}</h1>
-                <div dangerouslySetInnerHTML={{ __html: this.state.article ? (this.state.article.content).replace(/font-family\:[^;]+;?/g, '') : ''}}></div>
+            <div itemScope itemType="http://schema.org/Article">
+                <h1 itemProp="headline">{this.state.article ? this.state.article.title : ''}</h1>
+                <div itemProp="articleBody" dangerouslySetInnerHTML={{ __html: this.state.article ? (this.state.article.content).replace(/font-family\:[^;]+;?/g, '') : ''}}></div>
             </div>
         );
     }
