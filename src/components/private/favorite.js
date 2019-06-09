@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import request from '../../services/ajaxManager';
+import {connect} from "react-redux";
 
 class Favorite extends Component {
     constructor(props) {
@@ -52,6 +53,7 @@ class Favorite extends Component {
                 let arr = _this.state.products;
                 arr.splice(key, 1);
                 _this.setState({products: arr});
+                _this.props.onReloadMenu();
             },
             this.state.errorCallback
         );
@@ -150,4 +152,13 @@ class Favorite extends Component {
     }
 }
 
-export default Favorite;
+export default withRouter(connect(
+    (state, ownProps) => ({
+        token: state.token,
+    }),
+    dispatch => ({
+        onReloadMenu: () => {
+            dispatch({ type: 'RELOAD', payload: true })
+        },
+    })
+)(Favorite));
