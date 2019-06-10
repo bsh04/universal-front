@@ -103,7 +103,7 @@ class Basket extends Component {
                                 <tr key={key}>
                                     <td>{key + 1}</td>
                                     <td>
-                                        <img className="fav-img" src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://ts.vladimirov-mv.name/uploads/products/' + item.product.photo } alt="Card image cap"/>
+                                        <img className="fav-img" src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.product.photo } alt="Card image cap"/>
                                     </td>
                                     <td>
                                         <h5 className={'text-left'}>{item.product.title}</h5>

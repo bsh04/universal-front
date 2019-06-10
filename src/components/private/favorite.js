@@ -101,7 +101,7 @@ class Favorite extends Component {
                                 <tr key={key}>
                                     <td>{key + 1}</td>
                                     <td>
-                                        <img className="fav-img" src={item.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://ts.vladimirov-mv.name/uploads/products/' + item.photo } alt="Card image cap"/>
+                                        <img className="fav-img" src={item.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.photo } alt="Card image cap"/>
                                     </td>
                                     <td>
                                         <h5 className={'text-left'}>{item.title}</h5>

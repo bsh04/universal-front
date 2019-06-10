@@ -48,7 +48,7 @@ class News extends Component {
                     {this.state.news.map((item, key) => {
                         return (
                             <div key={key} className={"carousel-item " + (key === 0 ? "active" : '')}>
-                                <img className="" src={"https://ts.vladimirov-mv.name/uploads/news/" + item.photo}
+                                <img className="" src={"https://api.universal.tom.ru/uploads/news/" + item.photo}
                                      alt={(key + 1) + " slide"}/>
                                 <div className="carousel-caption d-none d-md-block">
                                     <h5 className={''}>{item.title}</h5>

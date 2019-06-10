@@ -119,7 +119,7 @@ class Card extends Component {
     render() {
         return (
             <div className={"card"} itemScope itemType="http://schema.org/Product">
-                <img itemProp="logo" className="card-img-top card-img-top-250" src={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://ts.vladimirov-mv.name/uploads/products/' + this.props.item.photo } alt="Card image cap"/>
+                <img itemProp="logo" className="card-img-top card-img-top-250" src={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo } alt="Card image cap"/>
                 <div className="card-body">
                     <h5 className="card-title" itemProp="name">{this.props.item.title}</h5>
                     <p className="card-text" itemProp="price">

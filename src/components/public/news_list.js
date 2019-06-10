@@ -53,7 +53,7 @@ class NewsList extends Component {
                     return(
                         <div key={key} className={'row news'}>
                             <div className={'col-md-3'}>
-                                <img itemProp="image" className={'newsImage'} alt={'image'} src={'https://ts.vladimirov-mv.name/uploads/news/' + item.photo}/>
+                                <img itemProp="image" className={'newsImage'} alt={'image'} src={'https://api.universal.tom.ru/uploads/news/' + item.photo}/>
                             </div>
                             <div className={'col-md-9'}>
                                 <h5 className={'text-left'} itemProp="headline">{item.title}</h5>
