@@ -25,7 +25,7 @@ export default function request(
 
     let options = {
         method: method,
-        mode: 'cors',
+//        mode: 'cors',
         headers: headers,
     };
     if (method !== 'GET') options.body = data instanceof FormData ? data : JSON.stringify(data);
