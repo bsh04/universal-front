@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import request from "../../../services/ajaxManager";
 import {connect} from "react-redux";
 
@@ -17,16 +17,14 @@ class CategoryList extends Component {
         this.handleGet();
     }
 
-    handleGet()
-    {
+    handleGet() {
         let _this = this;
         request(
             'product/categories',
             'GET',
             null,
             {},
-            function (response)
-            {
+            function (response) {
                 _this.setState({categories: response});
             },
         );
@@ -36,8 +34,7 @@ class CategoryList extends Component {
         let arr = this.state.open;
         if (arr.indexOf(id) === -1) {
             arr.push(id);
-        }
-        else {
+        } else {
             arr.splice(arr.indexOf(id), 1);
         }
 
@@ -50,17 +47,21 @@ class CategoryList extends Component {
                 <div key={item.id} className={'text-left'}>
                     <a href={"#collapseExample" + item.id}
                        className={'alert-link ' + (window.location.pathname === ('/catalog/' + item.id) ? ' active' : '')}
-                       onClick={() => {this.props.history.push('/catalog/' + item.id); this.changeState(item.id);}}
-                          data-toggle="collapse"
-                          role="button"
-                          aria-expanded="false"
-                          aria-controls={"collapseExample" + item.id}>
-                        <i className={'fa ' + (this.state.open.indexOf(item.id) === -1 ? 'fa-caret-right' : 'fa-caret-down')}>  <span>{item.title}</span></i>
+                       onClick={() => {
+                           this.props.history.push('/catalog/' + item.id);
+                           this.changeState(item.id);
+                       }}
+                       data-toggle="collapse"
+                       role="button"
+                       aria-expanded="false"
+                       aria-controls={"collapseExample" + item.id}>
+                        <i className={'fa ' + (this.state.open.indexOf(item.id) === -1 ? 'fa-caret-right' : 'fa-caret-down')}>
+                            <span>{item.title}</span></i>
                     </a>
                     <div className="collapse" id={"collapseExample" + item.id}>
                         <div className=" card-body">
                             {item.children.map((child) => {
-                                return(
+                                return (
                                     this.itemView(child)
                                 );
                             })}
@@ -83,23 +84,30 @@ class CategoryList extends Component {
     render() {
         return (
             <div className="alert alert-success">
-                <div className="input-group mb-2">
-                    <input type="text"
-                           className="form-control"
-                           id="inlineFormInputGroup"
-                           ref={(input) => this.search = input}
-                           placeholder="Поиск"/>
-                    <div className="input-group-prepend">
-                        <div className="input-group-text btn btn-success" onClick={() => {this.props.history.push('/catalog/search?q=' + this.search.value)}}>
-                            <i className={'fa fa-search'}></i>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    this.props.history.push('/catalog/search?q=' + this.search.value)
+                }}>
+                    <div className="input-group mb-2">
+                        <input type="text"
+                               className="form-control"
+                               id="inlineFormInputGroup"
+                               ref={(input) => this.search = input}
+                               placeholder="Поиск"/>
+                        <div className="input-group-prepend">
+                            <div className="input-group-text btn btn-success" onClick={() => {
+                                this.props.history.push('/catalog/search?q=' + this.search.value)
+                            }}>
+                                <i className={'fa fa-search'}></i>
+                            </div>
                         </div>
                     </div>
-                </div>
-                { this.itemView({id: 'new', children: [], title: 'Новые товары'}) }
-                { this.itemView({id: 'stock', children: [], title: 'Товары по акции'}) }
+                </form>
+                {this.itemView({id: 'new', children: [], title: 'Новые товары'})}
+                {this.itemView({id: 'stock', children: [], title: 'Товары по акции'})}
                 <hr/>
                 {this.state.categories.map((item) => {
-                    return(
+                    return (
                         this.itemView(item)
                     );
                 })}
