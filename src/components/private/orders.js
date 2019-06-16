@@ -84,6 +84,9 @@ class Orders extends Component {
                                                     <p className="card-text">
                                                         <small className="text-muted">Код товара: {item.product.id} </small> {item.product.new ? <span className="badge badge-success">Новинка!</span> : ''} {item.product.stock ? <span className="badge badge-danger">Акция!</span> : ''}<br/>
                                                         Цена: {item.product.price} * {item.count} = {item.product.price * item.count} р.
+                                                        {item.product.balance == 0 ? <div className="alert alert-danger" role="alert">
+                                                                Этого товара нет в наличии. При оформлении заказа он не будет учтен.
+                                                            </div> : ''}
                                                     </p>
                                                     <br/>
                                                 </div>
