@@ -25,6 +25,12 @@ code {
   }
 }
 
+.card-img-top-250 {
+  max-height: 150px;
+  width: auto;
+  object-fit: contain;
+}
+
 .row {
   margin: 0;
 }

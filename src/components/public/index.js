@@ -48,10 +48,8 @@ class Index extends Component {
             <div>
                 <Helmet>
                     <meta charSet="utf-8"/>
-                    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     <meta name="theme-color" content="#000000"/>
-                    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
                     <title>Главная - Универсал</title>
                     <meta name="keywords" content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
                     <meta name="description" content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>

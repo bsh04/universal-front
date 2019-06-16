@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 import Index from './index';
 import Contact from './contacts';
@@ -68,6 +69,7 @@ class PublicLayout extends Component {
                     </div>
                     {/*<div className='col-md-2'></div>*/}
                 </div>
+                <ScrollUpButton/>
                 <Footer />
             </div>
         );
