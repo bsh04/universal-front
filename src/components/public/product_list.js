@@ -127,7 +127,7 @@ class ProductList extends Component {
                     }) : <p className={'text-center'}>Товары не найдены</p>}
                 </div>
                 { this.state.viewCount < this.state.products.length ?
-                    <button className={'btn btn-outline-success'}
+                    <button className={'btn btn-success'}
                             onClick={() => {this.setState({viewCount: (this.state.viewCount + 30)})}}>
                         <i className={'fa fa-cloud-download-alt'}> <span>Загрузить еще</span></i>
                     </button> : null }
