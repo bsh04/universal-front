@@ -17,7 +17,7 @@ class ProductList extends Component {
         this.state = {
             products: [],
             favorites: [],
-            viewCount: 50,
+            viewCount: 30,
         };
     }
 
@@ -40,7 +40,7 @@ class ProductList extends Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({viewCount: 50});
+        this.setState({viewCount: 30});
         this.handleGet(props.match.params.category);
     }
 
@@ -101,10 +101,8 @@ class ProductList extends Component {
             <div>
                 <Helmet>
                     <meta charSet="utf-8"/>
-                    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     <meta name="theme-color" content="#000000"/>
-                    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
                     <title>Каталог - Универсал</title>
                     <meta name="keywords" content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
                     <meta name="description" content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
@@ -113,12 +111,14 @@ class ProductList extends Component {
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
                 <h1>Товары:</h1>
-                <div className="card-columns">
+                <div className="row">
                     {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                         if (key < this.state.viewCount) {
                             return (
-                                <Card item={item} key={item.id} update={this.updateFav}
-                                      favorite={this.isFavorite(item) ? true : false}/>
+                                <div className="col-md-4" style={{paddingBottom: '10px'}}>
+                                    <Card item={item} key={item.id} update={this.updateFav}
+                                          favorite={this.isFavorite(item) ? true : false}/>
+                                </div>
                             );
                         }
                         else {
@@ -128,7 +128,7 @@ class ProductList extends Component {
                 </div>
                 { this.state.viewCount < this.state.products.length ?
                     <button className={'btn btn-outline-success'}
-                            onClick={() => {this.setState({viewCount: (this.state.viewCount + 25)})}}>
+                            onClick={() => {this.setState({viewCount: (this.state.viewCount + 30)})}}>
                         <i className={'fa fa-cloud-download-alt'}> <span>Загрузить еще</span></i>
                     </button> : null }
             </div>

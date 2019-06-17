@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 import Menu from '../menu';
 import ProductUpdate from './product_update';
@@ -42,6 +43,7 @@ class PrivateLayout extends Component {
                     <div className='col-md-2'>
                     </div>
                 </div>
+                <ScrollUpButton />
             </div>
         );
     }

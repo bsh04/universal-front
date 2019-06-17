@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 import Menu from '../menu';
 import Favorite from './favorite';
@@ -48,6 +49,7 @@ class UserLayout extends Component {
                         </Switch>
                     </div>
                 </div>
+                <ScrollUpButton />
                 <Footer />
             </div>
         );
