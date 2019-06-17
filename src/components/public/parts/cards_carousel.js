@@ -16,6 +16,10 @@ class CardCarousel extends Component {
         this.setState({array: nextProps.array});
     }
 
+    componentDidMount() {
+        window.$('.carousel').carousel();
+    }
+
     render() {
         if (this.state.array.length > 0) {
             return (
