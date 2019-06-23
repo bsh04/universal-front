@@ -2,7 +2,7 @@
  * Created by misha on 27.01.19.
  */
 //Dev
-// export let serverUrl = 'http://localhost:80/api/';
+export let serverUrl = 'http://localhost:8000/api/';
 // export let regUrl = 'http://localhost:80/security/register';
 // export let loginUrl = 'http://localhost:80/oauth/v2/token';
 // export let serverImages = 'http://localhost:8000/uploads/images/';
@@ -10,7 +10,7 @@
 // export let clientSecret = '1tg914i7xtc0408wggosgs4gk4o0k8oso88884w4kgo8kc8kso';
 
 //Prod
-export let serverUrl = 'https://api.universal.tom.ru/api/';
+// export let serverUrl = 'https://api.universal.tom.ru/api/';
 // export let serverImages = 'https://api.compliance-expert.com/uploads/images/';
 export let regUrl = 'https://api.universal.tom.ru/security/register';
 export let resetUrl = 'https://api.universal.tom.ru/security/resetpassword/';

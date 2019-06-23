@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import request from '../../../services/ajaxManager';
 
-class NewsList extends Component {
+class StocksList extends Component {
     constructor(props) {
         super(props);
 
@@ -24,7 +24,7 @@ class NewsList extends Component {
     {
         let _this = this;
         request(
-            'news/news',
+            'news/stocks',
             'GET',
             null,
             {},
@@ -42,7 +42,7 @@ class NewsList extends Component {
         let data = new FormData();
         data.append('photo', this.fileInput.files[0]);
         data.append('title', this.titleInput.value);
-        data.append('type', 'news');
+        data.append('type', 'stocks');
         data.append('short_content', this.contentInput.value);
 
         let _this = this;
@@ -163,7 +163,7 @@ class NewsList extends Component {
                     <td></td>
                     <td>
                         <button className={'btn btn-success'} onClick={() => {this.setState({add: true})}}>
-                            <i className={'fa fa-plus'}> Добавить новость</i>
+                            <i className={'fa fa-plus'}> Добавить акцию</i>
                         </button>
                     </td>
                 </tr>
@@ -174,7 +174,7 @@ class NewsList extends Component {
     render() {
         return (
             <div>
-                <h4 className="text-center">Управление новостями</h4>
+                <h4 className="text-center">Управление акциями</h4>
                 <table className={"table table-striped table-hover"}>
                     <thead>
                         <tr>
@@ -243,7 +243,7 @@ class NewsList extends Component {
                                 </tr>
                             );
                         }) : <tr>
-                            <td colSpan={4}>Список новостей пуст</td>
+                            <td colSpan={4}>Список акций пуст</td>
                         </tr> }
                     </tbody>
                 </table>
@@ -252,4 +252,4 @@ class NewsList extends Component {
     }
 }
 
-export default NewsList;
+export default StocksList;
