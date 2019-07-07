@@ -2,7 +2,7 @@
  * Created by misha on 27.01.19.
  */
 //Dev
-// export let serverUrl = 'http://localhost:80/api/';
+// export let serverUrl = 'http://localhost:8000/api/';
 // export let regUrl = 'http://localhost:80/security/register';
 // export let loginUrl = 'http://localhost:80/oauth/v2/token';
 // export let serverImages = 'http://localhost:8000/uploads/images/';

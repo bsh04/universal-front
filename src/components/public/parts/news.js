@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import request from "../../../services/ajaxManager";
 
 class News extends Component {
@@ -19,16 +19,14 @@ class News extends Component {
         window.$('.carousel').carousel();
     }
 
-    handleGet()
-    {
+    handleGet() {
         let _this = this;
         request(
-            'news',
+            'news/' + this.props.type,
             'GET',
             null,
             {},
-            function (response)
-            {
+            function (response) {
                 _this.setState({news: response});
             },
         );
@@ -36,11 +34,12 @@ class News extends Component {
 
     render() {
         return (
-            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+            <div id={"carouselExampleIndicators" + this.props.type} className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
                     {this.state.news.map((item, key) => {
                         return (
-                            <li key={key} data-target="#carouselExampleIndicators" data-slide-to={key} className={key === 0 ? "active" : ''}></li>
+                            <li key={key} data-target={"#carouselExampleIndicators" + this.props.type} data-slide-to={key}
+                                className={key === 0 ? "active" : ''}></li>
                         );
                     })}
                 </ol>
@@ -58,11 +57,13 @@ class News extends Component {
                         );
                     })}
                 </div>
-                <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <a className="carousel-control-prev" href={"#carouselExampleIndicators" + this.props.type} role="button"
+                   data-slide="prev">
                     <i className={'fa fa-arrow-left'}></i>
                     <span className="sr-only">Previous</span>
                 </a>
-                <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <a className="carousel-control-next" href={"#carouselExampleIndicators" + this.props.type} role="button"
+                   data-slide="next">
                     <i className={'fa fa-arrow-right'}></i>
                     <span className="sr-only">Next</span>
                 </a>

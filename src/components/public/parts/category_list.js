@@ -41,7 +41,7 @@ class CategoryList extends Component {
         this.setState({open: arr});
     }
 
-    itemView(item) {
+    itemView(item, type = null) {
         if (item.children.length > 0) {
             return (
                 <div key={item.id} className={'text-left'}>
@@ -75,7 +75,9 @@ class CategoryList extends Component {
             <div key={item.id} className={'text-left'}>
                 <Link to={'/catalog/' + item.id}
                       className={'alert-link' + (window.location.pathname === ('/catalog/' + item.id) ? ' active' : '')}>
-                    <i className={'fa fa-caret-right'}> <span>{item.title}</span></i>
+                    <i className={'fa fa-caret-right'}>
+                        {type !== 'bold' ? <span>{item.title}</span> : <b><i><span>{item.title}</span></i></b> }
+                    </i>
                 </Link>
             </div>
         );
@@ -103,8 +105,8 @@ class CategoryList extends Component {
                         </div>
                     </div>
                 </form>
-                {this.itemView({id: 'new', children: [], title: 'Новые товары'})}
-                {this.itemView({id: 'stock', children: [], title: 'Товары по акции'})}
+                {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
+                {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
                 <hr/>
                 {this.state.categories.map((item) => {
                     return (

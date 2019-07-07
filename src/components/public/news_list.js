@@ -20,7 +20,7 @@ class NewsList extends Component {
     {
         let _this = this;
         request(
-            'news',
+            'news/news',
             'GET',
             null,
             {},

@@ -10,6 +10,8 @@ import Menu from '../menu';
 import ProductUpdate from './product_update';
 import NoImageList from './products_no_image_list';
 import NewsList from './news/news';
+import StocksList from './news/stocks';
+import ExportCategoryList from './to_csv';
 import ArticleList from './article';
 
 class PrivateLayout extends Component {
@@ -37,6 +39,8 @@ class PrivateLayout extends Component {
                             <Route exact path="/admin/product/update" component={ProductUpdate}/>
                             <Route exact path="/admin/product/image" component={NoImageList}/>
                             <Route exact path="/admin/news" component={NewsList}/>
+                            <Route exact path="/admin/export" component={ExportCategoryList}/>
+                            <Route exact path="/admin/stocks" component={StocksList}/>
                             <Route exact path="/admin/workshop" component={ArticleList}/>
                         </Switch>
                     </div>

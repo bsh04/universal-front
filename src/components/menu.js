@@ -28,6 +28,8 @@ class Menu extends Component {
                         {title: 'Список товаров без изображения', path: '/admin/product/image'},
                         {title: 'Управление швейным цехом', path: '/admin/workshop'},
                         {title: 'Управление новостями', path: '/admin/news'},
+                        {title: 'Управление акциями', path: '/admin/stocks'},
+                        {title: 'Экспорт данных', path: '/admin/export'},
                     ]
                 },
                 {
@@ -148,11 +150,36 @@ class Menu extends Component {
         return (
             <div>
                 <div className='mainImage'>
-                    <div></div>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <p className={'text-left'}>
+                                <i className={'fa fa-map-marker'}> <span itemProp="streetAddress">Адрес: г. Томск, ул. Бердская, 31 (пер. Пойменный 5)</span></i><br/>
+                                <i className={'fa fa-phone'}> <span><a href={'tel:+7 (3822) 909291'} itemProp="telephone">90-92-91</a>, <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">90-44-32</a>, <a href={'tel:+7 (3822) 902-668'} itemProp="telephone">902-668</a></span></i><br/>
+                            </p>
+                        </div>
+                        <div className="col-md-4">
+                            <Link to="/"><h1 className="text-center">Универсал Томск</h1></Link>
+                        </div>
+                        <div className="col-md-4 text-right">
+                            <p>
+                            { this.props.token ?
+                                    <Link to='/user/basket' className="iconButtons">
+                                        <i className={'fa fa-shopping-cart'}> </i>&nbsp;
+                                        <span className={'inRound'}>{this.state.basket.length}</span>
+                                    </Link>
+                                 : '' }
+                            { this.props.token ?
+                                    <Link to='/user/favorite' className="iconButtons">
+                                        <i className={'fa fa-heart'}> </i>&nbsp;
+                                        <span className={'inRound'}>{this.state.like.length}</span>
+                                    </Link>
+                                 : '' }
+                            </p>
+                        </div>
+                    </div>
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
                 <nav className="navbar navbar-dark navbar-expand-lg fixed" style={{backgroundColor: '#28a745'}}>
-                    <a className="navbar-brand" href="#">Универсал</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -167,18 +194,6 @@ class Menu extends Component {
                         </ul>
 
                         <ul className="navbar-nav ml-auto">
-                            { this.props.token ? <li className={"nav-item"}>
-                                <Link className="nav-link" to='/user/basket'>
-                                    <i className={'fa fa-shopping-cart'}> </i>
-                                    <span className={'inRound'}>{this.state.basket.length}</span>
-                                </Link>
-                            </li> : '' }
-                            { this.props.token ? <li className={"nav-item"}>
-                                <Link className="nav-link" to='/user/favorite'>
-                                    <i className={'fa fa-heart'}> </i>
-                                    <span className={'inRound'}>{this.state.like.length}</span>
-                                </Link>
-                            </li> : '' }
                             { this.props.token ? (
                                     this.state.rightItems.map((item, key) => {
                                         return this.menuItemRender(item, key)
