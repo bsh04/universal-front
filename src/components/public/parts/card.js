@@ -154,6 +154,18 @@ class Card extends Component {
                             <i className={'fa fa-check'}> {this.state.message}</i>
                         </div>
                     }
+                    <button className={'btn btn-secondary'} onClick={async () => {
+                        try {
+                            // 1) Copy text
+                            await navigator.clipboard.writeText('https://universal.tom.ru/catalog/search?q=' + this.props.item.id);
+
+                            // 2) Catch errors
+                        } catch (err) {
+                            console.error('Failed to copy: ', err);
+                        }
+                    }}>
+                        <i className={'fa fa-share'}> Скопировать ссылку на товар</i>
+                    </button>
                 </div>
             </div>
         );
