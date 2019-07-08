@@ -21,6 +21,7 @@ class OrderAdd extends AbstractForm {
         let data = {
             'address': this.addressInput.value,
             'phone': this.phoneInput.value,
+            'comment': this.commentInput.value ? this.commentInput.value : null,
             'pay_type': 'money', //this.typeSelect.value,
         };
 
@@ -65,6 +66,15 @@ class OrderAdd extends AbstractForm {
                         defaultValue={this.props.user.address}
                         className={'form-control '}
                         ref={(input) => {this.addressInput = input}}
+                    />
+                    <input
+                        name="comment"
+                        type="text"
+                        required={false}
+                        maxLength={250}
+                        placeholder={"Комментарий к заказу"}
+                        className={'form-control '}
+                        ref={(input) => {this.commentInput = input}}
                     />
                     <p className={'text-left'}>
                         Доставка по г.Томску от 3000 руб бесплатна (кроме отдаленных районов).<br/>
