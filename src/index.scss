@@ -2,15 +2,15 @@ body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  monospace;
 }
 
 .loadingBlock {
@@ -23,6 +23,16 @@ code {
   div img {
     width: 100%;
   }
+}
+
+.categoryList {
+  border-right: solid 1px;
+  border-image: linear-gradient(
+                  to bottom,
+                  rgba(0, 0, 0, 0),
+                  rgba(100, 100, 100, .6),
+                  rgba(0, 0, 0, 0)
+  ) 1 100%;
 }
 
 .mainImage {
@@ -57,7 +67,8 @@ code {
 }
 
 .card-img-top-250 {
-  max-height: 150px;
+  max-height: 150px !important;
+  max-width: auto !important;
   width: auto;
   object-fit: contain;
 }

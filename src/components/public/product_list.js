@@ -60,7 +60,7 @@ class ProductList extends Component {
         }
         else {
             request(
-                'product/' + cat,
+                'product/' + cat + (this.props.match.params.search ? '?data=' + this.props.match.params.search : ''),
                 'GET',
                 null,
                 {},

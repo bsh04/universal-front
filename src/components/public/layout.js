@@ -51,6 +51,7 @@ class PublicLayout extends Component {
                             <Route exact path={'/workshop'} component={ArticleList}/>
                             <Route exact path={'/workshop/:id'} component={Workshop}/>
                             <Route exact path={'/catalog'} component={Catalog}/>
+                            <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
                             <Route exact path={'/catalog/:category'} component={ProductList}/>
                             <Route exact path={'/about'} component={About}/>
                             <Route exact path="/register" render={() => (this.props.token !== false ?
