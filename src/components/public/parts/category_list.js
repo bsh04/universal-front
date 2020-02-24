@@ -42,11 +42,12 @@ class CategoryList extends Component {
     }
 
     itemView(item, type = null) {
+        let parts = window.location.pathname.split('/');
         if (item.children.length > 0) {
             return (
                 <div key={item.id} className={'text-left'}>
                     <a href={"#collapseExample" + item.id}
-                       className={'alert-link ' + (window.location.pathname === ('/catalog/' + item.id) ? ' active' : '')}
+                       className={'alert-link ' + (window.location.pathname === ('/catalog/' + item.id) || (parts[1] === 'catalog' && parts[2] == item.id) ? ' active' : '')}
                        onClick={() => {
                            this.props.history.push('/catalog/' + item.id);
                            this.changeState(item.id);
@@ -74,7 +75,7 @@ class CategoryList extends Component {
         return (
             <div key={item.id} className={'text-left'}>
                 <Link to={'/catalog/' + item.id}
-                      className={'alert-link' + (window.location.pathname === ('/catalog/' + item.id) ? ' active' : '')}>
+                      className={'alert-link' + (window.location.pathname === ('/catalog/' + item.id) || (parts[1] === 'catalog' && parts[2] == item.id) ? ' active' : '')}>
                     <i className={'fa fa-caret-right'}>
                         {type !== 'bold' ? <span><i>{item.title}</i></span> : <b><i><span>{item.title}</span></i></b> }
                     </i>
@@ -84,12 +85,13 @@ class CategoryList extends Component {
     }
 
     render() {
+        let parts = window.location.pathname.split('/');
+
         return (
             <div className="alert alert-default categoryList">
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     if (this.state.searchInCat) {
-                        let parts = window.location.pathname.split('/');
                         this.props.history.push('/' + parts[1] + '/' + parts[2] + '/' + this.search.value);
                     }
                     else {
@@ -101,11 +103,11 @@ class CategoryList extends Component {
                                className="form-control"
                                id="inlineFormInputGroup"
                                ref={(input) => this.search = input}
+                               defaultValue={(parts[1] === 'catalog' && parts.length > 3) ? parts[3] : ''}
                                placeholder="Поиск"/>
                         <div className="input-group-prepend">
                             <div className="input-group-text btn btn-success" onClick={() => {
                                 if (this.state.searchInCat) {
-                                    let parts = window.location.pathname.split('/');
                                     this.props.history.push('/' + parts[1] + '/' + parts[2] + '/' + this.search.value);
                                 }
                                 else {
