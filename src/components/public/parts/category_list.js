@@ -56,8 +56,7 @@ class CategoryList extends Component {
                        role="button"
                        aria-expanded="false"
                        aria-controls={"collapseExample" + item.id}>
-                        <i className={'fa ' + (this.state.open.indexOf(item.id) === -1 ? 'fa-caret-right' : 'fa-caret-down')}>
-                            <span><i>{item.title}</i></span></i>
+                        <span><i>{item.title}</i></span>
                     </a>
                     <div className="collapse" id={"collapseExample" + item.id}>
                         <div className=" card-body">
@@ -76,9 +75,7 @@ class CategoryList extends Component {
             <div key={item.id} className={'text-left'}>
                 <Link to={'/catalog/' + item.id}
                       className={'alert-link' + (window.location.pathname === ('/catalog/' + item.id) || (parts[1] === 'catalog' && parts[2] == item.id) ? ' active' : '')}>
-                    <i className={'fa fa-caret-right'}>
-                        {type !== 'bold' ? <span><i>{item.title}</i></span> : <b><i><span>{item.title}</span></i></b> }
-                    </i>
+                    {type !== 'bold' ? <span><i>{item.title}</i></span> : <b><i><span>{item.title}</span></i></b>}
                 </Link>
             </div>
         );
@@ -88,13 +85,12 @@ class CategoryList extends Component {
         let parts = window.location.pathname.split('/');
 
         return (
-            <div className="alert alert-default categoryList">
+            <div className="alert alert-success">
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     if (this.state.searchInCat) {
                         this.props.history.push('/' + parts[1] + '/' + parts[2] + '/' + this.search.value);
-                    }
-                    else {
+                    } else {
                         this.props.history.push('/catalog/search?q=' + this.search.value);
                     }
                 }}>
@@ -109,8 +105,7 @@ class CategoryList extends Component {
                             <div className="input-group-text btn btn-success" onClick={() => {
                                 if (this.state.searchInCat) {
                                     this.props.history.push('/' + parts[1] + '/' + parts[2] + '/' + this.search.value);
-                                }
-                                else {
+                                } else {
                                     this.props.history.push('/catalog/search?q=' + this.search.value);
                                 }
                             }}>
@@ -119,11 +114,14 @@ class CategoryList extends Component {
                         </div>
                     </div>
                     <div className="form-check mb-2 mr-sm-2">
-                        <input className="form-check-input" type="checkbox" id="inlineFormCheck" ref={(input) => this.categorySearch = input}
-                               onClick={() => {this.setState({searchInCat: this.categorySearch.checked})}}/>
-                            <label className="form-check-label" htmlFor="inlineFormCheck">
-                                Искать внутри выбранной категории
-                            </label>
+                        <input className="form-check-input" type="checkbox" id="inlineFormCheck"
+                               ref={(input) => this.categorySearch = input}
+                               onClick={() => {
+                                   this.setState({searchInCat: this.categorySearch.checked})
+                               }}/>
+                        <label className="form-check-label" htmlFor="inlineFormCheck">
+                            Искать внутри выбранной категории
+                        </label>
                     </div>
                 </form>
                 {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
