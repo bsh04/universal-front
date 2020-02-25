@@ -18,6 +18,7 @@ class ProductList extends Component {
             products: [],
             favorites: [],
             viewCount: 30,
+            request: false,
         };
     }
 
@@ -48,17 +49,22 @@ class ProductList extends Component {
     {
         let _this = this;
         if (cat === 'search') {
-            request(
-                'product/search',
-                'POST',
-                {data: (/%[0-9a-f]{2}/i.test(this.props.location.search.substr(3)) ?
-                        decodeURI(this.props.location.search.substr(3)) :
-                        this.props.location.search.substr(3))},
-                {},
-                function (response) {
-                    _this.setState({products: response});
-                },
-            );
+            if (!this.state.request && this.props.location.search.length > 0) {
+                this.setState({request: true});
+                request(
+                    'product/search',
+                    'POST',
+                    {
+                        data: (/%[0-9a-f]{2}/i.test(this.props.location.search.substr(3)) ?
+                            decodeURI(this.props.location.search.substr(3)) :
+                            this.props.location.search.substr(3))
+                    },
+                    {},
+                    function (response) {
+                        _this.setState({products: response, request: false});
+                    },
+                );
+            }
         }
         else {
             request(
