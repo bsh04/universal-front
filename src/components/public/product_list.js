@@ -123,7 +123,7 @@ class ProductList extends Component {
                     {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                         if (key < this.state.viewCount) {
                             return (
-                                <div className="col-md-4" style={{paddingBottom: '10px'}}>
+                                <div className="col-md-3" style={{paddingBottom: '10px'}} key={key}>
                                     <Card item={item} key={item.id} update={this.updateFav}
                                           favorite={this.isFavorite(item) ? true : false}/>
                                 </div>
