@@ -25,7 +25,23 @@ class CategoryList extends Component {
             null,
             {},
             function (response) {
-                _this.setState({categories: response});
+                let sorted = response.map(item => {
+                    
+                    if(item.children.length > 1){
+                        item.children = item.children.sort((current, next) => {
+                            if(current.title < next.title) {
+                                return -1;
+                            }
+                            if(current.title > next.title) {
+                                return 1;
+                            }
+                            return 0
+                        })
+                    }
+                    return item;                    
+                })
+
+                _this.setState({categories: sorted});
             },
         );
     }
@@ -56,7 +72,7 @@ class CategoryList extends Component {
                        role="button"
                        aria-expanded="false"
                        aria-controls={"collapseExample" + item.id}>
-                        <span><i>{item.title}</i></span>
+                        <span>{item.title}</span>
                     </a>
                     <div className="collapse" id={"collapseExample" + item.id}>
                         <div className=" card-body">
@@ -75,7 +91,7 @@ class CategoryList extends Component {
             <div key={item.id} className={'text-left'}>
                 <Link to={'/catalog/' + item.id}
                       className={'alert-link' + (window.location.pathname === ('/catalog/' + item.id) || (parts[1] === 'catalog' && parts[2] == item.id) ? ' active' : '')}>
-                    {type !== 'bold' ? <span><i>{item.title}</i></span> : <b><i><span>{item.title}</span></i></b>}
+                    {type !== 'bold' ? <span>{item.title}</span> : <b><span>{item.title}</span></b>}
                 </Link>
             </div>
         );

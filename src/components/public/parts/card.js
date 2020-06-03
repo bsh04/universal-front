@@ -124,21 +124,21 @@ class Card extends Component {
                     small={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
                     large={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
                     alt={this.props.item.title}
-                    className="card-img-top card-img-top-250"
+                    className="card-img-top card-img-top-250 mt-3"
                 />
                 <div className="card-body">
-                    <h5 className="card-title" itemProp="name">{this.props.item.title}</h5>
-                    <p className="card-text" itemProp="price">
-                        <small className="text-muted">Код товара: {this.props.item.id} </small> {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''} {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger">Акция!</span></Link>) : ''}<br/>
-                        Цена: {this.props.item.price} р.
+                    <h5 className="card-title text-left font-weight-light" itemProp="name">{this.props.item.title}</h5>
+                    <p className="card-text text-left font-weight-normal" itemProp="price">
+                        {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''} {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger">Акция!</span></Link>) : ''}<br/>
+                        Цена: <span style={{fontWeight: 700}}>{this.props.item.price}</span>  р.
                     </p>
                     <p>
                         <i className={'fa fa-heart' + (this.props.favorite ? ' text-danger' : '')}
                            onClick={this.handleClick}> {this.props.favorite ? 'В избранном' : 'Добавить в избранное'}</i>
                     </p>
                     {this.state.form ?
-                        <form className="form-inline" onSubmit={(e) => {e.preventDefault()}} style={{justifyContent: 'center'}}>
-                            <div className="input-group mb-2 mr-sm-2">
+                        <form onSubmit={(e) => {e.preventDefault()}} style={{justifyContent: 'center'}}>
+                            <div className="input-group mb-2 mr-sm-2 row d-flex flex-wrap justify-content-center">
                                 <input
                                     name="desc"
                                     type="number"
@@ -146,11 +146,18 @@ class Card extends Component {
                                     placeholder={"Количество:"}
                                     min={1}
                                     defaultValue={1}
-                                    className="form-control mb-1 mr-sm-1"
+                                    className={`form-control mb-1 
+                                                col-xl-3 col-lg-4 col-md-12 col-sm-2 col-12`
+                                            }
                                     ref={(input) => {this.countInput = input}}
                                 />
-                                <div className="input-group-prepend">
-                                    <button className="btn btn-success mb-1 " onClick={this.handleBasketAdd}>
+                                <div className={
+                                        `input-group-prepend 
+                                        pl-1 pr-0  
+                                        col-xl-7 col-lg-6 col-md-12 col-sm-8 col-12`
+                                    }>
+                                    <button className="btn-basket btn btn-success mb-1" onClick={this.handleBasketAdd}>
+                                        <span className="btn-label">В корзину </span>
                                         <i className={'fa fa-cart-plus'}></i>
                                     </button>
                                 </div>
@@ -173,6 +180,7 @@ class Card extends Component {
                         <i className={'fa fa-share'}> Скопировать ссылку на товар</i>
                     </button>
                 </div>
+                <small className="text-muted text-left ml-1 mb-1">Код товара: {this.props.item.id} </small>
             </div>
         );
     }

@@ -26,6 +26,7 @@ class PublicLayout extends Component {
         super(props);
         this.state = {
             redirectUrl: '/',
+            showMenu: true
         };
     }
 
@@ -35,15 +36,26 @@ class PublicLayout extends Component {
         }
     }
 
+    toggleMenuView() {
+        const showMenu = this.state.showMenu;
+
+        this.setState({
+            showMenu: !showMenu
+        })
+    }
+
     render() {
         return (
             <div>
                 <Menu />
                 <div className="content row">
-                    <div className='col-md-3'>
-                        <CategoryList/>
-                    </div>
-                    <div className='col-md-9'>
+                    { this.state.showMenu 
+                        ? <div className='col-md-3'>
+                            <button type="button" className="btn btn-primary fixed-top" onClick={() => this.toggleMenuView()}>Меню</button>
+                            <CategoryList/>
+                        </div>
+                        : <button type="button" className="btn btn-primary fixed-top" onClick={() => this.toggleMenuView()}>Меню</button> }
+                    <div className={`col-md-${this.state.showMenu ? 9 : 12}`}>
                         <Switch>
                             <Route exact path={'/'} component={Index}/>
                             <Route exact path={'/contact'} component={Contact}/>
