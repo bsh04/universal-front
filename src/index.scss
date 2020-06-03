@@ -66,11 +66,69 @@ code {
   }
 }
 
+.catalog_link {
+  position: relative;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-right: 1px solid #ffffff;
+}
+
+.catalog_main {
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  z-index: 3;
+}
+.catalog_sub {
+
+}
+
+.dropdown-share {
+  position: absolute;
+  top: 1px;
+  right: -8px;
+  .dropdown-menu {
+    &.share {
+    padding: 10px;
+    padding-left: 20px;
+      & > * {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
 .card-img-top-250 {
+  min-height: 150px;
   max-height: 150px !important;
   max-width: auto !important;
   width: auto;
   object-fit: contain;
+}
+
+.card-position {
+  position: relative;
+}
+
+.card {
+  & .card-title {
+    max-height: 3rem;
+    min-height: 3rem;
+    width: 100%;
+    overflow: hidden;
+  }
+  &:hover {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0px 0px 10px 1px #c7c7c7;
+    width: 100%;
+    & .card-title {
+      max-height: inherit;
+      overflow: visible;
+    }
+  }  
 }
 
 .row {

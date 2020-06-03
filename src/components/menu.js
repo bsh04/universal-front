@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import request from "../services/ajaxManager";
+import CategoryList from './public/parts/category_list';
+
 
 class Menu extends Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class Menu extends Component {
         this.handleLogout = this.handleLogout.bind(this);
 
         this.state = {
+            showCatalog: false,
             redirect: null,
             like: [],
             basket: [],
@@ -146,6 +149,14 @@ class Menu extends Component {
         }
     }
 
+    toggleMenuView() {
+        const showCatalog = this.state.showCatalog;
+
+        this.setState({
+            showCatalog: !showCatalog
+        })
+    }
+
     render() {
         return (
             <div>
@@ -188,6 +199,22 @@ class Menu extends Component {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
+
+
+                            <li className="nav-item">
+                                <a className="nav-link catalog_link"
+                                        onClick={() => this.toggleMenuView()}>
+                                <i className="fa fa-bars"></i>
+                                    <span> Каталог</span>
+                                </a>
+                            </li>
+                            { this.state.showCatalog 
+                            ? <div className='catalog_main'>
+                                
+                                <CategoryList className=""/>
+                            </div>
+                            : ''}
+
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
