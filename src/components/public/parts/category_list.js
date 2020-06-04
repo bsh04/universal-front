@@ -10,17 +10,11 @@ class CategoryList extends Component {
         this.state = {
             categories: [],
             open: [],
-            searchValue: '',
         };
     }
 
     componentWillMount() {
         this.handleGet();
-    }
-
-    componentDidMount() {
-        const searchValue = decodeURI(this.props.location.search.slice(3));
-        this.setState({searchValue: searchValue})
     }
 
     handleGet() {
@@ -60,29 +54,29 @@ class CategoryList extends Component {
             arr.splice(arr.indexOf(id), 1);
         }
 
-        this.setState({open: arr});
+        this.setState({
+            open: arr,
+        });
     }
 
     itemView(item, type = null) {
         let parts = window.location.pathname.split('/');
         if (item.children.length > 0) {
+            
             return (
-                <div key={item.id} className={'text-left catalog_sub'}>
+                <div key={item.id} className={'text-left '} >
                     <a href={"#collapseExample" + item.id}
-                       className={'alert-link ' + (window.location.pathname === ('/catalog/' + item.id) || (parts[1] === 'catalog' && parts[2] == item.id) ? ' active' : '')}
-                       onClick={() => {
-                           this.props.history.push('/catalog/' + item.id);
-                           this.changeState(item.id);
-                       }}
+                       onClick={() => this.setState({subMenuActive: item.id})}
+                       className={`alert-link ${this.state.subMenuActive === item.id ? '' : 'collapsed'}`}
                        data-toggle="collapse"
                        role="button"
-                       aria-expanded="false"
+                       aria-expanded={`${this.state.subMenuActive === item.id ? 'true' : 'false'}`}
                        aria-controls={"collapseExample" + item.id}>
                         <span>{item.title}</span>
                     </a>
-                    <div className="collapse" id={"collapseExample" + item.id}>
-                        <div className=" card-body ">
-                            {item.children.map((child) => {
+                    <div className={`${this.state.subMenuActive === item.id ? '' : 'collapse'}`} id={"collapseExample" + item.id}>
+                        <div className="card-body ">
+                            { item.children.map((child) => {
                                 return (
                                     this.itemView(child)
                                 );
@@ -96,24 +90,11 @@ class CategoryList extends Component {
         return (
             <div key={item.id} className={'text-left '}>
                 <Link to={'/catalog/' + item.id}
-                      className={'alert-link' + (window.location.pathname === ('/catalog/' + item.id) || (parts[1] === 'catalog' && parts[2] == item.id) ? ' active' : '')}>
+                      className={'alert-link'}>
                     {type !== 'bold' ? <span>{item.title}</span> : <b><span>{item.title}</span></b>}
                 </Link>
             </div>
         );
-    }
-
-    handleSearch(e) {
-        e.preventDefault();
-        let parts = window.location.pathname.split('/');
-        let { searchValue } = this.state;
-        
-        if (this.state.searchInCat) {
-            this.props.history.push('/' + parts[1] + '/' + parts[2] + '/' + searchValue, {searchValue: searchValue});
-        } else {
-            this.props.history.push('/catalog/search?q=' + searchValue, {searchValue: searchValue});
-        }
-        this.props.history.go()
     }
 
     render() {
@@ -121,34 +102,7 @@ class CategoryList extends Component {
 
         return (
             <div className="alert alert-success">
-                <form onSubmit={(e) => this.handleSearch(e)}>
-                    <div className="input-group mb-2">
-                        <input type="text"
-                               className="form-control"
-                               id="inlineFormInputGroup"
-                               defaultValue={(parts[1] === 'catalog' && parts.length > 3) ? parts[3] : this.state.searchValue}
-                               onInput={((e)=> this.setState({
-                                        searchValue: e.target.value
-                                    })
-                                )}
-                               placeholder="Поиск"/>
-                        <div className="input-group-prepend">
-                            <div className="input-group-text btn btn-success" onClick={(e) => this.handleSearch(e)}>
-                                <i className={'fa fa-search'}></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="form-check mb-2 mr-sm-2">
-                        <input className="form-check-input" type="checkbox" id="inlineFormCheck"
-                               ref={(input) => this.categorySearch = input}
-                               onClick={() => {
-                                   this.setState({searchInCat: this.categorySearch.checked})
-                               }}/>
-                        <label className="form-check-label" htmlFor="inlineFormCheck">
-                            Искать внутри выбранной категории
-                        </label>
-                    </div>
-                </form>
+                
                 {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
                 {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
                 <hr/>

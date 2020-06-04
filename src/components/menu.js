@@ -3,6 +3,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import request from "../services/ajaxManager";
 import CategoryList from './public/parts/category_list';
+import Search from './public/parts/search';
 
 
 class Menu extends Component {
@@ -190,7 +191,7 @@ class Menu extends Component {
                     </div>
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
-                <nav className="navbar navbar-dark navbar-expand-lg fixed" style={{backgroundColor: '#28a745'}}>
+                <nav className="navbar navbar-light navbar-expand-lg fixed">
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -200,24 +201,25 @@ class Menu extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
 
-
                             <li className="nav-item">
-                                <a className="nav-link catalog_link"
+                                <a className="catalog_link nav-link"
                                         onClick={() => this.toggleMenuView()}>
                                 <i className="fa fa-bars"></i>
                                     <span> Каталог</span>
                                 </a>
                             </li>
                             { this.state.showCatalog 
-                            ? <div className='catalog_main'>
-                                
-                                <CategoryList className=""/>
-                            </div>
+                            ? <li className='nav-item catalog_main'>
+                                <CategoryList />
+                            </li>
                             : ''}
 
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
+                            <li className="nav-item">
+                                <Search />
+                            </li>
                         </ul>
 
                         <ul className="navbar-nav ml-auto">
