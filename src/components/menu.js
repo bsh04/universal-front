@@ -16,6 +16,7 @@ class Menu extends Component {
 
         this.state = {
             showCatalog: false,
+            categories: [],
             redirect: null,
             like: [],
             basket: [],
@@ -51,6 +52,7 @@ class Menu extends Component {
 
     componentDidMount() {
         this.handleGet();
+        this.handleGetCategories();
     }
 
     handleLogout() {
@@ -63,6 +65,35 @@ class Menu extends Component {
             nextProps.onReloadedMenu();
             this.handleGet();
         }
+    }
+
+    handleGetCategories() {
+        let _this = this;
+        request(
+            'product/categories',
+            'GET',
+            null,
+            {},
+            function (response) {
+                let sorted = response.map(item => {
+                    
+                    if(item.children.length > 1){
+                        item.children = item.children.sort((current, next) => {
+                            if(current.title < next.title) {
+                                return -1;
+                            }
+                            if(current.title > next.title) {
+                                return 1;
+                            }
+                            return 0
+                        })
+                    }
+                    return item;                    
+                })
+
+                _this.setState({categories: sorted});
+            },
+        );
     }
 
     handleGet() {
@@ -210,13 +241,16 @@ class Menu extends Component {
                             </li>
                             { this.state.showCatalog 
                             ? <li className='nav-item catalog_main'>
-                                <CategoryList />
+                                <CategoryList categories={this.state.categories}/>
                             </li>
                             : ''}
 
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
+                        </ul>
+
+                        <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <Search />
                             </li>

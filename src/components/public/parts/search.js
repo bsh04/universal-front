@@ -7,7 +7,7 @@ class Search extends Component {
 
         this.state = {
             searchValue: null,
-            onFocus: false
+            searchFieldOnFocus: false,
         }
     }
 
@@ -31,22 +31,37 @@ class Search extends Component {
 
     render() {
         let parts = window.location.pathname.split('/');
+        let showCheckbox = false;
+        
+        if(this.state.searchFieldOnFocus) {
+            showCheckbox = true
+        }
+
         return (
             <form className="position-relative search-form"
+                  id="search-form"
                   onSubmit={(e) => this.handleSearch(e)}
-                  
-                  /*onFocus={() => this.setState({onFocus: true})}
                   onBlur={() => {
-                    setTimeout(() => {
-                        this.setState({onFocus: false})    
-                    }, 1500)
-                    
-                  }}*/>
+                    setTimeout(() => { 
+                        this.setState({searchFieldOnFocus: false})    
+                    }, 200);
+                  }}
+                  >
                 <div className="input-group mb-2">
                     <input type="text"
+                            form="search-form"
+                            onFocus={() => {
+                                setTimeout(() => {
+                                    this.setState({searchFieldOnFocus: true})
+                                    console.log('INSIDE', this)
+                                }, 200);
+                                console.log('OUTSIDE', this)
+                            }}
+                                      
                             className="form-control"
+                            ref={(input) => {this.searchField = input}}
                             id="inlineFormInputGroup"
-                            defaultValue={(parts[1] === 'catalog' && parts.length > 3) ? parts[3] : this.state.searchValue}
+                            defaultValue={(parts[1] === 'catalog' && parts.length > 3) ? decodeURI(parts[3]) : this.state.searchValue}
                             onInput={((e)=> this.setState({
                                     searchValue: e.target.value
                                 })
@@ -58,16 +73,23 @@ class Search extends Component {
                         </div>
                     </div>
                 
-                <div className={`form-check mb-2 mr-sm-2`}>
-                    <input className="form-check-input" type="checkbox" id="inlineFormCheck"
+                {showCheckbox 
+                ? <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="inlineFormCheck" form="search-form"
                             ref={(input) => this.categorySearch = input}
+                            defaultChecked={this.state.searchInCat}
                             onClick={() => {
-                                this.setState({searchInCat: this.categorySearch.checked})
-                            }}/>
-                    <label className="form-check-label" htmlFor="inlineFormCheck">
+                                this.setState({
+                                    searchInCat: this.categorySearch.checked,
+                                });
+                                
+                                this.searchField.focus();
+                            }}
+                            />
+                    <label className="form-check-label" htmlFor="inlineFormCheck" form="search-form">
                         Искать внутри выбранной категории
                     </label>
-                </div>
+                </div> : null }
                 </div>
             </form>
         )

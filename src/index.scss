@@ -98,6 +98,11 @@ code {
   }
   
 }
+.collapsing {
+  -webkit-transition: none;
+  transition: none;
+  display: none;
+}
 
 .dropdown-share {
   position: absolute;
@@ -230,19 +235,24 @@ nav {
   }
 }
 .search-form {
-  .form-check {
-    display: none;
-  }
-  &:hover .form-check {
-    display: inline-block;
+    
+  & .form-check {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 10px 1px #c7c7c7;
+    padding: 0 10px 0 30px;
+    z-index: 2;
     position: absolute;
-    top: 50px;
-    left: 1px;
-    text-align: left;
+    top: -30px;
+    left: 0;
+    
+  }
+  .form-check-input {
+    
   }
   .form-check-label {
     cursor: pointer;
-  
+    font-size: .7rem;
   }
   
 }

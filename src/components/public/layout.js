@@ -15,7 +15,6 @@ import ProductList from './product_list';
 import Workshop from './workshop/workshop';
 import Catalog from './catalog';
 import Footer from './footer';
-import CategoryList from './parts/category_list';
 import Menu from '../menu';
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';

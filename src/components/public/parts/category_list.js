@@ -13,38 +13,13 @@ class CategoryList extends Component {
         };
     }
 
-    componentWillMount() {
-        this.handleGet();
+    componentDidMount() {
+        this.setState({
+            categories: this.props.categories
+        })
     }
 
-    handleGet() {
-        let _this = this;
-        request(
-            'product/categories',
-            'GET',
-            null,
-            {},
-            function (response) {
-                let sorted = response.map(item => {
-                    
-                    if(item.children.length > 1){
-                        item.children = item.children.sort((current, next) => {
-                            if(current.title < next.title) {
-                                return -1;
-                            }
-                            if(current.title > next.title) {
-                                return 1;
-                            }
-                            return 0
-                        })
-                    }
-                    return item;                    
-                })
-
-                _this.setState({categories: sorted});
-            },
-        );
-    }
+    
 
     changeState(id) {
         let arr = this.state.open;
