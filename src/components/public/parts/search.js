@@ -53,9 +53,7 @@ class Search extends Component {
                             onFocus={() => {
                                 setTimeout(() => {
                                     this.setState({searchFieldOnFocus: true})
-                                    console.log('INSIDE', this)
                                 }, 200);
-                                console.log('OUTSIDE', this)
                             }}
                                       
                             className="form-control"
