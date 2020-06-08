@@ -15,7 +15,6 @@ import ProductList from './product_list';
 import Workshop from './workshop/workshop';
 import Catalog from './catalog';
 import Footer from './footer';
-import CategoryList from './parts/category_list';
 import Menu from '../menu';
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
@@ -36,26 +35,12 @@ class PublicLayout extends Component {
         }
     }
 
-    toggleMenuView() {
-        const showMenu = this.state.showMenu;
-
-        this.setState({
-            showMenu: !showMenu
-        })
-    }
-
     render() {
         return (
             <div>
                 <Menu />
                 <div className="content row">
-                    { this.state.showMenu 
-                        ? <div className='col-md-3'>
-                            <button type="button" className="btn btn-primary fixed-top" onClick={() => this.toggleMenuView()}>Меню</button>
-                            <CategoryList/>
-                        </div>
-                        : <button type="button" className="btn btn-primary fixed-top" onClick={() => this.toggleMenuView()}>Меню</button> }
-                    <div className={`col-md-${this.state.showMenu ? 9 : 12}`}>
+                    <div className={`col-md-12`}>
                         <Switch>
                             <Route exact path={'/'} component={Index}/>
                             <Route exact path={'/contact'} component={Contact}/>

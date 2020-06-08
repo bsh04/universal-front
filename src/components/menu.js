@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import request from "../services/ajaxManager";
+import CategoryList from './public/parts/category_list';
+import Search from './public/parts/search';
+
 
 class Menu extends Component {
     constructor(props) {
@@ -12,6 +15,8 @@ class Menu extends Component {
         this.handleLogout = this.handleLogout.bind(this);
 
         this.state = {
+            showCatalog: false,
+            categories: [],
             redirect: null,
             like: [],
             basket: [],
@@ -47,6 +52,7 @@ class Menu extends Component {
 
     componentDidMount() {
         this.handleGet();
+        this.handleGetCategories();
     }
 
     handleLogout() {
@@ -59,6 +65,35 @@ class Menu extends Component {
             nextProps.onReloadedMenu();
             this.handleGet();
         }
+    }
+
+    handleGetCategories() {
+        let _this = this;
+        request(
+            'product/categories',
+            'GET',
+            null,
+            {},
+            function (response) {
+                let sorted = response.map(item => {
+                    
+                    if(item.children.length > 1){
+                        item.children = item.children.sort((current, next) => {
+                            if(current.title < next.title) {
+                                return -1;
+                            }
+                            if(current.title > next.title) {
+                                return 1;
+                            }
+                            return 0
+                        })
+                    }
+                    return item;                    
+                })
+
+                _this.setState({categories: sorted});
+            },
+        );
     }
 
     handleGet() {
@@ -146,6 +181,14 @@ class Menu extends Component {
         }
     }
 
+    toggleMenuView() {
+        const showCatalog = this.state.showCatalog;
+
+        this.setState({
+            showCatalog: !showCatalog
+        })
+    }
+
     render() {
         return (
             <div>
@@ -179,7 +222,7 @@ class Menu extends Component {
                     </div>
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
-                <nav className="navbar navbar-dark navbar-expand-lg fixed" style={{backgroundColor: '#28a745'}}>
+                <nav className="navbar navbar-light navbar-expand-lg fixed">
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -188,9 +231,29 @@ class Menu extends Component {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
+
+                            <li className="nav-item">
+                                <a className="catalog_link nav-link"
+                                        onClick={() => this.toggleMenuView()}>
+                                <i className="fa fa-bars"></i>
+                                    <span> Каталог</span>
+                                </a>
+                            </li>
+                            { this.state.showCatalog 
+                            ? <li className='nav-item catalog_main'>
+                                <CategoryList categories={this.state.categories}/>
+                            </li>
+                            : ''}
+
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
+                        </ul>
+
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item">
+                                <Search />
+                            </li>
                         </ul>
 
                         <ul className="navbar-nav ml-auto">
