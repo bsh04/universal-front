@@ -23,11 +23,25 @@ class Card extends Component {
         this.state = {
             news: [],
             form: true,
+            cardView: null // tile || list
         };
     }
-    // componentWillMount() {
-    //     this.props.onResetFav([]);
-    // }
+
+    componentDidMount() {
+        let cardView;
+        this.props.cardView ? cardView = this.props.cardView : cardView = 'tile';
+
+        this.setState({
+            cardView: cardView
+        })
+    }
+    componentDidUpdate(prevProps) {
+        if(prevProps !== this.props) {
+            this.setState({
+                cardView: this.props.cardView
+            })
+        }
+    }
 
     handleClick() {
         if (!this.props.favorite) {
@@ -126,86 +140,144 @@ class Card extends Component {
         }
     }
 
+    cardContent(className = '') {
+        let cardView = this.state.cardView;
+
+        return <div className={`${className} ${cardView}`}
+        itemScope 
+        itemType="http://schema.org/Product">
+        <div className="dropleft dropdown-share">
+            <button className="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i className="fa fa-share"></i>
+            </button>
+            <div className="dropdown-menu share" aria-labelledby="dropdownMenuButton">
+                <VKShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-vk"> Поделиться в VK</i>} />
+                <WhatsappShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-whatsapp"> Поделиться в Whatsapp</i>} />
+                <EmailShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-envelope"> Отправить по E-mail</i>} />
+                <a className="dropdown-item" href="#" onClick={async () => {
+                    try {
+                        // 1) Copy text
+                        await navigator.clipboard.writeText('https://universal.tom.ru/catalog/search?q=' + this.props.item.id);
+
+                        // 2) Catch errors
+                    } catch (err) {
+                        console.error('Failed to copy: ', err);
+                    }
+            }}><i className="fa fa-clone"> Скопировать ссылку</i></a>
+            </div>
+        </div>
+        <ModalImage
+            small={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
+            large={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
+            alt={this.props.item.title}
+            className="card-img-top card-img-top-250 mt-3"
+        />
+
+        {this.state.cardView === 'tile'
+        ? <div className="card-body ">
+            <h5 
+                className="card-title text-left font-weight-light " 
+                itemProp="name">
+                    {this.props.item.title}
+            </h5>
+            <p className="card-text text-left font-weight-normal" itemProp="price">
+                {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''} 
+                {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger">Акция!</span></Link>) : ''}<br/>
+                Цена: <span style={{fontWeight: 700}}>{this.props.item.price}</span>  р.
+            </p>
+            <p>
+                <i className={'fa fa-heart' + (this.props.favorite ? ' text-danger' : '')}
+                onClick={this.handleClick}> {this.props.favorite ? 'В избранном' : 'Добавить в избранное'}</i>
+            </p>
+            {this.state.form ?
+                <form onSubmit={(e) => {e.preventDefault()}} style={{justifyContent: 'center'}}>
+                    <div className="input-group mb-2 mr-sm-2 row d-flex flex-wrap justify-content-center">
+                        <input
+                            name="desc"
+                            type="number"
+                            required={true}
+                            placeholder={"Количество:"}
+                            min={1}
+                            defaultValue={1}
+                            className={`form-control mb-1 col-xl-4 col-lg-5 col-md-12 col-sm-2 col-12`
+                                    }
+                            ref={(input) => {this.countInput = input}}
+                        />
+                        <div className={
+                                `pl-1 pr-0 col-xl-8 col-lg-7 col-md-12 col-sm-8 col-12`
+                            }>
+                            <button className="form-control btn-basket btn btn-success mb-1" onClick={this.handleBasketAdd}>
+                                <span className="btn-label">В корзину </span>
+                                <i className={'fa fa-cart-plus'}></i>
+                            </button>
+                        </div>
+                    </div>
+                </form> :
+                <div className="alert alert-success" role="alert">
+                    <i className={'fa fa-check'}> {this.state.message}</i>
+                </div>
+            }
+            <small className="text-left text-muted ">Код товара: {this.props.item.id} </small>
+        </div>
+        
+        :  
+            <div className="card-body row">
+                <div className="card-info col-xl-8 col-lg-8 col-md-5 col-sm-5 col-8">
+                    <h5 
+                        className="card-title text-left font-weight-light " 
+                        itemProp="name">
+                            {this.props.item.title}
+                    </h5>
+                    <p className="card-text text-left font-weight-normal" itemProp="price">
+                        {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''} 
+                        {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger">Акция!</span></Link>) : ''}<br/>
+                        Цена: <span style={{fontWeight: 700}}>{this.props.item.price}</span>  р.
+                    </p>
+                    <p className="text-left text-muted">
+                        <small>Код товара: {this.props.item.id} </small>
+                    </p>
+                </div>
+                <div className="card-controls col-xl-3 col-lg-3 col-md-4 col-sm-4 col-8">
+                    { this.state.form ?
+                        <form onSubmit={(e) => {e.preventDefault()}} style={{justifyContent: 'center'}}>
+                            <div className="input-group mb-2 mr-sm-2 row d-flex flex-wrap justify-content-center">
+                                <input
+                                    name="desc"
+                                    type="number"
+                                    required={true}
+                                    placeholder={"Количество:"}
+                                    min={1}
+                                    defaultValue={1}
+                                    className={`form-control mb-1 col-xl-4 col-lg-5 col-md-12 col-sm-12 col-12`
+                                            }
+                                    ref={(input) => {this.countInput = input}}
+                                />
+                                <div className="pl-1 pr-0 col-xl-8 col-lg-7 col-md-12 col-sm-12 col-12">
+                                    <button className="form-control btn-basket btn btn-success mb-1" onClick={this.handleBasketAdd}>
+                                        <span className="btn-label">В корзину </span>
+                                        <i className={'fa fa-cart-plus'}></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form> 
+                        : <div className="alert alert-success" role="alert">
+                            <i className={'fa fa-check'}> {this.state.message}</i>
+                        </div> }
+                        <p>
+                            <i className={'fa fa-heart' + (this.props.favorite ? ' text-danger' : '')}
+                                onClick={this.handleClick}> {this.props.favorite ? 'В избранном' : 'Добавить в избранное'}</i>
+                        </p>
+                </div>
+            </div>}
+    </div>;
+    }
+
     render() {
         return (
             <div className="card-position">
-                <div className={"card"} 
-                    itemScope 
-                    itemType="http://schema.org/Product">
-                    <div className="dropleft dropdown-share">
-                        <button className="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="fa fa-share"></i>
-                        </button>
-                        <div className="dropdown-menu share" aria-labelledby="dropdownMenuButton">
-                            <VKShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-vk"> Поделиться в VK</i>} />
-                            <WhatsappShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-whatsapp"> Поделиться в Whatsapp</i>} />
-                            <EmailShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-envelope"> Отправить по E-mail</i>} />
-                            <a className="dropdown-item" href="#" onClick={async () => {
-                                try {
-                                    // 1) Copy text
-                                    await navigator.clipboard.writeText('https://universal.tom.ru/catalog/search?q=' + this.props.item.id);
-
-                                    // 2) Catch errors
-                                } catch (err) {
-                                    console.error('Failed to copy: ', err);
-                                }
-                        }}><i className="fa fa-clone"> Скопировать ссылку</i></a>
-                        </div>
-                    </div>
-                    <ModalImage
-                        small={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
-                        large={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
-                        alt={this.props.item.title}
-                        className="card-img-top card-img-top-250 mt-3"
-                    />
-                    <div className="card-body ">
-                        <h5 
-                            className="card-title text-left font-weight-light " 
-                            itemProp="name">
-                                {this.props.item.title}
-                        </h5>
-                        <p className="card-text text-left font-weight-normal" itemProp="price">
-                            {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''} 
-                            {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger">Акция!</span></Link>) : ''}<br/>
-                            Цена: <span style={{fontWeight: 700}}>{this.props.item.price}</span>  р.
-                        </p>
-                        <p>
-                            <i className={'fa fa-heart' + (this.props.favorite ? ' text-danger' : '')}
-                            onClick={this.handleClick}> {this.props.favorite ? 'В избранном' : 'Добавить в избранное'}</i>
-                        </p>
-                        {this.state.form ?
-                            <form onSubmit={(e) => {e.preventDefault()}} style={{justifyContent: 'center'}}>
-                                <div className="input-group mb-2 mr-sm-2 row d-flex flex-wrap justify-content-center">
-                                    <input
-                                        name="desc"
-                                        type="number"
-                                        required={true}
-                                        placeholder={"Количество:"}
-                                        min={1}
-                                        defaultValue={1}
-                                        className={`form-control mb-1 col-xl-4 col-lg-5 col-md-12 col-sm-2 col-12`
-                                                }
-                                        ref={(input) => {this.countInput = input}}
-                                    />
-                                    <div className={
-                                            `pl-1 pr-0 col-xl-8 col-lg-7 col-md-12 col-sm-8 col-12`
-                                        }>
-                                        <button className="form-control btn-basket btn btn-success mb-1" onClick={this.handleBasketAdd}>
-                                            <span className="btn-label">В корзину </span>
-                                            <i className={'fa fa-cart-plus'}></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form> :
-                            <div className="alert alert-success" role="alert">
-                                <i className={'fa fa-check'}> {this.state.message}</i>
-                            </div>
-                        }
-
-                    </div>
-                    <small className="text-muted text-left ml-1 mb-1 col-10">Код товара: {this.props.item.id} </small>
+{this.cardContent('card')}
+{this.cardContent('card hover')}
                 </div>
-            </div>
         );
     }
 }

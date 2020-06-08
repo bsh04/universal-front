@@ -17,7 +17,10 @@ class ProductList extends Component {
         this.state = {
             products: [],
             favorites: [],
+            cardView: 'tile',
             viewCount: 30,
+            limit: 50,
+            sort: ['title', 'asc'],
             request: false,
         };
     }
@@ -45,8 +48,22 @@ class ProductList extends Component {
         this.handleGet(props.match.params.category);
     }
 
-    handleGet(cat)
-    {
+    handleGet(cat) {
+        let obj = {
+            cat: cat,
+            limit: this.state.limit,
+            sort_field: `${this.state.sort[0]}`,
+            sort: `${this.state.sort[1]}`
+        }
+        let str = "";
+        for(let key in obj) {
+            if (str != "") {
+                str += "&";
+            }
+            str += key + "=" + encodeURIComponent(obj[key]);
+        }
+        console.log(str)
+
         let _this = this;
         if (cat === 'search') {
             if (!this.state.request && this.props.location.search.length > 0) {
@@ -68,7 +85,7 @@ class ProductList extends Component {
         }
         else {
             request(
-                'product/' + cat + (this.props.match.params.search ? '?data=' + this.props.match.params.search : ''),
+                'product/' + cat + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
                 'GET',
                 null,
                 {},
@@ -104,6 +121,34 @@ class ProductList extends Component {
         return result.length > 0;
     }
 
+    setLimit = (e) => {
+        let limit = e.target.getAttribute('data');
+        this.setState({
+            limit: limit
+        }, () => {this.handleGet(this.props.match.params.category)})
+    }
+    setSort = (e) => {
+        let sort = e.target.getAttribute('data').split(',');
+        this.setState({
+            sort: sort
+        }, () => {this.handleGet(this.props.match.params.category)})
+    }
+
+    sortSelectedLabel() {
+        let param = this.state.sort.join('-')
+        console.log('param:', param)
+        switch(param) {
+            case 'title-asc':
+                return 'названию А-Я'
+            case 'title-desc': 
+                return 'названию Я-А'
+            case 'price-asc':
+                return 'цене по возрастанию'
+            case 'price-desc':
+                return 'цене по убыванию'
+        }
+    }
+
     render() {
         return (
             <div>
@@ -118,14 +163,93 @@ class ProductList extends Component {
                     <meta property="og:title" content="Каталог"/>
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
-                <h1>Товары:</h1>
+                <div className="products-toolbar mb-2 col-12">
+                    <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
+                        <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
+                            <li className="products-toolbar-item mr-2">
+                                <a href="#"
+                                    className={this.state.cardView === 'tile' ? 'text-success' : 'text-secondary'}
+                                    onClick={() => {
+                                        this.setState({
+                                            cardView: 'tile'
+                                        })
+                                    }}>
+                                    <i className="fa fa-th"></i>
+                                </a>
+                            </li>
+                            <li className="products-toolbar-item">
+                                <a href="#"
+                                    className={this.state.cardView === 'list' ? 'text-success' : 'text-secondary'}
+                                    onClick={() => {
+                                        this.setState({
+                                            cardView: 'list'
+                                        })
+                                    }}>
+                                        <i className="fa fa-list"></i>
+                                    </a>
+                            </li>
+                        </ul>
+                        <ul className="row col-xl-8 col-lg-8 col-md-8 col-sm-12 justify-content-center">
+                            <li className="products-toolbar-item mr-1">
+                                <div className="dropdown">
+                                    <span className="products-toolbar-item__text">Товаров на странице: </span>
+                                    <a className="dropdown-toggle" 
+                                        href="#" 
+                                        role="button" 
+                                        id="dropdownMenuLink" 
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false">
+                                        <span className="products-toolbar-item__selected">{this.state.limit ? this.state.limit : 'Все'}</span>
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a className="dropdown-item" href="#" data="50"
+                                            onClick={(e) => this.setLimit(e)}>50</a>
+                                        <a className="dropdown-item" href="#" data="100"
+                                            onClick={(e) => this.setLimit(e)}>100</a>
+                                        <a className="dropdown-item" href="#" data={null}
+                                            onClick={(e) => this.setLimit(e)}>Все</a>
+                                    </div>
+                                </div>
+                                
+                            </li>
+                            <li className="products-toolbar-item mr-1">
+                                <div className="dropdown">
+                                    <span className="products-toolbar-item__text">Сортировать по: </span>
+                                    <a className="dropdown-toggle products-toolbar-item__text" 
+                                        href="#" 
+                                        role="button" 
+                                        id="dropdownMenuLink" 
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false">
+                                        <span className="products-toolbar-item__selected">{this.sortSelectedLabel()}</span>
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a className="dropdown-item" href="#" data="title,asc"
+                                            onClick={(e) => this.setSort(e)}>названию А-Я</a>
+                                        <a className="dropdown-item" href="#" data="title,desc"
+                                            onClick={(e) => this.setSort(e)}>названию Я-А</a>
+                                        <a className="dropdown-item" href="#" data="price,asc"
+                                            onClick={(e) => this.setSort(e)}>цене по возрастанию</a>
+                                        <a className="dropdown-item" href="#" data="price,desc"
+                                            onClick={(e) => this.setSort(e)}>цене по убыванию</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
                 <div className="row">
                     {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                         if (key < this.state.viewCount) {
                             return (
-                                <div className="col-md-3" style={{paddingBottom: '10px'}} key={key}>
+                                <div className={this.state.cardView === 'tile' ? "col-md-3" : 'col-md-12'} 
+                                      style={{paddingBottom: '10px'}} 
+                                      key={key}>
                                     <Card item={item} key={item.id} update={this.updateFav}
-                                          favorite={this.isFavorite(item) ? true : false}/>
+                                          favorite={this.isFavorite(item) ? true : false}
+                                          cardView={this.state.cardView}/>
                                 </div>
                             );
                         }
