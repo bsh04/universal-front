@@ -105,9 +105,6 @@ code {
 }
 
 .dropdown-share {
-  position: absolute;
-  top: 1px;
-  right: -8px;
   .dropdown-menu {
     &.share {
     padding: 10px;
@@ -181,7 +178,12 @@ code {
   }
   &:hover {
     opacity: 1
-  }  
+  }
+  & .dropdown-share {
+    position: absolute;
+    top: 1px;
+    right: -8px;
+  }
 }
 
 .products-toolbar {
@@ -207,6 +209,18 @@ code {
     }
     & #dropdownMenuLink::after {
       color: #27b803;
+    }
+  }
+}
+
+.product-page {
+  height: 65vh;
+  & .image-gallery {
+    min-width: 270px;
+    max-width: 60%;
+
+    &-thumbnails {
+      
     }
   }
 }

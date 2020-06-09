@@ -8,7 +8,7 @@ class CategoryList extends Component {
         super(props);
 
         this.state = {
-            categories: [],
+            categories: props.categories,
             open: [],
         };
     }
@@ -81,11 +81,11 @@ class CategoryList extends Component {
                 {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
                 {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
                 <hr/>
-                {this.state.categories.map((item) => {
+                {this.state.categories ? this.state.categories.map((item) => {
                     return (
                         this.itemView(item)
                     );
-                })}
+                }) : null}
             </div>
         );
     }

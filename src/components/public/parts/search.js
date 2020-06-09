@@ -59,7 +59,7 @@ class Search extends Component {
                             className="form-control"
                             ref={(input) => {this.searchField = input}}
                             id="inlineFormInputGroup"
-                            defaultValue={(parts[1] === 'catalog' && parts.length > 3) ? decodeURI(parts[3]) : this.state.searchValue}
+                            defaultValue={(parts[1] === 'catalog' && parts.length > 3 && parts[2] !== 'product') ? decodeURI(parts[3]) : this.state.searchValue}
                             onInput={((e)=> this.setState({
                                     searchValue: e.target.value
                                 })

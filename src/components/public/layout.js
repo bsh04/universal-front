@@ -12,6 +12,7 @@ import NewsList from './news_list';
 import ArticleList from './workshop/workshop_list';
 import About from './about';
 import ProductList from './product_list';
+import Product from './product';
 import Workshop from './workshop/workshop';
 import Catalog from './catalog';
 import Footer from './footer';
@@ -48,6 +49,7 @@ class PublicLayout extends Component {
                             <Route exact path={'/workshop'} component={ArticleList}/>
                             <Route exact path={'/workshop/:id'} component={Workshop}/>
                             <Route exact path={'/catalog'} component={Catalog}/>
+                            <Route exact path={'/catalog/product/:id'} component={Product} />
                             <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
                             <Route exact path={'/catalog/:category'} component={ProductList}/>
                             <Route exact path={'/about'} component={About}/>

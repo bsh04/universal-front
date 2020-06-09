@@ -49,6 +49,7 @@ class ProductList extends Component {
     }
 
     handleGet(cat) {
+        console.log('from product list:',cat)
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -62,9 +63,9 @@ class ProductList extends Component {
             }
             str += key + "=" + encodeURIComponent(obj[key]);
         }
-        console.log(str)
-
+        
         let _this = this;
+        let res;
         if (cat === 'search') {
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});
@@ -136,7 +137,7 @@ class ProductList extends Component {
 
     sortSelectedLabel() {
         let param = this.state.sort.join('-')
-        console.log('param:', param)
+
         switch(param) {
             case 'title-asc':
                 return 'названию А-Я'

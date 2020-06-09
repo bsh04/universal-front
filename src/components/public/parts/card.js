@@ -5,8 +5,6 @@ import {connect} from "react-redux";
 import ModalImage from "react-modal-image";
 import {
     EmailShareButton,
-    InstapaperShareButton,
-    LineShareButton,
     VKShareButton,
     WhatsappShareButton,
     WorkplaceShareButton,
@@ -217,7 +215,8 @@ class Card extends Component {
                     <i className={'fa fa-check'}> {this.state.message}</i>
                 </div>
             }
-            <small className="text-left text-muted ">Код товара: {this.props.item.id} </small>
+            <p className="text-left text-muted "><small>Код товара: {this.props.item.id} </small></p>
+            <Link to={`/catalog/product/${this.props.item.id}`}><span className="badge">Перейти к товару</span></Link>
         </div>
         
         :  
@@ -266,6 +265,7 @@ class Card extends Component {
                         <p>
                             <i className={'fa fa-heart' + (this.props.favorite ? ' text-danger' : '')}
                                 onClick={this.handleClick}> {this.props.favorite ? 'В избранном' : 'Добавить в избранное'}</i>
+                                <Link to={`/catalog/product/${this.props.item.id}`}><span className="badge">Перейти к товару</span></Link>
                         </p>
                 </div>
             </div>}
@@ -275,9 +275,9 @@ class Card extends Component {
     render() {
         return (
             <div className="card-position">
-{this.cardContent('card')}
-{this.cardContent('card hover')}
-                </div>
+                {this.cardContent('card')}
+                {this.cardContent('card hover')}
+            </div>
         );
     }
 }
