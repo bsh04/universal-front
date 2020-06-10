@@ -20,6 +20,7 @@ import Menu from '../menu';
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
 import ResetForm from './sign_action/reset_pass';
+import DeliveryAndPayment from './delivery_and_payment';
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -52,6 +53,7 @@ class PublicLayout extends Component {
                             <Route exact path={'/catalog/product/:id'} component={Product} />
                             <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
                             <Route exact path={'/catalog/:category'} component={ProductList}/>
+                            <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
                             <Route exact path={'/about'} component={About}/>
                             <Route exact path="/register" render={() => (this.props.token !== false ?
                                 (<Redirect to={'/login'}/>) :

@@ -43,7 +43,7 @@ class Search extends Component {
                   onSubmit={(e) => this.handleSearch(e)}
                   onBlur={() => {
                     setTimeout(() => { 
-                        this.setState({searchFieldOnFocus: false})    
+                        this.setState({searchFieldOnFocus: false})
                     }, 200);
                   }}
                   >
@@ -65,7 +65,7 @@ class Search extends Component {
                                 })
                             )}
                             placeholder="Поиск"/>
-                    <div className="input-group-append">
+                    <div className="input-group-append" style={{zIndex: 1}}>
                         <div className="input-group-text btn btn-success" onClick={(e) => this.handleSearch(e)}>
                             <i className={'fa fa-search'}></i>
                         </div>

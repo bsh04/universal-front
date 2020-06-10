@@ -25,6 +25,7 @@ class Menu extends Component {
                 {title: 'Новости', path: '/news'},
                 {title: 'Швейный цех', path: '/workshop'},
                 {title: 'Контакты', path: '/contact'},
+                {title: 'Оплата и доставка', path: '/deliveryandpayment'}
             ],
             rightItems: [
                 {
@@ -32,6 +33,7 @@ class Menu extends Component {
                         {title: 'Обновление товаров', path: '/admin/product/update'},
                         {title: 'Список товаров без изображения', path: '/admin/product/image'},
                         {title: 'Управление швейным цехом', path: '/admin/workshop'},
+                        {title: 'Оплата и доставка', path: '/admin/deliveryandpayment'},
                         {title: 'Управление новостями', path: '/admin/news'},
                         {title: 'Управление акциями', path: '/admin/stocks'},
                         {title: 'Экспорт данных', path: '/admin/export'},
@@ -194,27 +196,48 @@ class Menu extends Component {
             <div>
                 <div className='mainImage'>
                     <div className="row">
-                        <div className="col-md-4">
-                            <p className={'text-left'}>
-                                <i className={'fa fa-map-marker'}> <span itemProp="streetAddress">Адрес: г. Томск, ул. Бердская, 31 (пер. Пойменный 5)</span></i><br/>
-                                <i className={'fa fa-phone'}> <span><a href={'tel:+7 (3822) 909291'} itemProp="telephone">90-92-91</a>, <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">90-44-32</a>, <a href={'tel:+7 (3822) 902-668'} itemProp="telephone">902-668</a></span></i><br/>
+                        <div className="col-md-3 my-3 my-md-0">
+                            <Link to="/">
+                                <h1 className="text-center">Универсал</h1>
+                                <h2 className="text-center">Хозяйственные товары</h2>
+                            </Link>
+                        </div>
+                        <div className="col-md-2 my-3 my-md-0">
+                            <p className={'text-md-left text-center'}>
+                                <span>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 909291'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">+7 (3822) 90-44-32</a></i><br/>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 902-668'} itemProp="telephone">+7 (3822) 902-668</a></i>
+                                </span>
+                                <br/>
                             </p>
                         </div>
-                        <div className="col-md-4">
-                            <Link to="/"><h1 className="text-center">Универсал Томск</h1></Link>
+                        <div className="col-md-3 text-md-left text-center my-3 my-md-0">
+                            <i className={'fa fa-envelope '}> <a href={'email:razov@mail.tomsknet.ru'} itemProp="email">razov@mail.tomsknet.ru</a></i><br/>
+                            <p className="street-addres" itemProp="streetAddress"><i className={'fa fa-map-marker'}></i> Адрес: г. Томск, ул. Бердская, 31 <br/>(пер. Пойменный 5)</p>
                         </div>
-                        <div className="col-md-4 text-right">
+                        <div className="col-md-2 my-3 my-md-0">
+                            <div className="shedule">
+                                График работы
+                            </div>
+                            <div className="shedule-tooltip">
+                                <p><b>ПН-ПТ</b> <span>9:00 - 17:00</span></p>
+                                <p><b>СБ</b> <span>9:00 - 14:00</span></p>
+                                <p><b>ВС</b> <span>ВЫХОДНОЙ</span></p>
+                            </div>
+                        </div>
+                        <div className="col-md-2 text-md-right text-center my-3 my-md-0">
                             <p>
                             { this.props.token ?
                                     <Link to='/user/basket' className="iconButtons">
-                                        <i className={'fa fa-shopping-cart'}> </i>&nbsp;
-                                        <span className={'inRound'}>{this.state.basket.length}</span>
+                                        <i className={'fa fa-shopping-cart'}> </i>
+                                        {this.state.basket.length > 0 ? <span className={'badge badge-danger'}>{this.state.basket.length}</span> : null}
                                     </Link>
                                  : '' }
                             { this.props.token ?
                                     <Link to='/user/favorite' className="iconButtons">
-                                        <i className={'fa fa-heart'}> </i>&nbsp;
-                                        <span className={'inRound'}>{this.state.like.length}</span>
+                                        <i className={'fa fa-heart'}> </i>
+                                        {this.state.like.length > 0 ? <span className={'badge badge-danger'}>{this.state.like.length}</span> : null}
                                     </Link>
                                  : '' }
                             </p>
@@ -222,6 +245,7 @@ class Menu extends Component {
                     </div>
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
+
                 <nav className="navbar navbar-light navbar-expand-lg fixed">
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
