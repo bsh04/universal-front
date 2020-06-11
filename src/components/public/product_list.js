@@ -4,6 +4,7 @@ import request from "../../services/ajaxManager";
 import {connect} from "react-redux";
 import { withRouter } from "react-router";
 import {Helmet} from "react-helmet";
+import Breadcrumbs from '../breadcrumbs';
 
 import Card from './parts/card';
 
@@ -49,7 +50,7 @@ class ProductList extends Component {
     }
 
     handleGet(cat) {
-        console.log('from product list:',cat)
+        
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -164,6 +165,18 @@ class ProductList extends Component {
                     <meta property="og:title" content="Каталог"/>
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
+                
+                { this.state.products && this.state.products[0] 
+                ? <Breadcrumbs 
+                    path={[
+                        {title: this.props.match.params.category === 'new' 
+                        ? 'Новинки' 
+                        : this.props.match.params.category === 'stock' 
+                            ? 'Товары по акции' 
+                            : this.state.products[0].category 
+                            ? this.state.products[0].category.title : ''}
+                    ]} /> 
+                 : null }
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
+import Breadcrumbs from '../breadcrumbs';
+
 import request from '../../services/ajaxManager';
 
 class Orders extends Component {
@@ -53,6 +55,10 @@ class Orders extends Component {
     render() {
         return (
             <div>
+                <Breadcrumbs 
+                    path={[
+                        {title: 'Мои заказы'}
+                    ]}/>
                 <h4 className="text-center">Мои заказы:</h4>
                 <table className={"table table-striped table-hover"}>
                     <thead>

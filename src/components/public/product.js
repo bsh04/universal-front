@@ -8,6 +8,7 @@ import {
     VKShareButton,
     WhatsappShareButton,
   } from "react-share";
+import Breadcrumbs from '../breadcrumbs';
 
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss";
@@ -206,6 +207,12 @@ class Product extends Component {
                     <meta property="og:title" content="Каталог"/>
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
+                { this.state.item && this.state.item.category
+                ? <Breadcrumbs 
+                    path={[
+                        {title: this.state.item.category.title, link: `/catalog/${this.state.item.category.id}`}, 
+                        {title: this.state.item.title}]}/>
+                : null}
                 <div className="product-page">
                     <div className="row">
                         <h5 className="card-title text-left font-weight-light col-12">{this.state.item.title}</h5>

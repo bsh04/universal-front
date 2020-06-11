@@ -16,6 +16,8 @@ class Menu extends Component {
 
         this.state = {
             showCatalog: false,
+            showNavbar: false,
+            searchInMenu: true,
             categories: [],
             redirect: null,
             like: [],
@@ -55,6 +57,22 @@ class Menu extends Component {
     componentDidMount() {
         this.handleGet();
         this.handleGetCategories();
+        
+        this.checkWidnowSizeMD();
+        window.addEventListener("resize", this.checkWidnowSizeMD.bind(this));
+    }
+
+    checkWidnowSizeMD() {
+        if(window.innerWidth >= 992) {
+            this.setState({
+                searchInMenu: false
+            })
+        }
+    }
+
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.checkWidnowSizeMD.bind(this));
     }
 
     handleLogout() {
@@ -176,19 +194,37 @@ class Menu extends Component {
             }
 
             return (
-                <li key={key} className={"nav-item" + (item.path === window.location.pathname ? ' active' : '')}>
+                <li key={key} className={"nav-item" + (item.path === window.location.pathname ? ' active' : '')}
+                onClick={() => this.toggleNavbarView()}>
                     <Link className="nav-link" to={item.path}>{item.title}</Link>
                 </li>
             );
         }
     }
 
-    toggleMenuView() {
+    toggleCatalogView() {
         const showCatalog = this.state.showCatalog;
 
         this.setState({
             showCatalog: !showCatalog
         })
+    }
+
+    hideCatalog() {
+        this.setState({
+            showCatalog: false
+        })
+    }
+
+    toggleNavbarView() {
+        const showNavbar = this.state.showNavbar;
+        this.hideCatalog();
+        if(showNavbar){
+            this.setState({
+                showNavbar: false,
+                showCatalog: false
+            })
+        }
     }
 
     render() {
@@ -245,41 +281,53 @@ class Menu extends Component {
                     </div>
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
-
+                    
                 <nav className="navbar navbar-light navbar-expand-lg fixed">
-                    <button className="navbar-toggler" type="button" data-toggle="collapse"
+                    <button className={this.state.showNavbar ? "navbar-toggler" : "navbar-toggler collapsed"} type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                            aria-expanded={this.state.showNavbar ? "false" : "true"} aria-label="Toggle navigation"
+                            onClick={() => this.setState({showNavbar: true})}>
                         <i className="navbar-toggler-icon"></i>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    { this.state.searchInMenu
+                    ? <ul className="navbar-nav ml-auto mt-2">
+                            <li className="nav-item">
+                                <Search onFocus={() => this.hideCatalog()}/>
+                            </li>
+                        </ul>
+                    : null }
+                    
+
+                    <div className={this.state.showNavbar ? "collapse navbar-collapse show" : "collapse navbar-collapse"} id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
 
-                            <li className="nav-item">
-                                <a className="catalog_link nav-link"
-                                        onClick={() => this.toggleMenuView()}>
+                            <li className="nav-item catalog_link">
+                                <a className="nav-link"
+                                        onClick={() => {
+                                            this.toggleCatalogView();
+                                        }}>
                                 <i className="fa fa-bars"></i>
                                     <span> Каталог</span>
                                 </a>
+                            
+                                { this.state.showCatalog 
+                                ? <div className='catalog_main'>
+                                    <CategoryList categories={this.state.categories} onClick={() => this.hideCatalog()}/>
+                                </div>
+                                : ''}
                             </li>
-                            { this.state.showCatalog 
-                            ? <li className='nav-item catalog_main'>
-                                <CategoryList categories={this.state.categories}/>
-                            </li>
-                            : ''}
-
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
                         </ul>
-
-                        <ul className="navbar-nav mr-auto">
+                        { !this.state.searchInMenu 
+                        ? <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <Search />
+                                <Search onFocus={() => this.hideCatalog()}/>
                             </li>
                         </ul>
-
+                        : null}
                         <ul className="navbar-nav ml-auto">
                             { this.props.token ? (
                                     this.state.rightItems.map((item, key) => {

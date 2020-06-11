@@ -117,6 +117,7 @@ code {
 
 .catalog_link {
   position: relative;
+  font-size: .9rem;
   cursor: pointer;
   text-transform: uppercase;
   border-right: 1px solid #c3c3c3;
@@ -126,9 +127,10 @@ code {
 .catalog_main {
   position: absolute;
   top: 100%;
-  left: 0px;
+  left: 0;
   z-index: 3;
   & .alert-success {
+    width: 25rem;
     background-color: #ffffff;
   }
 }
@@ -139,9 +141,10 @@ code {
     position: absolute;
     background-color: #ffffff;
     border: 1px solid #c4e7cc;
-    width: 70%;
+    width: 80%;
     left: 100%;
     top: 0;
+    
     .collapsed & {
       display: none;
     }
@@ -153,6 +156,33 @@ code {
   transition: none;
   display: none;
 }
+
+@media screen and (max-width: 992px) {
+  .catalog_link {
+    padding-right: 0 !important;
+    border-right: none;
+    color:red;
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav-link {
+    font-size: 1rem;
+  }
+  .catalog_main {
+    width: 100%;
+    & .alert-success {
+      width: 100%;
+    }
+    & .collapse {
+      &.show {
+        position: unset;
+        border: none;
+      }
+    }
+  }
+    
+  }
+
 
 .dropdown-share {
   & .dropdown-menu {
@@ -349,8 +379,8 @@ nav {
     }
   }
 
-  .nav-link {
-    font-size: 18px;
+  nav .navbar-nav .nav-link {
+    font-size: .9rem;
 
     .inRound {
       padding: 5px;

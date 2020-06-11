@@ -51,6 +51,7 @@ class Search extends Component {
                     <input type="text"
                             form="search-form"
                             onFocus={() => {
+                                this.props.onFocus();
                                 setTimeout(() => {
                                     this.setState({searchFieldOnFocus: true})
                                 }, 200);

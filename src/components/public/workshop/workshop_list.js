@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import request from "../../../services/ajaxManager";
 import {Helmet} from "react-helmet";
+import Breadcrumbs from '../../breadcrumbs';
 
 class ArticleList extends Component {
     constructor(props) {
@@ -45,6 +46,7 @@ class ArticleList extends Component {
                     <meta property="og:title" content="Швейный цех"/>
                     <meta property="og:url" content="https://universal.tom.ru/workshop"/>
                 </Helmet>
+                <Breadcrumbs path={[{title: 'Швейный цех'}]} />
                 <h1 itemProp="headline">Швейный цех</h1>
                 <ul>
                 {this.state.articles.map((item, key) => {

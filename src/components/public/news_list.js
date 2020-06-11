@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import request from "../../services/ajaxManager";
 import {Helmet} from "react-helmet";
+import Breadcrumbs from '../breadcrumbs';
+
 
 class NewsList extends Component {
     constructor(props) {
@@ -45,6 +47,7 @@ class NewsList extends Component {
                     <meta property="og:title" content="Новости"/>
                     <meta property="og:url" content="https://universal.tom.ru/news"/>
                 </Helmet>
+                <Breadcrumbs path={[{title: 'Новости' }]} />
                 <h1>Новости</h1>
                 {this.state.news.map((item, key) => {
                     let date = new Date(item.date);

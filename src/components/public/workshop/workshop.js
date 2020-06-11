@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import request from "../../../services/ajaxManager";
 import {connect} from "react-redux";
 import { withRouter } from "react-router";
+import Breadcrumbs from '../../breadcrumbs';
 
 class Workshop extends Component {
     constructor(props) {
@@ -31,6 +32,7 @@ class Workshop extends Component {
             {},
             function (response)
             {
+                console.log('Workshop!')
                 _this.setState({article: response});
             },
         );
@@ -39,6 +41,13 @@ class Workshop extends Component {
     render() {
         return (
             <div itemScope itemType="http://schema.org/Article">
+                {this.state.article 
+                ? <Breadcrumbs 
+                    path={[
+                        {title: 'Швейный цех', link: '/workshop'},
+                        {title: this.state.article.title }
+                    ]}/> 
+                : null}
                 <h1 itemProp="headline">{this.state.article ? this.state.article.title : ''}</h1>
                 <div itemProp="articleBody" dangerouslySetInnerHTML={{ __html: this.state.article ? (this.state.article.content).replace(/font-family\:[^;]+;?/g, '') : ''}}></div>
             </div>
