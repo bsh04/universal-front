@@ -60,7 +60,7 @@ class Index extends Component {
                 <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
                 <News type="news"/>
                 <br/>
-                <h3 className="text-center"><Link to='/news'>Акции</Link></h3>
+                <h3 className="text-center"><Link to='/catalog/stock'>Акции</Link></h3>
                 <News type="stocks"/>
                 <br/>
             </div>

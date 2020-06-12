@@ -21,6 +21,12 @@ class Breadcrumbs extends Component {
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            path: nextProps.path
+        })
+    }
+
     go(link) {
         this.props.history.push(link);
     }

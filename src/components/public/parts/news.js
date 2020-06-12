@@ -9,6 +9,7 @@ class News extends Component {
 
         this.state = {
             news: [],
+            type: ''
         };
     }
 
@@ -36,11 +37,7 @@ class News extends Component {
     render() {
         return (
             <div id={"carouselExampleIndicators" + this.props.type} className="carousel slide" data-ride="carousel">
-                <Breadcrumbs 
-                    path={[{
-                        title: this.props.type === 'news' ? 'Новости' : this.props.type === 'stocks' ? 'Товары по акции' : ''
-                    }]}
-                />
+                
                 <ol className="carousel-indicators">
                     {this.state.news.map((item, key) => {
                         return (

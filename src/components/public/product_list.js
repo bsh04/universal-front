@@ -13,7 +13,7 @@ class ProductList extends Component {
         super(props);
 
         this.isFavorite = this.isFavorite.bind(this);
-        this.updateFav= this.updateFav.bind(this);
+        this.updateFav = this.updateFav.bind(this);
 
         this.state = {
             products: [],
@@ -23,12 +23,23 @@ class ProductList extends Component {
             limit: 50,
             sort: ['title', 'asc'],
             request: false,
+            path: null
         };
+    }
+
+    setCategory(cat) {
+        if(cat === 'new') {
+            return 'Новые товары';
+        } else if(cat === 'stock'){
+            return 'Товары по акции';
+        } else if (this.state.products && this.state.products[0]) {
+            return this.state.products[0].category.title;
+        }
     }
 
     componentWillMount() {
         this.handleGet(this.props.match.params.category);
-
+        
         if (this.props.token !== false) {
 
             let _this = this;
@@ -44,9 +55,21 @@ class ProductList extends Component {
         }
     }
 
+    componentDidMount() {
+        let path = this.setCategory(this.props.match.params.category) 
+        this.setState({
+            path: path
+        })
+    }
+
     componentWillReceiveProps(props) {
         this.setState({viewCount: 30});
         this.handleGet(props.match.params.category);
+        
+        let path = this.setCategory(props.match.params.category) 
+        this.setState({
+            path: path
+        })
     }
 
     handleGet(cat) {
@@ -92,7 +115,12 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
-                    _this.setState({products: response});
+                    
+                    _this.setState({products: response}, () => {
+                        _this.setState({
+                            path: _this.setCategory(_this.props.match.params.category) 
+                        })
+                    });
                 },
             );
         }
@@ -166,17 +194,11 @@ class ProductList extends Component {
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
                 
-                { this.state.products && this.state.products[0] 
+                {this.state.path 
                 ? <Breadcrumbs 
                     path={[
-                        {title: this.props.match.params.category === 'new' 
-                        ? 'Новинки' 
-                        : this.props.match.params.category === 'stock' 
-                            ? 'Товары по акции' 
-                            : this.state.products[0].category 
-                            ? this.state.products[0].category.title : ''}
-                    ]} /> 
-                 : null }
+                        { title: this.state.path }
+                    ]} /> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
