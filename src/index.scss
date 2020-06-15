@@ -50,14 +50,14 @@ h3 > a {
   h1 {
     font-style: normal;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
     color: rgba(40, 167, 69, 1);
   }
 
   h2 {
     font-weight: 600;
-    font-size: .7rem;
+    font-size: 1rem;
     text-transform: uppercase;
     color: rgba(40, 167, 69, 1);
   }
@@ -228,7 +228,7 @@ h3 > a {
       min-width: 150px;
       width: 150px;
       min-height: 150px;
-      height: auto;
+      height: 150px;
       object-fit: contain;
     }
   }
