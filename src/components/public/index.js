@@ -13,11 +13,17 @@ class Index extends Component {
         this.state = {
             news: [],
             stocks: [],
+            categories: [],
+            showCatalogOutMenu: true
         }
     }
 
     componentWillMount() {
         this.handleGet();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.checkWidnowSize.bind(this));
     }
 
     handleGet() {
@@ -41,9 +47,66 @@ class Index extends Component {
                 _this.setState({stocks: response});
             },
         );
+        request(
+            'product/categories',
+            'GET',
+            null,
+            {},
+            function (response) {
+                let sorted = response.map(item => {
+                    
+                    if(item.children.length > 1){
+                        item.children = item.children.sort((current, next) => {
+                            if(current.title < next.title) {
+                                return -1;
+                            }
+                            if(current.title > next.title) {
+                                return 1;
+                            }
+                            return 0
+                        })
+                    }
+                    return item;                    
+                })
+
+                _this.setState({categories: sorted});
+            },
+        );
+    }
+
+    componentDidMount() {
+        this.checkWidnowSize();
+        window.addEventListener("resize", this.checkWidnowSize.bind(this));
+    }
+
+    checkWidnowSize() {
+        if(window.innerWidth <= 1200) {
+            this.setState({
+                showCatalogOutMenu: false
+            })
+        } else {
+            this.setState({
+                showCatalogOutMenu: true
+            })
+        }
+    }
+
+    itemView(item, type = null) {
+        return (
+            <div key={item.id} className="main-catalog-list__item">
+                <Link to={'/catalog/' + item.id}
+                      className="main-catalog-list__text">
+                    <span>{item.title}</span>
+                </Link>
+            </div>
+        );
     }
 
     render() {
+        let items = this.state.categories.map(item => {
+            return this.itemView(item)
+        });
+        
         return (
             <div>
                 <Helmet>
@@ -57,12 +120,23 @@ class Index extends Component {
                     <meta property="og:title" content="Главная"/>
                     <meta property="og:url" content="https://universal.tom.ru/"/>
                 </Helmet>
-                <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
-                <News type="news"/>
-                <br/>
-                <h3 className="text-center"><Link to='/catalog/stock'>Акции</Link></h3>
-                <News type="stocks"/>
-                <br/>
+                <div className="row">
+                    {this.state.showCatalogOutMenu 
+                    ?<div className="col-md-3 p-0">
+                        <div className="main-catalog-list">
+                            {items}
+                        </div>
+                    </div>
+                    : null }
+                    <div className={this.state.showCatalogOutMenu ? "col-md-9" : "col-md-12"}>
+                        <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
+                        <News type="news"/>
+                        <br/>
+                        <h3 className="text-center"><Link to='/catalog/stock'>Акции</Link></h3>
+                        <News type="stocks"/>
+                        <br/>
+                    </div>
+                </div>
             </div>
         );
     }

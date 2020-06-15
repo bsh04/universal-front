@@ -18,6 +18,7 @@ class Menu extends Component {
             showCatalog: false,
             showNavbar: false,
             searchInMenu: true,
+            showCatalogOutMenu: false,
             categories: [],
             redirect: null,
             like: [],
@@ -67,6 +68,22 @@ class Menu extends Component {
             this.setState({
                 searchInMenu: false
             })
+        }
+        if(this.props.location.pathname === '/'){
+            if(window.innerWidth <= 1200) {
+                this.setState({
+                    showCatalogOutMenu: false
+                })
+            } else if(window.innerWidth > 1200) {
+                this.setState({
+                    showCatalogOutMenu: true
+                })
+            }
+            if(window.innerWidth <= 992) {
+                this.setState({
+                    showCatalogOutMenu: true
+                })
+            }
         }
     }
 
@@ -300,9 +317,9 @@ class Menu extends Component {
                     
 
                     <div className={this.state.showNavbar ? "collapse navbar-collapse show" : "collapse navbar-collapse"} id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
-
-                            <li className="nav-item catalog_link">
+                        <ul className="navbar-nav">
+                            {this.state.showCatalogOutMenu 
+                            ? <li className="nav-item catalog_link">
                                 <a className="nav-link"
                                         onClick={() => {
                                             this.toggleCatalogView();
@@ -311,24 +328,25 @@ class Menu extends Component {
                                     <span> Каталог</span>
                                 </a>
                             
-                                { this.state.showCatalog 
+                                { this.state.showCatalog
                                 ? <div className='catalog_main'>
                                     <CategoryList categories={this.state.categories} onClick={() => this.hideCatalog()}/>
                                 </div>
                                 : ''}
                             </li>
+                            : null }
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
                         </ul>
-                        { !this.state.searchInMenu 
-                        ? <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
+                        { !this.state.searchInMenu
+                        ? <ul className="navbar-nav container-fluid p-0">
+                            <li className="nav-item w-100">
                                 <Search onFocus={() => this.hideCatalog()}/>
                             </li>
                         </ul>
                         : null}
-                        <ul className="navbar-nav ml-auto">
+                        <ul className="navbar-nav">
                             { this.props.token ? (
                                     this.state.rightItems.map((item, key) => {
                                         return this.menuItemRender(item, key)

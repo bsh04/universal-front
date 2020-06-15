@@ -59,7 +59,7 @@ class ProductList extends Component {
         let path = this.setCategory(this.props.match.params.category) 
         this.setState({
             path: path
-        })
+        });
     }
 
     componentWillReceiveProps(props) {
@@ -94,7 +94,7 @@ class ProductList extends Component {
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});
                 request(
-                    'product/search',
+                    'product/search' + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
                     'POST',
                     {
                         data: (/%[0-9a-f]{2}/i.test(this.props.location.search.substr(3)) ?
@@ -103,7 +103,12 @@ class ProductList extends Component {
                     },
                     {},
                     function (response) {
-                        _this.setState({products: response, request: false});
+                        let products = response.filter(item => {
+                            if(!item.count) {
+                                return item;
+                            }
+                        });
+                        _this.setState({products: products, request: false});
                     },
                 );
             }
@@ -115,8 +120,12 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
-                    
-                    _this.setState({products: response}, () => {
+                    let products = response.filter(item => {
+                        if(!item.count) {
+                            return item;
+                        }
+                    });
+                    _this.setState({products: products}, () => {
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category) 
                         })

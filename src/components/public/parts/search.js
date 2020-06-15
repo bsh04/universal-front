@@ -47,7 +47,7 @@ class Search extends Component {
                     }, 200);
                   }}
                   >
-                <div className="input-group mb-2">
+                <div className="input-group mb-2 ">
                     <input type="text"
                             form="search-form"
                             onFocus={() => {

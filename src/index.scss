@@ -133,6 +133,7 @@ h3 > a {
 }
 
 .catalog_main {
+  
   position: absolute;
   top: 100%;
   left: 0;
@@ -148,13 +149,18 @@ h3 > a {
   &.show {
     position: absolute;
     background-color: #ffffff;
-    border: 1px solid #c4e7cc;
-    width: 80%;
+    border: 1px solid #c7c7c7;
+    width: 100%;
     left: 100%;
     top: 0;
-    
+    & .text-left {
+      border-bottom: 1px solid #c7c7c7;
+    }
     .collapsed & {
       display: none;
+    }
+    .card-body {
+      padding: 0 !important;
     }
   }
   
@@ -273,6 +279,12 @@ h3 > a {
     top: 1px;
     right: -8px;
   }
+  .card-text {
+    font-size: 1.2rem;
+    & > span {
+      font-size: 1.4rem;
+    }
+  }
 }
 
 .products-toolbar {
@@ -319,7 +331,9 @@ h3 > a {
 }
 
 .carousel {
+  margin: 0 auto;
   width: 100%;
+  max-width: 800px;
 
   .carousel-item {
     width: 100%;
@@ -363,6 +377,26 @@ h3 > a {
   }
 }
 
+.main-catalog-list {
+  border: 1px solid #c7c7c7;
+  max-width: 400px;
+  &__item {
+    text-align: left;
+    padding: 0 1rem;
+    border-bottom: 1px solid #c7c7c7;
+
+    & .main-catalog-list__text {
+      color: #000000;
+      line-height: 1.8rem;
+      text-transform: uppercase;
+      font-weight: 300;
+      
+    }
+    &:hover {
+      box-shadow: 0 0 2px 1px #c7c7c7;
+    }
+  }
+}
 .btn {
   margin-left: 10px;
   margin-right: 10px;
@@ -406,6 +440,12 @@ nav {
     }
   }
 }
+
+.nav-item {
+  white-space: nowrap;
+  font-weight: bold;
+  
+}
 .search-form {
     
   & .form-check {
@@ -435,14 +475,37 @@ nav {
     margin: 0 auto;
   }
 }
-
-.alert-link {
-  &.active {
-    i {
-      font-weight: 900;
-      text-decoration: underline;
-      cursor: pointer;
+.alert {
+  padding: 0;
+  border-color: #c7c7c7;
+  
+  & .text-left {
+    padding: 0 10px;
+    padding-left: 20px;
+    border-bottom: 1px solid #c7c7c7;
+  }
+  & .empty-item {
+    height: 2rem;
+  }
+  .alert-link {
+    font-weight: 300;
+    line-height: 1.7rem;
+    &.active {
+      i {
+        font-weight: 300;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
+  }
+  .alert-link-sub {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: normal;
+    line-height: 1.7rem;
+    color: #000;
+    padding: 0 20px .5rem 1rem;
+    
   }
 }
 
