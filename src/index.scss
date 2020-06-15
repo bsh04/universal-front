@@ -117,8 +117,21 @@ h3 > a {
       padding: 1rem;
       z-index: 2;
       position: absolute;
-      top: 1.5rem;
-      left: 4rem;
+      top: 20px;
+      left: 25%;
+      @media screen and (max-width: 768px) {
+        top: 20px;
+        left: 40%;  
+      }
+      @media screen and (max-width: 600px) {
+        top: 20px;
+        left: 30%;  
+      }
+      @media screen and (max-width: 400px) {
+        top: 20px;
+        left: 30%;  
+      }
+      
     }
   }
 }
@@ -380,6 +393,9 @@ h3 > a {
 .main-catalog-list {
   border: 1px solid #c7c7c7;
   max-width: 400px;
+  max-height: 75vh;
+  overflow-y: scroll;
+
   &__item {
     text-align: left;
     padding: 0 1rem;
@@ -447,7 +463,8 @@ nav {
   
 }
 .search-form {
-    
+  min-width: 100px;
+  margin-left: 5px;
   & .form-check {
     background-color: #ffffff;
     border-radius: 1rem;

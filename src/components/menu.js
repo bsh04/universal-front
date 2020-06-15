@@ -102,6 +102,10 @@ class Menu extends Component {
             nextProps.onReloadedMenu();
             this.handleGet();
         }
+        this.setState({
+            showNavbar: false,
+            showCatalog: false,
+        })
     }
 
     handleGetCategories() {
@@ -255,7 +259,7 @@ class Menu extends Component {
                                 <h2 className="text-center">Хозяйственные товары</h2>
                             </Link>
                         </div>
-                        <div className="col-md-2 my-3 my-md-0">
+                        <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
                             <p className={'text-md-left text-center'}>
                                 <span>
                                     <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 909291'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
@@ -265,7 +269,7 @@ class Menu extends Component {
                                 <br/>
                             </p>
                         </div>
-                        <div className="col-md-3 text-md-left text-center my-3 my-md-0">
+                        <div className="col-md-3 text-md-left text-center my-3 my-md-0 d-none d-md-block">
                             <i className={'fa fa-envelope '}> <a href={'email:razov@mail.tomsknet.ru'} itemProp="email">razov@mail.tomsknet.ru</a></i><br/>
                             <p className="street-addres" itemProp="streetAddress"><i className={'fa fa-map-marker'}></i> Адрес: г. Томск, ул. Бердская, 31 <br/>(пер. Пойменный 5)</p>
                         </div>
