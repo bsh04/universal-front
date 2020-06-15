@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import request from "../../../services/ajaxManager";
+import Breadcrumbs from '../../breadcrumbs';
 
 class News extends Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class News extends Component {
 
         this.state = {
             news: [],
+            type: ''
         };
     }
 
@@ -35,6 +37,7 @@ class News extends Component {
     render() {
         return (
             <div id={"carouselExampleIndicators" + this.props.type} className="carousel slide" data-ride="carousel">
+                
                 <ol className="carousel-indicators">
                     {this.state.news.map((item, key) => {
                         return (

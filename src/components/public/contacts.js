@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { YMaps, Map, GeoObject, GeolocationControl, SearchControl, ZoomControl } from 'react-yandex-maps';
 import {Helmet} from "react-helmet";
+import Breadcrumbs from '../breadcrumbs';
 
 class Contact extends Component {
     render() {
@@ -18,6 +19,7 @@ class Contact extends Component {
                     <meta property="og:title" content="Контакты"/>
                     <meta property="og:url" content="https://universal.tom.ru/contact"/>
                 </Helmet>
+                <Breadcrumbs path={[{title: 'Контакты'}]}/>
                 <h1>Контакты</h1>
                 <p className={'text-left'}>
                     <i className={'fa fa-map-marker'}> <span itemProp="streetAddress">Адрес: г. Томск, ул. Бердская, 31 (пер. Пойменный 5)</span></i><br/>

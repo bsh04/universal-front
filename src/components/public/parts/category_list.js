@@ -8,7 +8,7 @@ class CategoryList extends Component {
         super(props);
 
         this.state = {
-            categories: [],
+            categories: props.categories,
             open: [],
         };
     }
@@ -41,7 +41,9 @@ class CategoryList extends Component {
             return (
                 <div key={item.id} className={'text-left '} >
                     <a href={"#collapseExample" + item.id}
-                       onClick={() => this.setState({subMenuActive: item.id})}
+                       onClick={() => {
+                           this.setState({subMenuActive: item.id})
+                        }}
                        className={`alert-link ${this.state.subMenuActive === item.id ? '' : 'collapsed'}`}
                        data-toggle="collapse"
                        role="button"
@@ -65,7 +67,8 @@ class CategoryList extends Component {
         return (
             <div key={item.id} className={'text-left '}>
                 <Link to={'/catalog/' + item.id}
-                      className={'alert-link'}>
+                      className={'alert-link'}
+                      onClick={() => {this.props.onClick()}}>
                     {type !== 'bold' ? <span>{item.title}</span> : <b><span>{item.title}</span></b>}
                 </Link>
             </div>
@@ -81,11 +84,11 @@ class CategoryList extends Component {
                 {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
                 {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
                 <hr/>
-                {this.state.categories.map((item) => {
+                {this.state.categories ? this.state.categories.map((item) => {
                     return (
                         this.itemView(item)
                     );
-                })}
+                }) : null}
             </div>
         );
     }

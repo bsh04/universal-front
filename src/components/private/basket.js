@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
+import Breadcrumbs from '../breadcrumbs';
+
 import request from '../../services/ajaxManager';
 
 class Basket extends Component {
@@ -87,6 +89,10 @@ class Basket extends Component {
 
         return (
             <div>
+                <Breadcrumbs 
+                    path={[
+                        {title: 'Корзина'}
+                    ]}/>
                 <h4 className="text-center">Моя корзина:</h4>
                 <table className={"table table-striped table-hover"}>
                     <thead>

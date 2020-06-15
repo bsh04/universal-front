@@ -57,10 +57,10 @@ class Index extends Component {
                     <meta property="og:title" content="Главная"/>
                     <meta property="og:url" content="https://universal.tom.ru/"/>
                 </Helmet>
-                <h3 className="text-center">Новости</h3>
+                <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
                 <News type="news"/>
                 <br/>
-                <h3 className="text-center">Акции</h3>
+                <h3 className="text-center"><Link to='/catalog/stock'>Акции</Link></h3>
                 <News type="stocks"/>
                 <br/>
             </div>

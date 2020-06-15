@@ -4,6 +4,7 @@
 import React from 'react';
 import AbstractForm from '../abstract/form';
 import { connect } from 'react-redux';
+import Breadcrumbs from '../breadcrumbs';
 
 class PassChange extends AbstractForm {
     constructor(props)
@@ -41,6 +42,10 @@ class PassChange extends AbstractForm {
     viewForm() {
         return (
             <div className="w-75">
+                <Breadcrumbs 
+                    path={[
+                        {title: 'Смена пароля'}
+                    ]}/>
                 <h4 className="text-center">Смена пароля</h4>
                 <form onSubmit={this.handleSubmit}>
                     <input

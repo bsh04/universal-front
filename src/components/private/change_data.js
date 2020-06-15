@@ -5,6 +5,8 @@ import React from 'react';
 import AbstractForm from '../abstract/form';
 import { connect } from 'react-redux';
 
+import Breadcrumbs from '../breadcrumbs';
+
 class DataChange extends AbstractForm {
     constructor(props)
     {
@@ -42,6 +44,10 @@ class DataChange extends AbstractForm {
     viewForm() {
         return (
             <div className="w-75">
+                <Breadcrumbs 
+                    path={[
+                        {title: 'Изменение данных пользователя'}
+                    ]}/>
                 <h4 className="text-center">Изменение данных пользователя</h4>
                 <form onSubmit={this.handleSubmit}>
                     <input

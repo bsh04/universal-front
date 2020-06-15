@@ -43,7 +43,7 @@ class Search extends Component {
                   onSubmit={(e) => this.handleSearch(e)}
                   onBlur={() => {
                     setTimeout(() => { 
-                        this.setState({searchFieldOnFocus: false})    
+                        this.setState({searchFieldOnFocus: false})
                     }, 200);
                   }}
                   >
@@ -51,6 +51,7 @@ class Search extends Component {
                     <input type="text"
                             form="search-form"
                             onFocus={() => {
+                                this.props.onFocus();
                                 setTimeout(() => {
                                     this.setState({searchFieldOnFocus: true})
                                 }, 200);
@@ -59,13 +60,13 @@ class Search extends Component {
                             className="form-control"
                             ref={(input) => {this.searchField = input}}
                             id="inlineFormInputGroup"
-                            defaultValue={(parts[1] === 'catalog' && parts.length > 3) ? decodeURI(parts[3]) : this.state.searchValue}
+                            defaultValue={(parts[1] === 'catalog' && parts.length > 3 && parts[2] !== 'product') ? decodeURI(parts[3]) : this.state.searchValue}
                             onInput={((e)=> this.setState({
                                     searchValue: e.target.value
                                 })
                             )}
                             placeholder="Поиск"/>
-                    <div className="input-group-append">
+                    <div className="input-group-append" style={{zIndex: 1}}>
                         <div className="input-group-text btn btn-success" onClick={(e) => this.handleSearch(e)}>
                             <i className={'fa fa-search'}></i>
                         </div>

@@ -13,6 +13,7 @@ import NewsList from './news/news';
 import StocksList from './news/stocks';
 import ExportCategoryList from './to_csv';
 import ArticleList from './article';
+import DeliveryAndPayment from './delivery_and_payment';
 
 class PrivateLayout extends Component {
     componentDidMount() {
@@ -42,6 +43,7 @@ class PrivateLayout extends Component {
                             <Route exact path="/admin/export" component={ExportCategoryList}/>
                             <Route exact path="/admin/stocks" component={StocksList}/>
                             <Route exact path="/admin/workshop" component={ArticleList}/>
+                            <Route exact path="/admin/deliveryandpayment" component={DeliveryAndPayment}/>
                         </Switch>
                     </div>
                     <div className='col-md-2'>

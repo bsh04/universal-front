@@ -16,6 +16,8 @@ class Menu extends Component {
 
         this.state = {
             showCatalog: false,
+            showNavbar: false,
+            searchInMenu: true,
             categories: [],
             redirect: null,
             like: [],
@@ -25,6 +27,7 @@ class Menu extends Component {
                 {title: 'Новости', path: '/news'},
                 {title: 'Швейный цех', path: '/workshop'},
                 {title: 'Контакты', path: '/contact'},
+                {title: 'Оплата и доставка', path: '/deliveryandpayment'}
             ],
             rightItems: [
                 {
@@ -32,6 +35,7 @@ class Menu extends Component {
                         {title: 'Обновление товаров', path: '/admin/product/update'},
                         {title: 'Список товаров без изображения', path: '/admin/product/image'},
                         {title: 'Управление швейным цехом', path: '/admin/workshop'},
+                        {title: 'Оплата и доставка', path: '/admin/deliveryandpayment'},
                         {title: 'Управление новостями', path: '/admin/news'},
                         {title: 'Управление акциями', path: '/admin/stocks'},
                         {title: 'Экспорт данных', path: '/admin/export'},
@@ -53,6 +57,22 @@ class Menu extends Component {
     componentDidMount() {
         this.handleGet();
         this.handleGetCategories();
+        
+        this.checkWidnowSizeMD();
+        window.addEventListener("resize", this.checkWidnowSizeMD.bind(this));
+    }
+
+    checkWidnowSizeMD() {
+        if(window.innerWidth >= 992) {
+            this.setState({
+                searchInMenu: false
+            })
+        }
+    }
+
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.checkWidnowSizeMD.bind(this));
     }
 
     handleLogout() {
@@ -174,14 +194,15 @@ class Menu extends Component {
             }
 
             return (
-                <li key={key} className={"nav-item" + (item.path === window.location.pathname ? ' active' : '')}>
+                <li key={key} className={"nav-item" + (item.path === window.location.pathname ? ' active' : '')}
+                onClick={() => this.toggleNavbarView()}>
                     <Link className="nav-link" to={item.path}>{item.title}</Link>
                 </li>
             );
         }
     }
 
-    toggleMenuView() {
+    toggleCatalogView() {
         const showCatalog = this.state.showCatalog;
 
         this.setState({
@@ -189,32 +210,70 @@ class Menu extends Component {
         })
     }
 
+    hideCatalog() {
+        this.setState({
+            showCatalog: false
+        })
+    }
+
+    toggleNavbarView() {
+        const showNavbar = this.state.showNavbar;
+        this.hideCatalog();
+        if(showNavbar){
+            this.setState({
+                showNavbar: false,
+                showCatalog: false
+            })
+        }
+    }
+
     render() {
         return (
             <div>
                 <div className='mainImage'>
                     <div className="row">
-                        <div className="col-md-4">
-                            <p className={'text-left'}>
-                                <i className={'fa fa-map-marker'}> <span itemProp="streetAddress">Адрес: г. Томск, ул. Бердская, 31 (пер. Пойменный 5)</span></i><br/>
-                                <i className={'fa fa-phone'}> <span><a href={'tel:+7 (3822) 909291'} itemProp="telephone">90-92-91</a>, <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">90-44-32</a>, <a href={'tel:+7 (3822) 902-668'} itemProp="telephone">902-668</a></span></i><br/>
+                        <div className="col-md-3 my-3 my-md-0">
+                            <Link to="/">
+                                <h1 className="text-center">Универсал</h1>
+                                <h2 className="text-center">Хозяйственные товары</h2>
+                            </Link>
+                        </div>
+                        <div className="col-md-2 my-3 my-md-0">
+                            <p className={'text-md-left text-center'}>
+                                <span>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 909291'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">+7 (3822) 90-44-32</a></i><br/>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 902-668'} itemProp="telephone">+7 (3822) 902-668</a></i>
+                                </span>
+                                <br/>
                             </p>
                         </div>
-                        <div className="col-md-4">
-                            <Link to="/"><h1 className="text-center">Универсал Томск</h1></Link>
+                        <div className="col-md-3 text-md-left text-center my-3 my-md-0">
+                            <i className={'fa fa-envelope '}> <a href={'email:razov@mail.tomsknet.ru'} itemProp="email">razov@mail.tomsknet.ru</a></i><br/>
+                            <p className="street-addres" itemProp="streetAddress"><i className={'fa fa-map-marker'}></i> Адрес: г. Томск, ул. Бердская, 31 <br/>(пер. Пойменный 5)</p>
                         </div>
-                        <div className="col-md-4 text-right">
+                        <div className="col-md-2 my-3 my-md-0">
+                            <div className="shedule">
+                                График работы
+                            </div>
+                            <div className="shedule-tooltip">
+                                <p><b>ПН-ПТ</b> <span>9:00 - 17:00</span></p>
+                                <p><b>СБ</b> <span>9:00 - 14:00</span></p>
+                                <p><b>ВС</b> <span>ВЫХОДНОЙ</span></p>
+                            </div>
+                        </div>
+                        <div className="col-md-2 text-md-right text-center my-3 my-md-0">
                             <p>
                             { this.props.token ?
                                     <Link to='/user/basket' className="iconButtons">
-                                        <i className={'fa fa-shopping-cart'}> </i>&nbsp;
-                                        <span className={'inRound'}>{this.state.basket.length}</span>
+                                        <i className={'fa fa-shopping-cart'}> </i>
+                                        {this.state.basket.length > 0 ? <span className={'badge badge-danger'}>{this.state.basket.length}</span> : null}
                                     </Link>
                                  : '' }
                             { this.props.token ?
                                     <Link to='/user/favorite' className="iconButtons">
-                                        <i className={'fa fa-heart'}> </i>&nbsp;
-                                        <span className={'inRound'}>{this.state.like.length}</span>
+                                        <i className={'fa fa-heart'}> </i>
+                                        {this.state.like.length > 0 ? <span className={'badge badge-danger'}>{this.state.like.length}</span> : null}
                                     </Link>
                                  : '' }
                             </p>
@@ -222,40 +281,53 @@ class Menu extends Component {
                     </div>
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
+                    
                 <nav className="navbar navbar-light navbar-expand-lg fixed">
-                    <button className="navbar-toggler" type="button" data-toggle="collapse"
+                    <button className={this.state.showNavbar ? "navbar-toggler" : "navbar-toggler collapsed"} type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                            aria-expanded={this.state.showNavbar ? "false" : "true"} aria-label="Toggle navigation"
+                            onClick={() => this.setState({showNavbar: true})}>
                         <i className="navbar-toggler-icon"></i>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    { this.state.searchInMenu
+                    ? <ul className="navbar-nav ml-auto mt-2">
+                            <li className="nav-item">
+                                <Search onFocus={() => this.hideCatalog()}/>
+                            </li>
+                        </ul>
+                    : null }
+                    
+
+                    <div className={this.state.showNavbar ? "collapse navbar-collapse show" : "collapse navbar-collapse"} id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
 
-                            <li className="nav-item">
-                                <a className="catalog_link nav-link"
-                                        onClick={() => this.toggleMenuView()}>
+                            <li className="nav-item catalog_link">
+                                <a className="nav-link"
+                                        onClick={() => {
+                                            this.toggleCatalogView();
+                                        }}>
                                 <i className="fa fa-bars"></i>
                                     <span> Каталог</span>
                                 </a>
+                            
+                                { this.state.showCatalog 
+                                ? <div className='catalog_main'>
+                                    <CategoryList categories={this.state.categories} onClick={() => this.hideCatalog()}/>
+                                </div>
+                                : ''}
                             </li>
-                            { this.state.showCatalog 
-                            ? <li className='nav-item catalog_main'>
-                                <CategoryList categories={this.state.categories}/>
-                            </li>
-                            : ''}
-
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
                         </ul>
-
-                        <ul className="navbar-nav mr-auto">
+                        { !this.state.searchInMenu 
+                        ? <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <Search />
+                                <Search onFocus={() => this.hideCatalog()}/>
                             </li>
                         </ul>
-
+                        : null}
                         <ul className="navbar-nav ml-auto">
                             { this.props.token ? (
                                     this.state.rightItems.map((item, key) => {

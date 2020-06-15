@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import request from '../../services/ajaxManager';
 import {connect} from "react-redux";
 
+import Breadcrumbs from '../breadcrumbs'
+
 class Favorite extends Component {
     constructor(props) {
         super(props);
@@ -85,6 +87,10 @@ class Favorite extends Component {
     render() {
         return (
             <div>
+                <Breadcrumbs 
+                    path={[
+                        {title: 'Избранные товары'}
+                    ]}/>
                 <h4 className="text-center">Избранные товары:</h4>
                 <table className={"table table-striped table-hover"}>
                     <thead>

@@ -12,6 +12,7 @@ import NewsList from './news_list';
 import ArticleList from './workshop/workshop_list';
 import About from './about';
 import ProductList from './product_list';
+import Product from './product';
 import Workshop from './workshop/workshop';
 import Catalog from './catalog';
 import Footer from './footer';
@@ -19,6 +20,7 @@ import Menu from '../menu';
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
 import ResetForm from './sign_action/reset_pass';
+import DeliveryAndPayment from './delivery_and_payment';
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -48,8 +50,10 @@ class PublicLayout extends Component {
                             <Route exact path={'/workshop'} component={ArticleList}/>
                             <Route exact path={'/workshop/:id'} component={Workshop}/>
                             <Route exact path={'/catalog'} component={Catalog}/>
+                            <Route exact path={'/catalog/product/:id'} component={Product} />
                             <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
                             <Route exact path={'/catalog/:category'} component={ProductList}/>
+                            <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
                             <Route exact path={'/about'} component={About}/>
                             <Route exact path="/register" render={() => (this.props.token !== false ?
                                 (<Redirect to={'/login'}/>) :
