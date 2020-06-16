@@ -18,6 +18,7 @@ class Menu extends Component {
             showCatalog: false,
             showNavbar: false,
             searchInMenu: true,
+            showCatalogOutMenu: true,
             categories: [],
             redirect: null,
             like: [],
@@ -68,6 +69,22 @@ class Menu extends Component {
                 searchInMenu: false
             })
         }
+        if(this.props.location.pathname === '/'){
+            if(window.innerWidth <= 1200) {
+                this.setState({
+                    showCatalogOutMenu: false
+                })
+            } else if(window.innerWidth > 1200) {
+                this.setState({
+                    showCatalogOutMenu: true
+                })
+            }
+            if(window.innerWidth <= 992) {
+                this.setState({
+                    showCatalogOutMenu: true
+                })
+            }
+        }
     }
 
 
@@ -85,6 +102,10 @@ class Menu extends Component {
             nextProps.onReloadedMenu();
             this.handleGet();
         }
+        this.setState({
+            showNavbar: false,
+            showCatalog: false,
+        })
     }
 
     handleGetCategories() {
@@ -238,7 +259,7 @@ class Menu extends Component {
                                 <h2 className="text-center">Хозяйственные товары</h2>
                             </Link>
                         </div>
-                        <div className="col-md-2 my-3 my-md-0">
+                        <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
                             <p className={'text-md-left text-center'}>
                                 <span>
                                     <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 909291'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
@@ -248,11 +269,11 @@ class Menu extends Component {
                                 <br/>
                             </p>
                         </div>
-                        <div className="col-md-3 text-md-left text-center my-3 my-md-0">
+                        <div className="col-md-3 text-md-left text-center my-3 my-md-0 d-none d-md-block">
                             <i className={'fa fa-envelope '}> <a href={'email:razov@mail.tomsknet.ru'} itemProp="email">razov@mail.tomsknet.ru</a></i><br/>
                             <p className="street-addres" itemProp="streetAddress"><i className={'fa fa-map-marker'}></i> Адрес: г. Томск, ул. Бердская, 31 <br/>(пер. Пойменный 5)</p>
                         </div>
-                        <div className="col-md-2 my-3 my-md-0">
+                        <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
                             <div className="shedule">
                                 График работы
                             </div>
@@ -300,9 +321,9 @@ class Menu extends Component {
                     
 
                     <div className={this.state.showNavbar ? "collapse navbar-collapse show" : "collapse navbar-collapse"} id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
-
-                            <li className="nav-item catalog_link">
+                        <ul className="navbar-nav">
+                            {this.state.showCatalogOutMenu 
+                            ? <li className="nav-item catalog_link">
                                 <a className="nav-link"
                                         onClick={() => {
                                             this.toggleCatalogView();
@@ -311,24 +332,23 @@ class Menu extends Component {
                                     <span> Каталог</span>
                                 </a>
                             
-                                { this.state.showCatalog 
-                                ? <div className='catalog_main'>
-                                    <CategoryList categories={this.state.categories} onClick={() => this.hideCatalog()}/>
-                                </div>
+                                { this.state.showCatalog
+                                ? <CategoryList categories={this.state.categories} onClick={() => this.hideCatalog()}/>
                                 : ''}
                             </li>
+                            : null }
                             {this.state.leftItems.map((item, key) => {
                                 return this.menuItemRender(item, key);
                             })}
                         </ul>
-                        { !this.state.searchInMenu 
-                        ? <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
+                        { !this.state.searchInMenu
+                        ? <ul className="navbar-nav container-fluid p-0">
+                            <li className="nav-item w-100">
                                 <Search onFocus={() => this.hideCatalog()}/>
                             </li>
                         </ul>
                         : null}
-                        <ul className="navbar-nav ml-auto">
+                        <ul className="navbar-nav">
                             { this.props.token ? (
                                     this.state.rightItems.map((item, key) => {
                                         return this.menuItemRender(item, key)

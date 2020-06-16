@@ -32,7 +32,7 @@ class ProductList extends Component {
             return 'Новые товары';
         } else if (cat === 'stock') {
             return 'Товары по акции';
-        } else if (this.state.products && this.state.products[0]) {
+        } else if (this.state.products && this.state.products[0]) { console.log(this.state.products[0])
             return this.state.products[0].category.title;
         }
     }
@@ -66,7 +66,6 @@ class ProductList extends Component {
     }
 
     handleGet(cat) {
-
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -87,7 +86,7 @@ class ProductList extends Component {
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});
                 request(
-                    'product/search',
+                    'product/search' + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
                     'POST',
                     {
                         data: (/%[0-9a-f]{2}/i.test(this.props.location.search.substr(3)) ?
@@ -192,12 +191,13 @@ class ProductList extends Component {
                     <meta property="og:title" content="Каталог"/>
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
-
-                {this.state.path
-                    ? <Breadcrumbs
-                        path={[
-                            {title: this.state.path}
-                        ]}/> : null}
+                
+                {this.state.path 
+                ? <Breadcrumbs 
+                    path={[
+                        {title: 'Каталог', link: '/catalog'},
+                        { title: this.state.path }
+                    ]} /> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">

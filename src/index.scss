@@ -117,8 +117,21 @@ h3 > a {
       padding: 1rem;
       z-index: 2;
       position: absolute;
-      top: 1.5rem;
-      left: 4rem;
+      top: 20px;
+      left: 25%;
+      @media screen and (max-width: 768px) {
+        top: 20px;
+        left: 40%;  
+      }
+      @media screen and (max-width: 600px) {
+        top: 20px;
+        left: 30%;  
+      }
+      @media screen and (max-width: 400px) {
+        top: 20px;
+        left: 30%;  
+      }
+      
     }
   }
 }
@@ -133,10 +146,16 @@ h3 > a {
 }
 
 .catalog_main {
+  
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 3;
+  z-index: 12;
+  @media screen and (max-width: 767px) {
+    overflow-y: scroll;
+  }
+  
+  
   & .alert-success {
     width: 25rem;
     background-color: #ffffff;
@@ -148,13 +167,18 @@ h3 > a {
   &.show {
     position: absolute;
     background-color: #ffffff;
-    border: 1px solid #c4e7cc;
-    width: 80%;
+    border: 1px solid #c7c7c7;
+    width: 100%;
     left: 100%;
     top: 0;
-    
+    & .text-left {
+      border-bottom: 1px solid #c7c7c7;
+    }
     .collapsed & {
       display: none;
+    }
+    .card-body {
+      padding: 0 !important;
     }
   }
   
@@ -169,7 +193,6 @@ h3 > a {
   .catalog_link {
     padding-right: 0 !important;
     border-right: none;
-    color:red;
   }
 }
 @media screen and (max-width: 768px) {
@@ -273,6 +296,27 @@ h3 > a {
     top: 1px;
     right: -8px;
   }
+  .card-text {
+    font-size: 1.2rem;
+    & > span {
+      font-size: 1.4rem;
+    }
+  }
+}
+.news-card {
+  .carousel-indicators {
+    z-index: 10;
+  }
+  & .carousel-inner {
+    max-width: 60%;
+    margin: 0 auto;
+  }
+  & .news-card__controls {
+    z-index: 10;
+  }
+  & .card-body .col-md-12{
+    padding: 0;
+  }
 }
 
 .products-toolbar {
@@ -319,7 +363,9 @@ h3 > a {
 }
 
 .carousel {
+  margin: 0 auto;
   width: 100%;
+  max-width: 800px;
 
   .carousel-item {
     width: 100%;
@@ -363,6 +409,27 @@ h3 > a {
   }
 }
 
+.main-catalog-list {
+  border: 1px solid #c7c7c7;
+  max-width: 400px;
+
+  &__item {
+    text-align: left;
+    padding: 0 1rem;
+    border-bottom: 1px solid #c7c7c7;
+
+    & .main-catalog-list__text {
+      color: #000000;
+      line-height: 1.8rem;
+      text-transform: uppercase;
+      font-weight: 300;
+      
+    }
+    &:hover {
+      box-shadow: 0 0 2px 1px #c7c7c7;
+    }
+  }
+}
 .btn {
   margin-left: 10px;
   margin-right: 10px;
@@ -406,8 +473,15 @@ nav {
     }
   }
 }
+
+.nav-item {
+  white-space: nowrap;
+  font-weight: bold;
+  
+}
 .search-form {
-    
+  min-width: 100px;
+  margin-left: 5px;
   & .form-check {
     background-color: #ffffff;
     border-radius: 1rem;
@@ -435,14 +509,37 @@ nav {
     margin: 0 auto;
   }
 }
-
-.alert-link {
-  &.active {
-    i {
-      font-weight: 900;
-      text-decoration: underline;
-      cursor: pointer;
+.alert {
+  padding: 0;
+  border-color: #c7c7c7;
+  
+  & .text-left {
+    padding: 0 10px;
+    padding-left: 20px;
+    border-bottom: 1px solid #c7c7c7;
+  }
+  & .empty-item {
+    height: 2rem;
+  }
+  .alert-link {
+    font-weight: 300;
+    line-height: 1.7rem;
+    &.active {
+      i {
+        font-weight: 300;
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
+  }
+  .alert-link-sub {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: normal;
+    line-height: 1.7rem;
+    color: #000;
+    padding: 0 20px .5rem 1rem;
+    
   }
 }
 

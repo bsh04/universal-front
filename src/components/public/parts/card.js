@@ -140,11 +140,13 @@ class Card extends Component {
 
     cardContent(className = '') {
         let cardView = this.state.cardView;
+        let mainPage = this.props.mainPage;
 
         return <div className={`${className} ${cardView}`}
         itemScope 
         itemType="http://schema.org/Product">
-        <div className="dropleft dropdown-share">
+        { !mainPage 
+        ? <div className="dropleft dropdown-share">
             <button className="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="fa fa-share"></i>
             </button>
@@ -164,6 +166,7 @@ class Card extends Component {
             }}><i className="fa fa-clone"> Скопировать ссылку</i></a>
             </div>
         </div>
+        : null }
         <ModalImage
             small={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
             large={this.props.item.photo === 'placeholder.jpg' ? require('../../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + this.props.item.photo}
@@ -172,21 +175,31 @@ class Card extends Component {
         />
 
         {this.state.cardView === 'tile'
-        ? <div className="card-body ">
+        ? <div className="card-body col-12">
             <h5 
                 className="card-title text-left font-weight-light " 
                 itemProp="name">
                     {this.props.item.title}
             </h5>
-            <p className="card-text text-left font-weight-normal" itemProp="price">
-                {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success">Новинка!</span></Link>) : ''} 
-                {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger">Акция!</span></Link>) : ''}<br/>
-                Цена: <span style={{fontWeight: 700}}>{this.props.item.price}</span>  р.
+            <div className="d-flex justify-content-start">
+                {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success ">Новинка!</span></Link>) : ''}
+                {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger ">Акция!</span></Link>) : ''}
+            </div>
+            <p className={"card-text text-left font-weight-normal" + (mainPage ? ' d-flex justify-content-between flex-nowrap' : '')} 
+                itemProp="price">
+                <span>{!mainPage ? 'Цена:' : ''} <span style={{fontWeight: 700}}>{this.props.item.price}</span>  р.</span>
+                { mainPage 
+                ? <i className={'fa fa-heart card-text' + (this.props.favorite ? ' text-danger' : '')}
+                    onClick={this.handleClick}></i> 
+                : null}
             </p>
-            <p>
+            
+            { !mainPage 
+            ? <p>
                 <i className={'fa fa-heart' + (this.props.favorite ? ' text-danger' : '')}
                 onClick={this.handleClick}> {this.props.favorite ? 'В избранном' : 'Добавить в избранное'}</i>
             </p>
+            : null }
             {this.state.form ?
                 <form onSubmit={(e) => {e.preventDefault()}} style={{justifyContent: 'center'}}>
                     <div className="input-group mb-2 mr-sm-2 row d-flex flex-wrap justify-content-center">
@@ -197,12 +210,12 @@ class Card extends Component {
                             placeholder={"Количество:"}
                             min={1}
                             defaultValue={1}
-                            className={`form-control mb-1 col-xl-4 col-lg-5 col-md-12 col-sm-2 col-12`
+                            className={`form-control mb-1 col-xl-4 col-lg-5 col-md-12 col-sm-2 col-12 ${!mainPage ? '' : 'd-none'}`
                                     }
                             ref={(input) => {this.countInput = input}}
                         />
                         <div className={
-                                `pl-1 pr-0 col-xl-8 col-lg-7 col-md-12 col-sm-8 col-12`
+                                !mainPage ? `pl-1 pr-0 col-xl-8 col-lg-7 col-md-12 col-sm-8 col-12` : 'col-md-12'
                             }>
                             <button className="form-control btn-basket btn btn-success mb-1" onClick={this.handleBasketAdd}>
                                 <span className="btn-label">В корзину </span>
@@ -215,8 +228,12 @@ class Card extends Component {
                     <i className={'fa fa-check'}> {this.state.message}</i>
                 </div>
             }
-            <p className="text-left text-muted "><small>Код товара: {this.props.item.id} </small></p>
-            <Link to={`/catalog/product/${this.props.item.id}`}><span className="badge">Перейти к товару</span></Link>
+            {!mainPage 
+            ? <div>
+                <p className="text-left text-muted "><small>Код товара: {this.props.item.id} </small></p>
+                <Link to={`/catalog/product/${this.props.item.id}`}><span className="badge">Перейти к товару</span></Link>
+            </div>
+            : null}
         </div>
         
         :  
