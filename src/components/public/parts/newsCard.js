@@ -72,7 +72,11 @@ class NewsCard extends Component {
             return(
                 <div className="row justify-content-center">
                 <h3 className="text-center"><Link to={`/${this.state.type.category.split('/')[1]}`}>{this.state.type.title}</Link></h3>
-                    <div id={"carouselExampleIndicators" + this.state.type.category.split('/')[1]} className="news-card carousel slide" data-ride="carousel">
+                    <div id={"carouselExampleIndicators" + this.state.type.category.split('/')[1]} 
+                        className="news-card carousel slide" 
+                        data-ride="carousel"
+                        style={{minHeight: '400px'}}>
+
                         <div className="carousel-inner">
                             { this.state.items
                             ? this.state.items.map((item, key) => {

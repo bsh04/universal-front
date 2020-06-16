@@ -253,6 +253,7 @@ h3 > a {
       min-height: 150px;
       height: 150px;
       object-fit: contain;
+      z-index: 10;
     }
   }
   
@@ -305,17 +306,26 @@ h3 > a {
 }
 .news-card {
   .carousel-indicators {
-    z-index: 10;
+    z-index: 9;
   }
   & .carousel-inner {
     max-width: 60%;
     margin: 0 auto;
+    overflow: visible;
   }
   & .news-card__controls {
     z-index: 10;
   }
   & .card-body .col-md-12{
     padding: 0;
+  }
+  & .card-position {
+
+    position: relative;
+    margin-bottom: 100px;
+  }
+  & .hover {
+    position: relative;
   }
 }
 
