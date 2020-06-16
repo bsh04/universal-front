@@ -35,6 +35,7 @@ class News extends Component {
     }
 
     render() {
+        
         return (
             <div id={"carouselExampleIndicators" + this.props.type} className="carousel slide" data-ride="carousel">
                 

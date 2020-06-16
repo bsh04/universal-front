@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Helmet} from "react-helmet";
 
 import News from './parts/news';
+import NewsCard from './parts/newsCard';
 import CardCarousel from './parts/cards_carousel';
 import request from "../../services/ajaxManager";
 
@@ -89,6 +90,15 @@ class Index extends Component {
                 showCatalogOutMenu: true
             })
         }
+        if(window.innerWidth <= 992) {
+            this.setState({
+                isMobile: true
+            })
+        } else {
+            this.setState({
+                isMobile: false
+            })
+        }
     }
 
     itemView(item, type = null) {
@@ -120,7 +130,9 @@ class Index extends Component {
                     <meta property="og:title" content="Главная"/>
                     <meta property="og:url" content="https://universal.tom.ru/"/>
                 </Helmet>
-                <div className="row">
+                
+                { !this.state.isMobile 
+                ? <div className="row">
                     {this.state.showCatalogOutMenu 
                     ?<div className="col-md-3 p-0">
                         <div className="main-catalog-list">
@@ -137,6 +149,12 @@ class Index extends Component {
                         <br/>
                     </div>
                 </div>
+                : <div>
+                    <NewsCard type={{title: 'Новинки', category: 'product/new'}} />
+                    <NewsCard type={{title: 'Акции', category: 'product/stock'}} />
+                    <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
+                    <News type="news"/>
+                </div> }
             </div>
         );
     }

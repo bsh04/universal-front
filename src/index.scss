@@ -150,7 +150,12 @@ h3 > a {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 3;
+  z-index: 12;
+  @media screen and (max-width: 767px) {
+    overflow-y: scroll;
+  }
+  
+  
   & .alert-success {
     width: 25rem;
     background-color: #ffffff;
@@ -188,7 +193,6 @@ h3 > a {
   .catalog_link {
     padding-right: 0 !important;
     border-right: none;
-    color:red;
   }
 }
 @media screen and (max-width: 768px) {
@@ -299,6 +303,21 @@ h3 > a {
     }
   }
 }
+.news-card {
+  .carousel-indicators {
+    z-index: 10;
+  }
+  & .carousel-inner {
+    max-width: 60%;
+    margin: 0 auto;
+  }
+  & .news-card__controls {
+    z-index: 10;
+  }
+  & .card-body .col-md-12{
+    padding: 0;
+  }
+}
 
 .products-toolbar {
   
@@ -393,8 +412,6 @@ h3 > a {
 .main-catalog-list {
   border: 1px solid #c7c7c7;
   max-width: 400px;
-  max-height: 75vh;
-  overflow-y: scroll;
 
   &__item {
     text-align: left;

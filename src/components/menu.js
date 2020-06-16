@@ -18,7 +18,7 @@ class Menu extends Component {
             showCatalog: false,
             showNavbar: false,
             searchInMenu: true,
-            showCatalogOutMenu: false,
+            showCatalogOutMenu: true,
             categories: [],
             redirect: null,
             like: [],
@@ -273,7 +273,7 @@ class Menu extends Component {
                             <i className={'fa fa-envelope '}> <a href={'email:razov@mail.tomsknet.ru'} itemProp="email">razov@mail.tomsknet.ru</a></i><br/>
                             <p className="street-addres" itemProp="streetAddress"><i className={'fa fa-map-marker'}></i> Адрес: г. Томск, ул. Бердская, 31 <br/>(пер. Пойменный 5)</p>
                         </div>
-                        <div className="col-md-2 my-3 my-md-0">
+                        <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
                             <div className="shedule">
                                 График работы
                             </div>
@@ -333,9 +333,7 @@ class Menu extends Component {
                                 </a>
                             
                                 { this.state.showCatalog
-                                ? <div className='catalog_main'>
-                                    <CategoryList categories={this.state.categories} onClick={() => this.hideCatalog()}/>
-                                </div>
+                                ? <CategoryList categories={this.state.categories} onClick={() => this.hideCatalog()}/>
                                 : ''}
                             </li>
                             : null }

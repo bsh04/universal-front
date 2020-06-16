@@ -84,16 +84,18 @@ class CategoryList extends Component {
         let parts = window.location.pathname.split('/');
 
         return (
-            <div className="alert alert-success">
-                
-                {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
-                {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
-                <div className={'text-left empty-item '}></div>
-                {this.state.categories ? this.state.categories.map((item) => {
-                    return (
-                        this.itemView(item)
-                    );
-                }) : null}
+            <div className='catalog_main' style={{maxHeight: window.innerHeight * .6}}>
+                <div className="alert alert-success">
+                    
+                    {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
+                    {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
+                    <div className={'text-left empty-item '}></div>
+                    {this.state.categories ? this.state.categories.map((item) => {
+                        return (
+                            this.itemView(item)
+                        );
+                    }) : null}
+                </div>
             </div>
         );
     }

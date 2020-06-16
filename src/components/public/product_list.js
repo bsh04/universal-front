@@ -32,7 +32,7 @@ class ProductList extends Component {
             return 'Новые товары';
         } else if(cat === 'stock'){
             return 'Товары по акции';
-        } else if (this.state.products && this.state.products[0]) {
+        } else if (this.state.products && this.state.products[0]) { console.log(this.state.products[0])
             return this.state.products[0].category.title;
         }
     }
@@ -73,7 +73,7 @@ class ProductList extends Component {
     }
 
     handleGet(cat) {
-        
+        console.log('from-product list:', cat)
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -206,6 +206,7 @@ class ProductList extends Component {
                 {this.state.path 
                 ? <Breadcrumbs 
                     path={[
+                        {title: 'Каталог', link: '/catalog'},
                         { title: this.state.path }
                     ]} /> : null}
                 <div className="products-toolbar mb-2 col-12">
