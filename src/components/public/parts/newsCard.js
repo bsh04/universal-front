@@ -70,7 +70,7 @@ class NewsCard extends Component {
     render() {
         if(this.state.items.length > 0) {
             return(
-                <div className="row">
+                <div className="row justify-content-center">
                 <h3 className="text-center"><Link to={`/${this.state.type.category.split('/')[1]}`}>{this.state.type.title}</Link></h3>
                     <div id={"carouselExampleIndicators" + this.state.type.category.split('/')[1]} className="news-card carousel slide" data-ride="carousel">
                         <div className="carousel-inner">

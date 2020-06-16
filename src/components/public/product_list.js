@@ -55,16 +55,6 @@ class ProductList extends Component {
         }
     }
 
-<<<<<<< HEAD
-    componentDidMount() {
-        let path = this.setCategory(this.props.match.params.category) 
-        this.setState({
-            path: path
-        });
-    }
-
-=======
->>>>>>> master
     componentWillReceiveProps(props) {
         this.setState({viewCount: 30});
         this.handleGet(props.match.params.category);
@@ -76,11 +66,6 @@ class ProductList extends Component {
     }
 
     handleGet(cat) {
-<<<<<<< HEAD
-        console.log('from-product list:', cat)
-=======
-
->>>>>>> master
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -110,17 +95,8 @@ class ProductList extends Component {
                     },
                     {},
                     function (response) {
-<<<<<<< HEAD
-                        let products = response.filter(item => {
-                            if(!item.count) {
-                                return item;
-                            }
-                        });
-                        _this.setState({products: products, request: false});
-=======
                         response.splice(-1, 1);
                         _this.setState({products: response, request: false});
->>>>>>> master
                     },
                 );
             }
@@ -131,17 +107,8 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
-<<<<<<< HEAD
-                    let products = response.filter(item => {
-                        if(!item.count) {
-                            return item;
-                        }
-                    });
-                    _this.setState({products: products}, () => {
-=======
                     response.splice(-1, 1);
                     _this.setState({products: response}, () => {
->>>>>>> master
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category)
                         })
@@ -224,7 +191,6 @@ class ProductList extends Component {
                     <meta property="og:title" content="Каталог"/>
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
-<<<<<<< HEAD
                 
                 {this.state.path 
                 ? <Breadcrumbs 
@@ -232,14 +198,6 @@ class ProductList extends Component {
                         {title: 'Каталог', link: '/catalog'},
                         { title: this.state.path }
                     ]} /> : null}
-=======
-
-                {this.state.path
-                    ? <Breadcrumbs
-                        path={[
-                            {title: this.state.path}
-                        ]}/> : null}
->>>>>>> master
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">

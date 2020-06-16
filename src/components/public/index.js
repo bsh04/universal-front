@@ -152,7 +152,7 @@ class Index extends Component {
                 : <div>
                     <NewsCard type={{title: 'Новинки', category: 'product/new'}} />
                     <NewsCard type={{title: 'Акции', category: 'product/stock'}} />
-                    <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
+                    <h3 className="text-center mt-3"><Link to='/news'>Новости</Link></h3>
                     <News type="news"/>
                 </div> }
             </div>
