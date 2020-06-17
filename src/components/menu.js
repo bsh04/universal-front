@@ -67,9 +67,10 @@ class Menu extends Component {
 
     navbarFixed() {
         let fixed;
-        if(window.pageYOffset > this.menuMainImage.clientHeight) {
+        if(window.pageYOffset > this.menuMainImage.clientHeight
+            && window.innerHeight < (document.body.clientHeight - this.navBar.clientHeight)) {
             fixed = true;
-        } else if(window.pageYOffset <= this.menuMainImage.clientHeight){
+        } else {
             fixed = false;
         }
 
@@ -267,7 +268,7 @@ class Menu extends Component {
 
     render() {
         return (
-            <div>
+            <div ref={(target) => this.navBar = target}>
                 <div className='mainImage' ref={(target) => this.menuMainImage = target}>
                     <div className="row">
                         <div className="col-md-3 my-3 my-md-0">
