@@ -229,7 +229,7 @@ class Product extends Component {
                         <div className="col-sm-5 col-10 mt-5 my-sm-0 ">
                             <div className="row ">
                                 <div className="text-left col-8 " itemProp="price">
-                                    <span>
+                                    <span style={{fontSize: '1.5rem'}}>
                                         {this.state.item.price} &#8381;
                                     </span>
                                 </div>

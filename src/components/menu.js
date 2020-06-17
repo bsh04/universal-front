@@ -19,6 +19,7 @@ class Menu extends Component {
             showNavbar: false,
             searchInMenu: true,
             showCatalogOutMenu: true,
+            navFix: false,
             categories: [],
             redirect: null,
             like: [],
@@ -61,6 +62,21 @@ class Menu extends Component {
         
         this.checkWidnowSizeMD();
         window.addEventListener("resize", this.checkWidnowSizeMD.bind(this));
+        window.addEventListener("scroll", this.navbarFixed.bind(this));
+    }
+
+    navbarFixed() {
+        let fixed;
+        if(window.pageYOffset > this.menuMainImage.clientHeight) {
+            fixed = true;
+        } else if(window.pageYOffset <= this.menuMainImage.clientHeight){
+            fixed = false;
+        }
+
+        this.setState({
+            navFix: fixed
+        })
+
     }
 
     checkWidnowSizeMD() {
@@ -90,6 +106,7 @@ class Menu extends Component {
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.checkWidnowSizeMD.bind(this));
+        window.removeEventListener("scroll", this.navbarFixed.bind(this));
     }
 
     handleLogout() {
@@ -251,7 +268,7 @@ class Menu extends Component {
     render() {
         return (
             <div>
-                <div className='mainImage'>
+                <div className='mainImage' ref={(target) => this.menuMainImage = target}>
                     <div className="row">
                         <div className="col-md-3 my-3 my-md-0">
                             <Link to="/">
@@ -303,7 +320,7 @@ class Menu extends Component {
                     {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
                 </div>
                     
-                <nav className="navbar navbar-light navbar-expand-lg fixed">
+                <nav className={"navbar navbar-light navbar-expand-lg " + (this.state.navFix ? 'fixed-top' : '')}>
                     <button className={this.state.showNavbar ? "navbar-toggler" : "navbar-toggler collapsed"} type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded={this.state.showNavbar ? "false" : "true"} aria-label="Toggle navigation"
@@ -312,7 +329,7 @@ class Menu extends Component {
                     </button>
 
                     { this.state.searchInMenu
-                    ? <ul className="navbar-nav ml-auto mt-2">
+                    ? <ul className="navbar-nav ml-auto mt-2 w-75">
                             <li className="nav-item">
                                 <Search onFocus={() => this.hideCatalog()}/>
                             </li>
@@ -342,7 +359,7 @@ class Menu extends Component {
                             })}
                         </ul>
                         { !this.state.searchInMenu
-                        ? <ul className="navbar-nav container-fluid p-0">
+                        ? <ul className="navbar-nav container-fluid p-0 ">
                             <li className="nav-item w-100">
                                 <Search onFocus={() => this.hideCatalog()}/>
                             </li>

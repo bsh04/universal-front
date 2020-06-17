@@ -157,7 +157,7 @@ h3 > a {
   
   
   & .alert-success {
-    width: 25rem;
+    min-width: 25rem;
     background-color: #ffffff;
   }
 }
@@ -361,10 +361,6 @@ h3 > a {
   & .image-gallery {
     min-width: 270px;
     max-width: 60%;
-
-    &-thumbnails {
-      
-    }
   }
 }
 
@@ -465,9 +461,10 @@ h3 > a {
   }
 }
 
-nav {
+nav.navbar {
   box-shadow: 0 0 20px -5px #c3c3c3;
-  
+  background-color: #ffffff;
+
   .ml-auto {
     .dropdown-menu {
       right: 0;
@@ -519,6 +516,14 @@ nav {
     margin: 0 auto;
   }
 }
+.fixed-top .alert {
+  overflow-y: scroll;
+  max-height: 90vh;
+  width: 50vw;
+  & .show {
+    position: sticky;
+  }
+}
 .alert {
   padding: 0;
   border-color: #c7c7c7;
@@ -527,6 +532,7 @@ nav {
     padding: 0 10px;
     padding-left: 20px;
     border-bottom: 1px solid #c7c7c7;
+    position: relative;
   }
   & .empty-item {
     height: 2rem;
