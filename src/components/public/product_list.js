@@ -333,7 +333,6 @@ class ProductList extends Component {
                                     <Card item={item} key={item.id} update={this.updateFav}
                                           favorite={this.isFavorite(item) ? true : false}
                                           cardView={this.state.cardView}/>
-                                          <span>{key}</span>
                                 </div>
                             );
                         } else {

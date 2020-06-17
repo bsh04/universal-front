@@ -215,11 +215,11 @@ class Product extends Component {
                         {title: this.state.item.title}]}/>
                 : null}
                 <div className="product-page">
-                    <div className="row">
+                    <div className="row ">
                         <h5 className="card-title text-left font-weight-light col-12">{this.state.item.title}</h5>
                         <p className="text-left text-muted col-12"><small>Артикул: {this.state.item.id} </small></p>
                     </div>
-                    <div className="row">
+                    <div className="row ">
                         <div className="col-sm-7 col-10">
                             <ImageGallery 
                                 items={this.state.images}
