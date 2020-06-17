@@ -210,9 +210,12 @@ class Product extends Component {
                 </Helmet>
                 { this.state.item && this.state.item.category
                 ? <Breadcrumbs 
-                    path={[
-                        {title: this.state.item.category.title, link: `/catalog/${this.state.item.category.id}`}, 
-                        {title: this.state.item.title}]}/>
+                    path={[{title: 'Каталог', link: '/catalog'}].concat(
+                        this.state.item.category.parent ? [{
+                            title: this.state.item.category.parent.title, link: `/catalog/${this.state.item.category.parent.id}`
+                        }] : [],
+                        [{title: this.state.item.category.title, link: `/catalog/${this.state.item.category.id}`},
+                        {title: this.state.item.title}])}/>
                 : null}
                 <div className="product-page">
                     <div className="row">

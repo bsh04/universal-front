@@ -33,8 +33,8 @@ class ProductList extends Component {
     }
 
     loadMore() {
-        if(this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight && this.state.limitAll && this.state.products.length < this.state.totalItems) {
-            
+        if (this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight && this.state.limitAll && this.state.products.length < this.state.totalItems) {
+
             this.setState({
                 loading: true,
                 limit: (this.state.limit + 50)
@@ -115,7 +115,7 @@ class ProductList extends Component {
                     {},
                     function (response) {
                         let totalItems = response[response.length - 1].count;
-                        
+
                         response.splice(-1, 1);
                         _this.setState({products: response, totalItems: totalItems, request: false});
                     },
@@ -129,7 +129,7 @@ class ProductList extends Component {
                 {},
                 function (response) {
                     let totalItems = response[response.length - 1].count;
-                    
+
                     response.splice(-1, 1);
                     _this.setState({products: response}, () => {
                         _this.setState({
@@ -212,7 +212,7 @@ class ProductList extends Component {
             return (
                 <li key={key} className="page-item">
                     <a className="page-link" href="#" onClick={() => this.setState({offset: (this.state.limit * key)})}>
-                        {key+1}
+                        {key + 1}
                     </a>
                 </li>
             )
@@ -237,13 +237,21 @@ class ProductList extends Component {
                     <meta property="og:title" content="Каталог"/>
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
-                
-                {this.state.path 
-                ? <Breadcrumbs 
-                    path={[
-                        {title: 'Каталог', link: '/catalog'},
-                        { title: this.state.path }
-                    ]} /> : null}
+
+                {this.state.path && this.state.products.length > 0
+                    ? <Breadcrumbs
+                        path={[{title: 'Каталог', link: '/catalog'}].concat(
+                            this.props.match.params.category !== 'new'
+                            && this.props.match.params.category !== 'stock'
+                                && this.state.products[0].category.parent
+                                && this.state.products[0].category.parent.id !== this.props.match.params.category ?
+                                [{title: this.state.products[0].category.parent.title, link: ('/catalog/' + this.state.products[0].category.parent.id)}] : [],
+                            [
+                                this.state.products[0].category.parent
+                                && this.state.products[0].category.parent.id === this.props.match.params.category ?
+                                    {title: this.state.products[0].category.parent.title} :
+                                    {title: this.state.path} ]
+                        )}/> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
@@ -333,7 +341,6 @@ class ProductList extends Component {
                                     <Card item={item} key={item.id} update={this.updateFav}
                                           favorite={this.isFavorite(item) ? true : false}
                                           cardView={this.state.cardView}/>
-                                          <span>{key}</span>
                                 </div>
                             );
                         } else {
@@ -341,42 +348,42 @@ class ProductList extends Component {
                         }
                     }) : <p className={'text-center'}>Товары не найдены</p>}
                 </div>
-                {!this.state.limitAll && this.state.limit < this.state.totalItems
-                ? <nav aria-label="Page navigation example" className="row justify-content-center">
-                    <ul className="pagination">
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Previous" 
-                                onClick={() => {
-                                    if(this.state.offset > 0){
-                                        this.setState({
-                                            offset: (this.state.offset - this.state.limit)
-                                        })
-                                    }
-                                }}>
-                                <span aria-hidden="true">&laquo;</span>
-                                <span className="sr-only">Previous</span>
-                            </a>
-                        </li>
+                {!this.state.limitAll && parseInt(this.state.limit) < parseInt(this.state.totalItems)
+                    ? <nav aria-label="Page navigation example" className="row justify-content-center">
+                        <ul className="pagination">
+                            <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Previous"
+                                   onClick={() => {
+                                       if (this.state.offset > 0) {
+                                           this.setState({
+                                               offset: (this.state.offset - this.state.limit)
+                                           })
+                                       }
+                                   }}>
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span className="sr-only">Previous</span>
+                                </a>
+                            </li>
 
-                        {this.paginationItems()}
+                            {this.paginationItems()}
 
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Next"
-                            onClick={() => {
-                                if(this.state.offset < this.state.totalItems){
-                                    this.setState({
-                                        offset: (this.state.offset + this.state.limit)
-                                    })
-                                }
-                            }}>
-                                <span aria-hidden="true">&raquo;</span>
-                                <span className="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                : null }
-                {this.state.loading ? <Loading /> : null}
+                            <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Next"
+                                   onClick={() => {
+                                       if (this.state.offset < this.state.totalItems) {
+                                           this.setState({
+                                               offset: (this.state.offset + this.state.limit)
+                                           })
+                                       }
+                                   }}>
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span className="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    : null}
+                {this.state.loading ? <Loading/> : null}
             </div>
         );
     }
