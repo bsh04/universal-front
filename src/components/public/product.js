@@ -193,6 +193,7 @@ class Product extends Component {
         if(!this.state.item){
             return <p>Подождите...</p>
         }
+        console.log(this.state.item)
 
         return (
             <div>
@@ -209,16 +210,19 @@ class Product extends Component {
                 </Helmet>
                 { this.state.item && this.state.item.category
                 ? <Breadcrumbs 
-                    path={[
-                        {title: this.state.item.category.title, link: `/catalog/${this.state.item.category.id}`}, 
-                        {title: this.state.item.title}]}/>
+                    path={[{title: 'Каталог', link: '/catalog'}].concat(
+                        this.state.item.category.parent ? [{
+                            title: this.state.item.category.parent.title, link: `/catalog/${this.state.item.category.parent.id}`
+                        }] : [],
+                        [{title: this.state.item.category.title, link: `/catalog/${this.state.item.category.id}`},
+                        {title: this.state.item.title}])}/>
                 : null}
                 <div className="product-page">
-                    <div className="row">
+                    <div className="row ">
                         <h5 className="card-title text-left font-weight-light col-12">{this.state.item.title}</h5>
                         <p className="text-left text-muted col-12"><small>Артикул: {this.state.item.id} </small></p>
                     </div>
-                    <div className="row">
+                    <div className="row ">
                         <div className="col-sm-7 col-10">
                             <ImageGallery 
                                 items={this.state.images}
@@ -229,7 +233,7 @@ class Product extends Component {
                         <div className="col-sm-5 col-10 mt-5 my-sm-0 ">
                             <div className="row ">
                                 <div className="text-left col-8 " itemProp="price">
-                                    <span>
+                                    <span style={{fontSize: '1.5rem'}}>
                                         {this.state.item.price} &#8381;
                                     </span>
                                 </div>
