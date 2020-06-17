@@ -34,9 +34,7 @@ class ProductList extends Component {
 
     loadMore() {
         if(this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight && this.state.limitAll && this.state.products.length < this.state.totalItems) {
-            console.log('productListInnerContainer:', this.productListInnerContainer.getBoundingClientRect().bottom)
-            console.log('window.clientHeight:', window.innerHeight)
-
+            
             this.setState({
                 loading: true,
                 limit: (this.state.limit + 50)
@@ -222,8 +220,7 @@ class ProductList extends Component {
     }
 
     render() {
-        console.log('total:',this.state.totalItems)
-        console.log('limit:',this.state.limit)
+        console.log(this.state.products)
         return (
             <div>
                 <Helmet>

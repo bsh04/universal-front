@@ -193,6 +193,7 @@ class Product extends Component {
         if(!this.state.item){
             return <p>Подождите...</p>
         }
+        console.log(this.state.item)
 
         return (
             <div>

@@ -71,7 +71,7 @@ class PublicLayout extends Component {
                     </div>
                     {/*<div className='col-md-2'></div>*/}
                 </div>
-                <ScrollUpButton/>
+                <ScrollUpButton style={{zIndex: 50}}/>
                 <Footer />
             </div>
         );

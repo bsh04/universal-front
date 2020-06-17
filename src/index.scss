@@ -165,7 +165,7 @@ h3 > a {
 .catalog_main .collapse {
   
   &.show {
-    position: absolute;
+    position: sticky;
     background-color: #ffffff;
     border: 1px solid #c7c7c7;
     width: 100%;
@@ -518,8 +518,7 @@ nav.navbar {
 }
 .fixed-top .alert {
   overflow-y: scroll;
-  max-height: 90vh;
-  width: 50vw;
+
   & .show {
     position: sticky;
   }
@@ -527,6 +526,8 @@ nav.navbar {
 .alert {
   padding: 0;
   border-color: #c7c7c7;
+  max-height: 60vh;
+  overflow-y: scroll;
   
   & .text-left {
     padding: 0 10px;
