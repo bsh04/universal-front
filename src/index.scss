@@ -157,7 +157,7 @@ h3 > a {
   
   
   & .alert-success {
-    width: 25rem;
+    min-width: 25rem;
     background-color: #ffffff;
   }
 }
@@ -165,7 +165,7 @@ h3 > a {
 .catalog_main .collapse {
   
   &.show {
-    position: absolute;
+    position: sticky;
     background-color: #ffffff;
     border: 1px solid #c7c7c7;
     width: 100%;
@@ -256,6 +256,7 @@ h3 > a {
       min-height: 150px;
       height: 150px;
       object-fit: contain;
+      z-index: 10;
     }
   }
   
@@ -308,17 +309,26 @@ h3 > a {
 }
 .news-card {
   .carousel-indicators {
-    z-index: 10;
+    z-index: 9;
   }
   & .carousel-inner {
     max-width: 60%;
     margin: 0 auto;
+    overflow: visible;
   }
   & .news-card__controls {
     z-index: 10;
   }
   & .card-body .col-md-12{
     padding: 0;
+  }
+  & .card-position {
+
+    position: relative;
+    margin-bottom: 100px;
+  }
+  & .hover {
+    position: relative;
   }
 }
 
@@ -350,14 +360,10 @@ h3 > a {
 }
 
 .product-page {
-  height: 65vh;
+  min-height: 65vh;
   & .image-gallery {
     min-width: 270px;
     max-width: 60%;
-
-    &-thumbnails {
-      
-    }
   }
 }
 
@@ -458,9 +464,10 @@ h3 > a {
   }
 }
 
-nav {
+nav.navbar {
   box-shadow: 0 0 20px -5px #c3c3c3;
-  
+  background-color: #ffffff;
+
   .ml-auto {
     .dropdown-menu {
       right: 0;
@@ -512,14 +519,18 @@ nav {
     margin: 0 auto;
   }
 }
+
 .alert {
   padding: 0;
   border-color: #c7c7c7;
+  max-height: 60vh;
+  overflow-y: scroll;
   
   & .text-left {
     padding: 0 10px;
     padding-left: 20px;
     border-bottom: 1px solid #c7c7c7;
+    position: relative;
   }
   & .empty-item {
     height: 2rem;

@@ -115,7 +115,7 @@ class Basket extends Component {
                                         <h5 className={'text-left'}>{item.product.title}</h5>
                                         <p className="card-text">
                                             <small className="text-muted">Код товара: {item.product.id} </small> {item.new ? <span className="badge badge-success">Новинка!</span> : ''} {item.stock ? <span className="badge badge-danger">Акция!</span> : ''}<br/>
-                                            Цена: {item.product.price} * {item.count} = {item.product.price * item.count} р.
+                                            Цена: {item.product.price} * {item.count} = {parseFloat((item.product.price * item.count).toFixed(2))} р.
                                             {item.product.balance == 0 ? <div className="alert alert-danger" role="alert">
                                                     Этого товара нет в наличии. При оформлении заказа он не будет учтен.
                                                 </div> : ''}
@@ -150,7 +150,7 @@ class Basket extends Component {
                         </tr> }
                         {this.state.products.length > 0 ? <tr>
                             <td colSpan={3}>
-                                <p className={'h5'}>Итого: {sum} рублей.</p>
+                                <p className={'h5'}>Итого: {parseFloat((sum).toFixed(2))} рублей.</p>
                             </td>
                             <td>
                                 <Link to={'/user/order/add'} className={'btn btn-success'}>

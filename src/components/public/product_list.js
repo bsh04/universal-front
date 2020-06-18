@@ -5,6 +5,8 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import {Helmet} from "react-helmet";
 import Breadcrumbs from '../breadcrumbs';
+import Loading from '../loading';
+
 
 import Card from './parts/card';
 
@@ -16,15 +18,28 @@ class ProductList extends Component {
         this.updateFav = this.updateFav.bind(this);
 
         this.state = {
+            loading: false,
+            limitAll: false,
+            totalItems: 50,
             products: [],
             favorites: [],
             cardView: 'tile',
-            viewCount: 30,
             limit: 50,
+            offset: 0,
             sort: ['title', 'asc'],
             request: false,
             path: null
         };
+    }
+
+    loadMore() {
+        if (this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight && this.state.limitAll && this.state.products.length < this.state.totalItems) {
+
+            this.setState({
+                loading: true,
+                limit: (this.state.limit + 50)
+            }, () => this.handleGet(this.props.match.params.category))
+        }
     }
 
     setCategory(cat) {
@@ -32,7 +47,7 @@ class ProductList extends Component {
             return 'Новые товары';
         } else if (cat === 'stock') {
             return 'Товары по акции';
-        } else if (this.state.products && this.state.products[0]) { console.log(this.state.products[0])
+        } else if (this.state.products && this.state.products[0]) {
             return this.state.products[0].category.title;
         }
     }
@@ -55,8 +70,11 @@ class ProductList extends Component {
         }
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.loadMore.bind(this));
+    }
+
     componentWillReceiveProps(props) {
-        this.setState({viewCount: 30});
         this.handleGet(props.match.params.category);
 
         let path = this.setCategory(props.match.params.category)
@@ -70,7 +88,8 @@ class ProductList extends Component {
             cat: cat,
             limit: this.state.limit,
             sort_field: `${this.state.sort[0]}`,
-            sort: `${this.state.sort[1]}`
+            sort: `${this.state.sort[1]}`,
+            offset: this.state.offset
         }
         let str = "";
         for (let key in obj) {
@@ -95,8 +114,10 @@ class ProductList extends Component {
                     },
                     {},
                     function (response) {
+                        let totalItems = response[response.length - 1].count;
+
                         response.splice(-1, 1);
-                        _this.setState({products: response, request: false});
+                        _this.setState({products: response, totalItems: totalItems, request: false});
                     },
                 );
             }
@@ -107,10 +128,14 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
+                    let totalItems = response[response.length - 1].count;
+
                     response.splice(-1, 1);
                     _this.setState({products: response}, () => {
                         _this.setState({
-                            path: _this.setCategory(_this.props.match.params.category)
+                            path: _this.setCategory(_this.props.match.params.category),
+                            totalItems: totalItems,
+                            loading: false
                         })
                     });
                 },
@@ -142,13 +167,19 @@ class ProductList extends Component {
         return result.length > 0;
     }
 
-    setLimit = (e) => {
+    setLimit = (e, all = false) => {
         let limit = e.target.getAttribute('data');
         this.setState({
-            limit: limit
+            limit: limit,
+            offset: 0,
+            limitAll: all
         }, () => {
             this.handleGet(this.props.match.params.category)
-        })
+        });
+        if (all) {
+            window.addEventListener("scroll", this.loadMore.bind(this));
+        }
+
     }
     setSort = (e) => {
         let sort = e.target.getAttribute('data').split(',');
@@ -174,7 +205,22 @@ class ProductList extends Component {
         }
     }
 
+    paginationItems() {
+        let arr = new Array(Math.ceil(this.state.totalItems / this.state.limit)).fill('');
+
+        return arr.map((item, key) => {
+            return (
+                <li key={key} className="page-item">
+                    <a className="page-link" href="#" onClick={() => this.setState({offset: (this.state.limit * key)})}>
+                        {key + 1}
+                    </a>
+                </li>
+            )
+        });
+    }
+
     render() {
+        console.log(this.state.products)
         return (
             <div>
                 <Helmet>
@@ -191,13 +237,21 @@ class ProductList extends Component {
                     <meta property="og:title" content="Каталог"/>
                     <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                 </Helmet>
-                
-                {this.state.path 
-                ? <Breadcrumbs 
-                    path={[
-                        {title: 'Каталог', link: '/catalog'},
-                        { title: this.state.path }
-                    ]} /> : null}
+
+                {this.state.path && this.state.products.length > 0
+                    ? <Breadcrumbs
+                        path={[{title: 'Каталог', link: '/catalog'}].concat(
+                            this.props.match.params.category !== 'new'
+                            && this.props.match.params.category !== 'stock'
+                                && this.state.products[0].category.parent
+                                && this.state.products[0].category.parent.id !== this.props.match.params.category ?
+                                [{title: this.state.products[0].category.parent.title, link: ('/catalog/' + this.state.products[0].category.parent.id)}] : [],
+                            [
+                                this.state.products[0].category.parent
+                                && this.state.products[0].category.parent.id === this.props.match.params.category ?
+                                    {title: this.state.products[0].category.parent.title} :
+                                    {title: this.state.path} ]
+                        )}/> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
@@ -236,15 +290,15 @@ class ProductList extends Component {
                                        aria-haspopup="true"
                                        aria-expanded="false">
                                         <span
-                                            className="products-toolbar-item__selected">{this.state.limit ? this.state.limit : 'Все'}</span>
+                                            className="products-toolbar-item__selected">{this.state.limitAll ? 'Все' : this.state.limit}</span>
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a className="dropdown-item" href="#" data="50"
-                                           onClick={(e) => this.setLimit(e)}>50</a>
+                                           onClick={(e) => this.setLimit(e, false)}>50</a>
                                         <a className="dropdown-item" href="#" data="100"
-                                           onClick={(e) => this.setLimit(e)}>100</a>
-                                        <a className="dropdown-item" href="#" data={null}
-                                           onClick={(e) => this.setLimit(e)}>Все</a>
+                                           onClick={(e) => this.setLimit(e, false)}>100</a>
+                                        <a className="dropdown-item" href="#" data="50"
+                                           onClick={(e) => this.setLimit(e, true)}>Все</a>
                                     </div>
                                 </div>
 
@@ -277,9 +331,9 @@ class ProductList extends Component {
                         </ul>
                     </ul>
                 </div>
-                <div className="row">
+                <div className="row" ref={(target) => this.productListInnerContainer = target}>
                     {this.state.products.length > 0 ? this.state.products.map((item, key) => {
-                        if (key < this.state.viewCount) {
+                        if (key < this.state.limit) {
                             return (
                                 <div className={this.state.cardView === 'tile' ? "col-md-3" : 'col-md-12'}
                                      style={{paddingBottom: '10px'}}
@@ -294,13 +348,42 @@ class ProductList extends Component {
                         }
                     }) : <p className={'text-center'}>Товары не найдены</p>}
                 </div>
-                {this.state.viewCount < this.state.products.length ?
-                    <button className={'btn btn-success'}
-                            onClick={() => {
-                                this.setState({viewCount: (this.state.viewCount + 30)})
-                            }}>
-                        <i className={'fa fa-cloud-download-alt'}> <span>Загрузить еще</span></i>
-                    </button> : null}
+                {!this.state.limitAll && parseInt(this.state.limit) < parseInt(this.state.totalItems)
+                    ? <nav aria-label="Page navigation example" className="row justify-content-center">
+                        <ul className="pagination">
+                            <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Previous"
+                                   onClick={() => {
+                                       if (this.state.offset > 0) {
+                                           this.setState({
+                                               offset: (this.state.offset - this.state.limit)
+                                           })
+                                       }
+                                   }}>
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span className="sr-only">Previous</span>
+                                </a>
+                            </li>
+
+                            {this.paginationItems()}
+
+                            <li className="page-item">
+                                <a className="page-link" href="#" aria-label="Next"
+                                   onClick={() => {
+                                       if (this.state.offset < this.state.totalItems) {
+                                           this.setState({
+                                               offset: (this.state.offset + this.state.limit)
+                                           })
+                                       }
+                                   }}>
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span className="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    : null}
+                {this.state.loading ? <Loading/> : null}
             </div>
         );
     }
