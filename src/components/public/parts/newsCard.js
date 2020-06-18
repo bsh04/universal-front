@@ -94,7 +94,7 @@ class NewsCard extends Component {
                 <div id={"carouselExampleIndicators_" + this.state.type.category.id}
                      className="news-card carousel slide"
                      data-ride="carousel"
-                     style={{minHeight: this.state.items.length > 0 ? '400px' : 0, maxWidth: window.innerWidth, overflow: 'hidden'}}>
+                     style={{minHeight: this.state.items.length > 0 ? '480px' : 0, maxWidth: window.innerWidth, overflow: 'hidden'}}>
 
                     {this.state.items.length > 0 ? <>
                         <div className="carousel-inner">

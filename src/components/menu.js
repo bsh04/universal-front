@@ -280,9 +280,9 @@ class Menu extends Component {
                         <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
                             <p className={'text-md-left text-center'}>
                                 <span>
-                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 909291'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-92-91'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
                                     <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">+7 (3822) 90-44-32</a></i><br/>
-                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 902-668'} itemProp="telephone">+7 (3822) 902-668</a></i>
+                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-26-68'} itemProp="telephone">+7 (3822) 90-26-68</a></i>
                                 </span>
                                 <br/>
                             </p>
