@@ -181,7 +181,7 @@ class Card extends Component {
                 itemProp="name">
                     {this.props.item.title}
             </h5>
-            <div className="d-flex justify-content-start">
+            <div className="d-flex justify-content-start card-sticker">
                 {this.props.item.new ? (<Link to={'/catalog/new'}><span className="badge badge-success ">Новинка!</span></Link>) : ''}
                 {this.props.item.stock ? (<Link to={'/catalog/stock'}><span className="badge badge-danger ">Акция!</span></Link>) : ''}
             </div>
