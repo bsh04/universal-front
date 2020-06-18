@@ -26,6 +26,7 @@ class ProductList extends Component {
             cardView: 'tile',
             limit: 50,
             offset: 0,
+            catList: [],
             sort: ['title', 'asc'],
             request: false,
             path: null
@@ -117,7 +118,7 @@ class ProductList extends Component {
                         let totalItems = response[response.length - 1].count;
 
                         response.splice(-1, 1);
-                        _this.setState({products: response, totalItems: totalItems, request: false});
+                        _this.setState({products: response, catlist: [], totalItems: totalItems, request: false});
                     },
                 );
             }
@@ -131,11 +132,21 @@ class ProductList extends Component {
                     let totalItems = response[response.length - 1].count;
 
                     response.splice(-1, 1);
-                    _this.setState({products: response}, () => {
+                    let categories = [];
+                    response.map(item => {
+                        let tmp = {id: item.category.id, title: item.category.title}
+                        if (categories.find((element) => {
+                            return tmp.id === element.id
+                        }) === undefined) {
+                            categories.push(tmp);
+                        }
+                    });
+
+                    _this.setState({products: response, catList: categories,}, () => {
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category),
                             totalItems: totalItems,
-                            loading: false
+                            loading: false,
                         })
                     });
                 },
@@ -220,7 +231,6 @@ class ProductList extends Component {
     }
 
     render() {
-        console.log(this.state.products)
         return (
             <div>
                 <Helmet>
@@ -239,19 +249,34 @@ class ProductList extends Component {
                 </Helmet>
 
                 {this.state.path && this.state.products.length > 0
-                    ? <Breadcrumbs
+                    ?
+                    <Breadcrumbs
                         path={[{title: 'Каталог', link: '/catalog'}].concat(
                             this.props.match.params.category !== 'new'
                             && this.props.match.params.category !== 'stock'
-                                && this.state.products[0].category.parent
-                                && this.state.products[0].category.parent.id !== this.props.match.params.category ?
-                                [{title: this.state.products[0].category.parent.title, link: ('/catalog/' + this.state.products[0].category.parent.id)}] : [],
+                            && this.state.products[0].category.parent
+                            && this.state.products[0].category.parent.id !== this.props.match.params.category ?
+                                [{
+                                    title: this.state.products[0].category.parent.title,
+                                    link: ('/catalog/' + this.state.products[0].category.parent.id)
+                                }] : [],
                             [
                                 this.state.products[0].category.parent
                                 && this.state.products[0].category.parent.id === this.props.match.params.category ?
                                     {title: this.state.products[0].category.parent.title} :
-                                    {title: this.state.path} ]
-                        )}/> : null}
+                                    {title: this.state.path}]
+                        )}/>
+                    : null}
+                {this.props.match.params.category !== 'new'
+                && this.props.match.params.category !== 'stock'
+                && this.state.catList.length > 1 ?
+                    <div className="alert alert-light" role="alert">
+                        Подкатегории: {this.state.catList.map((subcat, key) => {
+                        return <span key={key} ><Link to={'/catalog/' + subcat.id}>
+                            {subcat.title}
+                        </Link>{key < this.state.catList.length - 1 ? ', ' : ''}</span>
+                    })}
+                    </div> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">

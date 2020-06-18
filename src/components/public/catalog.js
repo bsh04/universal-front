@@ -34,15 +34,18 @@ class Catalog extends Component {
         return (
             <div>
                 <h1>Каталог</h1>
-                <ul className={'text-left'}>
+                <div className="main-catalog-list">
                     {this.state.categories.map((item, key) => {
                         return (
-                            <li key={key}>
-                                <Link to={'/catalog/' + item.id}>{item.title}</Link>
-                            </li>
+                            <div key={item.id} className="main-catalog-list__item">
+                                <Link to={'/catalog/' + item.id}
+                                      className="main-catalog-list__text">
+                                    <span>{item.title}</span>
+                                </Link>
+                            </div>
                         );
                     })}
-                </ul>
+                </div>
             </div>
         );
     }
