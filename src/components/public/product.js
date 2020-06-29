@@ -32,7 +32,7 @@ class Product extends Component {
 
     componentDidMount() {
         let itemId = this.props.match.params.id;
-        
+        console.log('from DidMount', itemId)
         let _this = this;
         request(
             `product/item/${itemId}`,
@@ -51,7 +51,9 @@ class Product extends Component {
                     item: response,
                     images: images
                 });
-            },
+                console.log('RESPONSE:', response)
+            }, 
+            (e) => {console.log('ERROR:', e)}
         );
         
         request(

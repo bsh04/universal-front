@@ -54,6 +54,7 @@ class ProductList extends Component {
     }
 
     componentWillMount() {
+        console.log(this.obj)
         this.handleGet(this.props.match.params.category);
 
         if (this.props.token !== false) {
@@ -123,12 +124,14 @@ class ProductList extends Component {
                 );
             }
         } else {
+            console.log('fromProductList:', cat)
             request(
                 'product/' + cat + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
                 'GET',
                 null,
                 {},
                 function (response) {
+                    console.log('fromProdList response:', response)
                     let totalItems = response[response.length - 1].count;
 
                     response.splice(-1, 1);
@@ -149,7 +152,7 @@ class ProductList extends Component {
                             loading: false,
                         })
                     });
-                },
+                }, (e) => console.log('fromProdList response:', e)
             );
         }
     }

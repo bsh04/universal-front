@@ -48,11 +48,14 @@ class ArticleList extends Component {
                 </Helmet>
                 <Breadcrumbs path={[{title: 'Швейный цех'}]} />
                 <h1 itemProp="headline">Швейный цех</h1>
-                <ul>
+                <div className="workshop-banner">
+                    <img src={require("../../../images/workshop_banner.jpeg")} alt="Швейное производство" className="workshop-banner__image"/>
+                </div>
+                <ul className="main-catalog-list pl-0 mt-3 mx-auto" style={{listStyle: 'none'}}>
                 {this.state.articles.map((item, key) => {
                     return(
-                        <li itemProp="itemListElement" key={key} className={'text-left'}>
-                            <Link to={'/workshop/' + item.id}>{item.title}</Link>
+                        <li itemProp="itemListElement" key={key} className={'text-left main-catalog-list__item'}>
+                            <Link to={'/workshop/' + item.id} className="main-catalog-list__text">{item.title}</Link>
                         </li>
                     );
                 })}

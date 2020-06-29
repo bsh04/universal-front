@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import request from "../services/ajaxManager";
 import CategoryList from './public/parts/category_list';
 import Search from './public/parts/search';
+import MenuTopSecond from './public/parts/menuTopSecond';
 
 
 class Menu extends Component {
@@ -270,56 +271,9 @@ class Menu extends Component {
         return (
             <div ref={(target) => this.navBar = target}>
                 <div className='mainImage' ref={(target) => this.menuMainImage = target}>
-                    <div className="row">
-                        <div className="col-md-3 my-3 my-md-0">
-                            <Link to="/">
-                                <h1 className="text-center">Универсал</h1>
-                                <h2 className="text-center">Хозяйственные товары</h2>
-                            </Link>
-                        </div>
-                        <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
-                            <p className={'text-md-left text-center'}>
-                                <span>
-                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-92-91'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
-                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">+7 (3822) 90-44-32</a></i><br/>
-                                    <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-26-68'} itemProp="telephone">+7 (3822) 90-26-68</a></i>
-                                </span>
-                                <br/>
-                            </p>
-                        </div>
-                        <div className="col-md-3 text-md-left text-center my-3 my-md-0 d-none d-md-block">
-                            <i className={'fa fa-envelope '}> <a href={'email:razov@mail.tomsknet.ru'} itemProp="email">razov@mail.tomsknet.ru</a></i><br/>
-                            <p className="street-addres" itemProp="streetAddress"><i className={'fa fa-map-marker'}></i> Адрес: г. Томск, ул. Бердская, 31 <br/>(пер. Пойменный 5)</p>
-                        </div>
-                        <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
-                            <div className="shedule">
-                                График работы
-                            </div>
-                            <div className="shedule-tooltip">
-                                <p><b>ПН-ПТ</b> <span>9:00 - 17:00</span></p>
-                                <p><b>СБ</b> <span>9:00 - 14:00</span></p>
-                                <p><b>ВС</b> <span>ВЫХОДНОЙ</span></p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 text-md-right text-center my-3 my-md-0">
-                            <p>
-                            { this.props.token ?
-                                    <Link to='/user/basket' className="iconButtons">
-                                        <i className={'fa fa-shopping-cart'}> </i>
-                                        {this.state.basket.length > 0 ? <span className={'badge badge-danger'}>{this.state.basket.length}</span> : null}
-                                    </Link>
-                                 : '' }
-                            { this.props.token ?
-                                    <Link to='/user/favorite' className="iconButtons">
-                                        <i className={'fa fa-heart'}> </i>
-                                        {this.state.like.length > 0 ? <span className={'badge badge-danger'}>{this.state.like.length}</span> : null}
-                                    </Link>
-                                 : '' }
-                            </p>
-                        </div>
-                    </div>
-                    {/*<img alt='main' src={require('../images/logo-min.png')} />*/}
+                    <MenuTopSecond basket={this.state.basket} like={this.state.like} token={this.props.token} />
                 </div>
+                
                     
                 <nav className={"navbar navbar-light navbar-expand-lg " + (this.state.navFix ? 'fixed-top' : '')}>
                     <button className={this.state.showNavbar ? "navbar-toggler" : "navbar-toggler collapsed"} type="button" data-toggle="collapse"
@@ -384,7 +338,7 @@ class Menu extends Component {
                         </ul>
                     </div>
                 </nav>
-                <div style={{height: "56px"}}></div>
+                <div className="empty"></div>
             </div>
         );
     }

@@ -54,6 +54,11 @@ h3 > a {
     text-transform: uppercase;
     color: rgba(40, 167, 69, 1);
   }
+  @media screen and (max-width: 767px){
+    & h1 {
+      font-size: 1.5rem;
+    }
+  }
 
   h2 {
     font-weight: 600;
@@ -133,6 +138,15 @@ h3 > a {
       }
       
     }
+  }
+}
+
+.empty {
+  height: 56px;  
+}
+@media screen and (max-width: 767px){
+ .empty {
+    display: none;
   }
 }
 
@@ -404,7 +418,7 @@ h3 > a {
 
   .carousel-control-prev, .carousel-control-next {
     color: #000000;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0);
   }
 }
 
@@ -565,4 +579,44 @@ nav.navbar {
 
 .fav-img {
   max-width: 10vw;
+}
+
+.workshop-banner{
+  
+  &__image {
+    max-width: 800px;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+.editorClassName {
+  height: 30vh !important;
+}
+
+.scrollDownBtn {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 50%; 
+    border: 5px solid black; 
+    height: 50px; 
+    position: fixed; 
+    bottom: 20px; 
+    width: 50px; 
+    transition: opacity 0.5s ease-in-out 0s, right; 
+    cursor: pointer; 
+    z-index: 50;
+}
+
+.menuTopWrapper {
+  background: url('./images/wood_background.jpg');
+  background-size: cover;
+  color: #fff !important;
+  & a {
+    color: #fff !important;
+  }
+  .shedule-tooltip {
+    color: #000
+  }
+
+  
 }

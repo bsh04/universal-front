@@ -16,7 +16,7 @@ class CategoryList extends Component {
     componentDidMount() {
         this.setState({
             categories: this.props.categories
-        })
+        }, () => console.log(this.state.categories))
     }
 
     
