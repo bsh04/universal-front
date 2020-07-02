@@ -62,7 +62,7 @@ h3 > a {
 }
 
 .catalog_main {
-  
+  max-height: 60vh;
   position: absolute;
   top: 100%;
   left: 0;
@@ -75,6 +75,17 @@ h3 > a {
   & .alert-success {
     min-width: 25rem;
     background-color: #ffffff;
+  }
+}
+
+.index_page .catalog_main {
+  
+  position: unset;
+  max-height: unset;
+  .alert {
+    z-index: 20;
+    overflow: visible;
+    max-height: unset;
   }
 }
 
