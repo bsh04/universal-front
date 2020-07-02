@@ -8,18 +8,9 @@ class CategoryList extends Component {
         super(props);
 
         this.state = {
-            categories: props.categories,
             open: [],
         };
     }
-
-    componentDidMount() {
-        this.setState({
-            categories: this.props.categories
-        })
-    }
-
-    
 
     changeState(id) {
         let arr = this.state.open;
@@ -82,15 +73,17 @@ class CategoryList extends Component {
 
     render() {
         let parts = window.location.pathname.split('/');
+        console.log('PROPS:',this.props.categories)
 
         return (
-            <div className='catalog_main' style={{maxHeight: window.innerHeight * .6}}>
+            <div className='catalog_main'>
                 <div className="alert alert-success">
                     
                     {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
                     {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
                     <div className={'text-left empty-item '}></div>
-                    {this.state.categories ? this.state.categories.map((item) => {
+                    {this.props.categories ? this.props.categories.map((item) => {
+                        console.log('render!')
                         return (
                             this.itemView(item)
                         );

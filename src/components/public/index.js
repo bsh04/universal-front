@@ -5,6 +5,7 @@ import {Helmet} from "react-helmet";
 import News from './parts/news';
 import NewsCard from './parts/newsCard';
 import CardCarousel from './parts/cards_carousel';
+import CategoryList from '../public/parts/category_list';
 import request from "../../services/ajaxManager";
 
 class Index extends Component {
@@ -113,10 +114,10 @@ class Index extends Component {
     }
 
     render() {
-        let items = this.state.categories.map(item => {
+        /*let items = this.state.categories.map(item => {
             return this.itemView(item)
-        });
-        
+        });*/
+        console.log(this.state.categories)
         return (
             <div>
                 <Helmet>
@@ -134,10 +135,9 @@ class Index extends Component {
                 { !this.state.isMobile 
                 ? <div className="row">
                     {this.state.showCatalogOutMenu 
-                    ?<div className="col-md-3 p-0">
-                        <div className="main-catalog-list">
-                            {items}
-                        </div>
+                    ?<div className="col-md-3 p-0 index_page">
+                        <CategoryList categories={this.state.categories} />
+                        
                     </div>
                     : null }
                     <div className={this.state.showCatalogOutMenu ? "col-md-9" : "col-md-12"}>
