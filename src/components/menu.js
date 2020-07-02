@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import request from "../services/ajaxManager";
 import CategoryList from './public/parts/category_list';
 import Search from './public/parts/search';
-import MenuTopSecond from './public/parts/menuTopSecond';
+import MenuTop from './public/parts/menuTop';
 
 
 class Menu extends Component {
@@ -152,6 +152,9 @@ class Menu extends Component {
                 })
 
                 _this.setState({categories: sorted});
+                //console.table(_this.state.categories)
+                //console.table(_this.state.categories[20].children)
+                //console.table(_this.state.categories[21].children)
             },
         );
     }
@@ -271,7 +274,7 @@ class Menu extends Component {
         return (
             <div ref={(target) => this.navBar = target}>
                 <div className='mainImage' ref={(target) => this.menuMainImage = target}>
-                    <MenuTopSecond basket={this.state.basket} like={this.state.like} token={this.props.token} />
+                    <MenuTop basket={this.state.basket} like={this.state.like} token={this.props.token} />
                 </div>
                 
                     

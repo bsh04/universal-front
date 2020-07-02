@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
 import request from '../../../services/ajaxManager';
+import { serverImages } from '../../../services/parameters';
 
 class NewsList extends Component {
     constructor(props) {
@@ -64,17 +65,31 @@ class NewsList extends Component {
 
     handleEdit(key)
     {
-        let data = {
+        /*let data = {
             id: this.state.news[key].id,
+            type: 'news',
             title: this.titleEditInput.value,
             short_content: this.contentEditInput.value,
+            photo: this.changedFileInput.files[0]
+        };*/
+
+        let data = new FormData();
+
+        data.append('id', this.state.news[key].id,);
+        data.append('type', 'news');
+        data.append('title', this.titleEditInput.value);
+        data.append('short_content', this.contentEditInput.value);
+        
+        if(this.changedFileInput.files[0] !== undefined) {
+            data.append('photo', this.changedFileInput.files[0])
         };
+        
 
         let _this = this;
 
         request(
             'news/',
-            'PUT',
+            'POST',
             data,
             {},
             function (response)
@@ -83,7 +98,7 @@ class NewsList extends Component {
                 arr[key] = response;
                 _this.setState({news: arr, edit: null});
             },
-            this.state.errorCallback
+            () => console.log()
         );
     }
 
@@ -114,7 +129,7 @@ class NewsList extends Component {
         if (this.state.add) {
             return (
                 <tr>
-                    <td colSpan={4}>
+                    <td colSpan={5}>
                         <form onSubmit={this.handleSubmit}>
                             <input
                                 name="title"
@@ -161,6 +176,7 @@ class NewsList extends Component {
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td>
                         <button className={'btn btn-success'} onClick={() => {this.setState({add: true})}}>
                             <i className={'fa fa-plus'}> Добавить новость</i>
@@ -179,6 +195,7 @@ class NewsList extends Component {
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Фотография</th>
                             <th>Заголовок</th>
                             <th>Описание</th>
                             <th>Управление</th>
@@ -191,6 +208,17 @@ class NewsList extends Component {
                                 return(
                                     <tr key={key}>
                                         <td>{key + 1}</td>
+                                        <td>
+                                            <img src={serverImages + item.photo} style={{width: 'auto', height: 50}}/><br/>
+                                            <input
+                                                name="file"
+                                                type="file"
+                                                required={true}
+                                                placeholder={"Файл с данными:*"}
+                                                className={'form-control '}
+                                                ref={(input) => {this.changedFileInput = input}}
+                                            />
+                                        </td>
                                         <td><input
                                             name="title"
                                             type="text"
@@ -228,6 +256,7 @@ class NewsList extends Component {
                             return (
                                 <tr key={key}>
                                     <td>{key + 1}</td>
+                                    <td><img src={serverImages + item.photo} style={{width: 'auto', height: 50}}/></td>
                                     <td>{item.title}</td>
                                     <td>{item.short_content}</td>
                                     <td>

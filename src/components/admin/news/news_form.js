@@ -44,7 +44,7 @@ class NewsList extends AbstractForm {
                         name="file"
                         type="file"
                         required={true}
-                        placeholder={"Файл с даными:*"}
+                        placeholder={"Файл с данными:*"}
                         className={'form-control '}
                         ref={(input) => {this.fileInput = input}}
                     />
