@@ -73,7 +73,6 @@ class CategoryList extends Component {
 
     render() {
         let parts = window.location.pathname.split('/');
-        console.log('PROPS:',this.props.categories)
 
         return (
             <div className='catalog_main'>
@@ -83,7 +82,6 @@ class CategoryList extends Component {
                     {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
                     <div className={'text-left empty-item '}></div>
                     {this.props.categories ? this.props.categories.map((item) => {
-                        console.log('render!')
                         return (
                             this.itemView(item)
                         );

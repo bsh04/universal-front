@@ -114,10 +114,6 @@ class Index extends Component {
     }
 
     render() {
-        /*let items = this.state.categories.map(item => {
-            return this.itemView(item)
-        });*/
-        console.log(this.state.categories)
         return (
             <div>
                 <Helmet>
@@ -137,7 +133,6 @@ class Index extends Component {
                     {this.state.showCatalogOutMenu 
                     ?<div className="col-md-3 p-0 index_page">
                         <CategoryList categories={this.state.categories} />
-                        
                     </div>
                     : null }
                     <div className={this.state.showCatalogOutMenu ? "col-md-9" : "col-md-12"}>
