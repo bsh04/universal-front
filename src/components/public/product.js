@@ -32,7 +32,6 @@ class Product extends Component {
 
     componentDidMount() {
         let itemId = this.props.match.params.id;
-        
         let _this = this;
         request(
             `product/item/${itemId}`,
@@ -51,7 +50,9 @@ class Product extends Component {
                     item: response,
                     images: images
                 });
-            },
+                
+            }, 
+            () => {console.log()}
         );
         
         request(
@@ -193,8 +194,7 @@ class Product extends Component {
         if(!this.state.item){
             return <p>Подождите...</p>
         }
-        console.log(this.state.item)
-
+        
         return (
             <div>
                 <Helmet>

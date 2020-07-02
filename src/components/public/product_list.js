@@ -149,7 +149,7 @@ class ProductList extends Component {
                             loading: false,
                         })
                     });
-                },
+                }
             );
         }
     }

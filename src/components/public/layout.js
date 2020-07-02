@@ -21,6 +21,7 @@ import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
 import ResetForm from './sign_action/reset_pass';
 import DeliveryAndPayment from './delivery_and_payment';
+import ScrollDownButton from "./parts/scrollDownButton";
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -42,6 +43,7 @@ class PublicLayout extends Component {
             <div>
                 <Menu />
                 <div className="content row">
+                <ScrollDownButton style={{zIndex: 50}}/>
                     <div className={`col-md-12`}>
                         <Switch>
                             <Route exact path={'/'} component={Index}/>

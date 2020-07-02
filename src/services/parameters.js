@@ -17,3 +17,4 @@ export let resetUrl = 'https://api.universal.tom.ru/security/resetpassword/';
 export let loginUrl = 'https://api.universal.tom.ru/oauth/v2/token';
 export let clientId = '1_4ks7w5c3rmkgw00sckwow04c884w8wgw8kc48k8skw4g80s8k8';
 export let clientSecret = '104knitpf57kgk80kks0g80gow8s0csw0g8g8cs4s0ggwg4c0w';
+export let serverImages = 'https://api.universal.tom.ru/uploads/news/'
