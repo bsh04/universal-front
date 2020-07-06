@@ -132,7 +132,7 @@ class Index extends Component {
                 ? <div className="row">
                     {this.state.showCatalogOutMenu 
                     ?<div className="col-md-3 p-0 index_page">
-                        <CategoryList categories={this.state.categories} />
+                        <CategoryList categories={this.state.categories} onClick={() => null}/>
                     </div>
                     : null }
                     <div className={this.state.showCatalogOutMenu ? "col-md-9" : "col-md-12"}>
