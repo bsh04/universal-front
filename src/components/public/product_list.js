@@ -270,12 +270,14 @@ class ProductList extends Component {
                 {this.props.match.params.category !== 'new'
                 && this.props.match.params.category !== 'stock'
                 && this.state.catList.length > 1 ?
-                    <div className="alert alert-light" role="alert">
-                        Подкатегории: {this.state.catList.map((subcat, key) => {
-                        return <span key={key} ><Link to={'/catalog/' + subcat.id}>
+                    <div className="alert alert-light" style={{padding: '5px'}} role="alert">
+                        <p>
+                            Подкатегории: {this.state.catList.map((subcat, key) => {
+                            return <span key={key}><Link to={'/catalog/' + subcat.id}>
                             {subcat.title}
                         </Link>{key < this.state.catList.length - 1 ? ', ' : ''}</span>
-                    })}
+                        })}
+                        </p>
                     </div> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
