@@ -270,9 +270,13 @@ class ProductList extends Component {
                 {this.props.match.params.category !== 'new'
                 && this.props.match.params.category !== 'stock'
                 && this.state.catList.length > 1 ?
-                    <div className="alert alert-light" style={{padding: '5px'}} role="alert">
+                    <div className="alert alert-light" style={{padding: '5px', overflow: 'auto', height: 'auto'}} role="alert">
                         <p>
-                            Подкатегории: {this.state.catList.map((subcat, key) => {
+                            Подкатегории: {this.state.catList.sort((a, b) => {
+                                if (a.title > b.title) return 1;
+                                else if (a.title < b.title) return -1;
+                                else return 0;
+                        }).map((subcat, key) => {
                             return <span key={key}><Link to={'/catalog/' + subcat.id}>
                             {subcat.title}
                         </Link>{key < this.state.catList.length - 1 ? ', ' : ''}</span>
