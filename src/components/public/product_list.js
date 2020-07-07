@@ -142,7 +142,7 @@ class ProductList extends Component {
                         }
                     });
 
-                    _this.setState({products: response, catList: categories,}, () => {
+                    _this.setState({products: response,}, () => {
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category),
                             totalItems: totalItems,
@@ -233,7 +233,12 @@ class ProductList extends Component {
     render() {
         return (
             <CategoriesContext.Consumer>
-                {contextValue => { console.log('fromPRODUCTLIST:', contextValue)
+                {contextValue => { 
+                let catList = [];
+                if(contextValue && contextValue.length > 0){
+                    let obj = contextValue.find(item => item.id === this.props.match.params.category);
+                    catList = obj.children;
+                }
                     
                 return <div>
                 <Helmet>
@@ -272,16 +277,16 @@ class ProductList extends Component {
                     : null}
                 {this.props.match.params.category !== 'new'
                 && this.props.match.params.category !== 'stock'
-                && this.state.catList.length > 1 ?
+                && catList.length > 1 ?
                     <div className="alert alert-light" role="alert">
-                        <button onClick={() => console.log(contextValue)}>context</button>
-                        Подкатегории: {this.state.catList.map((subcat, key) => {
+                        
+                        Подкатегории: {catList.map((subcat, key) => {
 
                             return (
                                 <span key={key} >
                                     <Link to={'/catalog/' + subcat.id}>
                                     {subcat.title}
-                                    </Link>{key < this.state.catList.length - 1 ? ', ' : ''}
+                                    </Link>{key < catList.length - 1 ? ', ' : ''}
                                 </span>
                             )
                             })}

@@ -20,6 +20,7 @@ class App extends Component {
 
         this.state = {
             from: props.location.pathname,
+            categories: []
         };
     }
 
@@ -36,8 +37,8 @@ class App extends Component {
             null,
             {},
             (response) => {
-                _this.setState({categories: response.data})
-                console.log('fromApp:',response)
+                _this.setState({categories: response})
+                console.log('from_App:',response)
             },
             (err) => console.log(err)
         )
