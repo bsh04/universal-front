@@ -6,7 +6,7 @@ import {withRouter} from "react-router";
 import {Helmet} from "react-helmet";
 import Breadcrumbs from '../breadcrumbs';
 import Loading from '../loading';
-
+import {CategoriesContext} from '../../services/contexts';
 
 import Card from './parts/card';
 
@@ -118,7 +118,7 @@ class ProductList extends Component {
                         let totalItems = response[response.length - 1].count;
 
                         response.splice(-1, 1);
-                        _this.setState({products: response, catlist: [], totalItems: totalItems, request: false});
+                        _this.setState({products: response, catList: [], totalItems: totalItems, request: false});
                     },
                 );
             }
@@ -232,7 +232,10 @@ class ProductList extends Component {
 
     render() {
         return (
-            <div>
+            <CategoriesContext.Consumer>
+                {contextValue => { console.log('fromPRODUCTLIST:', contextValue)
+                    
+                return <div>
                 <Helmet>
                     <meta charSet="utf-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -271,11 +274,17 @@ class ProductList extends Component {
                 && this.props.match.params.category !== 'stock'
                 && this.state.catList.length > 1 ?
                     <div className="alert alert-light" role="alert">
+                        <button onClick={() => console.log(contextValue)}>context</button>
                         Подкатегории: {this.state.catList.map((subcat, key) => {
-                        return <span key={key} ><Link to={'/catalog/' + subcat.id}>
-                            {subcat.title}
-                        </Link>{key < this.state.catList.length - 1 ? ', ' : ''}</span>
-                    })}
+
+                            return (
+                                <span key={key} >
+                                    <Link to={'/catalog/' + subcat.id}>
+                                    {subcat.title}
+                                    </Link>{key < this.state.catList.length - 1 ? ', ' : ''}
+                                </span>
+                            )
+                            })}
                     </div> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
@@ -409,7 +418,8 @@ class ProductList extends Component {
                     </nav>
                     : null}
                 {this.state.loading ? <Loading/> : null}
-            </div>
+            </div>}}
+            </CategoriesContext.Consumer>
         );
     }
 }
