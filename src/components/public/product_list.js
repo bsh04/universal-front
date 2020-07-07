@@ -278,18 +278,18 @@ class ProductList extends Component {
                 {this.props.match.params.category !== 'new'
                 && this.props.match.params.category !== 'stock'
                 && catList.length > 1 ?
-                    <div className="alert alert-light" role="alert">
-                        
-                        Подкатегории: {catList.map((subcat, key) => {
-
-                            return (
-                                <span key={key} >
-                                    <Link to={'/catalog/' + subcat.id}>
-                                    {subcat.title}
-                                    </Link>{key < catList.length - 1 ? ', ' : ''}
-                                </span>
-                            )
-                            })}
+                    <div className="alert alert-light" style={{padding: '5px', overflow: 'auto', height: 'auto'}} role="alert">
+                        <p>
+                            Подкатегории: {catList.sort((a, b) => {
+                                if (a.title > b.title) return 1;
+                                else if (a.title < b.title) return -1;
+                                else return 0;
+                        }).map((subcat, key) => {
+                            return <span key={key}><Link to={'/catalog/' + subcat.id}>
+                            {subcat.title}
+                        </Link>{key < catList.length - 1 ? ', ' : ''}</span>
+                        })}
+                        </p>
                     </div> : null}
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
