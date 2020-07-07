@@ -9,6 +9,9 @@ import UserLayout from './components/private/layout';
 import ErrorBoundary from './components/errorBoundary';
 import Modal from './components/modal';
 
+import { CategoriesContext } from './services/contexts';
+import request from './services/ajaxManager';
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -17,11 +20,28 @@ class App extends Component {
 
         this.state = {
             from: props.location.pathname,
+            categories: []
         };
     }
 
     updateFrom(from) {
         this.setState({from: from});
+    }
+    
+    componentDidMount(){
+        let _this = this;
+
+        request(
+            'product/categories',
+            'GET',
+            null,
+            {},
+            (response) => {
+                _this.setState({categories: response})
+                console.log('from_App:',response)
+            },
+            (err) => console.log(err)
+        )
     }
 
     render() {
@@ -29,12 +49,14 @@ class App extends Component {
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        <Switch>
-                            <Route path="/admin" component={() => <PrivateLayout updateFrom={this.updateFrom} />}/>
-                            <Route path="/user" component={() => <UserLayout updateFrom={this.updateFrom} />}/>
-                            <Route path="/" render={() => <PublicLayout from={this.state.from}
-                                                                        updateFrom={this.updateFrom} />}/>
-                        </Switch>
+                        <CategoriesContext.Provider value={this.state.categories}>
+                            <Switch>
+                                <Route path="/admin" component={() => <PrivateLayout updateFrom={this.updateFrom} />}/>
+                                <Route path="/user" component={() => <UserLayout updateFrom={this.updateFrom} />}/>
+                                <Route path="/" render={() => <PublicLayout from={this.state.from}
+                                                                            updateFrom={this.updateFrom} />}/>
+                            </Switch>
+                        </CategoriesContext.Provider>
                     </Router>
                     <Modal />
                 </ErrorBoundary>

@@ -6,7 +6,7 @@ import {withRouter} from "react-router";
 import {Helmet} from "react-helmet";
 import Breadcrumbs from '../breadcrumbs';
 import Loading from '../loading';
-
+import {CategoriesContext} from '../../services/contexts';
 
 import Card from './parts/card';
 
@@ -118,7 +118,7 @@ class ProductList extends Component {
                         let totalItems = response[response.length - 1].count;
 
                         response.splice(-1, 1);
-                        _this.setState({products: response, catlist: [], totalItems: totalItems, request: false});
+                        _this.setState({products: response, catList: [], totalItems: totalItems, request: false});
                     },
                 );
             }
@@ -142,7 +142,7 @@ class ProductList extends Component {
                         }
                     });
 
-                    _this.setState({products: response, catList: categories,}, () => {
+                    _this.setState({products: response,}, () => {
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category),
                             totalItems: totalItems,
@@ -232,7 +232,15 @@ class ProductList extends Component {
 
     render() {
         return (
-            <div>
+            <CategoriesContext.Consumer>
+                {contextValue => { 
+                let catList = [];
+                if(contextValue && contextValue.length > 0){
+                    let obj = contextValue.find(item => item.id === this.props.match.params.category);
+                    catList = obj.children;
+                }
+                    
+                return <div>
                 <Helmet>
                     <meta charSet="utf-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -269,17 +277,17 @@ class ProductList extends Component {
                     : null}
                 {this.props.match.params.category !== 'new'
                 && this.props.match.params.category !== 'stock'
-                && this.state.catList.length > 1 ?
+                && catList.length > 1 ?
                     <div className="alert alert-light" style={{padding: '5px', overflow: 'auto', height: 'auto'}} role="alert">
                         <p>
-                            Подкатегории: {this.state.catList.sort((a, b) => {
+                            Подкатегории: {catList.sort((a, b) => {
                                 if (a.title > b.title) return 1;
                                 else if (a.title < b.title) return -1;
                                 else return 0;
                         }).map((subcat, key) => {
                             return <span key={key}><Link to={'/catalog/' + subcat.id}>
                             {subcat.title}
-                        </Link>{key < this.state.catList.length - 1 ? ', ' : ''}</span>
+                        </Link>{key < catList.length - 1 ? ', ' : ''}</span>
                         })}
                         </p>
                     </div> : null}
@@ -415,7 +423,8 @@ class ProductList extends Component {
                     </nav>
                     : null}
                 {this.state.loading ? <Loading/> : null}
-            </div>
+            </div>}}
+            </CategoriesContext.Consumer>
         );
     }
 }

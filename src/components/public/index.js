@@ -7,6 +7,7 @@ import NewsCard from './parts/newsCard';
 import CardCarousel from './parts/cards_carousel';
 import CategoryList from '../public/parts/category_list';
 import request from "../../services/ajaxManager";
+import { CategoriesContext } from '../../services/contexts';
 
 class Index extends Component {
     constructor(props) {
@@ -15,7 +16,6 @@ class Index extends Component {
         this.state = {
             news: [],
             stocks: [],
-            categories: [],
             showCatalogOutMenu: true
         }
     }
@@ -49,31 +49,7 @@ class Index extends Component {
                 _this.setState({stocks: response});
             },
         );
-        request(
-            'product/categories',
-            'GET',
-            null,
-            {},
-            function (response) {
-                let sorted = response.map(item => {
-                    
-                    if(item.children.length > 1){
-                        item.children = item.children.sort((current, next) => {
-                            if(current.title < next.title) {
-                                return -1;
-                            }
-                            if(current.title > next.title) {
-                                return 1;
-                            }
-                            return 0
-                        })
-                    }
-                    return item;                    
-                })
-
-                _this.setState({categories: sorted});
-            },
-        );
+        
     }
 
     componentDidMount() {
@@ -114,44 +90,62 @@ class Index extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Helmet>
-                    <meta charSet="utf-8"/>
-                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                    <meta name="theme-color" content="#000000"/>
-                    <title>Главная - Универсал</title>
-                    <meta name="keywords" content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
-                    <meta name="description" content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
-                    <meta property="og:description" content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
-                    <meta property="og:title" content="Главная"/>
-                    <meta property="og:url" content="https://universal.tom.ru/"/>
-                </Helmet>
-                
-                { !this.state.isMobile 
-                ? <div className="row">
-                    {this.state.showCatalogOutMenu 
-                    ?<div className="col-md-3 p-0 index_page">
-                        <CategoryList categories={this.state.categories} onClick={() => null}/>
+        return <CategoriesContext.Consumer>{contextValue => {
+            const categories = contextValue.map(item => {       
+                if(item.children.length > 1){
+                    item.children = item.children.sort((current, next) => {
+                        if(current.title < next.title) {
+                            return -1;
+                        }
+                        if(current.title > next.title) {
+                            return 1;
+                        }
+                        return 0
+                    })
+                }
+                return item;                    
+            });
+
+            return (
+                <div>
+                    <Helmet>
+                        <meta charSet="utf-8"/>
+                        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                        <meta name="theme-color" content="#000000"/>
+                        <title>Главная - Универсал</title>
+                        <meta name="keywords" content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
+                        <meta name="description" content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
+                        <meta property="og:description" content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
+                        <meta property="og:title" content="Главная"/>
+                        <meta property="og:url" content="https://universal.tom.ru/"/>
+                    </Helmet>
+                    
+                    { !this.state.isMobile 
+                    ? <div className="row">
+                        {this.state.showCatalogOutMenu 
+                        ?<div className="col-md-3 p-0 index_page">
+                            <CategoryList categories={categories} onClick={() => null}/>
+                        </div>
+                        : null }
+                        <div className={this.state.showCatalogOutMenu ? "col-md-9" : "col-md-12"}>
+                            <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
+                            <News type="news"/>
+                            <br/>
+                            <h3 className="text-center"><Link to='/catalog/stock'>Акции</Link></h3>
+                            <News type="stocks"/>
+                            <br/>
+                        </div>
                     </div>
-                    : null }
-                    <div className={this.state.showCatalogOutMenu ? "col-md-9" : "col-md-12"}>
-                        <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
+                    : <div>
+                        <NewsCard type={{title: 'Новинки', category: 'product/new', id: 1,}} />
+                        <NewsCard type={{title: 'Акции', category: 'product/stock', id: 2}} />
+                        <h3 className="text-center mt-3"><Link to='/news'>Новости</Link></h3>
                         <News type="news"/>
-                        <br/>
-                        <h3 className="text-center"><Link to='/catalog/stock'>Акции</Link></h3>
-                        <News type="stocks"/>
-                        <br/>
-                    </div>
+                    </div> }
                 </div>
-                : <div>
-                    <NewsCard type={{title: 'Новинки', category: 'product/new', id: 1,}} />
-                    <NewsCard type={{title: 'Акции', category: 'product/stock', id: 2}} />
-                    <h3 className="text-center mt-3"><Link to='/news'>Новости</Link></h3>
-                    <News type="news"/>
-                </div> }
-            </div>
-        );
+            )
+        }}
+        </CategoriesContext.Consumer>
     }
 }
 
