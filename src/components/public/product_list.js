@@ -141,8 +141,7 @@ class ProductList extends Component {
                             categories.push(tmp);
                         }
                     });
-
-                    _this.setState({products: response,}, () => {
+                    _this.setState({products: response, catList: categories}, () => {
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category),
                             totalItems: totalItems,
@@ -235,9 +234,13 @@ class ProductList extends Component {
             <CategoriesContext.Consumer>
                 {contextValue => { 
                 let catList = [];
-                if(contextValue && contextValue.length > 0){
+                if(contextValue && contextValue.length > 0 && this.props.match.params.category !== 'new' 
+                    && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search'){
+                    
                     let obj = contextValue.find(item => item.id === this.props.match.params.category);
                     catList = obj.children;
+                } else {
+                    catList = this.state.catList;
                 }
                     
                 return <div>
@@ -277,6 +280,7 @@ class ProductList extends Component {
                     : null}
                 {this.props.match.params.category !== 'new'
                 && this.props.match.params.category !== 'stock'
+                && this.props.match.params.category !== 'search'
                 && catList.length > 1 ?
                     <div className="alert alert-light" style={{padding: '5px', overflow: 'auto', height: 'auto'}} role="alert">
                         <p>
