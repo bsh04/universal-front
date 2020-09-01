@@ -38,7 +38,7 @@ class App extends Component {
             {},
             (response) => {
                 _this.setState({categories: response})
-                
+                console.log('CATEGORIES:',response)
             },
             (err) => console.log(err)
         )

@@ -7,6 +7,7 @@ import $ from 'jquery';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
+import './index_.scss';
 import 'font-awesome/css/font-awesome.min.css';
 import { default as store } from './reducers/store';
 import App from './App';
