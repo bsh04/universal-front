@@ -10,8 +10,11 @@ export class FooterGroup extends Component {
 
     render() {
         return (
-            <div className={'footer-group' + ' ' + 'footer-group' + '_' + (this.props.groupName ? this.props.groupName : '')}>
-                <FooterGroupTitle title={this.props.title}/>
+            <div className={
+                'footer-group' + ' ' + 'footer-group' + '_' 
+                + (this.props.groupName ? this.props.groupName : '')}
+            >
+                <FooterGroupTitle title={this.props.title} toggleBtn={this.props.toggleBtn}/>
                 {this.props.children}
             </div>
         )

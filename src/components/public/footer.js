@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { CategoriesContext } from '../../services/contexts';
 import { FooterGroup } from './parts/footer/FooterGroup';
 import { FooterCatalog } from './parts/footer/FooterCatalog';
+import { FooterContacts } from './parts/footer/FooterContacts';
 
 
 class Footer extends Component {
@@ -17,7 +18,12 @@ class Footer extends Component {
                             <FooterCatalog list={categories} catalogTitle='Наше производство'/>
                         </FooterGroup>
                     </div>
-                    <div className="col-md-3 col-12"></div>
+
+                    <div className="col-md-4 col-12">
+                        <FooterGroup title='Контакты' groupName="contacts" toggleBtn>
+                            <FooterContacts />
+                        </FooterGroup>
+                    </div>
                 </div>
             );
         }}
@@ -26,6 +32,22 @@ class Footer extends Component {
 }
 
 export default Footer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 
