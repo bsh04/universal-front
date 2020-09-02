@@ -13,14 +13,14 @@ export class FooterGroupTitle extends Component {
     handleToggleBtnPress = () => {
         this.setState({
             groupHidden: !this.state.groupHidden
-        })
+        }, () => this.props.onToggleBtnPress(!this.state.groupHidden));
     }
 
     render() {
         return (
             <div className="footer-group__title">
                 <span>{this.props.title}</span>
-                <hr/>
+                <span className="hr"/>
                 {this.props.toggleBtn
                     ? <div 
                         className="footer-group__toggle-btn"

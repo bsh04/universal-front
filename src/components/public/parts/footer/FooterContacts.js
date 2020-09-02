@@ -25,10 +25,36 @@ export class FooterContacts extends Component {
                     <FooterContactsLink type='shedule'/>
                 </div>
                 <div className="footer-contacts-row-wrap">
-                    <FooterContactsSocial />
+                    <FooterContactsSocial list={mockData}/>
                 </div>
-                <div></div>
+                <hr className="m-0"/>
             </div>
         )
     }
 }
+
+
+const mockData = [
+    {
+        name: 'facebook',
+        link: 'https://facebook.com'
+    }, {
+        name: 'google-plus',
+        link: 'https://google.com'
+    }, {
+        name: 'twitter',
+        link: 'https://twitter.com'
+    }, {
+        name: 'instagram',
+        link: 'https://instagram.com'
+    }, {
+        name: 'telegram',
+        link: 'https://telegram.com'
+    }, {
+        name: 'vk',
+        link: 'https://vk.com'
+    }, {
+        name: 'youtube',
+        link: 'https://youtube.com'
+    }, 
+]

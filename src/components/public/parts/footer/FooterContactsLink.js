@@ -33,29 +33,28 @@ export class FooterContactsLink extends Component {
 
     renderLink () {
         if(!this.props.type) {
-            return <Link to={this.props.link}><i class="footer-contacts__link-icon fa fa-phone"></i></Link>
+            return <Link className={`footer__link footer__link_${this.props.link.slice(1)}`} to={this.props.link}>{this.props.title}</Link>
 
         } else if(this.props.type === 'shedule'){
-            return <span className="footer-contacts__link ">
+            return <span className="footer__link footer__link_shedule">
                 пн-пт - 9:00 - 17:00 <br/>
                 сб  - 9:00 - 14:00, вс - выходной 
             </span>
+
         } else if(this.props.type !== 'address') {
             return (
                 <a 
                     href={`${this.props.type}: ${this.props.link}`}
-                    className={`footer-contacts__link footer-contacts__link_${this.props.type}`}>
+                    className={`footer__link footer__link_${this.props.type}`}>
                     {this.renderContent()}
-                    <i class="footer-contacts__link-icon fa fa-phone"></i>
                 </a>)
         
         } else if (this.props.type === 'address') {
             return (
                 <a 
                     href={`${'http://maps.google.com/?q=' + this.props.address}`}
-                    className={`footer-contacts__link footer-contacts__link_address`}>
+                    className={`footer__link footer__link_address`}>
                     {this.renderContent() + '\n' + 'Работаем по РФ'}
-                    <i class="footer-contacts__link-icon fa fa-phone"></i>
                 </a>
             )
         } 

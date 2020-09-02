@@ -11,15 +11,33 @@ export class FooterContactsSocial extends Component {
         name = name.toLowerCase();
 
         switch(name) {
+            case 'facebook':
+                return 'fa fa-facebook-f'
+            case 'google-plus':
+                return 'fa fa-google-plus'
+            case 'twitter':
+                return 'fa fa-twitter'
+            case 'instagram':
+                return 'fa fa-instagram'
+            case 'skype':
+                return 'fa fa-skype'
+            case 'telegram':
+                return 'fa fa-telegram'
             case 'vk':
-                return 'fa-vk'
+                return 'fa fa-vk'
+            case 'youtube': 
+                return 'fa fa-youtube'
+
         }
     }
 
     socialListRender() {
         return this.props.list.map((item, index) => {
             return (
-                <a className="footer-contacts__social-link"><i className={"fa " + this.iconSwitch(item.name)}></i></a>
+                <a href={item.link} key={index.toString()}
+                    className="footer-contacts__social-link">
+                        <i className={this.iconSwitch(item.name)}></i>
+                </a>
             )
         })
     }
@@ -28,9 +46,11 @@ export class FooterContactsSocial extends Component {
         return (
             <div className="footer-contacts__social">
                 <span className="footer-contacts__social-title">
-                    Присоединяйтесь к нам:
+                    Присоединяйтесь к нам!
                 </span>
-                
+                <span className="footer-contacts__social-list">
+                    {this.socialListRender()}
+                </span>
             </div>
         )
     }
