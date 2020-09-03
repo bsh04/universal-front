@@ -43,6 +43,10 @@ export class FooterContactsSocial extends Component {
     }
 
     render() {
+        if(!this.props.list || this.props.list.length < 1) {
+            return null
+        }
+        
         return (
             <div className="footer-contacts__social">
                 <span className="footer-contacts__social-title">

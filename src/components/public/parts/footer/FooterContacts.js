@@ -25,7 +25,7 @@ export class FooterContacts extends Component {
                     <FooterContactsLink type='shedule'/>
                 </div>
                 <div className="footer-contacts-row-wrap">
-                    <FooterContactsSocial list={mockData}/>
+                    <FooterContactsSocial list={null}/>
                 </div>
                 <hr className="m-0"/>
             </div>

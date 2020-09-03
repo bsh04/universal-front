@@ -15,7 +15,8 @@ export class FooterGroup extends Component {
         return (
             <div className={
                 'footer-group' + ' ' 
-                + (this.props.groupName ? 'footer-group' + '_' + this.props.groupName : '')}
+                + (this.props.groupName ? 'footer-group' + '_' + this.props.groupName : '')
+                + (this.state.contentVisible ? '' : ' footer-group' + '_hidden')}
             >
                 {this.props.title
                     ? <FooterGroupTitle 

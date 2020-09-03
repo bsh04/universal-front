@@ -25,6 +25,7 @@ $footer_height: 580px;
         }
 
         &__title {
+            cursor: pointer;
             display: flex;
             flex-flow: row nowrap;
             align-items: center;
@@ -52,7 +53,6 @@ $footer_height: 580px;
             width: 48px;
             height: 48px;
             background-color: #229DD2;
-            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -68,13 +68,10 @@ $footer_height: 580px;
 
     .footer-catalog {
         box-sizing: border-box;
-        display: flex;
-        flex-flow: column wrap;
         text-align: left;
         align-items: flex-start;
         list-style: none;
         padding: 20px 0;
-        max-height: $footer_height *.85;
 
 
         &::-webkit-scrollbar {
@@ -92,14 +89,11 @@ $footer_height: 580px;
         
         & .catalog-list__item {
             margin: 10px 0;
-            width: 25%;
-            display: flex;
             position: relative;
 
-            &:first-child {
+            &_first {
                 text-transform: uppercase;
                 font-weight: bold;
-
 
                 & span {
                     padding-left: 25px;
@@ -107,12 +101,11 @@ $footer_height: 580px;
                         content: '';
                         position: absolute;
                         top: 0;
-                        left: -25px;
+                        left: -10px;
                         background-image: url('./images/icons/factory.png');
                         width: 20px;
                         height: 20px;
                         margin-left: 25px;
-                        
                     }
                 }
 
@@ -126,13 +119,12 @@ $footer_height: 580px;
                 color: $link_color_inactive;
                 font-size: 14px;
                 line-height: 18px;
-                width: 65%;
-                
+                text-decoration: none;
 
                 &:hover {
                     color: $link_color_active;
-                    font-weight: bold;
-                    text-decoration: none;
+                    font-weight: 600;
+                    
                 }
             }
         }
@@ -151,9 +143,7 @@ $footer_height: 580px;
             align-items: flex-start;
             align-content: space-between;
             margin-bottom: 15px;
-            &:first-child {
-                padding-right: 50px;
-            }
+            
         }
 
         & .footer-contacts__social {
@@ -221,6 +211,8 @@ $footer_height: 580px;
             }
         }
         &_shedule {
+            width: 150px;
+
             &::before {
                 background-image: url('./images/icons/clock.png');
             }
@@ -294,6 +286,7 @@ $footer_height: 580px;
             text-decoration: underline;
         }
         .copyright__unknown-blocks {
+            opacity: 0;
             display: flex;
             flex-flow: row nowrap;
             & span {
@@ -307,29 +300,18 @@ $footer_height: 580px;
 }
 
 
-
-@media screen and(max-width: 1660px) {
-    .footer .footer-catalog {
-        max-height: $footer_height;
-        
-    }
-}
-
 @media screen and(max-width: 1140px) {
     .footer {
         flex-direction: column;
 
         .footer-catalog {
-            max-height: $footer_height *1.5;
-            
             & .catalog-list__item {
-                width: 33%;
                 margin-right: 20px;
             }
         }
 
         & .footer-group__title {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
     }
 }
@@ -350,8 +332,8 @@ $footer_height: 580px;
                     content: '';
                     position: absolute;
                     border-bottom: 1px solid #465D68;
-                    width: 92%;
-                    margin: 0 4%;
+                    width: 94%;
+                    margin: 0 3%;
                     
                 }
                 &::before {
@@ -369,11 +351,17 @@ $footer_height: 580px;
                 left: 0;
                 display: block;
             }
+            &_hidden {
+                
+                &:first-child .footer-group__title::before {
+                    display: none;
+                }
+            }
 
         }
 
         & .footer-catalog {
-            max-height: 400px;
+            max-height: 390px;
             padding-top: 0;
             flex-wrap: nowrap;
             overflow-y: scroll;
@@ -414,6 +402,9 @@ $footer_height: 580px;
                 &::before {
                     background-image: none;
                 }
+            }
+            &_shedule {
+                width: auto;
             }
         }
 

@@ -18,14 +18,11 @@ export class FooterGroupTitle extends Component {
 
     render() {
         return (
-            <div className="footer-group__title">
+            <div className="footer-group__title" onClick={this.handleToggleBtnPress}>
                 <span>{this.props.title}</span>
                 <span className="hr"/>
                 {this.props.toggleBtn
-                    ? <div 
-                        className="footer-group__toggle-btn"
-                        onClick={this.handleToggleBtnPress}
-                    >
+                    ? <div className="footer-group__toggle-btn">
                         <i className={`fa fa-chevron-${!this.state.groupHidden ? 'up' : 'down'}`}></i>
                     </div>
                     : null
