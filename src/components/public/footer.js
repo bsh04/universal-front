@@ -5,6 +5,7 @@ import { FooterGroup } from './parts/footer/FooterGroup';
 import { FooterCatalog } from './parts/footer/FooterCatalog';
 import { FooterContacts } from './parts/footer/FooterContacts';
 import { FooterContactsLink } from './parts/footer/FooterContactsLink';
+import { Link } from 'react-router-dom';
 
 
 class Footer extends Component {
@@ -15,13 +16,13 @@ class Footer extends Component {
             return (
                 <div className='footer'>
                     <div className="row">
-                        <div className="col-xl-8 col-12 ">
+                        <div className="col-xl-8 col-lg-7 col-12 ">
                             <FooterGroup title='Каталог товаров' groupName="catalog" toggleBtn>
                                 <FooterCatalog list={categories} catalogTitle='Наше производство'/>
                             </FooterGroup>
                         </div>
 
-                        <div className="col-xl-4 col-12">
+                        <div className="col-xl-4 col-lg-5 col-12">
                             <FooterGroup title='Контакты' groupName="contacts" toggleBtn>
                                 <FooterContacts />
                                 
@@ -37,9 +38,17 @@ class Footer extends Component {
                                 </p>
                             </FooterGroup>
                         </div>
+                        <hr className="hr"/>
+                        <div className="footer-copyright">
+                            <p className="copyright__text">© 2020 ООО "Универсал Томск"</p>
+                            <Link to="" className="copyright__privacy-link">Политика конфидециальности</Link>
+                            <div className="copyright__unknown-blocks">
+                                <span></span>
+                                <span></span>
+                            </div>
+                            
+                        </div>
                     </div>
-                    <hr/>
-                    
                 </div>
             );
         }}
