@@ -8,6 +8,8 @@ import CardCarousel from './parts/cards_carousel';
 import CategoryList from '../public/parts/category_list';
 import request from "../../services/ajaxManager";
 import { CategoriesContext } from '../../services/contexts';
+import MapSection from './parts/mapSection';
+import ContactForm from './parts/contactForm';
 
 class Index extends Component {
     constructor(props) {
@@ -142,6 +144,8 @@ class Index extends Component {
                         <h3 className="text-center mt-3"><Link to='/news'>Новости</Link></h3>
                         <News type="news"/>
                     </div> }
+                    <ContactForm />
+                    <MapSection />
                 </div>
             )
         }}

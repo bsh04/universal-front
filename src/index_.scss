@@ -1,11 +1,104 @@
-$bg_color: #293C45;
-$link_color_inactive: #98AEB8;
-$link_color_active: #ffffff;
+$footer_bg_color: #293C45;
+$footer_link_color_inactive: #98AEB8;
+$footer_link_color_active: #ffffff;
 
 $footer_height: 580px;
 
+
+.contact-form {
+    width: 100%;
+    padding: 30px 12%;
+    height: 480px;
+    color: #fff;
+    
+    background-image: url('./images/contact-form_bg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    .contact-form-title {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 30px;
+        margin: 30px auto 10px;
+    }
+
+    .contact-form-subtitle {
+        text-align: center;
+        font-size: 16px;
+        margin: 0 auto 20px;
+    }
+
+
+    .contact-form__input-wrapper {
+        position: relative;
+        margin: 15px 0;
+    }
+
+    .contact-form__input-label {
+        position: absolute;
+        top: -20px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 600;
+        color: #79ACC2;
+
+    }
+    .contact-form__input {
+        height: 40px;
+        width: 100%;
+        border-radius: 20px;
+        border: none;
+        background-color: #ffffff;
+        color: #000000;
+        padding: 0 30px;
+        
+        
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 15px -5px #ffffff;
+        }
+        &.error {
+            box-shadow: 0 0 15px 0px #d82626;
+        }
+    }
+
+    .contact-form__submit-btn {
+        cursor: pointer;
+        user-select: none;
+        margin: 0 auto;
+        width: 250px;
+        height: 55px;
+        border-radius: 30px;
+        background-color: #229DD2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        font-weight: 500;
+        font-size: 14px;
+        transition: ease-in-out .1s;
+
+        &:hover {
+            box-shadow: 3px 3px 10px -5px #229DD2;
+        }
+        &:active {
+            box-shadow: 0 0 15px -5px #ffffff;
+        }
+    }
+}
+
+.map-section {
+    height: 450px;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+
+
 .footer {
-    background-color: $bg_color;
+    background-color: $footer_bg_color;
     padding: 35px 90px;
     min-height: $footer_height;
 
@@ -116,13 +209,13 @@ $footer_height: 580px;
             }
 
             & .catalog-list__item-text {
-                color: $link_color_inactive;
+                color: $footer_link_color_inactive;
                 font-size: 14px;
                 line-height: 18px;
                 text-decoration: none;
 
                 &:hover {
-                    color: $link_color_active;
+                    color: $footer_link_color_active;
                     font-weight: 600;
                     
                 }
@@ -154,7 +247,7 @@ $footer_height: 580px;
             &-title {
                 font-size: 14px;
                 font-weight: bold;
-                color: $link_color_active;
+                color: $footer_link_color_active;
                 margin-bottom: 10px;
             }
             &-list {
@@ -175,7 +268,7 @@ $footer_height: 580px;
     .footer__link {
         position: relative;
         font-size: 14px;
-        color: $link_color_inactive;
+        color: $footer_link_color_inactive;
         text-decoration: none;
         margin-left: 30px;
         margin-top: 5px;
@@ -194,7 +287,7 @@ $footer_height: 580px;
 
         &_tel {
             font-size: 16px;
-            color: $link_color_active;
+            color: $footer_link_color_active;
             font-weight: bold;
             
             &::before {
@@ -204,7 +297,7 @@ $footer_height: 580px;
         &_address {
             white-space: pre;
             font-size: 14px;
-            color: $link_color_inactive;
+            color: $footer_link_color_inactive;
 
             &::before {
                 background-image: url('./images/icons/pin.png');
@@ -225,7 +318,7 @@ $footer_height: 580px;
 
         &_workshop {
             font-weight: bold;
-            color: $link_color_active;
+            color: $footer_link_color_active;
 
             &::before {
                 background-image: url('./images/icons/sewing-machine.png');
@@ -234,7 +327,7 @@ $footer_height: 580px;
 
         &_news {
             font-weight: bold;
-            color: $link_color_active;
+            color: $footer_link_color_active;
 
             &::before {
                 background-image: url('./images/icons/newspaper.png');
@@ -243,7 +336,7 @@ $footer_height: 580px;
 
         &_deliveryandpayment {
             font-weight: bold;
-            color: $link_color_active;
+            color: $footer_link_color_active;
             
             &::before {
                 background-image: url('./images/icons/delivery.png');
@@ -276,13 +369,13 @@ $footer_height: 580px;
         width: 100%;
         margin: 10px 15px;
         font-size: 14px;
-        color: $link_color_inactive;
+        color: $footer_link_color_inactive;
 
         & .copyright__text {
             margin: 0;
         }
         .copyright__privacy-link {
-            color: $link_color_inactive;
+            color: $footer_link_color_inactive;
             text-decoration: underline;
         }
         .copyright__unknown-blocks {
@@ -292,12 +385,13 @@ $footer_height: 580px;
             & span {
                 width: 40px;
                 height: 16px;
-                background-color: $link_color_inactive;
+                background-color: $footer_link_color_inactive;
                 margin-right: 5px;
             }
         }
     }
 }
+
 
 
 @media screen and(max-width: 1140px) {
