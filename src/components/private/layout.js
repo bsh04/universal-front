@@ -6,7 +6,6 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
-import Menu from '../menu';
 import Favorite from './favorite';
 import Basket from './basket';
 import PassChange from './change_pass';
@@ -15,6 +14,7 @@ import OrderAdd from './order_add';
 import Orders from './orders';
 import CategoryList from "../public/parts/category_list";
 import Footer from "../public/footer";
+import Header from "../header";
 
 class UserLayout extends Component {
     componentDidUpdate() {
@@ -33,7 +33,7 @@ class UserLayout extends Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Header />
                 <div className="row content">
                     <div className='col-md-12'>
                         <Switch>

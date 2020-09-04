@@ -16,7 +16,7 @@ import Product from './product';
 import Workshop from './workshop/workshop';
 import Catalog from './catalog';
 import Footer from './footer';
-import Menu from '../menu';
+import Header from '../header';
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
 import ResetForm from './sign_action/reset_pass';
@@ -41,7 +41,7 @@ class PublicLayout extends Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Header />
                 <div className="content row">
                 <ScrollDownButton style={{zIndex: 50}}/>
                     <div className={`col-md-12`}>

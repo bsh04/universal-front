@@ -32,7 +32,6 @@ class NewsCard extends Component {
             null,
             {},
             function (response) {
-                console.log(response, _this.props.type)
                 let products = response.filter(item => {
                     if (!item.count) {
                         return item;
@@ -107,7 +106,7 @@ class NewsCard extends Component {
 
                                         <Card item={item} update={() => {
                                         }}
-                                              favorite={this.isFavorite(item) ? true : false}
+                                              favorite={this.isFavorite(item)}
                                               cardView={this.state.cardView}
                                               mainPage/>
                                     </div>
@@ -117,13 +116,13 @@ class NewsCard extends Component {
                     <a className="carousel-control-prev news-card__controls"
                        href={"#carouselExampleIndicators_" + this.state.type.category.id} role="button"
                        data-slide="prev">
-                        <i className={'fa fa-chevron-left'}></i>
+                        <i className={'fa fa-chevron-left'}/>
                         <span className="sr-only">Previous</span>
                     </a>
                     <a className="carousel-control-next news-card__controls"
                        href={"#carouselExampleIndicators_" + this.state.type.category.id} role="button"
                        data-slide="next">
-                        <i className={'fa fa-chevron-right'}></i>
+                        <i className={'fa fa-chevron-right'}/>
                         <span className="sr-only">Next</span>
                     </a>
                     </> : null}
