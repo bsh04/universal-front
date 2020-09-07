@@ -1,9 +1,9 @@
 /**
  * Created by misha on 27.01.19.
  */
-import React, { Component } from 'react';
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {Route, Redirect, Switch, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 import Index from './index';
@@ -41,40 +41,42 @@ class PublicLayout extends Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Menu/>
                 <div className="content row">
-                <ScrollDownButton style={{zIndex: 50}}/>
+                    <ScrollDownButton style={{zIndex: 50}}/>
                     <div className={`col-md-12`}>
-                        <Switch>
-                            <Route exact path={'/'} component={Index}/>
-                            <Route exact path={'/contact'} component={Contact}/>
-                            <Route exact path={'/news'} component={NewsList}/>
-                            <Route exact path={'/workshop'} component={ArticleList}/>
-                            <Route exact path={'/workshop/:id'} component={Workshop}/>
-                            <Route exact path={'/catalog'} component={Catalog}/>
-                            <Route exact path={'/catalog/product/:id'} component={Product} />
-                            <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
-                            <Route exact path={'/catalog/:category'} component={ProductList}/>
-                            <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
-                            <Route exact path={'/about'} component={About}/>
-                            <Route exact path="/register" render={() => (this.props.token !== false ?
-                                (<Redirect to={'/login'}/>) :
-                                (<RegForm/>)
-                            )}/>
-                            <Route exact path="/password/reset" render={() => (this.props.token !== false ?
-                                (<Redirect to={'/login'}/>) :
-                                (<ResetForm/>)
-                            )}/>
-                            <Route exact path="/login" render={() => (this.props.token !== false ?
-                                (<Redirect to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
-                                (<LoginForm/>)
-                            )}/>
-                        </Switch>
+                        <div className='image-background w-100'>
+                            <Switch>
+                                <Route exact path={'/'} component={Index}/>
+                                <Route exact path={'/contact'} component={Contact}/>
+                                <Route exact path={'/news'} component={NewsList}/>
+                                <Route exact path={'/workshop'} component={ArticleList}/>
+                                <Route exact path={'/workshop/:id'} component={Workshop}/>
+                                <Route exact path={'/catalog'} component={Catalog}/>
+                                <Route exact path={'/catalog/product/:id'} component={Product}/>
+                                <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
+                                <Route exact path={'/catalog/:category'} component={ProductList}/>
+                                <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
+                                <Route exact path={'/about'} component={About}/>
+                                <Route exact path="/register" render={() => (this.props.token !== false ?
+                                        (<Redirect to={'/login'}/>) :
+                                        (<RegForm/>)
+                                )}/>
+                                <Route exact path="/password/reset" render={() => (this.props.token !== false ?
+                                        (<Redirect to={'/login'}/>) :
+                                        (<ResetForm/>)
+                                )}/>
+                                <Route exact path="/login" render={() => (this.props.token !== false ?
+                                        (<Redirect to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
+                                        (<LoginForm/>)
+                                )}/>
+                            </Switch>
+                        </div>
                     </div>
                     {/*<div className='col-md-2'></div>*/}
                 </div>
                 <ScrollUpButton style={{zIndex: 50}}/>
-                <Footer />
+                <Footer/>
             </div>
         );
     }

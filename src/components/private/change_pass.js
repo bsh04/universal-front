@@ -85,7 +85,6 @@ class PassChange extends AbstractForm {
                                 name="pass"
                                 type="password"
                                 required={true}
-                                className={'form-control '}
                                 ref={(input) => {
                                     this.passInput = input
                                 }}
@@ -100,7 +99,6 @@ class PassChange extends AbstractForm {
                                 name="pass"
                                 type="password"
                                 required={true}
-                                className={'form-control '}
                                 ref={(input) => {
                                     this.cpassInput = input
                                 }}
@@ -108,7 +106,7 @@ class PassChange extends AbstractForm {
                             <span>*</span>
                         </div>
                     </div>
-                    <div className='form-button'>
+                    <div className='form-button change-password'>
                         <button type="submit" className="custom-btn rounded-pill">
                             <CheckCircleOutlinedIcon className='mr-2'/>
                             <span>Сменить пароль</span>
