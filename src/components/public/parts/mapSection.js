@@ -31,28 +31,30 @@ export default class MapSection extends Component {
                     height={450}
                 >
                     {this.state.coordinates.map((coordinate, key) => {
-                            return <Placemark key={key.toString()}
-                                        geometry={coordinate}
-                                        properties={{
-                                            iconContent: '',
-                                            
-                                            balloonContentBody: 'Томск, ул. Бердская, 31 (пер. Пойменный 5)',
-                                            hintContent: 'Томск, ул. Бердская, 31 (пер. Пойменный 5) '
-                                        }}
+                            return (
+                                <Placemark key={key.toString()}
+                                    geometry={coordinate}
+                                    properties={{
+                                        iconContent: '',
                                         
-                                        options={{
-                                            iconLayout: 'default#image',
-                                            iconImageHref: balloon,
-                                            iconImageSize: [30, 40],
-                                            iconImageOffset: [-20, -45],
-                                            draggable: false,
-                                            hasBaloon: true,
-                                            openBalloon: true,
-                                        }}
-                                        modules={
-                                            ['geoObject.addon.balloon', 'geoObject.addon.hint']
-                                        }
-                                    />
+                                        balloonContentBody: 'Томск, ул. Бердская, 31 (пер. Пойменный 5)',
+                                        hintContent: 'Томск, ул. Бердская, 31 (пер. Пойменный 5) '
+                                    }}
+                                    
+                                    options={{
+                                        iconLayout: 'default#image',
+                                        iconImageHref: balloon,
+                                        iconImageSize: [30, 40],
+                                        iconImageOffset: [-20, -45],
+                                        draggable: false,
+                                        hasBaloon: true,
+                                        openBalloon: true,
+                                    }}
+                                    modules={
+                                        ['geoObject.addon.balloon', 'geoObject.addon.hint']
+                                    }
+                                />
+                            )
                         }
                     )}
                 </Map>

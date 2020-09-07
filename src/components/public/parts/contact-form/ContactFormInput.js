@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-export class ContactFromInput extends Component {
+export class ContactFormInput extends Component {
     constructor(props) {
         super(props);
 
@@ -20,7 +20,7 @@ export class ContactFromInput extends Component {
 
     render() {
         return (
-            <div className={`contact-form__input-wrapper ${this.props.width ? 'col-' + this.props.width : ''} ${this.props.className ? this.props.className : ''}`}>
+            <div className={`contact-form__input-wrapper ${this.props.width ? 'col-lg-' + this.props.width : ''} ${this.props.className ? this.props.className : ''}`}>
                 {this.props.label ?
                 <span className="contact-form__input-label">{this.props.label}</span>
                 : null}

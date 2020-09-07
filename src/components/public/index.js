@@ -144,8 +144,6 @@ class Index extends Component {
                         <h3 className="text-center mt-3"><Link to='/news'>Новости</Link></h3>
                         <News type="news"/>
                     </div> }
-                    <ContactForm />
-                    <MapSection />
                 </div>
             )
         }}

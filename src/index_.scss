@@ -4,18 +4,33 @@ $footer_link_color_active: #ffffff;
 
 $footer_height: 580px;
 
+$btn_active_color: #B3A400;
+$btm_default_color: #229DD2;
+
 
 .contact-form {
-    width: 100%;
-    padding: 30px 12%;
-    height: 480px;
+    
     color: #fff;
     
-    background-image: url('./images/contact-form_bg.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+    &_main {
+        width: 100%;
+        padding: 30px 12%;
+        min-height: 480px;
+        background-image: url('./images/contact-form_bg.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
     
+    
+    .contact-form__title-wrapper {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
     .contact-form-title {
+        
         text-align: center;
         text-transform: uppercase;
         font-size: 30px;
@@ -23,9 +38,15 @@ $footer_height: 580px;
     }
 
     .contact-form-subtitle {
+        
         text-align: center;
         font-size: 16px;
         margin: 0 auto 20px;
+    }
+
+    .contact-form__agree-link {
+        color: #ffffff;
+        text-decoration: underline;
     }
 
 
@@ -71,7 +92,7 @@ $footer_height: 580px;
         width: 250px;
         height: 55px;
         border-radius: 30px;
-        background-color: #229DD2;
+        background-color: $btm_default_color;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -85,6 +106,7 @@ $footer_height: 580px;
         }
         &:active {
             box-shadow: 0 0 15px -5px #ffffff;
+            background-color: $btn_active_color;
         }
     }
 }
@@ -93,6 +115,40 @@ $footer_height: 580px;
     height: 450px;
     width: 100%;
     background-color: #ffffff;
+        & .user-balloon__wrapper{
+            position: relative;
+            width: 40px;
+            height: 60px;
+            
+            & .user-balloon {
+                position: absolute;
+                
+                display: block;
+                background-color: #fff;
+                left: -510%;
+                top: 50%;
+                box-shadow: 0 0 30px -5px #979696;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                width: 400px;
+                height: 60px;
+                color: #434343;
+            }
+            &::before {
+                content: '';
+                width: 20px;
+                height: 20px;
+                transform: rotate(45deg);
+                background-color: #ffffff;
+                position: absolute;
+                top: 35%;
+                left: -40%;
+                z-index: 1;
+            }
+        }
 }
 
 
@@ -189,6 +245,7 @@ $footer_height: 580px;
                 font-weight: bold;
 
                 & span {
+                    white-space: nowrap;
                     padding-left: 25px;
                     &::before {
                         content: '';

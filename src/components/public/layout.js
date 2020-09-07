@@ -22,13 +22,16 @@ import RegForm from './sign_action/register';
 import ResetForm from './sign_action/reset_pass';
 import DeliveryAndPayment from './delivery_and_payment';
 import ScrollDownButton from "./parts/scrollDownButton";
+import {MapSection_} from './parts/mapSection_';
+import ContactForm from './parts/contactForm';
 
 class PublicLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
             redirectUrl: '/',
-            showMenu: true
+            showMenu: true,
+            location: this.props.location.pathname,
         };
     }
 
@@ -45,6 +48,7 @@ class PublicLayout extends Component {
                 <div className="content row">
                 <ScrollDownButton style={{zIndex: 50}}/>
                     <div className={`col-md-12`}>
+                        {this.state.location}
                         <Switch>
                             <Route exact path={'/'} component={Index}/>
                             <Route exact path={'/contact'} component={Contact}/>
@@ -72,8 +76,12 @@ class PublicLayout extends Component {
                         </Switch>
                     </div>
                     {/*<div className='col-md-2'></div>*/}
+                    <ContactForm />
+                    {this.state.location.indexOf('contact') === -1 ?
+                        <MapSection_ /> : null}
                 </div>
                 <ScrollUpButton style={{zIndex: 50}}/>
+                
                 <Footer />
             </div>
         );
