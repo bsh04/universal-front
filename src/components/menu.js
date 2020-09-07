@@ -67,16 +67,16 @@ class Menu extends Component {
 
     navbarFixed() {
         let fixed;
-        if(window.pageYOffset > this.menuMainImage.clientHeight
-            && window.innerHeight < (document.body.clientHeight - this.navBar.clientHeight)) {
-            fixed = true;
-        } else {
-            fixed = false;
-        }
-
-        this.setState({
-            navFix: fixed
-        })
+        // if(window.pageYOffset > this.menuMainImage.clientHeight
+        //     && window.innerHeight < (document.body.clientHeight - this.navBar.clientHeight)) {
+        //     fixed = true;
+        // } else {
+        //     fixed = false;
+        // }
+        //
+        // this.setState({
+        //     navFix: fixed
+        // })
 
     }
 

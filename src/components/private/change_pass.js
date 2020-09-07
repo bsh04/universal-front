@@ -3,18 +3,34 @@
  */
 import React from 'react';
 import AbstractForm from '../abstract/form';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Breadcrumbs from '../breadcrumbs';
+import '../../index.scss'
+import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 
 class PassChange extends AbstractForm {
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.state = {
+            mobileMode: false
+        }
     }
 
-    handleSubmit(e)
-    {
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.getSizeWindow.bind(this));
+    }
+
+    getSizeWindow() {
+        if (window.innerWidth > 1000) {
+            this.setState({mobileMode: true})
+        } else {
+            this.setState({mobileMode: false})
+        }
+    }
+
+    handleSubmit(e) {
         e.preventDefault();
         this.setState({loading: true});
 
@@ -30,8 +46,7 @@ class PassChange extends AbstractForm {
             'POST',
             data,
             {},
-            function (response)
-            {
+            function (response) {
                 _this.setState({loading: false});
                 _this.props.history.push('/');
             },
@@ -39,45 +54,66 @@ class PassChange extends AbstractForm {
         );
     }
 
+
     viewForm() {
         return (
-            <div className="w-75">
-                <Breadcrumbs 
+            <div className="change-password">
+                <Breadcrumbs
                     path={[
                         {title: 'Смена пароля'}
                     ]}/>
-                <h4 className="text-center">Смена пароля</h4>
+                <h4>Смена пароля</h4>
                 <form onSubmit={this.handleSubmit}>
-                    <input
-                        name="pass"
-                        type="password"
-                        required={true}
-                        placeholder={"Старый пароль:*"}
-                        className={'form-control '}
-                        ref={(input) => {this.opassInput = input}}
-                    />
-                    <input
-                        name="pass"
-                        type="password"
-                        required={true}
-                        placeholder={"Новый пароль:*"}
-                        className={'form-control '}
-                        ref={(input) => {this.passInput = input}}
-                    />
-                    <input
-                        name="pass"
-                        type="password"
-                        required={true}
-                        placeholder={"Подтвердите пароль:*"}
-                        className={'form-control '}
-                        ref={(input) => {this.cpassInput = input}}
-                    />
-                    <br/>
-                    <p className="text-center">
-                        <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-edit'}> <span>Сменить пароль</span></i>
+                    <div className='form-input'>
+                        <p className='mb-0'>Старый пароль</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="pass"
+                                type="password"
+                                required={true}
+                                ref={(input) => {
+                                    this.opassInput = input
+                                }}
+                            />
+                            <span>*</span>
+                        </div>
+                    </div>
+                    <div className='form-input'>
+                        <p className='mb-0'>Новый пароль</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="pass"
+                                type="password"
+                                required={true}
+                                className={'form-control '}
+                                ref={(input) => {
+                                    this.passInput = input
+                                }}
+                            />
+                            <span>*</span>
+                        </div>
+                    </div>
+                    <div className='form-input'>
+                        <p className='mb-0'>Подтвердите пароль</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="pass"
+                                type="password"
+                                required={true}
+                                className={'form-control '}
+                                ref={(input) => {
+                                    this.cpassInput = input
+                                }}
+                            />
+                            <span>*</span>
+                        </div>
+                    </div>
+                    <div className='form-button'>
+                        <button type="submit" className="custom-btn rounded-pill">
+                            <CheckCircleOutlinedIcon className='mr-2'/>
+                            <span>Сменить пароль</span>
                         </button>
-                    </p>
+                    </div>
                 </form>
             </div>
         );
@@ -88,7 +124,5 @@ export default connect(
     state => ({
         store: state,
     }),
-    dispatch => ({
-
-    })
+    dispatch => ({})
 )(PassChange);

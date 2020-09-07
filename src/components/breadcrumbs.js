@@ -51,7 +51,7 @@ class Breadcrumbs extends Component {
     render() {
         return (
             <nav aria-label="breadcrumb">
-                <ol className="breadcrumb">
+                <ol className="breadcrumb bg-white">
                     {this.bodyView()}
                 </ol>
             </nav>
