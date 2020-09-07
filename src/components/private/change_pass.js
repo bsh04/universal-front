@@ -64,7 +64,7 @@ class PassChange extends AbstractForm {
                     ]}/>
                 <h4>Смена пароля</h4>
                 <form onSubmit={this.handleSubmit}>
-                    <div className='form-input'>
+                    <div className='change-form-input'>
                         <p className='mb-0'>Старый пароль</p>
                         <div className='form-control rounded-pill custom-input w-75'>
                             <input
@@ -78,7 +78,7 @@ class PassChange extends AbstractForm {
                             <span>*</span>
                         </div>
                     </div>
-                    <div className='form-input'>
+                    <div className='change-form-input'>
                         <p className='mb-0'>Новый пароль</p>
                         <div className='form-control rounded-pill custom-input w-75'>
                             <input
@@ -92,7 +92,7 @@ class PassChange extends AbstractForm {
                             <span>*</span>
                         </div>
                     </div>
-                    <div className='form-input'>
+                    <div className='change-form-input'>
                         <p className='mb-0'>Подтвердите пароль</p>
                         <div className='form-control rounded-pill custom-input w-75'>
                             <input
@@ -106,7 +106,7 @@ class PassChange extends AbstractForm {
                             <span>*</span>
                         </div>
                     </div>
-                    <div className='form-button change-password'>
+                    <div className='change-form-button'>
                         <button type="submit" className="custom-btn rounded-pill">
                             <CheckCircleOutlinedIcon className='mr-2'/>
                             <span>Сменить пароль</span>

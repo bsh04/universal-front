@@ -62,14 +62,14 @@ class LoginForm extends AbstractForm {
 
     viewForm() {
         return (
-            <div className="change-password">
+            <div className="login">
                 <Breadcrumbs
                     path={[
                         {title: 'Вход'}
                     ]}/>
                 <h4>Вход</h4>
                 <form onSubmit={this.handleSubmit}>
-                    <div className='form-input'>
+                    <div className='login-form-input'>
                         <p className='mb-0'>E-mail</p>
                         <div className='form-control rounded-pill custom-input w-75'>
                             <input
@@ -83,7 +83,7 @@ class LoginForm extends AbstractForm {
                             <span>*</span>
                         </div>
                     </div>
-                    <div className='form-input'>
+                    <div className='login-form-input'>
                         <p className='mb-0'>Пароль</p>
                         <div className='form-control rounded-pill custom-input w-75'>
                             <input
@@ -97,9 +97,9 @@ class LoginForm extends AbstractForm {
                             <span>*</span>
                         </div>
                     </div>
-                    <div className='submit-btns'>
+                    <div className='login-submit-btns'>
                         <div className='second'>
-                            <div className='form-button'>
+                            <div className='login-form-button'>
                                 <button type="submit" className="custom-btn rounded-pill w-100">
                                     <ExitToAppIcon className='mr-2'/>
                                     <span>Войти</span>
@@ -107,7 +107,7 @@ class LoginForm extends AbstractForm {
                             </div>
                             <Link to={'/password/reset'} className='custom-link'>Восстановить пароль</Link>
                         </div>
-                        <div className='form-button'>
+                        <div className='login-form-button'>
                             <button type="submit" className="custom-btn reg rounded-pill w-100">
                                 <Link to={'/register'}>
                                     <PersonOutlineIcon className='mr-2 text-white'/>

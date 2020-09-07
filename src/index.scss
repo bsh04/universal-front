@@ -91,24 +91,16 @@ h3 > a {
     width: 100%;
   }
 
-  .form-input {
+  .change-form-input {
     display: flex;
     padding: 10px 0 10px 0;
     align-items: center;
   }
 
-  .form-button {
-    width: 50%;
-    max-width: 300px;
-    display: flex;
-    justify-content: flex-start;
+  .change-form-button {
+    width: 100%;
+    max-width: 700px;
     padding-top: 10px;
-
-    &.change-password {
-      width: 100%;
-
-      max-width: 300px;
-    }
   }
 
   & h4 {
@@ -118,7 +110,6 @@ h3 > a {
     font-weight: bold;
     text-transform: uppercase;
     color: $color_secondary;
-    //color: #229dd2;
   }
 
   & p {
@@ -129,7 +120,97 @@ h3 > a {
     font-weight: bold;
   }
 
-  & .submit-btns {
+  & .change-submit-btns {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 15px;
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    & .change-submit-btns {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 15px;
+      align-items: center;
+
+      & span {
+        font-size: 80%;
+      }
+    }
+
+    & h4 {
+      font-size: 30px;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
+    .change-form-input {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0 10px 0;
+      align-items: center;
+
+      & p {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .change-form-button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.login {
+  width: 50%;
+  max-width: 700px;
+
+  & form {
+    width: 100%;
+  }
+
+  .login-form-input {
+    display: flex;
+    padding: 10px 0 10px 0;
+    align-items: center;
+  }
+
+  .login-form-button {
+    width: 50%;
+    max-width: 400px;
+    padding-top: 10px;
+  }
+
+  & h4 {
+    font-size: 40px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $color_secondary;
+  }
+
+  & p {
+    width: 25%;
+    text-align: left;
+    padding-right: 5px;
+    color: $color_label;
+    font-weight: bold;
+  }
+
+  & .login-submit-btns {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -151,7 +232,7 @@ h3 > a {
     flex-direction: column;
     align-items: center;
 
-    & .submit-btns {
+    & .login-submit-btns {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -177,7 +258,7 @@ h3 > a {
       text-align: center;
     }
 
-    .form-input {
+    .login-form-input {
       display: flex;
       flex-direction: column;
       padding: 10px 0 10px 0;
@@ -189,7 +270,7 @@ h3 > a {
       }
     }
 
-    .form-button {
+    .login-form-button {
       width: 80%;
       max-width: 300px;
       display: flex;
@@ -197,6 +278,7 @@ h3 > a {
     }
   }
 }
+
 
 .custom-btn {
   display: flex;
@@ -216,14 +298,6 @@ h3 > a {
 
   @media screen and (max-width: 1100px) {
     width: auto;
-  }
-}
-
-.custom-btn.reg {
-  background-color: $color_secondary;
-  width: 50%;
-  @media screen and (max-width: 1000px){
-    width: 100%;
   }
 }
 
