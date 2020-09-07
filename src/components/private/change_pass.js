@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import Breadcrumbs from '../breadcrumbs';
 import '../../index.scss'
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
+import request from "../../services/ajaxManager";
 
 class PassChange extends AbstractForm {
     constructor(props) {
@@ -41,7 +42,7 @@ class PassChange extends AbstractForm {
             'confirm_pass': this.cpassInput.value,
         };
 
-        this.state.request(
+        request(
             'user/change/password',
             'POST',
             data,
@@ -70,6 +71,7 @@ class PassChange extends AbstractForm {
                             <input
                                 name="pass"
                                 type="password"
+                                placeholder='Введите старый пароль'
                                 required={true}
                                 ref={(input) => {
                                     this.opassInput = input
@@ -85,6 +87,7 @@ class PassChange extends AbstractForm {
                                 name="pass"
                                 type="password"
                                 required={true}
+                                placeholder='Введите новый пароль'
                                 ref={(input) => {
                                     this.passInput = input
                                 }}
@@ -99,6 +102,7 @@ class PassChange extends AbstractForm {
                                 name="pass"
                                 type="password"
                                 required={true}
+                                placeholder='Повторите новый пароль'
                                 ref={(input) => {
                                     this.cpassInput = input
                                 }}

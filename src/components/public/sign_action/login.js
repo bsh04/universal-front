@@ -76,6 +76,7 @@ class LoginForm extends AbstractForm {
                                 name="email"
                                 type="email"
                                 required={true}
+                                placeholder='Введите Ваш E-mail'
                                 ref={(input) => {
                                     this.emailInput = input
                                 }}
@@ -90,6 +91,7 @@ class LoginForm extends AbstractForm {
                                 name="pass"
                                 type="password"
                                 required={true}
+                                placeholder='Введите Ваш пароль'
                                 ref={(input) => {
                                     this.passInput = input
                                 }}
@@ -109,7 +111,7 @@ class LoginForm extends AbstractForm {
                         </div>
                         <div className='login-form-button'>
                             <button type="submit" className="custom-btn reg rounded-pill w-100">
-                                <Link to={'/register'}>
+                                <Link to={'/register'} className='text-decoration-none'>
                                     <PersonOutlineIcon className='mr-2 text-white'/>
                                     <span>Зарегистрироваться</span>
                                 </Link>

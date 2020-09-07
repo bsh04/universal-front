@@ -8,6 +8,9 @@ import AbstractForm from '../../abstract/form';
 
 import { resetUrl } from '../../../services/parameters';
 import {Link} from "react-router-dom";
+import Breadcrumbs from "../../breadcrumbs";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 
 class ResetForm extends AbstractForm {
     constructor(props)
@@ -40,30 +43,48 @@ class ResetForm extends AbstractForm {
     viewForm() {
         if (!this.state.message) {
             return (
-                <div className="">
-                    <h4 className="text-center">Восстановить пароль</h4>
+
+                <div className="reset">
+                    <Breadcrumbs
+                        path={[
+                            {title: 'Восставить пароль'}
+                        ]}/>
+                    <h4>Восставить пароль</h4>
                     <form onSubmit={this.handleSubmit}>
-                        <input
-                            name="email"
-                            type="email"
-                            required={true}
-                            placeholder={"E-mail:*"}
-                            minLength={5}
-                            className={'form-control '}
-                            ref={(input) => {
-                                this.emailInput = input
-                            }}
-                        />
-                        <br/>
-                        <p className="text-center">
-                            <button type="submit" className="btn btn-success">
-                                <i className={'fa fa-key'}> <span>Восстановить</span></i>
-                            </button>
-                        </p>
+                        <div className='reset-form-input'>
+                            <p className='mb-0'>E-mail</p>
+                            <div className='form-control rounded-pill custom-input w-75'>
+                                <input
+                                    name="email"
+                                    type="email"
+                                    required={true}
+                                    placeholder={'Введите Ваш E-mail'}
+                                    ref={(input) => {
+                                        this.emailInput = input
+                                    }}
+                                />
+                                <span>*</span>
+                            </div>
+                        </div>
+                        <div className='reset-submit-btns'>
+                            <div className='second'>
+                                <div className='reset-form-button'>
+                                    <button type="submit" className="custom-btn rounded-pill w-100">
+                                        <i className="fa fa-key fa-rotate-270 mr-2"/>
+                                        <span>Восставить</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className='reset-form-button'>
+                                <button type="submit" className="custom-btn reg rounded-pill w-100">
+                                    <Link to={'/register'} className='text-decoration-none'>
+                                        <PersonOutlineIcon className='mr-2 text-white'/>
+                                        <span>Зарегистрироваться</span>
+                                    </Link>
+                                </button>
+                            </div>
+                        </div>
                     </form>
-                    <Link to={'/login'} className="btn btn-primary">
-                        <i className={'fa fa-sign-in'}> <span>Вход</span></i>
-                    </Link>
                 </div>
             );
         }

@@ -279,6 +279,112 @@ h3 > a {
   }
 }
 
+.reset {
+  width: 50%;
+  max-width: 700px;
+
+  & form {
+    width: 100%;
+  }
+
+  .reset-form-input {
+    display: flex;
+    padding: 10px 0 10px 0;
+    align-items: center;
+  }
+
+  .reset-form-button {
+    width: 50%;
+    max-width: 400px;
+    padding-top: 10px;
+  }
+
+  & h4 {
+    font-size: 40px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $color_secondary;
+  }
+
+  & p {
+    width: 15%;
+    text-align: left;
+    padding-right: 5px;
+    color: $color_label;
+    font-weight: bold;
+  }
+
+  & .reset-submit-btns {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 15px;
+
+    & .second {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    & .reset-submit-btns {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 15px;
+      align-items: center;
+
+      & span {
+        font-size: 80%;
+      }
+
+      & .second {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    & h4 {
+      font-size: 30px;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
+    .reset-form-input {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0 10px 0;
+      align-items: center;
+
+      & p {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .reset-form-button {
+      width: 80%;
+      max-width: 300px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
 
 .custom-btn {
   display: flex;
@@ -290,6 +396,11 @@ h3 > a {
   width: 40%;
   text-transform: uppercase;
   vertical-align: middle;
+  outline: none;
+
+  &:active {
+    outline: none;
+  }
 
   & span {
     color: white;
@@ -300,6 +411,11 @@ h3 > a {
     width: auto;
   }
 }
+
+.custom-btn.reg {
+  background-color: $color_secondary;
+}
+
 
 .custom-input {
   overflow: hidden;
@@ -322,6 +438,17 @@ h3 > a {
     outline: none;
     border: none;
     width: 95%;
+
+    &::placeholder {
+      color: #c3c3c3;
+    }
+  }
+
+
+  @media screen and (max-width: 1000px) {
+    & input {
+      text-align: center;
+    }
   }
 }
 
@@ -930,359 +1057,3 @@ nav.navbar {
     }
   }
 }
-
-/* SECOND 
-.menuTopWrapper {
-  background: url('./images/wood_background.jpg');
-  background-size: cover;
-  color: #fff !important;
-  & a {
-    color: #fff !important;
-  }
-  .shedule-tooltip {
-    color: #000
-  }
-}
-
-.mainImage {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  
-  h1 {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 2rem;
-    text-transform: uppercase;
-    color: rgba(40, 167, 69, 1);
-  }
-  @media screen and (max-width: 767px){
-    & h1 {
-      font-size: 1.5rem;
-    }
-  }
-
-  h2 {
-    font-weight: 600;
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: rgba(40, 167, 69, 1);
-  }
-
-  p {
-    margin-bottom: 0;
-  }
-  
-  a {
-    text-decoration: none;
-    font: 800 .9rem 'Roboto', sans-serif;
-    color: rgba(40, 167, 69, 1);
-
-
-    &.iconButtons {
-      background-color: rgba(40, 167, 69, 1);
-      position: relative;
-      color: #ffffff;
-      padding: 10px;
-      border-radius: 50%;
-      width: auto;
-      margin-right: 15px;
-      
-      & .badge {
-        position: absolute;
-        top: -.2rem;
-        right: -.2rem;
-        border-radius: 50%;
-      }
-    }
-  }
-
-  .street-addres {
-    font: 600 .8rem 'Roboto', sans-serif;
-  }
-
-  .shedule {
-    cursor: pointer;
-    font: 800 .9rem 'Roboto', sans-serif;
-    color: rgba(40, 167, 69, 1);
-    
-    text-decoration: underline;
-    text-decoration-style: dotted;
-
-    & + .shedule-tooltip {
-      display: none;
-    }
-
-    &:hover + .shedule-tooltip {
-      z-index: 2;
-      display: block;
-      font: .9rem 'Roboto', sans-serif;
-      text-align: left;
-      background-color: #ffffff;
-      border-radius: .1rem;
-      box-shadow: 0px 0px 10px 1px #c7c7c7;
-      padding: 1rem;
-      z-index: 2;
-      position: absolute;
-      top: 20px;
-      left: 25%;
-      @media screen and (max-width: 768px) {
-        top: 20px;
-        left: 40%;  
-      }
-      @media screen and (max-width: 600px) {
-        top: 20px;
-        left: 30%;  
-      }
-      @media screen and (max-width: 400px) {
-        top: 20px;
-        left: 30%;  
-      }
-      
-    }
-  }
-}
-*/
-
-
-/*THIRD
-$fontColor: rgba(47, 47, 47, 0.897);
-$iconColor: #fff;
-
-
-.menuTopWrapper {
-  background-color: rgba(0, 0, 0, 0.080);
-}
-
-
-.mainImage {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  
-  h1 {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 2rem;
-    text-transform: uppercase;
-    color: $fontColor;
-  }
-  @media screen and (max-width: 767px){
-    & h1 {
-      font-size: 1.5rem;
-    }
-  }
-
-  h2 {
-    font-weight: 600;
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: $fontColor;
-  }
-
-  p {
-    margin-bottom: 0;
-    
-  }
-  .fa-phone {
-    line-height: 10px; 
-  }
-  i {
-    color: $fontColor;
-  }
-  
-  a {
-    text-decoration: none;
-    font: 800 .9rem 'Roboto', sans-serif;
-    color: $fontColor;
-
-
-    &.iconButtons {
-      background-color: $fontColor;
-      position: relative;
-      color: $fontColor;
-      padding: 10px;
-      border-radius: 50%;
-      width: auto;
-      margin-right: 15px;
-      & i {
-        color: $iconColor
-      }
-      
-      & .badge {
-        position: absolute;
-        top: -.2rem;
-        right: -.2rem;
-        border-radius: 50%;
-      }
-    }
-  }
-
-  .street-addres {
-    font: 600 .8rem 'Roboto', sans-serif;
-    color: $fontColor;
-    margin-top: .5rem;
-  }
-
-  .shedule {
-    cursor: pointer;
-    font: 800 .9rem 'Roboto', sans-serif;
-    color: $fontColor;
-    
-    text-decoration: underline;
-    text-decoration-style: dotted;
-
-    & + .shedule-tooltip {
-      display: none;
-    }
-
-    &:hover + .shedule-tooltip {
-      z-index: 2;
-      display: block;
-      font: .9rem 'Roboto', sans-serif;
-      text-align: left;
-      background-color: #ffffff;
-      border-radius: .1rem;
-      box-shadow: 0px 0px 10px 1px #c7c7c7;
-      padding: 1rem;
-      z-index: 2;
-      position: absolute;
-      top: 20px;
-      left: 25%;
-      @media screen and (max-width: 768px) {
-        top: 20px;
-        left: 40%;  
-      }
-      @media screen and (max-width: 600px) {
-        top: 20px;
-        left: 30%;  
-      }
-      @media screen and (max-width: 400px) {
-        top: 20px;
-        left: 30%;  
-      }
-      
-    }
-  }
-}*/
-
-
-/*FOURTH
-
-
-$fontColor: rgb(100, 155, 112);
-$iconColor: #fff;
-
-
-.menuTopWrapper {
-  //background-color: rgba(0, 0, 0, 0.080);
-  background: url('./images/mainTopBackground.png') repeat-x;
-}
-
-
-.mainImage {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  
-  h1 {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 2rem;
-    text-transform: uppercase;
-    color: $fontColor;
-  }
-  @media screen and (max-width: 767px){
-    & h1 {
-      font-size: 1.5rem;
-    }
-  }
-
-  h2 {
-    font-weight: 600;
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: $fontColor;
-  }
-
-  p {
-    margin-bottom: 0;
-    
-  }
-  
-  i {
-    color: $fontColor;
-  }
-  
-  a {
-    text-decoration: none;
-    font: 800 .8rem 'Roboto', sans-serif;
-    color: $fontColor;
-
-
-    &.iconButtons {
-      background-color: $fontColor;
-      position: relative;
-      color: $fontColor;
-      padding: 10px;
-      border-radius: 50%;
-      width: auto;
-      margin-right: 15px;
-      & i {
-        color: $iconColor
-      }
-      
-      & .badge {
-        position: absolute;
-        top: -.2rem;
-        right: -.2rem;
-        border-radius: 50%;
-      }
-    }
-  }
-
-  .street-addres {
-    font: 600 .8rem 'Roboto', sans-serif;
-    color: $fontColor;
-    margin-top: .5rem;
-  }
-
-  .shedule {
-    cursor: pointer;
-    font: 800 .9rem 'Roboto', sans-serif;
-    color: $fontColor;
-    
-    text-decoration: underline;
-    text-decoration-style: dotted;
-
-    & + .shedule-tooltip {
-      display: none;
-    }
-
-    &:hover + .shedule-tooltip {
-      z-index: 2;
-      display: block;
-      font: .9rem 'Roboto', sans-serif;
-      text-align: left;
-      background-color: #ffffff;
-      border-radius: .1rem;
-      box-shadow: 0px 0px 10px 1px #c7c7c7;
-      padding: 1rem;
-      z-index: 2;
-      position: absolute;
-      top: 20px;
-      left: 25%;
-      @media screen and (max-width: 768px) {
-        top: 20px;
-        left: 40%;  
-      }
-      @media screen and (max-width: 600px) {
-        top: 20px;
-        left: 30%;  
-      }
-      @media screen and (max-width: 400px) {
-        top: 20px;
-        left: 30%;  
-      }
-      
-    }
-  }
-}
-*/
