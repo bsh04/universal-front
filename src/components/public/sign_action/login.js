@@ -62,63 +62,65 @@ class LoginForm extends AbstractForm {
 
     viewForm() {
         return (
-            <div className="login">
-                <Breadcrumbs
-                    path={[
-                        {title: 'Вход'}
-                    ]}/>
-                <h4>Вход</h4>
-                <form onSubmit={this.handleSubmit}>
-                    <div className='login-form-input'>
-                        <p className='mb-0'>E-mail</p>
-                        <div className='form-control rounded-pill custom-input w-75'>
-                            <input
-                                name="email"
-                                type="email"
-                                required={true}
-                                placeholder='Введите Ваш E-mail'
-                                ref={(input) => {
-                                    this.emailInput = input
-                                }}
-                            />
-                            <span>*</span>
+            <div className='image-background'>
+                <div className="login">
+                    <Breadcrumbs
+                        path={[
+                            {title: 'Вход'}
+                        ]}/>
+                    <h4>Вход</h4>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className='login-form-input'>
+                            <p className='mb-0'>E-mail</p>
+                            <div className='form-control rounded-pill custom-input w-75'>
+                                <input
+                                    name="email"
+                                    type="email"
+                                    required={true}
+                                    placeholder='Введите Ваш E-mail'
+                                    ref={(input) => {
+                                        this.emailInput = input
+                                    }}
+                                />
+                                <span>*</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className='login-form-input'>
-                        <p className='mb-0'>Пароль</p>
-                        <div className='form-control rounded-pill custom-input w-75'>
-                            <input
-                                name="pass"
-                                type="password"
-                                required={true}
-                                placeholder='Введите Ваш пароль'
-                                ref={(input) => {
-                                    this.passInput = input
-                                }}
-                            />
-                            <span>*</span>
+                        <div className='login-form-input'>
+                            <p className='mb-0'>Пароль</p>
+                            <div className='form-control rounded-pill custom-input w-75'>
+                                <input
+                                    name="pass"
+                                    type="password"
+                                    required={true}
+                                    placeholder='Введите Ваш пароль'
+                                    ref={(input) => {
+                                        this.passInput = input
+                                    }}
+                                />
+                                <span>*</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className='login-submit-btns'>
-                        <div className='second'>
+                        <div className='login-submit-btns'>
+                            <div className='second'>
+                                <div className='login-form-button'>
+                                    <button type="submit" className="custom-btn rounded-pill w-100">
+                                        <ExitToAppIcon className='mr-2'/>
+                                        <span>Войти</span>
+                                    </button>
+                                </div>
+                                <Link to={'/password/reset'} className='custom-link'>Восстановить пароль</Link>
+                            </div>
                             <div className='login-form-button'>
-                                <button type="submit" className="custom-btn rounded-pill w-100">
-                                    <ExitToAppIcon className='mr-2'/>
-                                    <span>Войти</span>
+                                <button type="submit" className="custom-btn reg rounded-pill w-100">
+                                    <Link to={'/register'} className='text-decoration-none'>
+                                        <PersonOutlineIcon className='mr-2 text-white'/>
+                                        <span>Зарегистрироваться</span>
+                                    </Link>
                                 </button>
                             </div>
-                            <Link to={'/password/reset'} className='custom-link'>Восстановить пароль</Link>
                         </div>
-                        <div className='login-form-button'>
-                            <button type="submit" className="custom-btn reg rounded-pill w-100">
-                                <Link to={'/register'} className='text-decoration-none'>
-                                    <PersonOutlineIcon className='mr-2 text-white'/>
-                                    <span>Зарегистрироваться</span>
-                                </Link>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         );
     }

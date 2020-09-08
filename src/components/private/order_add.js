@@ -45,110 +45,112 @@ class OrderAdd extends AbstractForm {
 
     viewForm() {
         return (
-            <div className="order-add">
-                <Breadcrumbs
-                    path={[
-                        {title: 'Уточнение данных для заказа'}
-                    ]}/>
-                <h4>Уточнение данных для заказа</h4>
-                <hr className='hr-1'/>
-                <div className='mobile-mode'>
-                    <div className='order-add-text'>
-                        <p>
-                            Имя
-                        </p>
-                        <p>
-                            {this.props.user.fio}
-                        </p>
-                    </div>
-                    <hr className='hr-2'/>
-                    <div className='order-add-text'>
-                        <p>
-                            Email
-                        </p>
-                        <p>
-                            {this.props.user.email}
-                        </p>
-                    </div>
-                    <hr className='hr-3'/>
-                </div>
-                <form onSubmit={this.handleSubmit}>
-                    <div className='order-add-form-input'>
-                        <p>Телефон</p>
-                        <div className='form-control rounded-pill custom-input'>
-                            <input
-                                name="email"
-                                type="text"
-                                required={true}
-                                placeholder={"+7 (ХХХ) - ХХХ - ХХ - ХХ"}
-                                defaultValue={this.props.user.phone}
-                                minLength={5}
-                                ref={(input) => {
-                                    this.phoneInput = input
-                                }}
-                            />
-                            <span>*</span>
-                        </div>
-                    </div>
-                    <div className='order-add-form-input'>
-                        <p>Адрес</p>
-                        <div className='form-control rounded-pill custom-input'>
-                            <input
-                                className='custom-input'
-                                name="fio"
-                                type="text"
-                                required={true}
-                                placeholder={"Введите Ваш адрес"}
-                                defaultValue={this.props.user.address}
-                                ref={(input) => {
-                                    this.addressInput = input
-                                }}
-                            />
-                            <span>*</span>
-                        </div>
-                    </div>
-                    <div className='order-add-form-input'>
-                        <p>Комментарий к заказу</p>
-                        <div className='form-control rounded-pill custom-input'>
-                            <input className='custom-input'
-                                   name="comment"
-                                   type="text"
-                                   required={false}
-                                   maxLength={250}
-                                   ref={(input) => {
-                                       this.commentInput = input
-                                   }}
-                            />
-                            <span>*</span>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div className='order-add-delivery'>
-                        <div className='paragraph'>
-                            <img src={parcel} alt=""/>
-                            <p>Доставка по г.Томску от 3000 руб бесплатна (кроме отдаленных районов)</p>
-                        </div>
-                        <div className='paragraph'>
-                            <img src={shipment}/>
-                            <p>Доставка по области Х руб/км</p>
-                        </div>
-                        <div className='paragraph'>
-                            <img src={delivery}/>
+            <div className='image-background'>
+                <div className="order-add">
+                    <Breadcrumbs
+                        path={[
+                            {title: 'Уточнение данных для заказа'}
+                        ]}/>
+                    <h4>Уточнение данных для заказа</h4>
+                    <hr className='hr-1'/>
+                    <div className='mobile-mode'>
+                        <div className='order-add-text'>
                             <p>
-                                Доставка до терминала указанной покупателем транспортной компании (почтовой службы)
-                                бесплатна</p>
+                                Имя
+                            </p>
+                            <p>
+                                {this.props.user.fio}
+                            </p>
                         </div>
+                        <hr className='hr-2'/>
+                        <div className='order-add-text'>
+                            <p>
+                                Email
+                            </p>
+                            <p>
+                                {this.props.user.email}
+                            </p>
+                        </div>
+                        <hr className='hr-3'/>
                     </div>
-                    <hr className='hr-4'/>
-                    <div className='order-add-button'>
-                        <button type="submit" className="custom-btn rounded-pill w-100">
-                            <Link to={'/register'} className='text-decoration-none'>
-                                <CheckCircleOutlinedIcon className='text-white'/>
-                                <span>Оформить заказ</span>
-                            </Link>
-                        </button>
-                    </div>
-                </form>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className='order-add-form-input'>
+                            <p>Телефон</p>
+                            <div className='form-control rounded-pill custom-input'>
+                                <input
+                                    name="email"
+                                    type="text"
+                                    required={true}
+                                    placeholder={"+7 (ХХХ) - ХХХ - ХХ - ХХ"}
+                                    defaultValue={this.props.user.phone}
+                                    minLength={5}
+                                    ref={(input) => {
+                                        this.phoneInput = input
+                                    }}
+                                />
+                                <span>*</span>
+                            </div>
+                        </div>
+                        <div className='order-add-form-input'>
+                            <p>Адрес</p>
+                            <div className='form-control rounded-pill custom-input'>
+                                <input
+                                    className='custom-input'
+                                    name="fio"
+                                    type="text"
+                                    required={true}
+                                    placeholder={"Введите Ваш адрес"}
+                                    defaultValue={this.props.user.address}
+                                    ref={(input) => {
+                                        this.addressInput = input
+                                    }}
+                                />
+                                <span>*</span>
+                            </div>
+                        </div>
+                        <div className='order-add-form-input'>
+                            <p>Комментарий к заказу</p>
+                            <div className='form-control rounded-pill custom-input'>
+                                <input className='custom-input'
+                                       name="comment"
+                                       type="text"
+                                       required={false}
+                                       maxLength={250}
+                                       ref={(input) => {
+                                           this.commentInput = input
+                                       }}
+                                />
+                                <span>*</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className='order-add-delivery'>
+                            <div className='paragraph'>
+                                <img src={parcel} alt=""/>
+                                <p>Доставка по г.Томску от 3000 руб бесплатна (кроме отдаленных районов)</p>
+                            </div>
+                            <div className='paragraph'>
+                                <img src={shipment}/>
+                                <p>Доставка по области Х руб/км</p>
+                            </div>
+                            <div className='paragraph'>
+                                <img src={delivery}/>
+                                <p>
+                                    Доставка до терминала указанной покупателем транспортной компании (почтовой службы)
+                                    бесплатна</p>
+                            </div>
+                        </div>
+                        <hr className='hr-4'/>
+                        <div className='order-add-button'>
+                            <button type="submit" className="custom-btn rounded-pill w-100">
+                                <Link to={'/register'} className='text-decoration-none'>
+                                    <CheckCircleOutlinedIcon className='text-white'/>
+                                    <span>Оформить заказ</span>
+                                </Link>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }

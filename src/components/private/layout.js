@@ -35,7 +35,6 @@ class UserLayout extends Component {
                 <Menu/>
                 <div className="row content">
                     <div className='col-md-12'>
-                        <div className='image-background w-100'>
                             <Switch>
                                 <Route exact path="/user/favorite" component={Favorite}/>
                                 <Route exact path="/user/order/add" component={OrderAdd}/>
@@ -44,7 +43,6 @@ class UserLayout extends Component {
                                 <Route exact path="/user/basket" component={Basket}/>
                                 <Route exact path="/user/password/change" component={PassChange}/>
                             </Switch>
-                        </div>
                     </div>
                 </div>
                 <ScrollUpButton/>

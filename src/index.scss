@@ -1,6 +1,7 @@
 $color_primary: #229dd2;
 $color_secondary: #1d7295;
 $color_label: gray;
+$color_lite: #c3c3c3;
 
 body {
   margin: 0;
@@ -61,7 +62,7 @@ h3 > a {
 .image-background {
   background: url("./images/settings_background.png") no-repeat right;
   height: 803px;
-  width: 901px;
+  width: 100%;
 
   @media screen and (max-width: 1000px) {
     background: #ffffff;
@@ -579,6 +580,241 @@ h3 > a {
   }
 }
 
+.basket-amount {
+  width: 100%;
+  padding: 30px;
+  margin-left: 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #f8f7f6;
+  text-transform: uppercase;
+  font-weight: bold;
+
+  & span {
+    font-size: 20px;
+    color: $color_secondary
+  }
+  & p {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+}
+
+.basket-page {
+  width: 100%;
+
+  & .basket-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .list-products {
+    width: 75%;
+  }
+  & .product-amount {
+    width: 23%;
+    margin: 0 20px 0 20px;
+  }
+
+  & h4 {
+    font-size: 30px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $color_secondary;
+  }
+
+  & .product-card {
+    height: 160px;
+    background-color: white;
+    border: 1px solid $color_lite;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 20px 5px 20px ;
+    margin-bottom: 20px;
+  }
+
+  & .product-image {
+    width: 10%;
+
+    & img {
+      max-height: 150px;
+    }
+  }
+
+  & .counter {
+    width: 10%;
+    max-width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: $color_label;
+
+    border: 1px solid $color_lite;
+
+    & input {
+      color: $color_label;
+      text-align: center;
+      width: 20%;
+      margin: 0;
+      border: none;
+      outline: none;
+    }
+
+    & input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    & input[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  & .product-title {
+    width: 30%;
+    text-align: left;
+    margin-left: 30px;
+
+    & small {
+      color: $color_label;
+    }
+  }
+
+  & .product-delete {
+    width: 5%;
+    i {
+      font-size: 25px;
+    }
+  }
+
+  & .product-price {
+    width: 15%;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+    & .default-price {
+      color: $color_label;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    & .full-price {
+      padding: 0;
+      margin: 0;
+      color: $color_secondary;
+      font-weight: bold;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    & .basket-amount {
+      & p {
+        font-size: 10px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+
+    & .product-card-top {
+      display: flex;
+      justify-content: space-between;
+      height: 75%;
+      width: 100%;
+      padding: 0;
+    }
+
+    & .product-card {
+      display: flex;
+      align-items: center;
+      padding: 10px 10px 10px 2px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    & .product-image {
+      margin: 10px 0 0 0 ;
+      width: 10%;
+
+      & img {
+        //min-height: 100px;
+        min-width: 70px;
+
+      }
+    }
+    & .product-delete {
+      width: 10%;
+    }
+
+    & .product-price {
+      width: 33%;
+      font-size: 18px;
+    }
+
+    & .counter {
+      padding: 10px 5px 10px 5px;
+      margin-bottom: 10px;
+      width: 33%;
+      max-width: 120px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      color: $color_label;
+    }
+
+
+    & .product-title {
+      width: 60%;
+      text-align: left;
+      margin-left: 30px;
+      margin-top: 10px;
+
+      & small {
+        color: $color_label;
+      }
+
+      & p {
+        height: 50px;
+        overflow: hidden;
+      }
+    }
+
+    & .basket-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    & .list-products {
+      width: 100%;
+    }
+    & .product-amount {
+      width: 100%;
+    }
+  }
+
+  & .product-amount {
+    margin: 0;
+    padding: 0;
+
+    & .basket-amount {
+      margin: 0;
+    }
+  }
+
+  & .product-delete {
+    order: 3;
+    width: 5%;
+    i {
+      font-size: 25px;
+    }
+  }
+
+}
+
 .order-add {
   width: 50%;
   max-width: 700px;
@@ -774,6 +1010,9 @@ h3 > a {
 
   &:active {
     outline: none;
+  }
+  &:hover {
+    color: white;
   }
 
   & span {

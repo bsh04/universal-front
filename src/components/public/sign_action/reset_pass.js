@@ -43,7 +43,7 @@ class ResetForm extends AbstractForm {
     viewForm() {
         if (!this.state.message) {
             return (
-
+                <div className='image-background'>
                 <div className="reset">
                     <Breadcrumbs
                         path={[
@@ -85,6 +85,7 @@ class ResetForm extends AbstractForm {
                             </div>
                         </div>
                     </form>
+                </div>
                 </div>
             );
         }
