@@ -9,7 +9,7 @@ export class ContactFormSubmit extends Component {
 
     render() {
         return (
-            <div className="contact-form__submit-btn" onClick={this.props.onClick} >
+            <div className={`contact-form__submit-btn ${this.props.className || ''}`} onClick={this.props.onClick} >
                 <span>{this.props.title ? this.props.title : 'Кнопка'}</span>
             </div>
         )

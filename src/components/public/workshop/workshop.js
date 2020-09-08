@@ -32,7 +32,6 @@ class Workshop extends Component {
             {},
             function (response)
             {
-                console.log('Workshop!')
                 _this.setState({article: response});
             },
         );

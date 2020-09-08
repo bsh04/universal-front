@@ -59,9 +59,9 @@ export const MapSection_ = () => {
                             width={'100%'}
                             height={450}
                         >
-                            {mapState.coordinates.map(coordinate => {
+                            {mapState.coordinates.map((coordinate, index) => {
                                 return <Placemark
-                                    key={coordinate.join()}
+                                    key={(coordinate[0] * index).toString()}
                                     geometry={coordinate}
                                     options={{
                                         balloonLayout: template,
@@ -77,7 +77,6 @@ export const MapSection_ = () => {
                                     // Load balloon addon for all geo objects
                                     modules={['geoObject.addon.balloon']}
                                     instanceRef={ref => {
-                                        console.log('PLACEMARK REF:', ref)
                                         ref && ref.balloon.open();
                                     }}
                                 />

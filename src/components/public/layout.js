@@ -48,7 +48,6 @@ class PublicLayout extends Component {
                 <div className="content row">
                 <ScrollDownButton style={{zIndex: 50}}/>
                     <div className={`col-md-12`}>
-                        {this.state.location}
                         <Switch>
                             <Route exact path={'/'} component={Index}/>
                             <Route exact path={'/contact'} component={Contact}/>

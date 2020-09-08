@@ -24,8 +24,11 @@ export class ContactFormInput extends Component {
                 {this.props.label ?
                 <span className="contact-form__input-label">{this.props.label}</span>
                 : null}
+                {this.props.required ?
+                <span className="contact-form__required-badge"></span>
+                : null}
                 <input
-
+                    required={this.props.required}
                     defaultValue={this.state.value} 
                     type={this.props.type ? this.props.type : "text"}
                     className={"contact-form__input" + (this.state.err ? " error" : "")}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ContactFormInput } from './contact-form/ContactFormInput';
 import { ContactFormSubmit } from './contact-form/ContactFormSubmit';
+import { ContactFormAgreeLink } from './contact-form/ContactFormAgreeLink';
+import { ModalBasketAddAlert } from './modal_blocks/ModalBasketAddAlert';
 
 
 
@@ -10,16 +12,20 @@ export default class ContactForm extends Component {
 
         this.state = {
             name: '',
+            modalVisible: false
         }
     }
 
     handleSubmit = () => {
-        console.log(this.state)
+        this.setState({modalVisible: !this.state.modalVisible});
+        
     }
 
     render() {
         return (
             <div className="contact-form contact-form_main">
+                
+                <ModalBasketAddAlert visible={this.state.modalVisible} handleToggle={this.handleSubmit}/>
                 <div className="col">
                     <div className="contact-form__title-wrapper">
                         <div className="contact-form-title">Есть вопросы — спрашивайте!</div>
@@ -68,8 +74,7 @@ export default class ContactForm extends Component {
                             />
                     </div>
                 </div>
-                <div className="row justify-content-center mb-3">Заполняя поля формы Вы даете согласие на 
-                    &nbsp;<a href="" className="contact-form__agree-link">обработку персональных данных</a></div>
+                <ContactFormAgreeLink link=""/>
                 <div className="row">
                     <ContactFormSubmit 
                         title="Отправить"

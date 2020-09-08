@@ -32,7 +32,6 @@ class NewsCard extends Component {
             null,
             {},
             function (response) {
-                console.log(response, _this.props.type)
                 let products = response.filter(item => {
                     if (!item.count) {
                         return item;
