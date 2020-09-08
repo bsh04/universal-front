@@ -501,10 +501,89 @@ h3 > a {
   }
 }
 
+.change-data {
+  width: 50%;
+  max-width: 700px;
+
+  & form {
+    width: 100%;
+  }
+
+  & .change-data-form-input {
+    display: flex;
+    padding: 10px 0 10px 0;
+    align-items: center;
+  }
+
+  & h4 {
+    font-size: 30px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $color_secondary;
+  }
+
+  & p {
+    width: 25%;
+    max-width: 100px;
+    text-align: left;
+    padding-right: 5px;
+    color: $color_label;
+    font-weight: bold;
+  }
+
+  .change-data-form-button {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+
+    button {
+      max-width: 300px;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    & h4 {
+      font-size: 30px;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
+    .change-data-form-input {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0 10px 0;
+      align-items: center;
+
+      & p {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    & .change-data-form-button {
+      display: flex;
+      flex-direction: column;
+      padding: 0 0 10px 0;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
 
 .custom-btn {
   display: flex;
   justify-content: center;
+  align-items: center;
   border: none;
   background-color: $color_primary;
   color: white;
@@ -523,8 +602,10 @@ h3 > a {
     vertical-align: middle;
   }
 
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1000px) {
     width: auto;
+    display: flex;
+    align-items: center;
   }
 }
 

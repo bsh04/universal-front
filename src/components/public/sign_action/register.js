@@ -49,8 +49,6 @@ class RegForm extends AbstractForm {
 
     viewForm() {
         return (
-
-
             <div className="register">
                 <Breadcrumbs
                     path={[
