@@ -8,6 +8,9 @@ import Breadcrumbs from "../breadcrumbs";
 import {Link} from "react-router-dom";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
+import delivery from '../../images/delivery.png'
+import parcel from '../../images/parcel.png'
+import shipment from '../../images/shipment.png'
 
 class OrderAdd extends AbstractForm {
     constructor(props) {
@@ -122,15 +125,15 @@ class OrderAdd extends AbstractForm {
                     <hr/>
                     <div className='order-add-delivery'>
                         <div className='paragraph'>
-                            <i className="fa fa-truck"/>
+                            <img src={parcel} alt=""/>
                             <p>Доставка по г.Томску от 3000 руб бесплатна (кроме отдаленных районов)</p>
                         </div>
                         <div className='paragraph'>
-                            <i className="fa fa-truck"/>
+                            <img src={shipment}/>
                             <p>Доставка по области Х руб/км</p>
                         </div>
                         <div className='paragraph'>
-                            <i className="fa fa-truck"/>
+                            <img src={delivery}/>
                             <p>
                                 Доставка до терминала указанной покупателем транспортной компании (почтовой службы)
                                 бесплатна</p>
