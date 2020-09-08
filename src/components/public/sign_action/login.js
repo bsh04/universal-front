@@ -117,7 +117,6 @@ class LoginForm extends AbstractForm {
                                 </Link>
                             </button>
                         </div>
-
                     </div>
                 </form>
             </div>

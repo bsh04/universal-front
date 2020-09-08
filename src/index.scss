@@ -579,6 +579,174 @@ h3 > a {
   }
 }
 
+.order-add {
+  width: 50%;
+  max-width: 700px;
+
+  .hr-1 {
+    border: none;
+  }
+
+  .hr-3 {
+    border: none;
+  }
+
+  & .order-add-text {
+    display: flex;
+    flex-direction: row;
+    & p {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  & form {
+    padding-top: 10px;
+    width: 100%;
+  }
+
+  & .order-add-form-input {
+    display: flex;
+    padding: 10px 0 10px 0;
+    align-items: center;
+    justify-content: center;
+  }
+  & .order-add-delivery {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    & .paragraph {
+      width: 100%;
+      display: flex;
+
+      i {
+        padding-right: 5px;
+      }
+
+      p {
+        width: 100%;
+        max-width: 1000px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  & h4 {
+    font-size: 30px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $color_secondary;
+  }
+
+  & p {
+    width: 100%;
+    max-width: 150px;
+    text-align: left;
+    padding: 0 5px 0 0;
+    color: $color_label;
+    font-weight: bold;
+  }
+
+  .order-add-button {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+
+    button {
+      max-width: 300px;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .mobile-mode {
+      width: 100%;
+    }
+
+    .hr-1 {
+      width: 100%;
+      border-top: 0.01px solid #e1e1e1e1;
+    }
+
+    .hr-2 {
+      width: 100%;
+      border-top: 0.01px solid #e1e1e1e1;
+    }
+
+    .hr-3 {
+      width: 100%;
+      border-top: 1px solid #e1e1e1e1;
+    }
+
+    .hr-4 {
+      border: none;
+    }
+
+    & .order-add-text {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      & p {
+        width: 100%;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    & .order-add-delivery {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      & .paragraph {
+
+        p {
+          font-size: 13px;
+        }
+      }
+    }
+
+        & h4 {
+      font-size: 20px;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
+    .order-add-form-input {
+      display: flex;
+      flex-direction: column;
+      padding: 5px 0 10px 0;
+      align-items: center;
+
+      & p {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    & .order-add-button {
+      display: flex;
+      flex-direction: column;
+      padding: 0 0 10px 0;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+
 
 .custom-btn {
   display: flex;
@@ -632,6 +800,7 @@ h3 > a {
     color: $color_label;
     height: 100%;
     margin: 0;
+    padding: 0;
     outline: none;
     border: none;
     width: 95%;
