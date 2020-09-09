@@ -26,7 +26,6 @@ export class ModalFrame extends Component {
             if(this.props.visible) {
                 this.setState({scrollY}, () => {
                     document.body.style.position = 'fixed';
-                    document.body.style.padding = '0px';
                     document.body.style.top = (`${(scrollY + fix) * -1}px`);
                 })
                 
@@ -48,7 +47,8 @@ export class ModalFrame extends Component {
     render() {
         return (
             <div className={`modal-wrapper ${this.props.visible? 'active' : ''}`}>
-                <div className="modal-frame">
+                <div className={`modal-frame modal-frame_bg ${this.props.className ? this.props.className : ''}`}>
+
                     <i className="fa fa-close" onClick={() => this.props.handleToggle()}></i>
                     <div className="modal-frame-inner">{this.props.children}</div>
                 </div>                

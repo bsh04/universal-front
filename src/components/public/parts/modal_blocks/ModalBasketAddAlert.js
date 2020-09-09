@@ -15,7 +15,7 @@ export class ModalBasketAddAlert extends Component {
 
     render() {
         return (
-            <ModalFrame visible={this.props.visible} handleToggle={this.props.handleToggle}>
+            <ModalFrame visible={this.props.visible} handleToggle={this.props.handleToggle} className={'modal-frame_bg-small'}>
                 <span className="contact-form-text">Товар добавлен в корзину</span>
                 <div className="row basket-add-alert">
                     <ContactFormSubmit 

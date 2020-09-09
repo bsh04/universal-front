@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { ContactFormInput } from './contact-form/ContactFormInput';
 import { ContactFormSubmit } from './contact-form/ContactFormSubmit';
 import { ContactFormAgreeLink } from './contact-form/ContactFormAgreeLink';
-import { ModalBasketAddAlert } from './modal_blocks/ModalBasketAddAlert';
-
+import { ModalGallery } from './modal_blocks/ModalGallery';
 
 
 export default class ContactForm extends Component {
@@ -25,14 +24,13 @@ export default class ContactForm extends Component {
         return (
             <div className="contact-form contact-form_main">
                 
-                <ModalBasketAddAlert visible={this.state.modalVisible} handleToggle={this.handleSubmit}/>
+                <ModalGallery visible={this.state.modalVisible} handleToggle={this.handleSubmit} images={images}/>
                 <div className="col">
                     <div className="contact-form__title-wrapper">
                         <div className="contact-form-title">Есть вопросы — спрашивайте!</div>
                         <div className="contact-form-subtitle">Вы можете задать вопрос по работе магазина или спросить о интересующем вас товаре. <br/>Наши специалисты вам помогут</div>
                     </div>
                     <div className="row">
-                        
                         
                         <ContactFormInput 
                             type="text"
@@ -84,4 +82,10 @@ export default class ContactForm extends Component {
             </div>
         )
     }
-} 
+}
+
+const images = [
+    "https://i.pinimg.com/originals/61/e7/8b/61e78b08a8dd18779132812218a9f2a8.jpg",
+    "https://storge.pic2.me/upload/739/524aab17af4ad.jpg",
+    "https://lh3.googleusercontent.com/proxy/JB1bptpUpxIZ4TsO4_fUsqVEwXs6Dcbjvk0dTWgXucgaB-SXQgntSf9B_NufChP0hlnqVrSWbrzOUuxaKKEYHUAIRc1WwFA",
+]
