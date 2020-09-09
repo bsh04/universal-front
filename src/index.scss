@@ -594,6 +594,7 @@ h3 > a {
     font-size: 20px;
     color: $color_secondary
   }
+
   & p {
     margin-bottom: 0;
     font-size: 14px;
@@ -611,6 +612,7 @@ h3 > a {
   & .list-products {
     width: 75%;
   }
+
   & .product-amount {
     width: 23%;
     margin: 0 20px 0 20px;
@@ -633,7 +635,7 @@ h3 > a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 20px 5px 20px ;
+    padding: 5px 20px 5px 20px;
     margin-bottom: 20px;
   }
 
@@ -668,6 +670,7 @@ h3 > a {
       -webkit-appearance: none;
       margin: 0;
     }
+
     & input[type=number] {
       -moz-appearance: textfield;
     }
@@ -685,6 +688,7 @@ h3 > a {
 
   & .product-delete {
     width: 5%;
+
     i {
       font-size: 25px;
     }
@@ -695,6 +699,7 @@ h3 > a {
     font-size: 18px;
     padding: 0;
     margin: 0;
+
     & .default-price {
       color: $color_label;
       font-weight: bold;
@@ -736,7 +741,7 @@ h3 > a {
     }
 
     & .product-image {
-      margin: 10px 0 0 0 ;
+      margin: 10px 0 0 0;
       width: 10%;
 
       & img {
@@ -808,6 +813,7 @@ h3 > a {
   & .product-delete {
     order: 3;
     width: 5%;
+
     i {
       font-size: 25px;
     }
@@ -830,6 +836,7 @@ h3 > a {
   & .order-add-text {
     display: flex;
     flex-direction: row;
+
     & p {
       padding-bottom: 0;
       margin-bottom: 0;
@@ -847,6 +854,7 @@ h3 > a {
     align-items: center;
     justify-content: center;
   }
+
   & .order-add-delivery {
     width: 100%;
     display: flex;
@@ -942,6 +950,7 @@ h3 > a {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
+
       & p {
         width: 100%;
         padding-bottom: 0;
@@ -962,7 +971,7 @@ h3 > a {
       }
     }
 
-        & h4 {
+    & h4 {
       font-size: 20px;
       padding-bottom: 0;
       text-align: center;
@@ -993,7 +1002,331 @@ h3 > a {
   }
 }
 
+.layout {
+  @media screen and (max-width: 1000px) {
+    padding: 0;
+  }
+}
 
+.orders-label {
+    font-size: 40px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $color_secondary;
+}
+
+.orders-headers-container {
+  width: 100%;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  display: flex;
+  padding: 10px;
+
+  & div {
+    text-align: left;
+    color: $color_label;
+    font-weight: bold;
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    & p {
+      margin: 0;
+    }
+  }
+
+  & .orders-header-number {
+    width: 15%;
+  }
+
+  & .orders-header-date {
+    width: 75%;
+  }
+
+  & .orders-header-sum {
+    width: 10%;
+  }
+
+  @media screen and (max-width: 1000px) {
+
+    margin: 0;
+    border-radius: 0;
+    & .orders-header-number {
+      width: 33%;
+    }
+
+    & .orders-header-date {
+      width: 33%;
+      text-align: center;
+    }
+
+    & .orders-header-sum {
+      width: 33%;
+      text-align: right;
+    }
+  }
+}
+
+.orders-body-container {
+  width: 100%;
+
+  & .container-header {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #f1f1f1;
+    margin-top: 10px;
+    text-align: left;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f1f1f1;
+
+    & .headers {
+      display: flex;
+      width: 100%;
+      align-items: center;
+    }
+
+    & .items {
+      display: flex;
+      width: 100%;
+      align-items: center;
+
+      & .order-detail-container {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        flex-direction: column;
+        background-color: white;
+        margin: 15px;
+        padding: 15px;
+        border-radius: 10px;
+
+        & .cont {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          max-height: 150px;
+          justify-content: space-between;
+          margin: 10px;
+          padding: 10px 0 15px 0;
+          border-bottom: none;
+          font-size: 18px;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid #f1f1f1;
+          }
+
+
+          & .order-detail-top {
+            width: 70%;
+            display: flex;
+            align-items: center;
+
+            & .order-image {
+              text-align: center;
+              width: 20%;
+              max-height: 90%;
+
+              & img {
+                max-width: 120px;
+                max-height: 150px;
+              }
+            }
+
+            & .order-title {
+              width: 80%;
+
+              & .art {
+                color: $color_label;
+              }
+
+              & p {
+                margin-bottom: 10px;
+              }
+            }
+          }
+
+          & .order-detail-bottom {
+            display: flex;
+            width: 30%;
+            align-items: center;
+
+            & .order-default-amount {
+              width: 44%;
+              color: $color_label;
+              font-weight: bold;
+            }
+
+            & .order-count {
+              width: 28%;
+              color: $color_label
+            }
+
+            & .order-full-amount {
+              width: 28%;
+              font-weight: bold;
+              color: $color_secondary;
+            }
+          }
+
+          @media screen and (max-width: 1000px) {
+            max-height: 500px;
+            display: flex;
+            flex-direction: column;
+
+            & .order-detail-top {
+              width: 100%;
+
+              & .order-image {
+                width: 20%;
+
+                & img {
+                  max-width: 120px;
+                  max-height: 150px;
+                }
+              }
+
+              @media screen and (max-width: 500px) {
+                & .order-image {
+                  width: 20%;
+
+                  & img {
+                    max-width: 60px;
+                    max-height: 90px;
+                  }
+                }
+
+                & .order-title {
+                  font-size: 14px;
+                  padding-left: 20px;
+                }
+              }
+            }
+
+            & .order-detail-bottom {
+              width: 100%;
+              margin-top: 20px;
+              display: flex;
+              justify-content: space-between;
+
+              & .order-default-amount {
+                width: auto;
+              }
+
+              & .order-count {
+                width: auto;
+              }
+
+              & .order-full-amount {
+                width: auto;
+                text-align: right;
+              }
+            }
+
+          }
+        }
+
+      }
+
+
+    }
+
+    & p {
+      margin: 0;
+    }
+  }
+
+  & .orders-item-number {
+    width: 15%;
+  }
+
+  & .orders-item-date {
+    width: 75%;
+    text-align: left;
+  }
+
+  & .orders-item-sum {
+    color: $color_secondary;
+    font-weight: bold;
+    width: 10%;
+  }
+
+  @media screen and (max-width: 1000px) {
+    & .orders-item-number {
+      width: 33%;
+    }
+
+    & .orders-item-date {
+      width: 33%;
+      text-align: center;
+    }
+
+    & .orders-item-sum {
+      width: 33%;
+      text-align: right;
+    }
+  }
+}
+
+.pagination-cont {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: $color_lite;
+
+  & .pagination-body {
+    margin-top: 30px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+
+    & .item {
+      width: 42px;
+      height: 42px;
+      padding: 7px;
+      border-radius: 50%;
+      margin: 0;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+
+    & .number-pages-container {
+      width: 50%;
+      display: flex;
+      justify-content: space-between;
+
+      & .pick {
+        background-color: #f1f1f1;
+      }
+
+      & p {
+        width: 40px;
+        height: 40px;
+        padding-top: 8px;
+        border-radius: 50%;
+        margin: 0;
+        cursor: pointer;
+        color: $color_label;
+
+        &:hover {
+          background-color: #f1f1f1;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1000px){
+    display: none;
+  }
+}
 
 .custom-btn {
   display: flex;
@@ -1011,6 +1344,7 @@ h3 > a {
   &:active {
     outline: none;
   }
+
   &:hover {
     color: white;
   }

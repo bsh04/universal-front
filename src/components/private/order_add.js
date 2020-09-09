@@ -143,10 +143,8 @@ class OrderAdd extends AbstractForm {
                         <hr className='hr-4'/>
                         <div className='order-add-button'>
                             <button type="submit" className="custom-btn rounded-pill w-100">
-                                <Link to={'/register'} className='text-decoration-none'>
-                                    <CheckCircleOutlinedIcon className='text-white'/>
-                                    <span>Оформить заказ</span>
-                                </Link>
+                                <CheckCircleOutlinedIcon className='text-white'/>
+                                <span>Оформить заказ</span>
                             </button>
                         </div>
                     </form>

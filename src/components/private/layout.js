@@ -34,7 +34,7 @@ class UserLayout extends Component {
             <div>
                 <Menu/>
                 <div className="row content">
-                    <div className='col-md-12'>
+                    <div className='col-md-12 layout'>
                             <Switch>
                                 <Route exact path="/user/favorite" component={Favorite}/>
                                 <Route exact path="/user/order/add" component={OrderAdd}/>
