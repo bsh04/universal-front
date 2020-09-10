@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import {Link, withRouter, Redirect} from 'react-router-dom';
 import request from "../../../services/ajaxManager";
 import {connect} from "react-redux";
+import ExtensionIcon from '@material-ui/icons/Extension';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 class CategoryList extends Component {
     constructor(props) {
@@ -9,6 +13,7 @@ class CategoryList extends Component {
 
         this.state = {
             open: [],
+            showAll: false
         };
     }
 
@@ -26,68 +31,60 @@ class CategoryList extends Component {
     }
 
     itemView(item, type = null) {
-        let parts = window.location.pathname.split('/');
         if (item.children.length > 0) {
-            
             return (
-                <div key={item.id} className={'text-left '} >
-                    <a href={"#collapseExample" + item.id}
-                       onClick={() => {
-                           this.setState({subMenuActive: item.id})
-                        }}
-                       className={`alert-link ${this.state.subMenuActive === item.id ? '' : 'collapsed'}`}
-                       data-toggle="collapse"
-                       role="button"
-                       aria-expanded={`${this.state.subMenuActive === item.id ? 'true' : 'false'}`}
-                       aria-controls={"collapseExample" + item.id}>
-                        <span>{item.title}</span>
-                    </a>
-                    <div className={`${this.state.subMenuActive === item.id ? '' : 'collapse'}`} id={"collapseExample" + item.id}>
-                        <div className="card-body ">
-                            <Link to={"/catalog/" + item.id}
-                                onClick={() => {this.props.onClick()}}
-                                className={'alert-link-sub'}>
-                                    Все товары
-                            </Link>
-                            { item.children.map((child) => {
-                                return (
-                                    this.itemView(child)
-                                );
-                            })}
-                        </div>
+                <>
+                    <div className="d-flex flex-row align-items-center items py-0 my-0">
+                        <ExtensionIcon className='item arrow-icon'/>
+                        <a className="pl-2 text-left item" href="#">{item.title}</a>
                     </div>
-                </div>
+                    <hr/>
+                </>
             );
         }
 
-        return (
-            <div key={item.id} className={'text-left '}>
-                <Link to={'/catalog/' + item.id}
-                      className={'alert-link'}
-                      onClick={() => {this.props.onClick()}}>
-                    {type !== 'bold' ? <span>{item.title}</span> : <b><span>{item.title}</span></b>}
-                </Link>
-            </div>
-        );
+        // <div key={item.id} className={'text-left '}>
+        //     <Link to={'/catalog/' + item.id}
+        //           className={'alert-link'}
+        //           onClick={() => {
+        //               this.props.onClick()
+        //           }}>
+        //         {type !== 'bold' ? <span>{item.title}</span> : <b><span>{item.title}</span></b>}
+        //     </Link>
+        // </div>
     }
 
     render() {
+        console.log()
         let parts = window.location.pathname.split('/');
 
         return (
-            <div className='catalog_main'>
-                <div className="alert alert-success">
-                    
-                    {this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}
-                    {this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}
-                    <div className={'text-left empty-item '}></div>
-                    {this.props.categories ? this.props.categories.map((item) => {
-                        return (
-                            this.itemView(item)
-                        );
-                    }) : null}
+            <>
+                <div className='catalog_main'>
+                    <div className={this.state.showAll ? 'catalog_main list' : 'catalog_main small-list'}>
+                        <div className="row production">
+                            <ExtensionIcon className='text-white'/>
+                            <a className="pl-2" href="#">НАШЕ ПРОИЗВОДСТВО</a>
+                            <ArrowForwardIosIcon className='text-white' style={{right: 10}}/>
+                        </div>
+
+                        {/*{this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}*/}
+                        {/*{this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}*/}
+                        {this.props.categories ? this.props.categories.map((item) => {
+                            return (
+                                this.itemView(item)
+                            );
+                        }) : null}
+                    </div>
+                    <div className='show-all'
+                            onClick={() => this.setState({showAll: !this.state.showAll})}
+                    >
+                        {this.state.showAll ? 'СВЕРНУТЬ' : 'РАЗВЕРНУТЬ'}
+                        {this.state.showAll ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+                    </div>
                 </div>
-            </div>
+
+            </>
         );
     }
 }

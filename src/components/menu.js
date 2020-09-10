@@ -7,6 +7,7 @@ import Search from './public/parts/search';
 import MenuTop from './public/parts/menuTop';
 
 import {CategoriesContext} from '../services/contexts';
+import login from "./public/sign_action/login";
 
 class Menu extends Component {
     constructor(props) {
@@ -240,7 +241,7 @@ class Menu extends Component {
     render() {
         return <CategoriesContext.Consumer>{contextValue => {
             const categories = contextValue.map(item => {
-                    
+
                 if(item.children.length > 1){
                     item.children = item.children.sort((current, next) => {
                         if(current.title < next.title) {
@@ -290,10 +291,9 @@ class Menu extends Component {
                                     <i className="fa fa-bars"></i>
                                         <span> Каталог</span>
                                     </a>
-                                
                                     { this.state.showCatalog
                                     ? <CategoryList categories={categories} onClick={() => this.hideCatalog()}/>
-                                    : ''}
+                                    : null}
                                 </li>
                                 : null }
                                 {this.state.leftItems.map((item, key) => {

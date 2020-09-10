@@ -11,6 +11,7 @@ import Modal from './components/modal';
 
 import { CategoriesContext } from './services/contexts';
 import request from './services/ajaxManager';
+import login from "./components/public/sign_action/login";
 
 class App extends Component {
     constructor(props) {

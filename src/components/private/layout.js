@@ -32,17 +32,18 @@ class UserLayout extends Component {
     render() {
         return (
             <div>
+
                 <Menu/>
                 <div className="row content">
                     <div className='col-md-12 layout'>
-                            <Switch>
-                                <Route exact path="/user/favorite" component={Favorite}/>
-                                <Route exact path="/user/order/add" component={OrderAdd}/>
-                                <Route exact path="/user/order" component={Orders}/>
-                                <Route exact path="/user/data/change" component={DataChange}/>
-                                <Route exact path="/user/basket" component={Basket}/>
-                                <Route exact path="/user/password/change" component={PassChange}/>
-                            </Switch>
+                        <Switch>
+                            <Route exact path="/user/favorite" component={Favorite}/>
+                            <Route exact path="/user/order/add" component={OrderAdd}/>
+                            <Route exact path="/user/order" component={Orders}/>
+                            <Route exact path="/user/data/change" component={DataChange}/>
+                            <Route exact path="/user/basket" component={Basket}/>
+                            <Route exact path="/user/password/change" component={PassChange}/>
+                        </Switch>
                     </div>
                 </div>
                 <ScrollUpButton/>
