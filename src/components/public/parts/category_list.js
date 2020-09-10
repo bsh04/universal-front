@@ -23,7 +23,7 @@ class CategoryList extends Component {
                 <>
                     <div className="d-flex flex-row align-items-center items py-0 my-0">
                         <ExtensionIcon className='item arrow-icon'/>
-                        <a className="pl-2 text-left item" href="#">{item.title}</a>
+                        <a className="pl-2 text-left item" href={'/catalog/' + item.id}>{item.title}</a>
                     </div>
                     <hr/>
                 </>

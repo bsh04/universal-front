@@ -27,7 +27,7 @@ const CatalogList = (props) => {
         if (props.reduce) {
             return (
                 <>
-                    <a href={"/catalog/" + item.id} key={index} className='d-flex ml-4 mt-2 font-weight-light catalog-item'>
+                    <a href={"/catalog/" + item.id} key={index} className='d-flex ml-4 mt-2 catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         <p className='text-break'>
                             {item.title}
@@ -40,14 +40,14 @@ const CatalogList = (props) => {
             if (props.mobile) {
                 return (
                     <a href={"/catalog/" + item.id} key={index}
-                       className='nav-link dropdown-item d-flex ml-4 mt-2 font-weight-light catalog-item'>
+                       className='nav-link dropdown-item d-flex ml-4 mt-2 catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         {item.title}
                     </a>
                 )
             } else {
                 return (
-                    <a href={"/catalog/" + item.id} key={index} className='nav-link d-flex ml-4 mt-2 font-weight-light catalog-item'>
+                    <a href={"/catalog/" + item.id} key={index} className='nav-link d-flex ml-4 mt-2 catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         {item.title}
                     </a>
@@ -60,10 +60,12 @@ const CatalogList = (props) => {
         return (
             list.length > 0 ?
                 <div className='w-100'>
-                    <a className='d-flex mt-2 catalog-first-item'>
-                        <ExtensionIcon className='ml-2 mr-2 text-black-50'/>
-                        <div className='pl-2 pr-2 text-light'>
-                            НАШЕ ПРОИЗВОДСТВО
+                    <a className='d-flex mt-2 catalog-first-item justify-content-between'>
+                        <div className='d-flex align-items-center'>
+                            <ExtensionIcon className='ml-2 mr-2 text-black-50'/>
+                            <div className='pl-2 pr-2 text-light'>
+                                НАШЕ ПРОИЗВОДСТВО
+                            </div>
                         </div>
                         <ArrowForwardIosIcon className='text-white'/>
                     </a>
