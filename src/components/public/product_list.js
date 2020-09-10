@@ -9,6 +9,7 @@ import Loading from '../loading';
 import {CategoriesContext} from '../../services/contexts';
 
 import Card from './parts/card';
+import ProductCard from './parts/product/ProductCard';
 
 class ProductList extends Component {
     constructor(props) {
@@ -383,13 +384,10 @@ class ProductList extends Component {
                     {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                         if (key < this.state.limit) {
                             return (
-                                <div className={this.state.cardView === 'tile' ? "col-md-3" : 'col-md-12'}
-                                     style={{paddingBottom: '10px'}}
-                                     key={key}>
-                                    <Card item={item} key={item.id} update={this.updateFav}
-                                          favorite={this.isFavorite(item) ? true : false}
-                                          cardView={this.state.cardView}/>
-                                </div>
+                                <ProductCard item={item} key={key} update={this.updateFav}
+                                    favorite={this.isFavorite(item) ? true : false}
+                                    cardView={this.state.cardView}
+                                />
                             );
                         } else {
                             return;
