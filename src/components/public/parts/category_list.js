@@ -17,19 +17,6 @@ class CategoryList extends Component {
         };
     }
 
-    changeState(id) {
-        let arr = this.state.open;
-        if (arr.indexOf(id) === -1) {
-            arr.push(id);
-        } else {
-            arr.splice(arr.indexOf(id), 1);
-        }
-
-        this.setState({
-            open: arr,
-        });
-    }
-
     itemView(item, type = null) {
         if (item.children.length > 0) {
             return (
@@ -42,16 +29,6 @@ class CategoryList extends Component {
                 </>
             );
         }
-
-        // <div key={item.id} className={'text-left '}>
-        //     <Link to={'/catalog/' + item.id}
-        //           className={'alert-link'}
-        //           onClick={() => {
-        //               this.props.onClick()
-        //           }}>
-        //         {type !== 'bold' ? <span>{item.title}</span> : <b><span>{item.title}</span></b>}
-        //     </Link>
-        // </div>
     }
 
     render() {
@@ -60,12 +37,14 @@ class CategoryList extends Component {
 
         return (
             <>
-                <div className='catalog_main'>
-                    <div className={this.state.showAll ? 'catalog_main list' : 'catalog_main small-list'}>
+                <div className='catalog_main pl-3'>
+                    <div className={this.state.showAll ? 'list' : 'small-list'}>
                         <div className="row production">
-                            <ExtensionIcon className='text-white'/>
-                            <a className="pl-2" href="#">НАШЕ ПРОИЗВОДСТВО</a>
-                            <ArrowForwardIosIcon className='text-white' style={{right: 10}}/>
+                            <div>
+                                <ExtensionIcon className='text-white'/>
+                                <a className="pl-2" href="#">НАШЕ ПРОИЗВОДСТВО</a>
+                            </div>
+                            <ArrowForwardIosIcon className='text-white'/>
                         </div>
 
                         {/*{this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}*/}

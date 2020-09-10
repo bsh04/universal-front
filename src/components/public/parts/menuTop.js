@@ -139,19 +139,11 @@ const MenuTop = props => {
                         marginLeft: 15,
                         marginRight: 15
                     }}/>
-                    <div className="flex-column align-items-center d-flex">
+                    <div className="flex-column align-items-center d-flex"  style={{width: 83}}>
                         <Link to='/user/favorite'>
                             <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
                         </Link>
                         <p className='menuText pl-0'>Избранное</p>
-                        {
-                            props.like.length > 0 ?
-                                <span className={'badge badge-danger'}>
-                                    {props.like.length}
-                                </span>
-                                :
-                                null
-                        }
                     </div>
                 </div>
             </div>
@@ -236,14 +228,6 @@ const MenuTop = props => {
                         </Link>
 
                         <p style={{color: 'black', fontWeight: 'normal', marginLeft: 10}}>Избранное</p>
-                        {
-                            props.like.length > 0 ?
-                                <span className={'badge badge-danger'}>
-                                                    {props.like.length}
-                                                </span>
-                                :
-                                null
-                        }
                     </div>
                 </div>
             </div>

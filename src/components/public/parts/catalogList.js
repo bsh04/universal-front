@@ -27,7 +27,7 @@ const CatalogList = (props) => {
         if (props.reduce) {
             return (
                 <>
-                    <a href={item.path} key={index} className='d-flex ml-4 mt-2 font-weight-light'>
+                    <a href={"/catalog/" + item.id} key={index} className='d-flex ml-4 mt-2 font-weight-light catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         <p className='text-break'>
                             {item.title}
@@ -39,15 +39,15 @@ const CatalogList = (props) => {
         } else {
             if (props.mobile) {
                 return (
-                    <a href={item.path} key={index}
-                       className='nav-link dropdown-item d-flex ml-4 mt-2 font-weight-light'>
+                    <a href={"/catalog/" + item.id} key={index}
+                       className='nav-link dropdown-item d-flex ml-4 mt-2 font-weight-light catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         {item.title}
                     </a>
                 )
             } else {
                 return (
-                    <a href={item.path} key={index} className='nav-link d-flex ml-4 mt-2 font-weight-light'>
+                    <a href={"/catalog/" + item.id} key={index} className='nav-link d-flex ml-4 mt-2 font-weight-light catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         {item.title}
                     </a>

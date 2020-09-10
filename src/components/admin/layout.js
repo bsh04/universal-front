@@ -1,9 +1,9 @@
 /**
  * Created by misha on 27.01.19.
  */
-import React, { Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {Route, Switch, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 import Header from '../header';
@@ -14,11 +14,12 @@ import StocksList from './news/stocks';
 import ExportCategoryList from './to_csv';
 import ArticleList from './article';
 import DeliveryAndPayment from './delivery_and_payment';
+import {CategoriesContext} from "../../services/contexts";
+import CategoryList from "../public/parts/category_list";
 
 class PrivateLayout extends Component {
     componentDidMount() {
-        if (this.props.token === false || this.props.user.roles === undefined || this.props.user.roles.indexOf('ROLE_ADMIN') === -1)
-        {
+        if (this.props.token === false || this.props.user.roles === undefined || this.props.user.roles.indexOf('ROLE_ADMIN') === -1) {
             this.props.history.replace('/login');
         }
     }
@@ -30,28 +31,73 @@ class PrivateLayout extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Header />
-                <div className="row content">
-                    <div className='col-md-2'></div>
-                    <div className='col-md-8'>
-                        <Switch>
-                            <Route exact path="/admin/product/update" component={ProductUpdate}/>
-                            <Route exact path="/admin/product/image" component={NoImageList}/>
-                            <Route exact path="/admin/news" component={NewsList}/>
-                            <Route exact path="/admin/export" component={ExportCategoryList}/>
-                            <Route exact path="/admin/stocks" component={StocksList}/>
-                            <Route exact path="/admin/workshop" component={ArticleList}/>
-                            <Route exact path="/admin/deliveryandpayment" component={DeliveryAndPayment}/>
-                        </Switch>
+        return <CategoriesContext.Consumer>{contextValue => {
+            console.log(contextValue)
+            if (contextValue) {
+                const categories = contextValue.map(item => {
+                    if (item.children.length > 1) {
+                        item.children = item.children.sort((current, next) => {
+                            if (current.title < next.title) {
+                                return -1;
+                            }
+                            if (current.title > next.title) {
+                                return 1;
+                            }
+                            return 0
+                        })
+                    }
+                    return item;
+                });
+                return (
+                    <div>
+                        <Header/>
+                        <div className="row content">
+                            <div className="col-md-3 p-0 index_page">
+                                <CategoryList categories={categories} onClick={() => null}/>
+                            </div>
+                            <div className='col-md-9'>
+                                <Switch>
+                                    <Route exact path="/admin/product/update" component={ProductUpdate}/>
+                                    <Route exact path="/admin/product/image" component={NoImageList}/>
+                                    <Route exact path="/admin/news" component={NewsList}/>
+                                    <Route exact path="/admin/export" component={ExportCategoryList}/>
+                                    <Route exact path="/admin/stocks" component={StocksList}/>
+                                    <Route exact path="/admin/workshop" component={ArticleList}/>
+                                    <Route exact path="/admin/deliveryandpayment" component={DeliveryAndPayment}/>
+                                </Switch>
+                            </div>
+                            <div className='col-md-2'>
+                            </div>
+                        </div>
+                        <ScrollUpButton/>
                     </div>
-                    <div className='col-md-2'>
+                );
+            } else {
+                return (
+                    <div>
+                        <Header/>
+                        <div className="row content">
+                            <div className='col-md-12'>
+                                <Switch>
+                                    <Route exact path="/admin/product/update" component={ProductUpdate}/>
+                                    <Route exact path="/admin/product/image" component={NoImageList}/>
+                                    <Route exact path="/admin/news" component={NewsList}/>
+                                    <Route exact path="/admin/export" component={ExportCategoryList}/>
+                                    <Route exact path="/admin/stocks" component={StocksList}/>
+                                    <Route exact path="/admin/workshop" component={ArticleList}/>
+                                    <Route exact path="/admin/deliveryandpayment" component={DeliveryAndPayment}/>
+                                </Switch>
+                            </div>
+                            <div className='col-md-2'>
+                            </div>
+                        </div>
+                        <ScrollUpButton/>
                     </div>
-                </div>
-                <ScrollUpButton />
-            </div>
-        );
+                )
+            }
+        }
+        }
+        </CategoriesContext.Consumer>
     }
 }
 

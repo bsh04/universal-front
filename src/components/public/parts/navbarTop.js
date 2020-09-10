@@ -30,12 +30,29 @@ const NavbarTop = (props) => {
     const [isOpenCatalog, setIsOpenCatalog] = useState(false)
     const [amountBasket, setAmountBasket] = useState(null)
     const [ready, setReady] = useState(false)
+    const [openMore, setOpenMore] = useState(false)
 
     const leftItems = [
         {title: 'Швейный цех', path: '/workshop'},
         {title: 'Новости', path: '/news'},
         {title: 'Оплата и доставка', path: '/deliveryandpayment'},
         {title: 'Контакты', path: '/contact'},
+    ]
+
+    const rightItems = [
+        {title: 'Мои заказы', path: '/user/order'},
+        {title: 'Изменить данные', path: '/user/data/change'},
+        {title: 'Изменить пароль', path: '/user/password/change'},
+    ]
+
+    const allItems = [
+        {title: 'Швейный цех', path: '/workshop'},
+        {title: 'Новости', path: '/news'},
+        {title: 'Оплата и доставка', path: '/deliveryandpayment'},
+        {title: 'Контакты', path: '/contact'},
+        {title: 'Мои заказы', path: '/user/order'},
+        {title: 'Изменить данные', path: '/user/data/change'},
+        {title: 'Изменить пароль', path: '/user/password/change'},
     ]
 
     useEffect(() => {
@@ -69,6 +86,19 @@ const NavbarTop = (props) => {
     const handleLogout = () => {
         props.onDeleteUser();
         props.onDeleteToken();
+    }
+
+    const menuItemRenderProfile = (item, index) => {
+        return (
+            <button className="dropdown-item" type="button">
+                <a
+                    className="rounded-0 m-0 d-flex align-items-center"
+                    href={item.path}
+                >
+                    {item.title}
+                </a>
+            </button>
+        )
     }
 
     const menuItemRender = (item, index, dropdown) => {
@@ -223,7 +253,27 @@ const NavbarTop = (props) => {
 
                 {
                     token ?
-                        <div className='d-flex align-items-center text-white ml-4'>
+                        <div className='d-flex align-items-center text-white ml-4' style={{width: 300}}>
+                            <div className='d-flex align-items-center dropdown icon-more-less' onClick={() => setOpenMore(!openMore)}>
+                                <Link className="nav-link text-white pr-0"
+                                      type="button" data-toggle="dropdown" data-display="static" aria-haspopup="true"
+                                      aria-expanded="false"
+                                >Профиль</Link>
+                                <div className="dropdown-menu dropdown-menu-lg-right">
+                                    {
+                                        rightItems.map((item, index) => menuItemRenderProfile(item, index, true))
+                                    }
+                                </div>
+                                <ExpandLessIcon className='icon-less'/>
+                                <ExpandMoreIcon className='icon-more'/>
+                            </div>
+                            <div style={{
+                                width: 1,
+                                height: 50,
+                                backgroundColor: '#f5f5f5',
+                                marginLeft: 15,
+                                marginRight: 15
+                            }}/>
                             <ExitToAppIcon/>
                             <Link className="nav-link text-white pl-1" onClick={() => handleLogout()}
                                   to={''}>Выход</Link>
@@ -297,11 +347,11 @@ const NavbarTop = (props) => {
                                       aria-expanded="false" className='text-white mr-3'/>
                         <div className="dropdown-menu dropdown-menu-lg-right">
                             {
-                                leftItems.map((item, index) => menuItemRender(item, index, true))
+                                allItems.map((item, index) => menuItemRender(item, index, true))
                             }
                             {
                                 token ?
-                                    <div >
+                                    <div>
                                         <Link className="nav-link pl-4 py-1" onClick={() => handleLogout()}
                                               to={''}>Выход</Link>
                                     </div>
