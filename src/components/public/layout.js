@@ -1,9 +1,9 @@
 /**
  * Created by misha on 27.01.19.
  */
-import React, {Component} from 'react';
-import {Route, Redirect, Switch, withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 import Index from './index';
@@ -16,7 +16,7 @@ import Product from './product';
 import Workshop from './workshop/workshop';
 import Catalog from './catalog';
 import Footer from './footer';
-import Menu from '../menu';
+import Header from '../header';
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
 import ResetForm from './sign_action/reset_pass';
@@ -41,9 +41,9 @@ class PublicLayout extends Component {
     render() {
         return (
             <div>
-                <Menu/>
+                <Header />
                 <div className="content row">
-                    <ScrollDownButton style={{zIndex: 50}}/>
+                <ScrollDownButton style={{zIndex: 50}}/>
                     <div className={`col-md-12`}>
                         <div className='image-background w-100'>
                             <Switch>

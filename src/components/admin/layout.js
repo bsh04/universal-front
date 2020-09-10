@@ -6,7 +6,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
-import Menu from '../menu';
+import Header from '../header';
 import ProductUpdate from './product_update';
 import NoImageList from './products_no_image_list';
 import NewsList from './news/news';
@@ -32,7 +32,7 @@ class PrivateLayout extends Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Header />
                 <div className="row content">
                     <div className='col-md-2'></div>
                     <div className='col-md-8'>
