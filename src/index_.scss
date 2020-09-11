@@ -18,6 +18,63 @@ $btn_default_color: #229DD2;
 }
 
 
+.products-toolbar {
+    min-height: 40px;
+    width: 100%;
+    
+
+    & .products-toolbar-group {
+        min-height: 40px;
+        background-color: #cccccc;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+  
+    & .products-toolbar-item {
+        list-style: none;
+        
+        
+        
+        &__list-view {
+            &:first-child {
+                margin-right: 10px;
+            }
+            & .active {
+                color: $btn_active_color;
+            }
+            & .disabled {
+                color: #c4c4c4;
+            }
+        }
+        
+  
+        &__text {
+            font-size: .8rem;
+            text-decoration: none;
+            color: #c4c4c4;
+            height: 30px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            display: inline-block;
+            
+        }
+  
+        &__selected {
+            font-size: .8rem;
+            text-decoration: none;
+            color: #000000;
+        }
+  
+        & #dropdownMenuLink::after {
+            color: #434343;
+        }
+    }
+}
+
+
+
 .sub-categories-select {
     position: relative;
     

@@ -6,12 +6,20 @@ export class ProductToolbar extends Component {
 
     }
 
+    shouldComponentUpdate(prevProps) {
+        if(prevProps !== this.props) {
+            return true;
+        } else return false;
+
+    }
+    
+
     render() {
         return (
-            <div className="products-toolbar mb-2 col-12">
-                <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
-                    <ul className="row col-xl-8 col-lg-8 col-md-8 col-sm-12 justify-content-center">
-                        <li className="products-toolbar-item mr-1">
+            <div className="products-toolbar">
+                <ul className="products-toolbar-group">
+                    <ul className="row">
+                        <li className="products-toolbar-item">
                             <div className="dropdown">
                                 <span className="products-toolbar-item__text">Товаров на странице: </span>
                                 <a className="dropdown-toggle"
@@ -22,20 +30,20 @@ export class ProductToolbar extends Component {
                                     aria-haspopup="true"
                                     aria-expanded="false">
                                     <span
-                                        className="products-toolbar-item__selected">{this.state.limitAll ? 'Все' : this.state.limit}</span>
+                                        className="products-toolbar-item__selected">{this.props.limitAll ? 'Все' : this.props.limit}</span>
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a className="dropdown-item" href="#" data="50"
-                                        onClick={(e) => this.setLimit(e, false)}>50</a>
+                                        onClick={(e) => this.props.setLimit(e, false)}>50</a>
                                     <a className="dropdown-item" href="#" data="100"
-                                        onClick={(e) => this.setLimit(e, false)}>100</a>
+                                        onClick={(e) => this.props.setLimit(e, false)}>100</a>
                                     <a className="dropdown-item" href="#" data="50"
-                                        onClick={(e) => this.setLimit(e, true)}>Все</a>
+                                        onClick={(e) => this.props.setLimit(e, true)}>Все</a>
                                 </div>
                             </div>
 
                         </li>
-                        <li className="products-toolbar-item mr-1">
+                        <li className="products-toolbar-item">
                             <div className="dropdown">
                                 <span className="products-toolbar-item__text">Сортировать по: </span>
                                 <a className="dropdown-toggle products-toolbar-item__text"
@@ -46,45 +54,38 @@ export class ProductToolbar extends Component {
                                     aria-haspopup="true"
                                     aria-expanded="false">
                                     <span
-                                        className="products-toolbar-item__selected">{this.sortSelectedLabel()}</span>
+                                        className="products-toolbar-item__selected">{this.props.sortSelectedLabel()}</span>
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a className="dropdown-item" href="#" data="title,asc"
-                                        onClick={(e) => this.setSort(e)}>названию А-Я</a>
+                                        onClick={(e) => this.props.setSort(e)}>названию А-Я</a>
                                     <a className="dropdown-item" href="#" data="title,desc"
-                                        onClick={(e) => this.setSort(e)}>названию Я-А</a>
+                                        onClick={(e) => this.props.setSort(e)}>названию Я-А</a>
                                     <a className="dropdown-item" href="#" data="price,asc"
-                                        onClick={(e) => this.setSort(e)}>цене по возрастанию</a>
+                                        onClick={(e) => this.props.setSort(e)}>цене по возрастанию</a>
                                     <a className="dropdown-item" href="#" data="price,desc"
-                                        onClick={(e) => this.setSort(e)}>цене по убыванию</a>
+                                        onClick={(e) => this.props.setSort(e)}>цене по убыванию</a>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
-                        <li className="products-toolbar-item mr-2">
+                    
+                    <div className="row">
+                        <span className="products-toolbar-item__list-view">
                             <a href="#"
-                                className={this.state.cardView === 'tile' ? 'text-success' : 'text-secondary'}
-                                onClick={() => {
-                                    this.setState({
-                                        cardView: 'tile'
-                                    })
-                                }}>
+                                className={this.props.cardView === 'tile' ? 'active' : 'disabled'}
+                                onClick={() => this.props.handleChangeCardView({cardView: 'tile'})}>
                                 <i className="fa fa-th"></i>
                             </a>
-                        </li>
-                        <li className="products-toolbar-item">
+                        </span>
+                        <span className="products-toolbar-item__list-view">
                             <a href="#"
-                                className={this.state.cardView === 'list' ? 'text-success' : 'text-secondary'}
-                                onClick={() => {
-                                    this.setState({
-                                        cardView: 'list'
-                                    })
-                                }}>
-                                <i className="fa fa-list"></i>
+                                className={this.props.cardView === 'list' ? 'active' : 'disabled'}
+                                onClick={() => this.props.handleChangeCardView({cardView: 'list'})}>
+                                <i className="fa fa-list-ul"></i>
                             </a>
-                        </li>
-                    </ul>
+                        </span>
+                    </div>
                 </ul>
             </div>
         )
