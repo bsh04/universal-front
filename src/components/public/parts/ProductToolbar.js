@@ -10,31 +10,6 @@ export class ProductToolbar extends Component {
         return (
             <div className="products-toolbar mb-2 col-12">
                 <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
-                    <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
-                        <li className="products-toolbar-item mr-2">
-                            <a href="#"
-                                className={this.state.cardView === 'tile' ? 'text-success' : 'text-secondary'}
-                                onClick={() => {
-                                    this.setState({
-                                        cardView: 'tile'
-                                    })
-                                }}>
-                                <i className="fa fa-th"></i>
-                            </a>
-                        </li>
-                        <li className="products-toolbar-item">
-                            <a href="#"
-                                className={this.state.cardView === 'list' ? 'text-success' : 'text-secondary'}
-                                onClick={() => {
-                                    this.setState({
-                                        cardView: 'list'
-                                    })
-                                }}>
-                                <i className="fa fa-list"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    
                     <ul className="row col-xl-8 col-lg-8 col-md-8 col-sm-12 justify-content-center">
                         <li className="products-toolbar-item mr-1">
                             <div className="dropdown">
@@ -84,6 +59,30 @@ export class ProductToolbar extends Component {
                                         onClick={(e) => this.setSort(e)}>цене по убыванию</a>
                                 </div>
                             </div>
+                        </li>
+                    </ul>
+                    <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
+                        <li className="products-toolbar-item mr-2">
+                            <a href="#"
+                                className={this.state.cardView === 'tile' ? 'text-success' : 'text-secondary'}
+                                onClick={() => {
+                                    this.setState({
+                                        cardView: 'tile'
+                                    })
+                                }}>
+                                <i className="fa fa-th"></i>
+                            </a>
+                        </li>
+                        <li className="products-toolbar-item">
+                            <a href="#"
+                                className={this.state.cardView === 'list' ? 'text-success' : 'text-secondary'}
+                                onClick={() => {
+                                    this.setState({
+                                        cardView: 'list'
+                                    })
+                                }}>
+                                <i className="fa fa-list"></i>
+                            </a>
                         </li>
                     </ul>
                 </ul>
