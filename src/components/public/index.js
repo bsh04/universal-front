@@ -26,7 +26,6 @@ class Index extends Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.checkWidnowSize.bind(this));
     }
 
     handleGet() {
@@ -53,32 +52,6 @@ class Index extends Component {
         
     }
 
-    componentDidMount() {
-        this.checkWidnowSize();
-        window.addEventListener("resize", this.checkWidnowSize.bind(this));
-    }
-
-    checkWidnowSize() {
-        if(window.innerWidth <= 1200) {
-            this.setState({
-                showCatalogOutMenu: false
-            })
-        } else {
-            this.setState({
-                showCatalogOutMenu: true
-            })
-        }
-        if(window.innerWidth <= 992) {
-            this.setState({
-                isMobile: true
-            })
-        } else {
-            this.setState({
-                isMobile: false
-            })
-        }
-    }
-
     itemView(item, type = null) {
         return (
             <div key={item.id} className="main-catalog-list__item">
@@ -91,21 +64,6 @@ class Index extends Component {
     }
 
     render() {
-        return <CategoriesContext.Consumer>{contextValue => {
-            const categories = contextValue.map(item => {       
-                if(item.children.length > 1){
-                    item.children = item.children.sort((current, next) => {
-                        if(current.title < next.title) {
-                            return -1;
-                        }
-                        if(current.title > next.title) {
-                            return 1;
-                        }
-                        return 0
-                    })
-                }
-                return item;                    
-            });
 
             return (
                 <div>
@@ -121,32 +79,18 @@ class Index extends Component {
                         <meta property="og:url" content="https://universal.tom.ru/"/>
                     </Helmet>
                     
-                    { !this.state.isMobile 
-                    ? <div className="row">
-                        {this.state.showCatalogOutMenu 
-                        ?<div className="col-md-3 p-0 index_page">
-                            <CategoryList categories={categories} onClick={() => null}/>
-                        </div>
-                        : null }
-                        <div className={this.state.showCatalogOutMenu ? "col-md-9" : "col-md-12"}>
-                            <h3 className="text-center"><Link to='/news'>Новости</Link></h3>
+                    <div>
+                        <div className={"col-md-12"}>
+                            <h3 ><Link to='/news'>Новости</Link></h3>
                             <News type="news"/>
                             <br/>
-                            <h3 className="text-center"><Link to='/catalog/stock'>Акции</Link></h3>
+                            <h3><Link to='/catalog/stock'>Акции</Link></h3>
                             <News type="stocks"/>
                             <br/>
                         </div>
                     </div>
-                    : <div>
-                        <NewsCard type={{title: 'Новинки', category: 'product/new', id: 1,}} />
-                        <NewsCard type={{title: 'Акции', category: 'product/stock', id: 2}} />
-                        <h3 className="text-center mt-3"><Link to='/news'>Новости</Link></h3>
-                        <News type="news"/>
-                    </div> }
                 </div>
             )
-        }}
-        </CategoriesContext.Consumer>
     }
 }
 

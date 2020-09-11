@@ -101,7 +101,7 @@ class ProductList extends Component {
             }
             str += key + "=" + encodeURIComponent(obj[key]);
         }
-        
+
         let _this = this;
         let res;
         if (cat === 'search') {
@@ -131,7 +131,7 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
-                    
+
                     let totalItems = response[response.length - 1].count;
 
                     response.splice(-1, 1);
@@ -144,7 +144,6 @@ class ProductList extends Component {
                             categories.push(tmp);
                         }
                     });
-                    
                     _this.setState({products: response}, () => {
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category),
@@ -236,17 +235,18 @@ class ProductList extends Component {
     render() {
         return (
             <CategoriesContext.Consumer>
-                {contextValue => { 
+                {contextValue => {
                 
                 let catList = [];
                 
                 if(contextValue && contextValue.length > 0 && this.props.match.params.category !== 'new' 
                     && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search'){
-                    
+
                     let obj = contextValue.find(item => item.id === this.props.match.params.category);
                     
                     if(obj && obj.children !== undefined){
                         catList = obj.children;
+
                     } else {
                         let obj = contextValue.find(item => {
                             if(item.children !== undefined && item.children.length > 0

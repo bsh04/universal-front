@@ -17,11 +17,24 @@ class AbstractForm extends Component {
         };
 
         this.state = {
+            mobileMode: false,
             loading: false,
             errors: [],
             request: request,
             errorCallback: errorCallback,
         };
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.checkSizeWindow.bind(this));
+    }
+
+    checkSizeWindow() {
+        if (window.innerWidth < 1000) {
+            this.setState({mobileMode: true})
+        } else {
+            this.setState({mobileMode: false})
+        }
     }
 
     viewForm() {return '...'}

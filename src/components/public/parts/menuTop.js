@@ -1,70 +1,405 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import QueryBuilderOutlinedIcon from '@material-ui/icons/QueryBuilderOutlined';
+import PhoneInTalkOutlinedIcon from '@material-ui/icons/PhoneInTalkOutlined';
+import MailOutlineOutlinedIcon from '@material-ui/icons/MailOutlineOutlined';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import SearchIcon from "@material-ui/icons/Search";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import MenuIcon from "@material-ui/icons/Menu";
+import {connect} from "react-redux";
+import Modal from "@material-ui/core/Modal";
+import {ItemExit} from './navbarDropItems'
 
 
+const MenuTop = props => {
 
-class MenuTop extends Component {
-    constructor(props) {
-        super(props);
+    const handleLogout = () => {
+        props.onDeleteUser();
+        props.onDeleteToken();
     }
 
-    
-    
-    render() {
+    const [amountBasket, setAmountBasket] = useState(null)
+    const [ready, setReady] = useState(false)
 
+    useEffect(() => {
+        if (props.basket.length > 0) {
+            props.basket.map((item, index) => {
+                setAmountBasket(prev => prev + item.product.price)
+                if (index === props.basket.length - 1) setReady(true)
+            })
+        } else {
+            setReady(true)
+        }
+        return () => {
+            setAmountBasket(null)
+        }
+    }, [props])
+
+
+    const defaultMenu = () => {
         return (
+            <div
+                className="d-flex justify-content-around text-left bg-white align-items-center fixed-top mainImage container-fluid defaultTopMenu">
+                <Link to="/">
+                    <div className={'d-flex flex-column'}>
+                        <h1 className={'pr-3'}>Универсал</h1>
+                        <h6>хозяйственные товары</h6>
+                    </div>
+                </Link>
+                <div className='row'>
+                    <LocationOnOutlinedIcon className='menuItems'/>
+                    <p style={{paddingLeft: 5}} className='menuText'>
+                        Адрес:
+                        г. Томск, ул. Бердская, 31
+                        <br/>
+                        Работаем по РФ
+                    </p>
+                </div>
+
+                <div className='row'>
+                    <QueryBuilderOutlinedIcon className='menuItems'/>
+                    <p className='menuText'>
+                        пн-пт - 9:00 - 17:00
+                        <br/>
+                        сб - 9:00 - 14:00, вс - выходной
+                    </p>
+                </div>
+
                 <div className="row">
-                    <div className="col-md-3 col-7 my-1 my-md-0 ">
-                        
-                        <Link to="/">
-                        {/*<img alt='main' src={require('../../../images/main_logo.jpeg')} style={{maxHeight: 100}}/>*/}
-                            <h1 className="text-center">Универсал</h1>
-                            <h2 className="text-center d-none d-md-block">Хозяйственные товары</h2>
+                    <p>
+                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-92-91'}
+                           itemProp="telephone">
+                            +7 (3822) 90-92-91
+                        </a>
+                        <br/>
+
+                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-44-32'}
+                           itemProp="telephone">
+                            +7 (3822) 90-44-32
+                        </a>
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-26-68'}
+                           itemProp="telephone">
+                            +7 (3822) 90-26-68
+                        </a>
+                        <br/>
+                        <MailOutlineOutlinedIcon className='menuItems'/>
+                        <a className='menuText' href={'email:razov@mail.tomsknet.ru'}
+                           itemProp="email">razov@mail.tomsknet.ru
+                        </a>
+                        <br/>
+                    </p>
+                </div>
+                <div className='d-flex flex-row align-items-center'>
+                    <div>
+                        <Link to='/user/basket'>
+                            <div className="iconButtons">
+                                <ShoppingCartIcon/>
+                            </div>
                         </Link>
-                        
                     </div>
-                    <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
-                        <p className={'text-md-left text-center'}>
-                            <span>
-                                <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-92-91'} itemProp="telephone">+7 (3822) 90-92-91</a></i><br/>
-                                <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">+7 (3822) 90-44-32</a></i><br/>
-                                <i className={'fa fa-phone'}> <a href={'tel:+7 (3822) 90-26-68'} itemProp="telephone">+7 (3822) 90-26-68</a></i>
-                            </span>
-                            <br/>
-                        </p>
-                    </div>
-                    <div className="col-md-3 text-md-left text-center my-3 my-md-0 d-none d-md-block">
-                        <i className={'fa fa-envelope '}> <a href={'email:razov@mail.tomsknet.ru'} itemProp="email">razov@mail.tomsknet.ru</a></i><br/>
-                        <p className="street-addres" itemProp="streetAddress"><i className={'fa fa-map-marker'}></i> Адрес: г. Томск, ул. Бердская, 31 <br/>(пер. Пойменный 5)</p>
-                    </div>
-                    <div className="col-md-2 my-3 my-md-0 d-none d-md-block">
-                        <div className="shedule">
-                            График работы
-                        </div>
-                        <div className="shedule-tooltip">
-                            <p><b>ПН-ПТ</b> <span>9:00 - 17:00</span></p>
-                            <p><b>СБ</b> <span>9:00 - 14:00</span></p>
-                            <p><b>ВС</b> <span>ВЫХОДНОЙ</span></p>
-                        </div>
-                    </div>
-                    <div className="col-md-2 col-5 text-md-right text-center my-1 my-md-0">
-                        <p>
-                        { this.props.token ?
-                                <Link to='/user/basket' className="iconButtons">
-                                    <i className={'fa fa-shopping-cart'}> </i>
-                                    {this.props.basket.length > 0 ? <span className={'badge badge-danger'}>{this.props.basket.length}</span> : null}
-                                </Link>
-                                : '' }
-                        { this.props.token ?
-                                <Link to='/user/favorite' className="iconButtons">
-                                    <i className={'fa fa-heart'}> </i>
-                                    {this.props.like.length > 0 ? <span className={'badge badge-danger'}>{this.props.like.length}</span> : null}
-                                </Link>
-                                : '' }
-                        </p>
+                    {
+                        props.basket.length > 0 && ready
+                            ?
+                            <div className='d-flex flex-column basket'>
+                                <span>
+                                    {amountBasket + ' Р'}
+                                </span>
+                                <p className='menuText'>
+                                    {
+                                        props.basket.length === 1
+                                            ? props.basket.length + ' товар'
+                                            : props.basket.length === 2
+                                            ?
+                                            props.basket.length + ' товара'
+                                            :
+                                            props.basket.length + ' товаров'
+                                    }
+                                </p>
+                            </div>
+                            : ready ?
+                            <p className='basket'>У Вас нет
+                                товаров<br/>в
+                                корзине</p>
+                            : null
+                    }
+                    <div style={{
+                        width: 1,
+                        height: 50,
+                        backgroundColor: '#b0b0b0b0',
+                        marginLeft: 15,
+                        marginRight: 15
+                    }}/>
+                    <div className="flex-column align-items-center d-flex"  style={{width: 83}}>
+                        <Link to='/user/favorite'>
+                            <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
+                        </Link>
+                        <p className='menuText pl-0'>Избранное</p>
                     </div>
                 </div>
+            </div>
         )
     }
+
+    const reduceMenu = () => {
+        return (
+            <div
+                className="d-flex flex-row justify-content-around text-left bg-light align-items-center container-fluid fixed-top mainImage minTopMenu"
+            >
+                <Link to="/">
+                    <div className={'d-flex flex-row align-items-center'}>
+                        <h1 className={'pr-3'}>Универсал</h1>
+                        <h6>хозяйственные товары</h6>
+                    </div>
+                </Link>
+                <div className='d-flex align-items-center'>
+                    <p>
+                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                        <a className='menuTextPhone pr-5' href={'tel:+7 (3822) 90-92-91'} itemProp="telephone">
+                            +7 (3822) 90-92-91
+                        </a>
+                    </p>
+                    <p className='px-4'>
+                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">
+                            +7 (3822) 90-44-32
+                        </a>
+                    </p>
+                    <p>
+                        <PhoneInTalkOutlinedIcon className='menuItems pl-5'/>
+                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-26-68'} itemProp="telephone">
+                            +7 (3822) 90-26-68
+                        </a>
+                    </p>
+                </div>
+                <div className='d-flex flex-row align-items-center'>
+                    <div>
+                        <Link to='/user/basket'>
+                            <div className="iconButtonsReducer">
+                                <ShoppingCartIcon/>
+                            </div>
+                        </Link>
+                    </div>
+                    {
+                        props.basket.length > 0 && ready
+                            ?
+                            <div className='d-flex flex-row basket'>
+                                <span>
+                                    {amountBasket + ' Р'}
+                                </span>
+                                <p className='menuText'>
+                                    {
+                                        props.basket.length === 1
+                                            ? props.basket.length + ' товар'
+                                            : props.basket.length === 2
+                                            ?
+                                            props.basket.length + ' товара'
+                                            :
+                                            props.basket.length + ' товаров'
+                                    }
+                                </p>
+                            </div>
+                            : ready ?
+                            <p className='basket'>У Вас нет
+                                товаров<br/>в
+                                корзине</p>
+                            : null
+                    }
+                    <div style={{
+                        width: 1,
+                        height: 30,
+                        backgroundColor: '#b0b0b0b0',
+                        marginLeft: 15,
+                        marginRight: 15
+                    }}/>
+
+                    <div className="flex-row align-items-center d-flex">
+                        <Link to='/user/favorite'>
+                            <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
+                        </Link>
+
+                        <p style={{color: 'black', fontWeight: 'normal', marginLeft: 10}}>Избранное</p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const minMenu = () => {
+        return (
+            <div
+                className="d-flex justify-content-around text-left bg-white align-items-center fixed-top mainImage container-fluid defaultTopMenu" style={reduce ? {height: 50} : null}>
+                <Link to="/">
+                    <div className={reduce ? 'd-flex flex-row align-items-center' : 'd-flex flex-column'}>
+                        <h1 className={'pr-3'}>Универсал</h1>
+                        <h6>хозяйственные товары</h6>
+                    </div>
+                </Link>
+                {
+                    reduce ?
+                        <>
+                            <div className='row'>
+                                    <p>
+                                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                                        <a className='menuTextPhone mr-2' href={'tel:+7 (3822) 90-92-91'}
+                                           itemProp="telephone">
+                                            +7 (3822) 90-92-91
+                                        </a>
+                                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                                        <a className='menuTextPhone mr-2' href={'tel:+7 (3822) 90-44-32'}
+                                           itemProp="telephone">
+                                            +7 (3822) 90-44-32
+                                        </a>
+                                    </p>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className='d-flex flex-column justify-content-center'>
+                                <div className='row'>
+                                    <LocationOnOutlinedIcon className='menuItems'/>
+                                    <p style={{paddingLeft: 5}} className='menuText'>
+                                        Адрес:
+                                        г. Томск, ул. Бердская, 31
+                                        <br/>
+                                    </p>
+                                </div>
+                                <div className='row'>
+                                    <QueryBuilderOutlinedIcon className='menuItems'/>
+                                    <p className='menuText'>
+                                        пн-пт - 9:00 - 17:00
+                                        <br/>
+                                        сб - 9:00 - 14:00, вс - выходной
+                                    </p>
+                                </div>
+                            </div>
+                            <div className='d-flex flex-column justify-content-center'>
+                                <div className="row">
+                                    <p>
+                                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-92-91'}
+                                           itemProp="telephone">
+                                            +7 (3822) 90-92-91
+                                        </a>
+                                        <br/>
+
+                                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-44-32'}
+                                           itemProp="telephone">
+                                            +7 (3822) 90-44-32
+                                        </a>
+                                    </p>
+                                </div>
+                                <div className='row'>
+                                    <p>
+                                        <PhoneInTalkOutlinedIcon className='menuItems'/>
+                                        <a className='menuTextPhone' href={'tel:+7 (3822) 90-26-68'}
+                                           itemProp="telephone">
+                                            +7 (3822) 90-26-68
+                                        </a>
+                                        <br/>
+                                        <MailOutlineOutlinedIcon className='menuItems'/>
+                                        <a className='menuText' href={'email:razov@mail.tomsknet.ru'}
+                                           itemProp="email">razov@mail.tomsknet.ru
+                                        </a>
+                                        <br/>
+                                    </p>
+                                </div>
+                            </div>
+                        </>
+                }
+
+                <div className='d-flex flex-row align-items-center'>
+                    <div>
+                        <Link to='/user/basket'>
+                            <div className={reduce ? "basketMobile text-white" : "iconButtons"}>
+                                <ShoppingCartIcon/>
+                            </div>
+                        </Link>
+                    </div>
+                    {
+                        reduce ?
+                            <div className='line' style={{height: 30}}/>
+                            :
+                            <div className='line'/>
+                    }
+                    <div className="flex-column align-items-center d-flex">
+                        <Link to='/user/favorite'>
+                            <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const mobileMenu = () => {
+        return (
+            <div
+                className="d-flex flex-row px-3 bg-light text-left align-items-center justify-content-center fixed-top mainImage"
+                style={{height: 70}}>
+                <div className='d-flex flex-column align-items-left w-50'>
+                    <Link to="/">
+                        <h1>универсал</h1>
+                        <h6>хозяйственные товары</h6>
+                    </Link>
+                </div>
+                <div className='d-flex justify-content-around align-items-center px-0 mx-0 text-black-50 w-50'>
+                    <ExitToAppIcon className='mx-1' onClick={() => props.setDropItem('exit')}/>
+                    <SearchIcon className='mx-1' onClick={() => props.setDropItem('search')}/>
+                    <PhoneInTalkOutlinedIcon className='mx-1' onClick={() => props.setDropItem('phone')}/>
+                    <MenuIcon className='mx-1' onClick={() => props.setDropItem('menu')}/>
+                </div>
+            </div>
+        )
+    }
+
+    let reduce = props.reduceTopMenu
+    let mobile = props.mobileMode
+    let minimal = props.minimalMode
+
+    return (
+        mobile && reduce ?
+            null
+            :
+            mobile ?
+                mobileMenu()
+                :
+                minimal ?
+                    minMenu()
+                    :
+                    reduce
+                        ?
+                        reduceMenu()
+                        :
+                        defaultMenu()
+    )
 }
-export default MenuTop;
+
+export default withRouter(connect(
+    (state) => ({
+        token: state.token,
+        user: state.user,
+        reload: state.reload,
+    }),
+    dispatch => ({
+        onDeleteToken: (token) => {
+            dispatch({type: 'DELETE_TOKEN', payload: token})
+        },
+        onDeleteUser: (user) => {
+            dispatch({type: 'DELETE_USER', payload: user})
+        },
+        onReloadedMenu: () => {
+            dispatch({type: 'RELOADED', payload: true})
+        },
+    })
+)(MenuTop));

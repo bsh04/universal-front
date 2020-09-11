@@ -3,22 +3,23 @@
  */
 import React from 'react';
 import AbstractForm from '../../abstract/form';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Link, withRouter} from 'react-router-dom';
 
-import { loginUrl, clientId, clientSecret } from '../../../services/parameters';
+import {loginUrl, clientId, clientSecret} from '../../../services/parameters';
 import request from "../../../services/ajaxManager";
+import Breadcrumbs from "../../breadcrumbs";
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 class LoginForm extends AbstractForm {
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateUser = this.updateUser.bind(this);
     }
 
-    handleSubmit(e)
-    {
+    handleSubmit(e) {
         e.preventDefault();
         this.setState({loading: true});
 
@@ -36,16 +37,14 @@ class LoginForm extends AbstractForm {
             'POST',
             data,
             {},
-            function (response)
-            {
+            function (response) {
                 _this.updateUser(response.access_token, () => _this.props.onAddToken(response.access_token));
             },
             this.state.errorCallback
         );
     }
 
-    updateUser(token, callback)
-    {
+    updateUser(token, callback) {
         let _this = this;
 
         request(
@@ -53,8 +52,7 @@ class LoginForm extends AbstractForm {
             'GET',
             null,
             {"Authorization": 'Bearer ' + token},
-            function (response)
-            {
+            function (response) {
                 _this.props.onAddUser(response);
                 callback();
             },
@@ -64,37 +62,65 @@ class LoginForm extends AbstractForm {
 
     viewForm() {
         return (
-            <div className="w-75">
-                <h4 className="text-center">Войти</h4>
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        name="email"
-                        type="email"
-                        required={true}
-                        placeholder={"E-mail:*"}
-                        className={'form-control '}
-                        ref={(input) => {this.emailInput = input}}
-                    />
-                    <input
-                        name="pass"
-                        type="password"
-                        required={true}
-                        placeholder={"Пароль:*"}
-                        className={'form-control '}
-                        ref={(input) => {this.passInput = input}}
-                    />
-                    <br/>
-                    <p className="text-center">
-                        <button type="submit" className="btn btn-success">
-                            <i className={'fa fa-sign-in'}> <span>Войти</span></i>
-                        </button>
-                    </p>
-                </form>
-                <Link to={'/password/reset'}>Восстановить пароль</Link>
-                <br/><br/>
-                <Link to={'/register'} className="btn btn-primary">
-                    <i className={'fa fa-user-plus'}> <span>Регистрация</span></i>
-                </Link>
+            <div className='image-background'>
+                <div className="login">
+                    <Breadcrumbs
+                        path={[
+                            {title: 'Вход'}
+                        ]}/>
+                    <h4>Вход</h4>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className='login-form-input'>
+                            <p className='mb-0'>E-mail</p>
+                            <div className='form-control rounded-pill custom-input w-75'>
+                                <input
+                                    name="email"
+                                    type="email"
+                                    required={true}
+                                    placeholder='Введите Ваш E-mail'
+                                    ref={(input) => {
+                                        this.emailInput = input
+                                    }}
+                                />
+                                <span>*</span>
+                            </div>
+                        </div>
+                        <div className='login-form-input'>
+                            <p className='mb-0'>Пароль</p>
+                            <div className='form-control rounded-pill custom-input w-75'>
+                                <input
+                                    name="pass"
+                                    type="password"
+                                    required={true}
+                                    placeholder='Введите Ваш пароль'
+                                    ref={(input) => {
+                                        this.passInput = input
+                                    }}
+                                />
+                                <span>*</span>
+                            </div>
+                        </div>
+                        <div className='login-submit-btns'>
+                            <div className='second'>
+                                <div className='login-form-button'>
+                                    <button type="submit" className="custom-btn rounded-pill w-100">
+                                        <ExitToAppIcon className='mr-2'/>
+                                        <span>Войти</span>
+                                    </button>
+                                </div>
+                                <Link to={'/password/reset'} className='custom-link'>Восстановить пароль</Link>
+                            </div>
+                            <div className='login-form-button'>
+                                <button type="submit" className="custom-btn reg rounded-pill w-100">
+                                    <Link to={'/register'} className='text-decoration-none'>
+                                        <PersonOutlineIcon className='mr-2 text-white'/>
+                                        <span>Зарегистрироваться</span>
+                                    </Link>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }
@@ -106,10 +132,10 @@ export default withRouter(connect(
     }),
     dispatch => ({
         onAddToken: (token) => {
-            dispatch({ type: 'ADD_TOKEN', payload: token })
+            dispatch({type: 'ADD_TOKEN', payload: token})
         },
         onAddUser: (user) => {
-            dispatch({ type: 'ADD_USER', payload: user })
+            dispatch({type: 'ADD_USER', payload: user})
         },
     })
 )(LoginForm));

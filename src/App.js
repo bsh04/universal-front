@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import './App.css';
 import PublicLayout from './components/public/layout';
@@ -9,26 +9,44 @@ import UserLayout from './components/private/layout';
 import ErrorBoundary from './components/errorBoundary';
 import Modal from './components/modal';
 
-import { CategoriesContext } from './services/contexts';
+import {CategoriesContext} from './services/contexts';
 import request from './services/ajaxManager';
+import login from "./components/public/sign_action/login";
 
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.updateFrom = this.updateFrom.bind(this);
+        this.checkSizeWindow = this.checkSizeWindow.bind(this)
 
         this.state = {
             from: props.location.pathname,
-            categories: []
+            categories: [],
+            mobileMode: false
         };
     }
 
     updateFrom(from) {
         this.setState({from: from});
     }
-    
-    componentDidMount(){
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.checkSizeWindow.bind(this))
+    }
+
+    checkSizeWindow() {
+        if (window.innerWidth > 1200) {
+            this.setState({mobileMode: false})
+        } else {
+            this.setState({mobileMode: true})
+        }
+    }
+
+    componentDidMount() {
+        this.checkSizeWindow()
+        window.addEventListener("resize", this.checkSizeWindow.bind(this));
+
         let _this = this;
 
         request(
@@ -48,16 +66,30 @@ class App extends Component {
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        <CategoriesContext.Provider value={this.state.categories}>
-                            <Switch>
-                                <Route path="/admin" component={() => <PrivateLayout updateFrom={this.updateFrom} />}/>
-                                <Route path="/user" component={() => <UserLayout updateFrom={this.updateFrom} />}/>
-                                <Route path="/" render={() => <PublicLayout from={this.state.from}
-                                                                            updateFrom={this.updateFrom} />}/>
-                            </Switch>
-                        </CategoriesContext.Provider>
+                        {
+                            this.state.mobileMode ?
+                                <Switch>
+                                    <Route path="/admin"
+                                           component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
+                                    <Route path="/user"
+                                           component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
+                                    <Route path="/" render={() => <PublicLayout from={this.state.from}
+                                                                                updateFrom={this.updateFrom}/>}/>
+                                </Switch>
+                                :
+                                <CategoriesContext.Provider value={this.state.categories}>
+                                    <Switch>
+                                        <Route path="/admin"
+                                               component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
+                                        <Route path="/user"
+                                               component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
+                                        <Route path="/" render={() => <PublicLayout from={this.state.from}
+                                                                                    updateFrom={this.updateFrom}/>}/>
+                                    </Switch>
+                                </CategoriesContext.Provider>
+                        }
                     </Router>
-                    <Modal />
+                    <Modal/>
                 </ErrorBoundary>
             </div>
         );
