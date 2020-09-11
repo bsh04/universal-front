@@ -53,6 +53,7 @@ class PublicLayout extends Component {
     }
 
     componentDidMount() {
+        this.checkWindowSize();
         window.addEventListener('resize', this.checkWindowSize);
     }
     componentWillUnmount() {
@@ -105,7 +106,7 @@ class PublicLayout extends Component {
                 <Menu />
                 <div className="content row">
                 <ScrollDownButton style={{zIndex: 50}}/>
-                    <div className={`col-md-12`}>
+                    <div className={`col-md-12 pr-2`}>
                         <Switch>
                             <Route exact path={'/'} component={Index}/>
                             <Route exact path={'/contact'} component={Contact}/>

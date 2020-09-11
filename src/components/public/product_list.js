@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+
 import request from "../../services/ajaxManager";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
@@ -10,6 +10,7 @@ import {CategoriesContext} from '../../services/contexts';
 
 import Card from './parts/card';
 import ProductCard from './parts/product/ProductCard';
+import { SubCategoriesRow } from './parts/SubCategoriesRow';
 
 class ProductList extends Component {
     constructor(props) {
@@ -144,7 +145,7 @@ class ProductList extends Component {
                         }
                     });
                     
-                    _this.setState({products: response, catList: categories}, () => {
+                    _this.setState({products: response}, () => {
                         _this.setState({
                             path: _this.setCategory(_this.props.match.params.category),
                             totalItems: totalItems,
@@ -236,18 +237,29 @@ class ProductList extends Component {
         return (
             <CategoriesContext.Consumer>
                 {contextValue => { 
+                
                 let catList = [];
+                
                 if(contextValue && contextValue.length > 0 && this.props.match.params.category !== 'new' 
                     && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search'){
                     
                     let obj = contextValue.find(item => item.id === this.props.match.params.category);
+                    
                     if(obj && obj.children !== undefined){
                         catList = obj.children;
-                    }                    
+                    } else {
+                        let obj = contextValue.find(item => {
+                            if(item.children !== undefined && item.children.length > 0
+                                && item.children.find(item => item.id === this.props.match.params.category)) {
+                                    return item;
+                            }
+                        });
+                        catList = obj.children;
+                    }
+
                 } else {
                     catList = this.state.catList;
                 }
-                
                     
                 return <div>
                 <Helmet>
@@ -284,23 +296,12 @@ class ProductList extends Component {
                                     {title: this.state.path}]
                         )}/>
                     : null}
-                {this.props.match.params.category !== 'new'
-                && this.props.match.params.category !== 'stock'
-                && this.props.match.params.category !== 'search'
-                && catList.length > 1 ?
-                    <div className="alert alert-light" style={{padding: '5px', overflow: 'auto', height: 'auto'}} role="alert">
-                        <p>
-                            Подкатегории: {catList.sort((a, b) => {
-                                if (a.title > b.title) return 1;
-                                else if (a.title < b.title) return -1;
-                                else return 0;
-                        }).map((subcat, key) => {
-                            return <span key={key}><Link to={'/catalog/' + subcat.id}>
-                            {subcat.title}
-                        </Link>{key < catList.length - 1 ? ', ' : ''}</span>
-                        })}
-                        </p>
-                    </div> : null}
+
+                {this.props.match.params.category !== 'new' && this.props.match.params.category !== 'stock'
+                && this.props.match.params.category !== 'search' && catList.length > 0 ?
+                    <SubCategoriesRow catList={catList} location={this.props.location}/> 
+                : null}
+
                 <div className="products-toolbar mb-2 col-12">
                     <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
                         <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
@@ -327,6 +328,7 @@ class ProductList extends Component {
                                 </a>
                             </li>
                         </ul>
+                        
                         <ul className="row col-xl-8 col-lg-8 col-md-8 col-sm-12 justify-content-center">
                             <li className="products-toolbar-item mr-1">
                                 <div className="dropdown">
@@ -380,6 +382,7 @@ class ProductList extends Component {
                         </ul>
                     </ul>
                 </div>
+                
                 <div className="row" ref={(target) => this.productListInnerContainer = target}>
                     {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                         if (key < this.state.limit) {
@@ -390,10 +393,11 @@ class ProductList extends Component {
                                 />
                             );
                         } else {
-                            return;
+                            return null;
                         }
                     }) : <p className={'text-center'}>Товары не найдены</p>}
                 </div>
+
                 {!this.state.limitAll && parseInt(this.state.limit) < parseInt(this.state.totalItems)
                     ? <nav aria-label="Page navigation example" className="row justify-content-center">
                         <ul className="pagination">
