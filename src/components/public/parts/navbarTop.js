@@ -104,7 +104,7 @@ const NavbarTop = (props) => {
     const menuItemRender = (item, index, dropdown) => {
         if (dropdown) {
             return (
-                <button className="dropdown-item" type="button">
+                <button key={index} className="dropdown-item" type="button">
                     <a
                         className="rounded-0 m-0 d-flex align-items-center"
                         href={item.path}

@@ -51,7 +51,7 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(i + 1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
                         } else if (i + 1 === 4) {
-                            items.push(<MoreHorizIcon className='item'/>)
+                            items.push(<MoreHorizIcon key={i+1} className='item'/>)
                             items.push(<p key={i} onClick={() => handlePicker(numberPages)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{numberPages}</p>)
                         }
@@ -60,7 +60,7 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(i + 1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
                         } else if (i + 1 === 5) {
-                            items.push(<MoreHorizIcon className='item'/>)
+                            items.push(<MoreHorizIcon key={i} className='item'/>)
                         } else if (i + 1 === numberPages) {
                             items.push(<p key={i} onClick={() => handlePicker(numberPages)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{numberPages}</p>)
@@ -70,12 +70,12 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{1}</p>)
                         } else if (i + 1 === 2) {
-                            items.push(<MoreHorizIcon className='item'/>)
+                            items.push(<MoreHorizIcon key={i} className='item'/>)
                         } else if (i + 1 === pickPage - 1 || i + 1 === pickPage || i + 1 === pickPage + 1) {
                             items.push(<p key={i} onClick={() => handlePicker(i + 1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
                         } else if (i + 1 === numberPages - 1) {
-                            items.push(<MoreHorizIcon className='item'/>)
+                            items.push(<MoreHorizIcon key={i} className='item'/>)
                         } else if (i + 1 === numberPages) {
                             items.push(<p key={i} onClick={() => handlePicker(numberPages)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{numberPages}</p>)
@@ -87,7 +87,7 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>1</p>)
                         } else if (i + 1 === 2) {
-                            items.push(<MoreHorizIcon className='item'/>)
+                            items.push(<MoreHorizIcon key={i} className='item'/>)
                         } else if (i + 1 > numberPages - 4) {
                             items.push(<p key={i} onClick={() => handlePicker(i + 1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
@@ -98,7 +98,7 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>1</p>)
                         } else if (i + 1 === 2) {
-                            items.push(<MoreHorizIcon className='item'/>)
+                            items.push(<MoreHorizIcon key={i} className='item'/>)
                         } else if (i + 1 > numberPages - 3) {
                             items.push(<p key={i} onClick={() => handlePicker(i + 1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)

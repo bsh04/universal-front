@@ -107,7 +107,7 @@ class Orders extends Component {
                 </div>
                 {
                     this.state.numberItems ?
-                        <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.numberItems} offset={5}/>
+                        <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.numberItems} offset={6}/>
                         : null
                 }
             </div>
