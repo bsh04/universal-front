@@ -121,6 +121,182 @@ h3 > a {
   }
 }
 
+.contacts {
+  width: 95%;
+  padding-bottom: 40px;
+
+
+  & .about-text {
+    text-align: left;
+  }
+
+  & .map {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid $color_lite;
+  }
+
+  & p {
+    padding-top: 20px;
+    color: $color_label;
+  }
+
+  & h4 {
+    font-size: 40px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $color_secondary;
+  }
+
+  & strong {
+    font-weight: 700;
+    color: black;
+  }
+
+
+  & .about {
+    display: flex;
+    align-items: flex-end;
+
+    & h3 {
+      font-size: 30px;
+      padding: 40px 0 0 0;
+      text-align: left;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: $color_secondary;
+      margin: 0;
+
+    }
+
+    & hr {
+      width: 85%;
+      margin: 0 0 5px 20px;
+    }
+
+
+  }
+
+
+  & .contacts-items {
+    width: 75%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 10px 0 30px 0;
+
+    & .location, .phone, .mail {
+      display: flex;
+      width: 30%;
+      color: $color_label;
+      text-align: left;
+
+      & .icon {
+        color: #b0b0b0;
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    & .phone {
+      display: flex;
+      flex-wrap: wrap;
+
+      & a {
+        color: black;
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+
+    & .mail {
+      & a {
+        color: $color_label;
+        text-decoration: none;
+      }
+    }
+
+    & .location {
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+
+    & .about-text {
+      text-align: center;
+    }
+
+    & .about {
+
+      width: 100%;
+      & h3 {
+        width: 100%;
+        text-align: center;
+      }
+
+      & hr {
+        display: none;
+      }
+    }
+
+    & p {
+      text-align: center;
+    }
+
+    & .map {
+      border-radius: 0;
+    }
+    & h4 {
+      text-align: center;
+    }
+
+    & .contacts-items {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      & .location, .phone, .mail {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        color: $color_label;
+        text-align: left;
+
+        padding: 10px 0 10px 0;
+
+        & .phone {
+          height: 50px;
+        }
+
+        & .first {
+          width: 35%;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-end;
+        }
+
+        & .second {
+          width: 65%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+
+          & a {
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+
+    }
+  }
+}
+
 .catalog-first-item {
   width: 80%;
   margin-left: 0;
@@ -1395,16 +1571,16 @@ h3 > a {
   justify-content: space-between;
 
 
-
   .card-container {
     margin: 20px;
     height: 450px;
     overflow: hidden;
     width: 450px;
     border-radius: 10px;
+
     &:hover {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      }
+    }
 
     & img {
       height: 50%;
@@ -1428,7 +1604,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2588,7 +2764,7 @@ nav.navbar {
     font-weight: bold;
     color: $color_secondary;
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 768px) {
       text-align: center;
     }
   }

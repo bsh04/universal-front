@@ -44,7 +44,7 @@ const Pagination = (props) => {
     const renderNumberPages = () => {
         if (numberPages) {
             const items = []
-            if (numberPages > 5) {
+            if (numberPages > 6) {
                 for (let i = 0; i < numberPages; i++) {
                     if (pickPage === 1 || pickPage === 2) {
                         if (i + 1 < 4) {
@@ -65,7 +65,7 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(numberPages)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{numberPages}</p>)
                         }
-                    } else if (pickPage > 3 && pickPage < numberPages - 3) {
+                    }  else if (pickPage > 3 && pickPage < numberPages - 2) {
                         if (i + 1 === 1) {
                             items.push(<p key={i} onClick={() => handlePicker(1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{1}</p>)
@@ -81,8 +81,7 @@ const Pagination = (props) => {
                                           className={i + 1 === pickPage ? 'pick' : null}>{numberPages}</p>)
                         }
 
-                    } else if (pickPage === numberPages - 3) {
-                        console.log('numberPages - 3')
+                    } else if (pickPage === numberPages - 2) {
                         if (i + 1 === 1) {
                             items.push(<p key={i} onClick={() => handlePicker(1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>1</p>)
@@ -93,7 +92,6 @@ const Pagination = (props) => {
                                           className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
                         }
                     } else if (pickPage > numberPages - 3) {
-                        console.log('> numberPages - 3')
                         if (i + 1 === 1) {
                             items.push(<p key={i} onClick={() => handlePicker(1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>1</p>)
@@ -105,9 +103,10 @@ const Pagination = (props) => {
                         }
                     }
                 }
-            } else {
+            } else if (numberPages <= 6) {
                 for (let i = 0; i < numberPages; i++) {
-                        items.push(<p key={i} onClick={() => handlePicker(i + 1)} className={i+1 === pickPage ? 'pick' : null}>{i + 1}</p>)
+                    items.push(<p key={i} onClick={() => handlePicker(i+1)}
+                                  className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
                 }
             }
             return items
