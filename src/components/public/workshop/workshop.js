@@ -114,7 +114,8 @@ class Workshop extends Component {
             'GET',
             null,
             {},
-            function (response) {
+            function (response)
+            {
                 _this.setState({article: response});
             },
         );

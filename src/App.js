@@ -56,7 +56,6 @@ class App extends Component {
             {},
             (response) => {
                 _this.setState({categories: response})
-
             },
             (err) => console.log(err)
         )

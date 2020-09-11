@@ -22,7 +22,7 @@ class ExportCategoryList extends Component {
             'GET',
             null,
             {},
-            function (response) { console.log(response);
+            function (response) { //console.log(response);
                 _this.setState({categories: response});
             },
         );

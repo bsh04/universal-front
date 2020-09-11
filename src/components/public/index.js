@@ -9,6 +9,7 @@ import CategoryList from '../public/parts/category_list';
 import request from "../../services/ajaxManager";
 import { CategoriesContext } from '../../services/contexts';
 
+
 class Index extends Component {
     constructor(props) {
         super(props);

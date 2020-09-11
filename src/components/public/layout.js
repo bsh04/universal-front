@@ -24,13 +24,27 @@ import DeliveryAndPayment from './delivery_and_payment';
 import ScrollDownButton from "./parts/scrollDownButton";
 import {CategoriesContext} from "../../services/contexts";
 import CategoryList from "./parts/category_list";
+import {MapSection_} from './parts/mapSection_';
+import ContactForm from './parts/contactForm';
+import { ServiceBtn } from './parts/buttons/ServiceBtn';
+import { ModalGallery, ModalBasketAddAlert, ModalCallbackForm, ModalRequestForm, ModalQuestionForm, ModalThanks } from './parts/modal_blocks';
 
 class PublicLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
             redirectUrl: '/',
-            showMenu: true
+            showMenu: true,
+            location: this.props.location.pathname,
+            isMobile: false,
+
+            callbackModalVisible: false,
+            questionModalVisible: false,
+            requestFormModalVisible: false,
+
+            basketAddModalVisible: false,
+            galleryModalVisible: false,
+            modalThanksVisible: false,
         };
     }
 
@@ -40,8 +54,56 @@ class PublicLayout extends Component {
         }
     }
 
-    render() {
+    componentDidMount() {
+        this.checkWindowSize();
+        window.addEventListener('resize', this.checkWindowSize);
+    }
 
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.checkWindowSize);
+    }
+
+    checkWindowSize = () => {
+        if (window.innerWidth < 600 && this.state.isMobile === false) {
+            this.setState({isMobile: true})
+        } else if (window.innerWidth >= 600 && this.state.isMobile === true) {
+            this.setState({isMobile: false})
+        }
+    }
+
+
+    toggleModal = (name) => {
+        let target = null;
+
+        switch (name) {
+            case 'basket':
+                target = 'basketAddModalVisible';
+                break;
+            case 'thanks':
+                target = 'modalThanksVisible';
+                break;
+            case 'gallery':
+                target = 'galleryModalVisible';
+                break;
+            case 'callback':
+                target = 'callbackModalVisible';
+                break;
+            case 'request':
+                target = 'requestFormModalVisible';
+                break;
+            case 'question':
+                target = 'questionModalVisible';
+                break;
+        }
+
+        if (target) {
+            this.setState({
+                [target]: !this.state[target]
+            })
+        }
+    }
+
+    render() {
         return <CategoriesContext.Consumer>{contextValue => {
             if (contextValue) {
                 const categories = contextValue.map(item => {
@@ -95,7 +157,27 @@ class PublicLayout extends Component {
                                     )}/>
                                 </Switch>
                             </div>
-                            {/*<div className='col-md-2'></div>*/}
+                            <div className={`service-btn-group ${this.state.isMobile ? '' : 'sticked'}`}>
+                                <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
+                                <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
+                                <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/>
+                            </div>
+
+                            <ModalGallery visible={this.state.galleryModalVisible}/>
+                            <ModalBasketAddAlert visible={this.state.basketAddModalVisible}/>
+                            <ModalThanks visible={this.state.modalThanksVisible}/>
+
+                            <ModalCallbackForm visible={this.state.callbackModalVisible}
+                                               handleToggle={() => this.toggleModal('callback')}/>
+                            <ModalRequestForm visible={this.state.requestFormModalVisible}
+                                              handleToggle={() => this.toggleModal('request')}/>
+                            <ModalQuestionForm visible={this.state.questionModalVisible}
+                                               handleToggle={() => this.toggleModal('question')}/>
+
+
+                            <ContactForm/>
+                            {this.state.location.indexOf('contact') === -1 ?
+                                <MapSection_/> : null}
                         </div>
                         <ScrollUpButton style={{zIndex: 50}}/>
                         <Footer/>
@@ -135,6 +217,27 @@ class PublicLayout extends Component {
                                     )}/>
                                 </Switch>
                             </div>
+                            <div className={`service-btn-group ${this.state.isMobile ? '' : 'sticked'}`}>
+                                <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
+                                <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
+                                <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/>
+                            </div>
+
+                            <ModalGallery visible={this.state.galleryModalVisible}/>
+                            <ModalBasketAddAlert visible={this.state.basketAddModalVisible}/>
+                            <ModalThanks visible={this.state.modalThanksVisible}/>
+
+                            <ModalCallbackForm visible={this.state.callbackModalVisible}
+                                               handleToggle={() => this.toggleModal('callback')}/>
+                            <ModalRequestForm visible={this.state.requestFormModalVisible}
+                                              handleToggle={() => this.toggleModal('request')}/>
+                            <ModalQuestionForm visible={this.state.questionModalVisible}
+                                               handleToggle={() => this.toggleModal('question')}/>
+
+
+                            <ContactForm/>
+                            {this.state.location.indexOf('contact') === -1 ?
+                                <MapSection_/> : null}
                         </div>
                         <ScrollUpButton style={{zIndex: 50}}/>
                         <Footer/>
@@ -145,7 +248,6 @@ class PublicLayout extends Component {
         </CategoriesContext.Consumer>
     }
 }
-
 
 export default withRouter(connect(
     (state, ownProps) => ({
