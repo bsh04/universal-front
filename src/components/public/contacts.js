@@ -4,6 +4,8 @@ import { YMaps, Map, GeoObject, GeolocationControl, SearchControl, ZoomControl }
 import {Helmet} from "react-helmet";
 import Breadcrumbs from '../breadcrumbs';
 
+import MapSection from './parts/mapSection';
+
 class Contact extends Component {
     render() {
         return (
@@ -27,6 +29,8 @@ class Contact extends Component {
                     <i className={'fa fa-envelope'}> <span><a href="mailto:razov@mail.tomsknet.ru" itemProp="email">razov@mail.tomsknet.ru</a></span></i>
                 </p>
 
+                <MapSection />
+
                 <h3>О компании</h3>
                 <p className={'text-left'}>
                     Основным направлением нашей деятельности является оптовая торговля товарами народного потребления: посуда, хозяйственные товары, инструменты. Наша цель - предоставление качественных товаров широкого ассортимента по разумным ценам.<br/><br/>
@@ -37,37 +41,6 @@ class Contact extends Component {
                 <br/>
                 <hr/>
                 <br/>
-                <YMaps>
-                    <div className={'map'}>
-                        <Map defaultState={{ center: [56.51271706822828,84.94996649999996], zoom: 16 }}
-                             style={{width: '80%', margin: '0 auto', height: '80vh'}}>
-                            <GeolocationControl/>
-                            <SearchControl/>
-                            <ZoomControl/>
-                            <GeoObject
-                                // The geometry description.
-                                geometry={{
-                                    type: 'Point',
-                                    coordinates: [56.51271706822828,84.94996649999996],
-                                }}
-                                // Properties.
-                                properties={{
-                                    // The placemark content.
-                                    iconContent: 'Мы здесь',
-                                    hintContent: 'ООО "Компания Универсал"',
-                                }}
-                                // Options.
-                                options={{
-                                    // The placemark's icon will stretch to fit its contents.
-                                    preset: 'islands#blackStretchyIcon',
-                                    // The placemark can be moved.
-                                    draggable: false,
-                                }}
-                            />
-                        </Map>
-
-                    </div>
-                </YMaps>
             </div>
         );
     }
