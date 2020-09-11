@@ -9,6 +9,9 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import Pagination from "../pagination";
+import login from "../public/sign_action/login";
 
 class Orders extends Component {
     constructor(props) {
@@ -16,13 +19,13 @@ class Orders extends Component {
 
 
         this.handleDuplicate = this.handleDuplicate.bind(this);
+        this.handleRenderList = this.handleRenderList.bind(this)
 
         this.state = {
             orders: [],
             message: [],
             showDetails: false,
-            offset: 5,
-            pickPage: 1
+            pickPage: 1,
         };
     }
 
@@ -37,15 +40,19 @@ class Orders extends Component {
             'GET',
             null,
             {},
-            async function (response) {
+            function (response) {
                 _this.setState({orders: response});
                 let numberItems = 0
                 response.map(() => {
                     numberItems += 1
                 })
-                await _this.setState({numberPages: Math.ceil(numberItems / _this.state.offset)})
+                _this.setState({numberItems: numberItems-1})
             },
         );
+    }
+
+    handleRenderList(start, end) {
+        this.setState({start, end})
     }
 
     handleDuplicate(id) {
@@ -63,23 +70,6 @@ class Orders extends Component {
         );
     }
 
-    pickPage(i) {
-        this.setState({pickPage: i + 1})
-    }
-
-    renderNumberPages() {
-        if (this.state.numberPages) {
-            const items = []
-            for (let i = 0; i < this.state.numberPages; i++) {
-                if (i + 1 === this.state.pickPage) {
-                    items.push(<p key={i} onClick={() => this.pickPage(i)} className='pick'>{i + 1}</p>)
-                } else {
-                    items.push(<p key={i} onClick={() => this.pickPage(i)}>{i + 1}</p>)
-                }
-            }
-            return items
-        }
-    }
 
     render() {
         return (
@@ -104,16 +94,7 @@ class Orders extends Component {
                         })
                         let date = new Date(order.date);
 
-                        let startRender, endRender
-
-                        if (this.state.pickPage === 1) {
-                            startRender = 1
-                            endRender = this.state.offset
-                        } else {
-                            startRender = this.state.pickPage * this.state.offset - this.state.offset + 1
-                            endRender = this.state.pickPage * this.state.offset
-                        }
-                        if ((key >= startRender) && (key <= endRender)) {
+                        if ((key >= this.state.start) && (key <= this.state.end)) {
                             return (
                                 <React.Fragment key={key}>
                                     <OrdersDetail index={key} date={date} sum={sum} order={order}/>
@@ -125,38 +106,8 @@ class Orders extends Component {
                     </div>}
                 </div>
                 {
-                    this.state.numberPages ?
-                        <div className='pagination-cont'>
-                            <div className='pagination-body'>
-                                <DoubleArrowIcon
-                                    className='fa-rotate-180 item'
-                                    onClick={() => this.setState({pickPage: 1})}
-                                />
-                                <KeyboardArrowLeftIcon
-                                    className='item'
-                                    onClick={() =>
-                                        this.setState(this.state.pickPage === 1
-                                            ? null
-                                            : {pickPage: this.state.pickPage - 1})}
-                                />
-                                <div className='number-pages-container'>
-                                    {this.renderNumberPages()}
-                                </div>
-                                <KeyboardArrowRightIcon
-                                    className='item'
-                                    onClick={() =>
-                                        this.setState(
-                                            this.state.pickPage === this.state.numberPages
-                                                ? null
-                                                : {pickPage: this.state.pickPage + 1})}
-                                />
-                                <DoubleArrowIcon
-                                    className='item'
-                                    onClick={() =>
-                                        this.setState({pickPage: this.state.numberPages})}
-                                />
-                            </div>
-                        </div>
+                    this.state.numberItems ?
+                        <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.numberItems} offset={5}/>
                         : null
                 }
             </div>

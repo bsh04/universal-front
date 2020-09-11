@@ -17,16 +17,16 @@ class CategoryList extends Component {
         };
     }
 
-    itemView(item, type = null) {
+    itemView(item,index, type = null) {
         if (item.children.length > 0) {
             return (
-                <>
+                <React.Fragment key={index}>
                     <div className="d-flex flex-row align-items-center items py-0 my-0">
                         <ExtensionIcon className='item arrow-icon'/>
                         <a className="pl-2 text-left item" href={'/catalog/' + item.id}>{item.title}</a>
                     </div>
                     <hr/>
-                </>
+                </React.Fragment>
             );
         }
     }
@@ -47,11 +47,9 @@ class CategoryList extends Component {
                             <ArrowForwardIosIcon className='text-white'/>
                         </div>
 
-                        {/*{this.itemView({id: 'new', children: [], title: 'Новые товары'}, 'bold')}*/}
-                        {/*{this.itemView({id: 'stock', children: [], title: 'Товары по акции'}, 'bold')}*/}
-                        {this.props.categories ? this.props.categories.map((item) => {
+                        {this.props.categories ? this.props.categories.map((item,index) => {
                             return (
-                                this.itemView(item)
+                                this.itemView(item,index)
                             );
                         }) : null}
                     </div>

@@ -90,7 +90,7 @@ const NavbarTop = (props) => {
 
     const menuItemRenderProfile = (item, index) => {
         return (
-            <button className="dropdown-item" type="button">
+            <button key={index} className="dropdown-item" type="button">
                 <a
                     className="rounded-0 m-0 d-flex align-items-center"
                     href={item.path}
@@ -255,10 +255,10 @@ const NavbarTop = (props) => {
                     token ?
                         <div className='d-flex align-items-center text-white ml-4' style={{width: 300}}>
                             <div className='d-flex align-items-center dropdown icon-more-less' onClick={() => setOpenMore(!openMore)}>
-                                <Link className="nav-link text-white pr-0"
+                                <div className="nav-link text-white pr-0"
                                       type="button" data-toggle="dropdown" data-display="static" aria-haspopup="true"
                                       aria-expanded="false"
-                                >Профиль</Link>
+                                >Профиль</div>
                                 <div className="dropdown-menu dropdown-menu-lg-right">
                                     {
                                         rightItems.map((item, index) => menuItemRenderProfile(item, index, true))

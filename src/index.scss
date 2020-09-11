@@ -1386,15 +1386,72 @@ h3 > a {
   }
 }
 
+
+.news-container {
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+
+
+  .card-container {
+    margin: 20px;
+    height: 450px;
+    overflow: hidden;
+    width: 450px;
+    border-radius: 10px;
+    &:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+
+    & img {
+      height: 50%;
+      border-radius: 30px;
+      padding: 20px;
+      width: 100%;
+    }
+
+    & small {
+      color: $color_label
+    }
+
+    & h5 {
+      font-weight: bold;
+      padding: 0;
+      margin: 0;
+    }
+
+    & p {
+
+    }
+  }
+
+  @media screen and (max-width: 768px){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & img {
+      object-fit: contain;
+    }
+  }
+}
+
 .pagination-cont {
   display: flex;
   justify-content: center;
   width: 100%;
   color: $color_lite;
 
+  & .pagination-body.small {
+    width: 400px;
+  }
+
   & .pagination-body {
     margin-top: 30px;
-    width: 500px;
+    width: 600px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1439,7 +1496,6 @@ h3 > a {
   }
 
   @media screen and (max-width: 1000px) {
-    display: none;
   }
 }
 
@@ -2063,8 +2119,8 @@ div {
     & img {
       padding: 10px;
 
-      @media screen and (max-width:1000px){
-          max-width: 90%;
+      @media screen and (max-width: 1000px) {
+        max-width: 90%;
       }
     }
   }
@@ -2526,6 +2582,16 @@ nav.navbar {
 
 .news {
   padding: 15px;
+
+  & h1 {
+    text-align: left;
+    font-weight: bold;
+    color: $color_secondary;
+
+    @media screen and (max-width: 768px){
+      text-align: center;
+    }
+  }
 
   .newsImage {
     width: 80%;
