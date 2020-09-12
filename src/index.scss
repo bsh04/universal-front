@@ -159,8 +159,10 @@ h3 > a {
   & .about {
     display: flex;
     align-items: flex-end;
+    justify-content: space-between;
 
     & h3 {
+      white-space: nowrap;
       font-size: 30px;
       padding: 40px 0 0 0;
       text-align: left;
@@ -172,7 +174,7 @@ h3 > a {
     }
 
     & hr {
-      width: 85%;
+      width: 75%;
       margin: 0 0 5px 20px;
     }
 
@@ -181,7 +183,7 @@ h3 > a {
 
 
   & .contacts-items {
-    width: 75%;
+    width: 1000px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -189,13 +191,13 @@ h3 > a {
 
     & .location, .phone, .mail {
       display: flex;
-      width: 30%;
+      width: 33%;
       color: $color_label;
       text-align: left;
 
       & .icon {
         color: #b0b0b0;
-        width: 30px;
+        width: 33px;
         height: 30px;
       }
     }
@@ -219,6 +221,22 @@ h3 > a {
     }
 
     & .location {
+    }
+  }
+
+  @media screen and (max-width: 1024px) and (min-width: 700px) {
+
+    margin-left: 10px;
+
+    & .about {
+      & h3 {
+        font-size: 20px;
+      }
+
+      & hr {
+        width: 80%;
+        margin: 0 0 5px 20px;
+      }
     }
   }
 
@@ -266,31 +284,29 @@ h3 > a {
         width: 100%;
         color: $color_label;
         text-align: left;
-
         padding: 10px 0 10px 0;
+        justify-content: center;
 
         & .phone {
           height: 50px;
         }
-
-        & .first {
-          width: 35%;
-          display: flex;
-          align-items: flex-start;
-          justify-content: flex-end;
-        }
-
         & .second {
-          width: 65%;
+          width: 200px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+
 
           & a {
+            max-width: 200px;
             padding: 0;
             margin: 0;
           }
+          & span {
+            width: 200px;
+          }
         }
+
+
       }
 
     }
@@ -1361,6 +1377,7 @@ h3 > a {
 
 .orders-body-container {
   width: 100%;
+  height: 120%;
 
   & .container-header {
     border-radius: 10px;
