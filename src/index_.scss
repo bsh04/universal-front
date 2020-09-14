@@ -156,6 +156,19 @@ $btn_default_color: #229DD2;
             background-image: url('./images/icons/product_card/product-card__icon-favorite_active.png')
         }
     }
+
+    &__delete-icon {
+        position: absolute;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        right: 5px;
+        top: 7px;
+        color: gray;
+        &:hover {
+            color: $btn_default_color
+        }
+    }
     &__icons-row {
         position: absolute;
         left: 5px;

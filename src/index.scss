@@ -1375,6 +1375,47 @@ h3 > a {
   }
 }
 
+.favorite {
+
+  & h4 {
+    color: $color_secondary;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .favorite-body {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+
+    & .favorite-item {
+      display: flex;
+    }
+  }
+
+  @media screen and (max-width: 768px){
+    & h4 {
+      text-align: center;
+    }
+
+    .favorite-body {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+
+      & .favorite-item {
+        width: 45%;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
 .orders-body-container {
   width: 100%;
   height: 120%;
@@ -1637,9 +1678,15 @@ h3 > a {
   justify-content: center;
   width: 100%;
   color: $color_lite;
+  margin: 20px 0 20px 0;
 
   & .pagination-body.small {
+
     width: 400px;
+
+    @media screen and (max-width: 400px){
+      width: 100%;
+    }
   }
 
   & .pagination-body {
@@ -1686,10 +1733,28 @@ h3 > a {
         }
       }
     }
+    @media screen and (max-width: 400px){
+      width: 100%;
+
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+
+      & .item {
+        width: 30px;
+        height: 30px;
+      }
+
+      & .number-pages-container {
+        & p {
+          width: 30px;
+          height: 30px;
+          padding: 4px 1px 0 0 ;
+        }
+      }
+    }
   }
 
-  @media screen and (max-width: 1000px) {
-  }
 }
 
 .custom-btn {
@@ -1826,7 +1891,6 @@ h3 > a {
 
   & .items:hover {
     .item {
-      font-weight: bold;
       color: #b3a400;
     }
   }

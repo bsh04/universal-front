@@ -9,16 +9,28 @@ const Pagination = (props) => {
     const [pickPage, setPickPage] = useState(1)
     const [offset, setOffset] = useState(props.offset)
     const [numberPages, setNumberPages] = useState(props.numberItems)
+    const [numberItems, setNumberItems] = useState(props.numberItems)
     const [smallBar, setSmallBar] = useState(true)
 
     useEffect(() => {
+        setNumberItems(props.numberItems)
+    })
 
-        setNumberPages(Math.ceil(numberPages / offset))
+    useEffect(() => {
 
-        if (Math.ceil(numberPages / offset)  > 5) setSmallBar(false)
+        setNumberPages(Math.ceil(numberItems / offset))
+
+
+        if (Math.ceil(numberItems / offset) > 5) setSmallBar(false)
         else setSmallBar(true)
 
-    }, [setNumberPages])
+    }, [numberItems])
+
+    useEffect(() => {
+        if (pickPage === numberPages + 1) {
+            handlePicker(numberPages)
+        }
+    }, [numberPages])
 
     useEffect(() => {
         props.handleRenderList(1, offset)
@@ -51,7 +63,7 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(i + 1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
                         } else if (i + 1 === 4) {
-                            items.push(<MoreHorizIcon key={i+1} className='item'/>)
+                            items.push(<MoreHorizIcon key={i + 1} className='item'/>)
                             items.push(<p key={i} onClick={() => handlePicker(numberPages)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{numberPages}</p>)
                         }
@@ -65,7 +77,7 @@ const Pagination = (props) => {
                             items.push(<p key={i} onClick={() => handlePicker(numberPages)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{numberPages}</p>)
                         }
-                    }  else if (pickPage > 3 && pickPage < numberPages - 2) {
+                    } else if (pickPage > 3 && pickPage < numberPages - 2) {
                         if (i + 1 === 1) {
                             items.push(<p key={i} onClick={() => handlePicker(1)}
                                           className={i + 1 === pickPage ? 'pick' : null}>{1}</p>)
@@ -105,7 +117,7 @@ const Pagination = (props) => {
                 }
             } else if (numberPages <= 6) {
                 for (let i = 0; i < numberPages; i++) {
-                    items.push(<p key={i} onClick={() => handlePicker(i+1)}
+                    items.push(<p key={i} onClick={() => handlePicker(i + 1)}
                                   className={i + 1 === pickPage ? 'pick' : null}>{i + 1}</p>)
                 }
             }
@@ -113,41 +125,46 @@ const Pagination = (props) => {
         }
     }
 
-    return (
-        <div className='pagination-cont'>
-            <div className={smallBar ? 'pagination-body small' : 'pagination-body'}>
-                <DoubleArrowIcon
-                    className='fa-rotate-180 item'
-                    onClick={() => setPickPage(1)}
-                />
-                <KeyboardArrowLeftIcon
-                    className='item'
-                    onClick={() =>
-                        setPickPage(pickPage === 1
-                            ? 1
-                            : pickPage - 1)}
-                />
-                <div className='number-pages-container'>
-                    {renderNumberPages()}
+    if (numberPages === 1) {
+        return null
+    } else {
+        return (
+
+            <div className='pagination-cont'>
+                <div className={smallBar ? 'pagination-body small' : 'pagination-body'}>
+                    <DoubleArrowIcon
+                        className='fa-rotate-180 item'
+                        onClick={() => setPickPage(1)}
+                    />
+                    <KeyboardArrowLeftIcon
+                        className='item'
+                        onClick={() =>
+                            setPickPage(pickPage === 1
+                                ? 1
+                                : pickPage - 1)}
+                    />
+                    <div className={`number-pages-container ${numberPages === 2 ? 'w-25' : ''}`}>
+                        {renderNumberPages()}
+                    </div>
+                    <KeyboardArrowRightIcon
+                        className='item'
+                        onClick={() =>
+                            setPickPage(pickPage === numberPages
+                                ?
+                                numberPages
+                                :
+                                pickPage + 1)
+                        }
+                    />
+                    <DoubleArrowIcon
+                        className='item'
+                        onClick={() =>
+                            setPickPage(numberPages)}
+                    />
                 </div>
-                <KeyboardArrowRightIcon
-                    className='item'
-                    onClick={() =>
-                        setPickPage(pickPage === numberPages
-                            ?
-                            numberPages
-                            :
-                            pickPage + 1)
-                    }
-                />
-                <DoubleArrowIcon
-                    className='item'
-                    onClick={() =>
-                        setPickPage(numberPages)}
-                />
             </div>
-        </div>
-    );
+        );
+    }
 };
 
 export default Pagination;

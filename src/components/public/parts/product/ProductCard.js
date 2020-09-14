@@ -6,6 +6,7 @@ import {withRouter} from "react-router";
 import { productImageUrl } from '../../../../services/parameters';
 import request from '../../../../services/ajaxManager';
 import { ProductBasketAdd } from './ProductBasketAdd';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
 class ProductCard extends Component {
@@ -136,6 +137,12 @@ class ProductCard extends Component {
         
         return (
             <div className={`product-card product-card_${this.state.cardView}`}>
+                {
+                    this.props.page === 'favorite' ?
+                        <DeleteOutlineIcon className='product-card__delete-icon' onClick={() => this.props.handleDelete(this.props.index)}/>
+                        :
+                        null
+                }
                 <i className={`product-card__favorite-icon${this.props.favorite ? "_active" : ""}`}
                     onClick={this.handleFavoriteClick}
                 ></i>
@@ -145,6 +152,7 @@ class ProductCard extends Component {
                 <div className="product-card__image-wrapper">
                     <img src={image} alt="" className="product-card__image"/>
                 </div>
+
 
                 <div className="product-card-inner">
                     <div className="product-card__description">

@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import request from '../../services/ajaxManager';
 import {connect} from "react-redux";
 
 import Breadcrumbs from '../breadcrumbs'
+import ProductCard from "../public/parts/product/ProductCard";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Pagination from "../pagination";
 
 class Favorite extends Component {
     constructor(props) {
@@ -12,35 +15,42 @@ class Favorite extends Component {
 
         this.handleBasketAdd = this.handleBasketAdd.bind(this);
 
+        this.getSizeWindow = this.getSizeWindow.bind(this)
+        window.addEventListener('resize', this.getSizeWindow)
+
         this.state = {
-            products: [],
+            favorites: [],
             form: [],
+            cardView: 'tile',
+            ready: false,
+            numberItems: null
         };
+    }
+
+    getSizeWindow() {
+
     }
 
     componentDidMount() {
         this.handleGet();
     }
 
-    handleGet()
-    {
+    handleGet() {
         let _this = this;
         request(
             'product/favorite',
             'GET',
             null,
             {},
-            function (response)
-            {
-                _this.setState({products: response});
+            function (response) {
+                _this.setState({favorites: response, ready: true, numberItems: response.length});
             },
         );
     }
 
-    handleDelete(key)
-    {
+    handleDelete = (key) => {
         let data = {
-            id: this.state.products[key].id,
+            id: this.state.favorites[key].id,
         };
 
         let _this = this;
@@ -50,20 +60,44 @@ class Favorite extends Component {
             'DELETE',
             data,
             {},
-            function (response)
-            {
-                let arr = _this.state.products;
+            function (response) {
+                let arr = _this.state.favorites;
                 arr.splice(key, 1);
-                _this.setState({products: arr});
+                _this.setState({favorites: arr});
                 _this.props.onReloadMenu();
+                _this.setState({numberItems: arr.length})
             },
             this.state.errorCallback
         );
     }
 
+    updateFav(obj) {
+        let arr = this.state.favorites;
+        let result;
+
+        if (this.isFavorite(obj)) {
+            result = this.state.favorites.filter(item => {
+                return obj.id !== item.id;
+            });
+        } else {
+            result = arr;
+            result.push(obj);
+        }
+
+        this.setState({favorites: result});
+    }
+
+    isFavorite(obj) {
+        let result = this.state.favorites.filter(item => {
+            return obj.id === item.id;
+        });
+
+        return result.length > 0;
+    }
+
     handleBasketAdd(key) {
         let data = {
-            product: this.state.products[key].id,
+            product: this.state.favorites[key].id,
             count: this.countInput.value,
         };
 
@@ -74,85 +108,59 @@ class Favorite extends Component {
             'POST',
             data,
             {},
-            function (response)
-            {
+            function (response) {
                 let form = _this.state.form;
-                form.push(_this.state.products[key].id);
+                form.push(_this.state.favorites[key].id);
                 _this.setState({message: response.message, form: form});
             },
             this.state.errorCallback
         );
     }
 
+    handleRenderList = (start, end) => {
+        this.setState({start, end})
+    }
+
     render() {
         return (
-            <div>
-                <Breadcrumbs 
+            <div className='favorite'>
+                <Breadcrumbs
                     path={[
                         {title: 'Избранные товары'}
                     ]}/>
-                <h4 className="text-center">Избранные товары:</h4>
-                <table className={"table table-striped table-hover"}>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th></th>
-                            <th>Описание</th>
-                            <th>Управление</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { this.state.products.length > 0 ? this.state.products.map((item, key) => {
+                <h4>Избранное</h4>
+                <div className='favorite-body'>
+                    {this.state.favorites.length > 0 ? this.state.favorites.map((item, key) => {
+                        if ((key >= this.state.start) && (key <= this.state.end)) {
                             return (
-                                <tr key={key}>
-                                    <td>{key + 1}</td>
-                                    <td>
-                                        <img className="fav-img" src={item.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.photo } alt="Card image cap"/>
-                                    </td>
-                                    <td>
-                                        <h5 className={'text-left'}>{item.title}</h5>
-                                        <p className="card-text">
-                                            <small className="text-muted">Код товара: {item.id} </small> {item.new ? <span className="badge badge-success">Новинка!</span> : ''} {item.stock ? <span className="badge badge-danger">Акция!</span> : ''}<br/>
-                                            Цена: {item.price} р.
-                                        </p>
-                                        {this.state.form.indexOf(item.id) === -1 ?
-                                            <form className="form-inline" onSubmit={(e) => {e.preventDefault()}}>
-                                                <div className="input-group mb-2 mr-sm-2">
-                                                    <input
-                                                        name="desc"
-                                                        type="number"
-                                                        required={true}
-                                                        placeholder={"Количество:"}
-                                                        min={1}
-                                                        defaultValue={1}
-                                                        className="form-control mb-1 mr-sm-1"
-                                                        ref={(input) => {this.countInput = input}}
-                                                    />
-                                                    <div className="input-group-prepend">
-                                                        <button className="btn btn-success mb-1 " onClick={() => this.handleBasketAdd(key)}>
-                                                            <i className={'fa fa-cart-plus'}></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form> :
-                                            <div className="alert alert-success" role="alert">
-                                                <i className={'fa fa-check'}> <span>{this.state.message}</span></i>
-                                            </div>
-                                        }
-                                    </td>
-                                    <td>
-                                        <button className={'btn btn-danger'}
-                                                onClick={() => this.handleDelete(key)}>
-                                            <i className={'fa fa-trash'}> <span>Удалить</span></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                <div className='favorite-item' id='favorite-item' key={key}>
+                                    <ProductCard item={item} index={key} update={this.updateFav}
+                                                 favorite={this.isFavorite(item)}
+                                                 cardView={this.state.cardView}
+                                                 page={'favorite'}
+                                                 handleDelete={this.handleDelete}
+                                    />
+                                </div>
                             );
-                        }) : <tr>
-                            <td colSpan={4}>Список избранных товаров пуст</td>
-                        </tr> }
-                    </tbody>
-                </table>
+                        }
+                    }) : this.state.ready ?
+                        <p>Список избранных пуст</p>
+                        :
+                        <CircularProgress/>
+                    }
+                </div>
+                <div>
+                    {
+                    }
+                    {
+                        this.state.numberItems > 0
+                            ?
+                            <Pagination handleRenderList={this.handleRenderList}
+                                        numberItems={this.state.numberItems - 1} offset={5}/>
+                            :
+                            null
+                    }
+                </div>
             </div>
         );
     }
@@ -164,7 +172,7 @@ export default withRouter(connect(
     }),
     dispatch => ({
         onReloadMenu: () => {
-            dispatch({ type: 'RELOAD', payload: true })
+            dispatch({type: 'RELOAD', payload: true})
         },
     })
 )(Favorite));
