@@ -363,6 +363,8 @@ class ProductList extends Component {
                         </ul>
                     </nav>
                     : null}
+
+                    
                 {this.state.loading ? <Loading/> : null}
             </div>}}
             </CategoriesContext.Consumer>
