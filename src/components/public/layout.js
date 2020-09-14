@@ -130,7 +130,7 @@ class PublicLayout extends Component {
                                 <CategoryList categories={categories} onClick={() => null}/>
                             </div>
                             <ScrollDownButton style={{zIndex: 50}}/>
-                            <div className={`col-md-9`}>
+                            <div className={`col-md-9 content-wrapper`}>
                                 <Switch>
                                     <Route exact path={'/'} component={Index}/>
                                     <Route exact path={'/contact'} component={Contact}/>
