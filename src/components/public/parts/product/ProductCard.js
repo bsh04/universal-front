@@ -28,7 +28,7 @@ class ProductCard extends Component {
     renderIcons() {
         let arr = ['stock', 'new', 'self', ]
         return arr.map((item, key) => {
-            return <i className={`product-card__icons-row-icon product-card__icons-row-icon_${item}`} key={key}></i>
+            return <i className={`product-card__icons-row-icon product-card__icons-row-icon_${item}`} key={key}/>
         })
     }
 
@@ -132,11 +132,12 @@ class ProductCard extends Component {
 
 
     render() {
-        let { item } = this.props; 
+        let { item } = this.props;
         let image = item.photo ? productImageUrl + item.photo : require('../../../../images/image-placeholder.png');
-        
+        console.log( this.props.favorite)
+
         return (
-            <div className={`product-card product-card_${this.state.cardView}`}>
+            <div className={`product-card product-card_${this.state.cardView}`} onClick={() => this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}>
                 {
                     this.props.page === 'favorite' ?
                         <DeleteOutlineIcon className='product-card__delete-icon' onClick={() => this.props.handleDelete(this.props.index)}/>
@@ -145,7 +146,7 @@ class ProductCard extends Component {
                 }
                 <i className={`product-card__favorite-icon${this.props.favorite ? "_active" : ""}`}
                     onClick={this.handleFavoriteClick}
-                ></i>
+                />
                 <div className="product-card__icons-row">
                     {this.renderIcons()}
                 </div>

@@ -250,6 +250,7 @@ h3 > a {
     & .about {
 
       width: 100%;
+
       & h3 {
         width: 100%;
         text-align: center;
@@ -290,6 +291,7 @@ h3 > a {
         & .phone {
           height: 50px;
         }
+
         & .second {
           width: 200px;
           display: flex;
@@ -301,6 +303,7 @@ h3 > a {
             padding: 0;
             margin: 0;
           }
+
           & span {
             width: 200px;
           }
@@ -1397,7 +1400,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     & h4 {
       text-align: center;
     }
@@ -1684,7 +1687,7 @@ h3 > a {
 
     width: 400px;
 
-    @media screen and (max-width: 400px){
+    @media screen and (max-width: 400px) {
       width: 100%;
     }
   }
@@ -1733,7 +1736,8 @@ h3 > a {
         }
       }
     }
-    @media screen and (max-width: 400px){
+
+    @media screen and (max-width: 400px) {
       width: 100%;
 
       font-size: 16px;
@@ -1749,12 +1753,163 @@ h3 > a {
         & p {
           width: 30px;
           height: 30px;
-          padding: 4px 1px 0 0 ;
+          padding: 4px 1px 0 0;
         }
       }
     }
   }
+}
 
+.product-details {
+  width: 100%;
+
+  &__description {
+    margin: 0 20px 0 20px;
+    width: 80%;
+  }
+
+
+  &__icons-row {
+    left: 5px;
+    top: 7px;
+    height: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+
+
+    &-icon {
+      margin-right: 5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: 50%;
+
+      &_stock {
+        background-image: url('./images/icons/product_card/product-card__icon-stock.png');
+        background-color: #E42D7F;
+      }
+      &_new {
+        background-image: url('./images/icons/product_card/product-card__icon-star.png');
+        background-color: #EFA44B;
+      }
+      &_self {
+        background-image: url('./images/icons/product_card/product-card__icon-factory.png');
+        background-color: #229DD2;
+      }
+    }
+  }
+
+  & h4 {
+    color: $color_secondary;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  & .product-details-items {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    & .product-carousel-cont {
+      height: 390px;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+
+      & .carousel-arrow {
+        color: $color_label;
+
+        &:hover {
+          background-color: #f1f1f1;
+          border-radius: 50%;
+        }
+      }
+
+      & .product-carousel {
+        margin: 0;
+        height: 320px;
+        width: 100px;
+
+        & .images {
+          height: 100%;
+          border-radius: 10px;
+          width: 100%;
+
+          & .image-placeholder {
+            margin: 5px 0 5px 0;
+            border-radius: 10px;
+            border: 1px solid $color_lite;
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+
+            & img {
+              border-radius: 10px;
+              width: 30%;
+              height: 30%;
+              object-fit: contain;
+              text-transform: uppercase;
+              color: $color_label;
+            }
+
+            & p {
+              padding-top: 5px;
+              font-size: 8px;
+              text-transform: uppercase;
+              color: $color_label;
+            }
+          }
+
+          & .image {
+            margin: 5px 0 5px 0;
+            border-radius: 10px;
+            border: 1px solid $color_lite;
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & img {
+              border-radius: 10px;
+              width: 95%;
+              height: 95%;
+              object-fit: contain;
+            }
+          }
+        }
+      }
+    }
+
+    & .main_image {
+      margin-left: 20px;
+      width: 40%;
+      border-radius: 10px;
+      border: 1px solid $color_lite;
+      max-width: 400px;
+      height: 390px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & img {
+        border-radius: 10px;
+        width: 95%;
+        object-fit: contain;
+        height: 95%;
+      }
+    }
+  }
 }
 
 .custom-btn {

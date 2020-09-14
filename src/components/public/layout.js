@@ -28,6 +28,7 @@ import {MapSection_} from './parts/mapSection_';
 import ContactForm from './parts/contactForm';
 import { ServiceBtn } from './parts/buttons/ServiceBtn';
 import { ModalGallery, ModalBasketAddAlert, ModalCallbackForm, ModalRequestForm, ModalQuestionForm, ModalThanks } from './parts/modal_blocks';
+import ProductDetails from "./parts/product/ProductDetails";
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -141,6 +142,7 @@ class PublicLayout extends Component {
                                     <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
                                     <Route exact path={'/catalog/:category'} component={ProductList}/>
                                     <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
+                                    <Route exact path={'/product/details/:id'} component={ProductDetails}/>
                                     <Route exact path={'/about'} component={About}/>
                                     <Route exact path="/register" render={() => (this.props.token !== false ?
                                             (<Redirect to={'/login'}/>) :
@@ -202,6 +204,7 @@ class PublicLayout extends Component {
                                     <Route exact path={'/catalog/:category'} component={ProductList}/>
                                     <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
                                     <Route exact path={'/about'} component={About}/>
+                                    <Route exact path={'/product/details/:id'} component={ProductDetails}/>
                                     <Route exact path="/register" render={() => (this.props.token !== false ?
                                             (<Redirect to={'/login'}/>) :
                                             (<RegForm/>)
