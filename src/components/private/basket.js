@@ -7,6 +7,7 @@ import request from '../../services/ajaxManager';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Basket extends Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class Basket extends Component {
         this.state = {
             products: [],
             count: 1,
-            mobileMode: false
+            mobileMode: false,
+            ready: false
         };
     }
 
@@ -46,7 +48,7 @@ class Basket extends Component {
             null,
             {},
             function (response) {
-                _this.setState({products: response});
+                _this.setState({products: response, ready: true});
             },
         );
     }
@@ -129,7 +131,7 @@ class Basket extends Component {
                                                             <img className="fav-img"
                                                                  src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.product.photo}
                                                                  alt="Card image cap"
-                                                                 // style={{width: '80%', height: '80%'}}
+                                                                // style={{width: '80%', height: '80%'}}
                                                             />
                                                         </div>
                                                         <div className='product-title'>
@@ -142,7 +144,8 @@ class Basket extends Component {
                                                         </div>
 
                                                     </div>
-                                                    <div className='d-flex justify-content-between align-items-center h-25 w-100'>
+                                                    <div
+                                                        className='d-flex justify-content-between align-items-center h-25 w-100'>
                                                         <div className='product-price'>
                                                             <p className='default-price'>{item.product.price} Р</p>
                                                         </div>
@@ -237,11 +240,18 @@ class Basket extends Component {
                                     </div>
                                 );
                             }) :
-                            <div>
-                                <div colSpan={4}>
-                                    Моя корзина пуста
+                            this.state.ready ?
+                                <div>
+                                    <div>
+                                        <p>Ваша корзина пуста</p>
+                                    </div>
                                 </div>
-                            </div>
+                                :
+                                <div>
+                                    <div>
+                                        <CircularProgress/>
+                                    </div>
+                                </div>
                         }
                     </div>
                     {

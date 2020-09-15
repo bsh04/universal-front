@@ -37,7 +37,7 @@ class CategoryList extends Component {
 
         return (
             <>
-                <div className='catalog_main pl-3'>
+                <div className='catalog_main'>
                     <div className={this.state.showAll ? 'list' : 'small-list'}>
                         <div className="row production">
                             <div>
