@@ -18,6 +18,8 @@ import {CategoriesContext} from "../../services/contexts";
 import CategoryList from "../public/parts/category_list";
 
 class UserLayout extends Component {
+    
+
     componentDidUpdate() {
         if (this.props.token === false) {
             this.props.history.replace('/login');
@@ -31,10 +33,13 @@ class UserLayout extends Component {
     }
 
     render() {
-
+        console.log(this.props.location.pathname)
         return <CategoriesContext.Consumer>{contextValue => {
+            let categories = null;
+            let showCategoryList = null;
+
             if (contextValue) {
-                const categories = contextValue.map(item => {
+                categories = contextValue.map(item => {
                     if (item.children.length > 1) {
                         item.children = item.children.sort((current, next) => {
                             if (current.title < next.title) {
@@ -48,53 +53,40 @@ class UserLayout extends Component {
                     }
                     return item;
                 });
-
-                return (
-                    <div>
-                        <Header/>
-                        <div className="row content">
-                            <div className="col-md-3 p-0 index_page">
-                                <CategoryList categories={categories} onClick={() => null}/>
-                            </div>
-                            <div className='col-md-9 layout'>
-                                <Switch>
-                                    <Route exact path="/user/favorite" component={Favorite}/>
-                                    <Route exact path="/user/order/add" component={OrderAdd}/>
-                                    <Route exact path="/user/order" component={Orders}/>
-                                    <Route exact path="/user/data/change" component={DataChange}/>
-                                    <Route exact path="/user/basket" component={Basket}/>
-                                    <Route exact path="/user/password/change" component={PassChange}/>
-                                </Switch>
-                            </div>
-                        </div>
-                        <ScrollUpButton/>
-                        <Footer/>
-                    </div>
-                );
-            } else {
-                return (
-                    <div>
-                        <Header/>
-                        <div className="row content">
-                            <div className='col-md-12 layout'>
-                                <Switch>
-                                    <Route exact path="/user/favorite" component={Favorite}/>
-                                    <Route exact path="/user/order/add" component={OrderAdd}/>
-                                    <Route exact path="/user/order" component={Orders}/>
-                                    <Route exact path="/user/data/change" component={DataChange}/>
-                                    <Route exact path="/user/basket" component={Basket}/>
-                                    <Route exact path="/user/password/change" component={PassChange}/>
-                                </Switch>
-                            </div>
-                        </div>
-                        <ScrollUpButton/>
-                        <Footer/>
-                    </div>
-                )
             }
-        }
-        }
 
+            showCategoryList = !!(categories);
+
+            let background = null;
+            let arr = ['login', 'data/change', '/password/change', '/password/reset', '/order/add', 'register', '/data/change']
+            arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
+            console.log(background);
+
+            return (
+                <div>
+                    <Header/>
+                    <div className="row content">
+                        <div className="flex-nowrap row w-100">
+                            {categories
+                            ? <CategoryList categories={categories} onClick={() => null}/>
+                            : null}
+                            <div className={`content-wrapper ${background ? 'image-background' : ''}`}>
+                                <Switch>
+                                    <Route exact path="/user/favorite" component={Favorite}/>
+                                    <Route exact path="/user/order/add" component={OrderAdd}/>
+                                    <Route exact path="/user/order" component={Orders}/>
+                                    <Route exact path="/user/data/change" component={DataChange}/>
+                                    <Route exact path="/user/basket" component={Basket}/>
+                                    <Route exact path="/user/password/change" component={PassChange}/>
+                                </Switch>
+                            </div>
+                        </div>
+                    </div>
+                    <ScrollUpButton/>
+                    <Footer/>
+                </div>
+            );
+        }}
         </CategoriesContext.Consumer>
     }
 }

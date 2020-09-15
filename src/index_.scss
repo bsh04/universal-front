@@ -20,8 +20,10 @@ $btn_default_color: #229DD2;
 
 .content-wrapper {
     padding: 0 3% 0 30px;
+    max-width: 81%;
     display: flex;
-    flex-direction: row;
+    margin-left: 10px;
+    
 }
 
 .product-page-title {
@@ -1298,6 +1300,8 @@ $btn_default_color: #229DD2;
     .content-wrapper {
         max-width: 100%;
         padding: 0 3%;
+        margin-left: 0;
+        margin: 0 auto;
     }
 
     .product-page-title {

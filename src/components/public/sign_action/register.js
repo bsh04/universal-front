@@ -49,121 +49,119 @@ class RegForm extends AbstractForm {
 
     viewForm() {
         return (
-            <div className='image-background'>
-                <div className="register">
-                    <Breadcrumbs
-                        path={[
-                            {title: 'Регистрация'}
-                        ]}/>
-                    <h4>Регистрация</h4>
-                    <form onSubmit={this.handleSubmit}>
-                        <div className='register-form-input'>
-                            <p className='mb-0'>E-mail</p>
-                            <div className='form-control rounded-pill custom-input w-75'>
-                                <input
-                                    name="email"
-                                    type="email"
-                                    required={true}
-                                    minLength={5}
-                                    ref={(input) => {
-                                        this.emailInput = input
-                                    }}
-                                />
-                                <span>*</span>
-                            </div>
+            <div className="register">
+                <Breadcrumbs
+                    path={[
+                        {title: 'Регистрация'}
+                    ]}/>
+                <h4>Регистрация</h4>
+                <form onSubmit={this.handleSubmit}>
+                    <div className='register-form-input'>
+                        <p className='mb-0'>E-mail</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="email"
+                                type="email"
+                                required={true}
+                                minLength={5}
+                                ref={(input) => {
+                                    this.emailInput = input
+                                }}
+                            />
+                            <span>*</span>
                         </div>
-                        <div className='register-form-input'>
-                            <p className='mb-0'>Имя</p>
-                            <div className='form-control rounded-pill custom-input w-75'>
-                                <input
-                                    name="fio"
-                                    type="text"
-                                    required={true}
-                                    ref={(input) => {
-                                        this.nameInput = input
-                                    }}
-                                />
-                                <span>*</span>
-                            </div>
+                    </div>
+                    <div className='register-form-input'>
+                        <p className='mb-0'>Имя</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="fio"
+                                type="text"
+                                required={true}
+                                ref={(input) => {
+                                    this.nameInput = input
+                                }}
+                            />
+                            <span>*</span>
                         </div>
-                        <div className='register-form-input'>
-                            <p className='mb-0'>Телефон</p>
-                            <div className='form-control rounded-pill custom-input w-75'>
-                                <input
-                                    name="sname"
-                                    type="text"
-                                    required={true}
-                                    placeholder={"+7 (XXX) XXX - XX - XX"}
-                                    ref={(input) => {
-                                        this.phoneInput = input
-                                    }}
-                                />
-                                <span>*</span>
-                            </div>
+                    </div>
+                    <div className='register-form-input'>
+                        <p className='mb-0'>Телефон</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="sname"
+                                type="text"
+                                required={true}
+                                placeholder={"+7 (XXX) XXX - XX - XX"}
+                                ref={(input) => {
+                                    this.phoneInput = input
+                                }}
+                            />
+                            <span>*</span>
                         </div>
-                        <div className='register-form-input'>
-                            <p className='mb-0'>Адрес</p>
-                            <div className='form-control rounded-pill custom-input w-75'>
-                                <input
-                                    name="fname"
-                                    type="text"
-                                    required={true}
-                                    ref={(input) => {
-                                        this.addressInput = input
-                                    }}
-                                />
-                                <span>*</span>
-                            </div>
+                    </div>
+                    <div className='register-form-input'>
+                        <p className='mb-0'>Адрес</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="fname"
+                                type="text"
+                                required={true}
+                                ref={(input) => {
+                                    this.addressInput = input
+                                }}
+                            />
+                            <span>*</span>
                         </div>
-                        <div className='register-form-input'>
-                            <p className='mb-0'>Пароль</p>
-                            <div className='form-control rounded-pill custom-input w-75'>
-                                <input
-                                    name="pass"
-                                    type="password"
-                                    required={true}
-                                    placeholder={"Введите пароль"}
-                                    minLength={6}
-                                    ref={(input) => {
-                                        this.passInput = input
-                                    }}
-                                />
-                                <span>*</span>
-                            </div>
+                    </div>
+                    <div className='register-form-input'>
+                        <p className='mb-0'>Пароль</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="pass"
+                                type="password"
+                                required={true}
+                                placeholder={"Введите пароль"}
+                                minLength={6}
+                                ref={(input) => {
+                                    this.passInput = input
+                                }}
+                            />
+                            <span>*</span>
                         </div>
-                        <div className='register-form-input'>
-                            <p className='mb-0'>Еще пароль</p>
-                            <div className='form-control rounded-pill custom-input w-75'>
-                                <input
-                                    name="cpass"
-                                    type="password"
-                                    required={true}
-                                    placeholder={"Повторите пароль"}
-                                    ref={(input) => {
-                                        this.cpassInput = input
-                                    }}
-                                />
-                                <span>*</span>
-                            </div>
+                    </div>
+                    <div className='register-form-input'>
+                        <p className='mb-0'>Еще пароль</p>
+                        <div className='form-control rounded-pill custom-input w-75'>
+                            <input
+                                name="cpass"
+                                type="password"
+                                required={true}
+                                placeholder={"Повторите пароль"}
+                                ref={(input) => {
+                                    this.cpassInput = input
+                                }}
+                            />
+                            <span>*</span>
                         </div>
-                        <div className='register-submit-btns'>
-                            <div className='register-form-button'>
-                                <button type="submit" className="custom-btn rounded-pill w-100">
-                                    <PersonOutlineIcon className='mr-2 text-white'/>
-                                    <span>Зарегистрироваться</span>
-                                </button>
-                            </div>
-                            <div className='register-form-button-login'>
-                                <button type="submit" className="custom-btn reg rounded-pill w-100">
-                                    <Link to={'/login'} className='text-decoration-none'>
-                                        <ExitToAppIcon className='mr-2 text-white'/>
-                                        <span>Вход</span>
-                                    </Link>
-                                </button>
-                            </div>
+                    </div>
+                    <div className='register-submit-btns'>
+                        <div className='register-form-button'>
+                            <button type="submit" className="custom-btn rounded-pill w-100">
+                                <PersonOutlineIcon className='mr-2 text-white'/>
+                                <span>Зарегистрироваться</span>
+                            </button>
                         </div>
-                    </form>
-                </div>
+                        <div className='register-form-button-login'>
+                            <button type="submit" className="custom-btn reg rounded-pill w-100">
+                                <Link to={'/login'} className='text-decoration-none'>
+                                    <ExitToAppIcon className='mr-2 text-white'/>
+                                    <span>Вход</span>
+                                </Link>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         );
     }

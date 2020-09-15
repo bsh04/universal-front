@@ -127,43 +127,51 @@ class PublicLayout extends Component {
 
             showCategoryList = !!(!this.state.isMobile && categories);
 
+            let background = null;
+            let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
+            arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
+            console.log(background);
+
+
             return (
                 <div>
                     <Header/>
                     <div className="content row">
                         <ScrollDownButton style={{zIndex: 50}}/>
-                        {!this.state.isMobile && categories
-                        ? <div className="col-md-2 p-0 index_page">
-                            <CategoryList categories={categories} onClick={() => null}/>
-                        </div> : null}
-                        <div className={`col-md-${showCategoryList ? '10' : '12'} content-wrapper`}>
-                            <Switch>
-                                <Route exact path={'/'} component={Index}/>
-                                <Route exact path={'/contact'} component={Contact}/>
-                                <Route exact path={'/news'} component={NewsList}/>
-                                <Route exact path={'/workshop'} component={ArticleList}/>
-                                <Route exact path={'/workshop/:id'} component={Workshop}/>
-                                <Route exact path={'/catalog'} component={Catalog}/>
-                                <Route exact path={'/catalog/product/:id'} component={Product}/>
-                                <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
-                                <Route exact path={'/catalog/:category'} component={ProductList}/>
-                                <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
-                                <Route exact path={'/about'} component={About}/>
-                                <Route exact path={'/product/details/:id'} component={ProductDetails}/>
-                                <Route exact path="/register" render={() => (this.props.token !== false ?
-                                        (<Redirect to={'/login'}/>) :
-                                        (<RegForm/>)
-                                )}/>
-                                <Route exact path="/password/reset" render={() => (this.props.token !== false ?
-                                        (<Redirect to={'/login'}/>) :
-                                        (<ResetForm/>)
-                                )}/>
-                                <Route exact path="/login" render={() => (this.props.token !== false ?
-                                        (<Redirect
-                                            to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
-                                        (<LoginForm/>)
-                                )}/>
-                            </Switch>
+                        
+                        <div className="flex-nowrap row w-100">
+                            {!this.state.isMobile && categories
+                            ? <CategoryList categories={categories} onClick={() => null}/>
+                            : null}
+                            <div className={`content-wrapper ${background ? 'image-background' : ''}`}>
+                                <Switch>
+                                    <Route exact path={'/'} component={Index}/>
+                                    <Route exact path={'/contact'} component={Contact}/>
+                                    <Route exact path={'/news'} component={NewsList}/>
+                                    <Route exact path={'/workshop'} component={ArticleList}/>
+                                    <Route exact path={'/workshop/:id'} component={Workshop}/>
+                                    <Route exact path={'/catalog'} component={Catalog}/>
+                                    <Route exact path={'/catalog/product/:id'} component={Product}/>
+                                    <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
+                                    <Route exact path={'/catalog/:category'} component={ProductList}/>
+                                    <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
+                                    <Route exact path={'/about'} component={About}/>
+                                    <Route exact path={'/product/details/:id'} component={ProductDetails}/>
+                                    <Route exact path="/register" render={() => (this.props.token !== false ?
+                                            (<Redirect to={'/login'}/>) :
+                                            (<RegForm/>)
+                                    )}/>
+                                    <Route exact path="/password/reset" render={() => (this.props.token !== false ?
+                                            (<Redirect to={'/login'}/>) :
+                                            (<ResetForm/>)
+                                    )}/>
+                                    <Route exact path="/login" render={() => (this.props.token !== false ?
+                                            (<Redirect
+                                                to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
+                                            (<LoginForm/>)
+                                    )}/>
+                                </Switch>
+                            </div>
                         </div>
                         <div className={`service-btn-group ${this.state.isMobile ? '' : 'sticked'}`}>
                             <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
