@@ -134,8 +134,7 @@ class ProductCard extends Component {
     render() {
         let { item } = this.props;
         let image = item.photo ? productImageUrl + item.photo : require('../../../../images/image-placeholder.png');
-        console.log( this.props.favorite)
-
+        
         return (
             <div className={`product-card product-card_${this.state.cardView}`} onClick={() => this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}>
                 {

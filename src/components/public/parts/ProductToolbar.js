@@ -55,8 +55,9 @@ export class ProductToolbar extends Component {
         });
     }
 
-    handlehandleSelectLimit = (e) => {
-        this.props.setLimit(e, false);
+    handlehandleSelectLimit = (e, all) => {
+        
+        this.props.setLimit(e, all ? true : false);
         this.state.dropdownList.forEach(item => item.current.classList.remove('active'));
     }
 
@@ -85,7 +86,7 @@ export class ProductToolbar extends Component {
                             <span className="products-toolbar-dropdown__list-item" data="100"
                                 onClick={(e) => this.handlehandleSelectLimit(e)}>100</span>
                             <span className="products-toolbar-dropdown__list-item" data="50"
-                                onClick={(e) => this.handlehandleSelectLimit(e)}>Все</span>
+                                onClick={(e) => this.handlehandleSelectLimit(e, true)}>Все</span>
                         </div>
                     </div>
 

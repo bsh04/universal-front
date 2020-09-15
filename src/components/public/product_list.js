@@ -195,6 +195,7 @@ class ProductList extends Component {
         }
 
     }
+
     setSort = (e) => {
         let sort = e.target.getAttribute('data').split(',');
         this.setState({
@@ -239,12 +240,18 @@ class ProductList extends Component {
                 {contextValue => {
                 
                 let catList = [];
-                
+                let productPageTitle = null;
+
                 if(contextValue && contextValue.length > 0 && this.props.match.params.category !== 'new' 
                     && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search'){
 
                     let obj = contextValue.find(item => item.id === this.props.match.params.category);
                     
+                    if(obj && obj.title) {
+                        productPageTitle = obj.title;
+                    }
+                    
+
                     if(obj && obj.children !== undefined){
                         catList = obj.children;
 
@@ -261,22 +268,23 @@ class ProductList extends Component {
                 } else {
                     catList = this.state.catList;
                 }
+                
                     
                 return <div>
-                <Helmet>
-                    <meta charSet="utf-8"/>
-                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                    <meta name="theme-color" content="#000000"/>
-                    <title>Каталог - Универсал</title>
-                    <meta name="keywords"
-                          content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
-                    <meta name="description"
-                          content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
-                    <meta property="og:description"
-                          content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
-                    <meta property="og:title" content="Каталог"/>
-                    <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
-                </Helmet>
+                    <Helmet>
+                        <meta charSet="utf-8"/>
+                        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                        <meta name="theme-color" content="#000000"/>
+                        <title>Каталог - Универсал</title>
+                        <meta name="keywords"
+                            content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
+                        <meta name="description"
+                            content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
+                        <meta property="og:description"
+                            content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
+                        <meta property="og:title" content="Каталог"/>
+                        <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
+                    </Helmet>
 
                 {this.state.path && this.state.products.length > 0
                     ?
@@ -297,6 +305,10 @@ class ProductList extends Component {
                                     {title: this.state.path}]
                         )}/>
                     : null}
+
+                {productPageTitle ?
+                <h3 className="product-page-title">{productPageTitle}</h3>
+                : null}
 
                 {this.props.match.params.category !== 'new' && this.props.match.params.category !== 'stock'
                 && this.props.match.params.category !== 'search' && catList.length > 0 ?

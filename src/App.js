@@ -66,28 +66,16 @@ class App extends Component {
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        {
-                            this.state.mobileMode ?
-                                <Switch>
-                                    <Route path="/admin"
-                                           component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
-                                    <Route path="/user"
-                                           component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
-                                    <Route path="/" render={() => <PublicLayout from={this.state.from}
-                                                                                updateFrom={this.updateFrom}/>}/>
-                                </Switch>
-                                :
-                                <CategoriesContext.Provider value={this.state.categories}>
-                                    <Switch>
-                                        <Route path="/admin"
-                                               component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
-                                        <Route path="/user"
-                                               component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
-                                        <Route path="/" render={() => <PublicLayout from={this.state.from}
-                                                                                    updateFrom={this.updateFrom}/>}/>
-                                    </Switch>
-                                </CategoriesContext.Provider>
-                        }
+                        <CategoriesContext.Provider value={this.state.categories}>
+                            <Switch>
+                                <Route path="/admin"
+                                        component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
+                                <Route path="/user"
+                                        component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
+                                <Route path="/" render={() => <PublicLayout from={this.state.from}
+                                                                            updateFrom={this.updateFrom}/>}/>
+                            </Switch>
+                        </CategoriesContext.Provider>
                     </Router>
                     <Modal/>
                 </ErrorBoundary>
