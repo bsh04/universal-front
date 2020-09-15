@@ -325,7 +325,7 @@ class ProductList extends Component {
                     limit={this.state.limit}
                 />
 
-                <div className="row" ref={(target) => this.productListInnerContainer = target}>
+                <div className="row products-wrapper" ref={(target) => this.productListInnerContainer = target}>
                     {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                         if (key < this.state.limit) {
                             return (
