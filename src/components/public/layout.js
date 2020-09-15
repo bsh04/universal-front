@@ -65,13 +65,12 @@ class PublicLayout extends Component {
     }
 
     checkWindowSize = () => {
-        if (window.innerWidth < 600 && this.state.isMobile === false) {
+        if (window.innerWidth < 768 && this.state.isMobile === false) {
             this.setState({isMobile: true})
-        } else if (window.innerWidth >= 600 && this.state.isMobile === true) {
+        } else if (window.innerWidth >= 768 && this.state.isMobile === true) {
             this.setState({isMobile: false})
         }
     }
-
 
     toggleModal = (name) => {
         let target = null;
@@ -106,8 +105,11 @@ class PublicLayout extends Component {
 
     render() {
         return <CategoriesContext.Consumer>{contextValue => {
+            let categories = null;
+            let showCategoryList = null;
+            
             if (contextValue) {
-                const categories = contextValue.map(item => {
+                categories = contextValue.map(item => {
                     if (item.children.length > 1) {
                         item.children = item.children.sort((current, next) => {
                             if (current.title < next.title) {
@@ -121,132 +123,75 @@ class PublicLayout extends Component {
                     }
                     return item;
                 });
-
-                return (
-                    <div>
-                        <Header/>
-                        <div className="content row">
-                            <div className="col-md-3 p-0 index_page">
-                                <CategoryList categories={categories} onClick={() => null}/>
-                            </div>
-                            <ScrollDownButton style={{zIndex: 50}}/>
-                            <div className={`col-md-9 content-wrapper`}>
-                                <Switch>
-                                    <Route exact path={'/'} component={Index}/>
-                                    <Route exact path={'/contact'} component={Contact}/>
-                                    <Route exact path={'/news'} component={NewsList}/>
-                                    <Route exact path={'/workshop'} component={ArticleList}/>
-                                    <Route exact path={'/workshop/:id'} component={Workshop}/>
-                                    <Route exact path={'/catalog'} component={Catalog}/>
-                                    <Route exact path={'/catalog/product/:id'} component={Product}/>
-                                    <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
-                                    <Route exact path={'/catalog/:category'} component={ProductList}/>
-                                    <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
-                                    <Route exact path={'/product/details/:id'} component={ProductDetails}/>
-                                    <Route exact path={'/about'} component={About}/>
-                                    <Route exact path="/register" render={() => (this.props.token !== false ?
-                                            (<Redirect to={'/login'}/>) :
-                                            (<RegForm/>)
-                                    )}/>
-                                    <Route exact path="/password/reset" render={() => (this.props.token !== false ?
-                                            (<Redirect to={'/login'}/>) :
-                                            (<ResetForm/>)
-                                    )}/>
-                                    <Route exact path="/login" render={() => (this.props.token !== false ?
-                                            (<Redirect
-                                                to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
-                                            (<LoginForm/>)
-                                    )}/>
-                                </Switch>
-                            </div>
-                            <div className={`service-btn-group ${this.state.isMobile ? '' : 'sticked'}`}>
-                                <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
-                                <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
-                                <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/>
-                            </div>
-
-                            <ModalGallery visible={this.state.galleryModalVisible}/>
-                            <ModalBasketAddAlert visible={this.state.basketAddModalVisible}/>
-                            <ModalThanks visible={this.state.modalThanksVisible}/>
-
-                            <ModalCallbackForm visible={this.state.callbackModalVisible}
-                                               handleToggle={() => this.toggleModal('callback')}/>
-                            <ModalRequestForm visible={this.state.requestFormModalVisible}
-                                              handleToggle={() => this.toggleModal('request')}/>
-                            <ModalQuestionForm visible={this.state.questionModalVisible}
-                                               handleToggle={() => this.toggleModal('question')}/>
-
-
-                            <ContactForm/>
-                            {this.state.location.indexOf('contact') === -1 ?
-                                <MapSection_/> : null}
-                        </div>
-                        <ScrollUpButton style={{zIndex: 50}}/>
-                        <Footer/>
-                    </div>
-                );
-            } else {
-                return (
-                    <div>
-                        <Header/>
-                        <div className="content row">
-                            <ScrollDownButton style={{zIndex: 50}}/>
-                            <div className={`col-md-12 p-0`}>
-                                <Switch>
-                                    <Route exact path={'/'} component={Index}/>
-                                    <Route exact path={'/contact'} component={Contact}/>
-                                    <Route exact path={'/news'} component={NewsList}/>
-                                    <Route exact path={'/workshop'} component={ArticleList}/>
-                                    <Route exact path={'/workshop/:id'} component={Workshop}/>
-                                    <Route exact path={'/catalog'} component={Catalog}/>
-                                    <Route exact path={'/catalog/product/:id'} component={Product}/>
-                                    <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
-                                    <Route exact path={'/catalog/:category'} component={ProductList}/>
-                                    <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
-                                    <Route exact path={'/about'} component={About}/>
-                                    <Route exact path={'/product/details/:id'} component={ProductDetails}/>
-                                    <Route exact path="/register" render={() => (this.props.token !== false ?
-                                            (<Redirect to={'/login'}/>) :
-                                            (<RegForm/>)
-                                    )}/>
-                                    <Route exact path="/password/reset" render={() => (this.props.token !== false ?
-                                            (<Redirect to={'/login'}/>) :
-                                            (<ResetForm/>)
-                                    )}/>
-                                    <Route exact path="/login" render={() => (this.props.token !== false ?
-                                            (<Redirect
-                                                to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
-                                            (<LoginForm/>)
-                                    )}/>
-                                </Switch>
-                            </div>
-                            <div className={`service-btn-group ${this.state.isMobile ? '' : 'sticked'}`}>
-                                <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
-                                <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
-                                <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/>
-                            </div>
-
-                            <ModalGallery visible={this.state.galleryModalVisible}/>
-                            <ModalBasketAddAlert visible={this.state.basketAddModalVisible}/>
-                            <ModalThanks visible={this.state.modalThanksVisible}/>
-
-                            <ModalCallbackForm visible={this.state.callbackModalVisible}
-                                               handleToggle={() => this.toggleModal('callback')}/>
-                            <ModalRequestForm visible={this.state.requestFormModalVisible}
-                                              handleToggle={() => this.toggleModal('request')}/>
-                            <ModalQuestionForm visible={this.state.questionModalVisible}
-                                               handleToggle={() => this.toggleModal('question')}/>
-
-
-                            <ContactForm/>
-                            {this.state.location.indexOf('contact') === -1 ?
-                                <MapSection_/> : null}
-                        </div>
-                        <ScrollUpButton style={{zIndex: 50}}/>
-                        <Footer/>
-                    </div>
-                )
             }
+
+            showCategoryList = !!(!this.state.isMobile && categories);
+
+            return (
+                <div>
+                    <Header/>
+                    <div className="content row">
+                        <ScrollDownButton style={{zIndex: 50}}/>
+                        {!this.state.isMobile && categories
+                        ? <div className="col-md-2 p-0 index_page">
+                            <CategoryList categories={categories} onClick={() => null}/>
+                        </div> : null}
+                        <div className={`col-md-${showCategoryList ? '10' : '12'} content-wrapper`}>
+                            <Switch>
+                                <Route exact path={'/'} component={Index}/>
+                                <Route exact path={'/contact'} component={Contact}/>
+                                <Route exact path={'/news'} component={NewsList}/>
+                                <Route exact path={'/workshop'} component={ArticleList}/>
+                                <Route exact path={'/workshop/:id'} component={Workshop}/>
+                                <Route exact path={'/catalog'} component={Catalog}/>
+                                <Route exact path={'/catalog/product/:id'} component={Product}/>
+                                <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
+                                <Route exact path={'/catalog/:category'} component={ProductList}/>
+                                <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
+                                <Route exact path={'/about'} component={About}/>
+                                <Route exact path={'/product/details/:id'} component={ProductDetails}/>
+                                <Route exact path="/register" render={() => (this.props.token !== false ?
+                                        (<Redirect to={'/login'}/>) :
+                                        (<RegForm/>)
+                                )}/>
+                                <Route exact path="/password/reset" render={() => (this.props.token !== false ?
+                                        (<Redirect to={'/login'}/>) :
+                                        (<ResetForm/>)
+                                )}/>
+                                <Route exact path="/login" render={() => (this.props.token !== false ?
+                                        (<Redirect
+                                            to={this.props.from !== '/login' ? this.props.from : '/'}/>) :
+                                        (<LoginForm/>)
+                                )}/>
+                            </Switch>
+                        </div>
+                        <div className={`service-btn-group ${this.state.isMobile ? '' : 'sticked'}`}>
+                            <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
+                            <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
+                            <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/>
+                        </div>
+
+                        <ModalGallery visible={this.state.galleryModalVisible}/>
+                        <ModalBasketAddAlert visible={this.state.basketAddModalVisible}/>
+                        <ModalThanks visible={this.state.modalThanksVisible}/>
+
+                        <ModalCallbackForm visible={this.state.callbackModalVisible}
+                                            handleToggle={() => this.toggleModal('callback')}/>
+                        <ModalRequestForm visible={this.state.requestFormModalVisible}
+                                            handleToggle={() => this.toggleModal('request')}/>
+                        <ModalQuestionForm visible={this.state.questionModalVisible}
+                                            handleToggle={() => this.toggleModal('question')}/>
+
+
+                        <ContactForm/>
+                        {this.state.location.indexOf('contact') === -1 ?
+                            <MapSection_/> : null}
+                    </div>
+                    <ScrollUpButton style={{zIndex: 50}}/>
+                    <Footer/>
+                </div>
+            )
+            
         }}
         </CategoriesContext.Consumer>
     }
