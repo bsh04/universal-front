@@ -36,7 +36,7 @@ class App extends Component {
     }
 
     checkSizeWindow() {
-        if (window.innerWidth > 1200) {
+        if (window.innerWidth > 767) {
             this.setState({mobileMode: false})
         } else {
             this.setState({mobileMode: true})
@@ -66,7 +66,7 @@ class App extends Component {
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        <CategoriesContext.Provider value={this.state.categories}>
+                        <CategoriesContext.Provider value={{categories: this.state.categories, isMobile: this.state.mobileMode}}>
                             <Switch>
                                 <Route path="/admin"
                                         component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>

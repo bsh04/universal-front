@@ -242,27 +242,28 @@ class ProductList extends Component {
                 let catList = [];
                 let productPageTitle = null;
 
-                if(contextValue && contextValue.length > 0 && this.props.match.params.category !== 'new' 
+                if(contextValue.categories && contextValue.categories.length > 0 && this.props.match.params.category !== 'new' 
                     && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search'){
 
-                    let obj = contextValue.find(item => item.id === this.props.match.params.category);
+                    let obj = contextValue.categories.find(item => item.id === this.props.match.params.category);
                     
                     if(obj && obj.title) {
                         productPageTitle = obj.title;
+                        
                     }
-                    
 
                     if(obj && obj.children !== undefined){
                         catList = obj.children;
 
                     } else {
-                        let obj = contextValue.find(item => {
+                        let obj = contextValue.categories.find(item => {
                             if(item.children !== undefined && item.children.length > 0
                                 && item.children.find(item => item.id === this.props.match.params.category)) {
                                     return item;
                             }
                         });
                         catList = obj.children;
+                        productPageTitle = obj.title;
                     }
 
                 } else {
