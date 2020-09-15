@@ -35,8 +35,10 @@ class PrivateLayout extends Component {
             let categories = null;
             let showCategoryList = null;
 
-            if (contextValue) {
-                categories = contextValue.map(item => {
+            let isMobile = contextValue.isMobile;
+
+            if (contextValue.categories) {
+                categories = contextValue.categories.map(item => {
                     if (item.children.length > 1) {
                         item.children = item.children.sort((current, next) => {
                             if (current.title < next.title) {
@@ -52,14 +54,14 @@ class PrivateLayout extends Component {
                 });
             }
 
-            showCategoryList = !!(!this.state.isMobile && categories);
+            showCategoryList = !!(!isMobile && categories);
 
             return (
                 <div>
                     <Header/>
                     <div className="row content">
                         <div className="flex-nowrap row w-100">
-                            {!this.state.isMobile && categories
+                            {showCategoryList
                             ? <CategoryList categories={categories} onClick={() => null}/>
                             : null}
                             <div className={`content-wrapper`}>

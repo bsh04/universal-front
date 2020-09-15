@@ -38,8 +38,10 @@ class UserLayout extends Component {
             let categories = null;
             let showCategoryList = null;
 
-            if (contextValue) {
-                categories = contextValue.map(item => {
+            let isMobile = contextValue.isMobile;
+
+            if (contextValue.categories) {
+                categories = contextValue.categories.map(item => {
                     if (item.children.length > 1) {
                         item.children = item.children.sort((current, next) => {
                             if (current.title < next.title) {
@@ -55,19 +57,19 @@ class UserLayout extends Component {
                 });
             }
 
-            showCategoryList = !!(categories);
+            showCategoryList = !!(!isMobile && categories);
 
             let background = null;
             let arr = ['login', 'data/change', '/password/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
-            console.log(background);
+            
 
             return (
                 <div>
                     <Header/>
                     <div className="row content">
                         <div className="flex-nowrap row w-100">
-                            {categories
+                            {showCategoryList
                             ? <CategoryList categories={categories} onClick={() => null}/>
                             : null}
                             <div className={`content-wrapper ${background ? 'image-background' : ''}`}>
