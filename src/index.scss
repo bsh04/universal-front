@@ -369,8 +369,12 @@ h3 > a {
 }
 
 .image-background {
-  background: url("./images/settings_background.png") no-repeat right;
-  height: 803px;
+  background-image: url("./images/settings_background.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+  
+  height: 100%;
   width: 100%;
 
   @media screen and (max-width: 1000px) {
@@ -485,7 +489,8 @@ h3 > a {
 
 .login {
   width: 50%;
-  max-width: 700px;
+  text-align: left;
+  
 
   & form {
     width: 100%;
@@ -2016,17 +2021,15 @@ h3 > a {
 }
 
 .catalog_main {
-  top: 100%;
-  left: 0;
   z-index: 21;
   width: 19%;
-  min-width: 340px;
-  padding-left: 12%;
+  min-width: 310px;
+  margin-left: 3%;
   max-height: 2000px;
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  
 
 
   & .list {
