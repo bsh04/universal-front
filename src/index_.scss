@@ -195,14 +195,16 @@ $btn_default_color: #229DD2;
         margin: 10px auto;
         color: #434343;
         font-size: 14px;
-        z-index: 5;
+        z-index: 27;
+        overflow: hidden;
+        
     }
 
     .sub-categories-select-list {
         display: none;
 
         &_show {
-            z-index: 2;
+            z-index: 26;
             position: absolute;
             top: 20px;
             left: 0;
@@ -234,6 +236,10 @@ $btn_default_color: #229DD2;
                 text-decoration: none;
                 font-size: 14px;
             }
+        }
+
+        &__item {
+            text-align: left;
         }
     }
 }
@@ -1302,6 +1308,10 @@ $btn_default_color: #229DD2;
         padding: 0 3%;
         margin-left: 0;
         margin: 0 auto;
+    }
+
+    .products-wrapper {
+        margin-right: 0;
     }
 
     .product-page-title {

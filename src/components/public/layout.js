@@ -37,7 +37,6 @@ class PublicLayout extends Component {
             redirectUrl: '/',
             showMenu: true,
             location: this.props.location.pathname,
-            isMobile: false,
 
             callbackModalVisible: false,
             questionModalVisible: false,
@@ -55,22 +54,6 @@ class PublicLayout extends Component {
         }
     }
 
-    componentDidMount() {
-        this.checkWindowSize();
-        window.addEventListener('resize', this.checkWindowSize);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.checkWindowSize);
-    }
-
-    checkWindowSize = () => {
-        if (window.innerWidth < 768 && this.state.isMobile === false) {
-            this.setState({isMobile: true})
-        } else if (window.innerWidth >= 768 && this.state.isMobile === true) {
-            this.setState({isMobile: false})
-        }
-    }
 
     toggleModal = (name) => {
         let target = null;
@@ -107,9 +90,10 @@ class PublicLayout extends Component {
         return <CategoriesContext.Consumer>{contextValue => {
             let categories = null;
             let showCategoryList = null;
-            
-            if (contextValue) {
-                categories = contextValue.map(item => {
+            let isMobile = contextValue.isMobile;
+
+            if (contextValue.categories) {
+                categories = contextValue.categories.map(item => {
                     if (item.children.length > 1) {
                         item.children = item.children.sort((current, next) => {
                             if (current.title < next.title) {
@@ -125,11 +109,12 @@ class PublicLayout extends Component {
                 });
             }
 
-            showCategoryList = !!(!this.state.isMobile && categories);
+            showCategoryList = !!(!isMobile && categories);
 
             let background = null;
             let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
+
 
             return (
                 <div>
@@ -138,7 +123,7 @@ class PublicLayout extends Component {
                         <ScrollDownButton style={{zIndex: 50}}/>
                         
                         <div className="flex-nowrap row w-100">
-                            {!this.state.isMobile && categories
+                            {showCategoryList
                             ? <CategoryList categories={categories} onClick={() => null}/>
                             : null}
                             <div className={`content-wrapper ${background ? 'image-background' : ''}`}>
@@ -171,7 +156,7 @@ class PublicLayout extends Component {
                                 </Switch>
                             </div>
                         </div>
-                        <div className={`service-btn-group ${this.state.isMobile ? '' : 'sticked'}`}>
+                        <div className={`service-btn-group ${isMobile ? '' : 'sticked'}`}>
                             <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
                             <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
                             <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/>

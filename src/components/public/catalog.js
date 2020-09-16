@@ -12,7 +12,7 @@ class Catalog extends Component {
 
     render() {
         return <CategoriesContext.Consumer>{contextValue => {
-            const categories = contextValue;
+            const {categories} = contextValue;
             return (
                 <div>
                     <h1>Каталог</h1>
