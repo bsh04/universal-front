@@ -143,7 +143,7 @@ const Pagination = (props) => {
                                 ? 1
                                 : pickPage - 1)}
                     />
-                    <div className={`number-pages-container ${numberPages === 2 ? 'w-25' : ''}`}>
+                    <div className={`number-pages-container ${numberPages === 2 ? 'w-25' : numberPages === 3 ? 'minimal' : ''}`}>
                         {renderNumberPages()}
                     </div>
                     <KeyboardArrowRightIcon

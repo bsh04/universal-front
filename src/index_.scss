@@ -19,8 +19,8 @@ $btn_default_color: #229DD2;
 
 
 .content-wrapper {
-    padding: 0 3% 0 30px;
-    max-width: 81%;
+    padding: 0 3% 60px 30px;
+    width: 100%;
     display: flex;
     margin-left: 10px;
     
@@ -816,7 +816,6 @@ $btn_default_color: #229DD2;
 
 
 .contact-form {
-    
     color: #fff;
     
     &_main {
@@ -1302,11 +1301,10 @@ $btn_default_color: #229DD2;
     }
 }
 
-@media screen and(max-width: 767px) {
+@media screen and(max-width: 768px) {
     .content-wrapper {
         max-width: 100%;
-        padding: 0 3%;
-        margin-left: 0;
+        padding: 0 3% 60px 3%;
         margin: 0 auto;
     }
 
