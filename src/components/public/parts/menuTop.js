@@ -101,7 +101,7 @@ const MenuTop = props => {
                 </div>
                 <div className='d-flex flex-row align-items-center'>
                     <div>
-                        <Link to={props.token ? '/user/basket' : '/login'}>
+                        <Link to={'/user/basket'}>
                             <div className="iconButtons">
                                 <ShoppingCartIcon/>
                             </div>
@@ -140,7 +140,7 @@ const MenuTop = props => {
                         marginRight: 15
                     }}/>
                     <div className="flex-column align-items-center d-flex"  style={{width: 83}}>
-                        <Link to={props.token ? '/user/favorite' : '/login'}>
+                        <Link to={'/user/favorite'}>
                             <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
                         </Link>
                         <p className='menuText pl-0'>Избранное</p>
@@ -183,7 +183,7 @@ const MenuTop = props => {
                 </div>
                 <div className='d-flex flex-row align-items-center'>
                     <div>
-                        <Link to={props.token ? '/user/basket' : '/login'}>
+                        <Link to={'/user/basket'}>
                             <div className="iconButtonsReducer">
                                 <ShoppingCartIcon/>
                             </div>
@@ -223,7 +223,7 @@ const MenuTop = props => {
                     }}/>
 
                     <div className="flex-row align-items-center d-flex">
-                        <Link to={props.token ? '/user/favorite' : '/login'}>
+                        <Link to={'/user/favorite'}>
                             <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
                         </Link>
 
@@ -320,7 +320,7 @@ const MenuTop = props => {
 
                 <div className='d-flex flex-row align-items-center'>
                     <div>
-                        <Link to={props.token ? '/user/basket' : '/login'}>
+                        <Link to={'/user/basket'}>
                             <div className={reduce ? "basketMobile text-white" : "iconButtons"}>
                                 <ShoppingCartIcon/>
                             </div>
@@ -333,7 +333,7 @@ const MenuTop = props => {
                             <div className='line'/>
                     }
                     <div className="flex-column align-items-center d-flex">
-                        <Link to={props.token ? '/user/favorite' : '/login'}>
+                        <Link to={'/user/favorite'}>
                             <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
                         </Link>
                     </div>
@@ -389,7 +389,6 @@ export default withRouter(connect(
     (state) => ({
         token: state.token,
         user: state.user,
-        reload: state.reload,
     }),
     dispatch => ({
         onDeleteToken: (token) => {
@@ -397,9 +396,6 @@ export default withRouter(connect(
         },
         onDeleteUser: (user) => {
             dispatch({type: 'DELETE_USER', payload: user})
-        },
-        onReloadedMenu: () => {
-            dispatch({type: 'RELOADED', payload: true})
         },
     })
 )(MenuTop));

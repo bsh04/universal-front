@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import login from "../sign_action/login";
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
@@ -40,20 +39,29 @@ const NavbarTop = (props) => {
     ]
 
     const rightItems = [
-        {title: 'Мои заказы', path: props.token ? '/user/order' : '/login'},
-        {title: 'Изменить данные', path: props.token ? '/user/data/change' : '/login'},
-        {title: 'Изменить пароль', path: props.token ? '/user/password/change' : '/login'},
+        {title: 'Мои заказы', path: '/user/order'},
+        {title: 'Изменить данные', path: '/user/data/change'},
+        {title: 'Изменить пароль', path: '/user/password/change'},
     ]
 
-    const allItems = [
-        {title: 'Швейный цех', path: '/workshop'},
-        {title: 'Новости', path: '/news'},
-        {title: 'Оплата и доставка', path: '/deliveryandpayment'},
-        {title: 'Контакты', path: '/contact'},
-        {title: 'Мои заказы', path: props.token ? '/user/order' : '/login'},
-        {title: 'Изменить данные', path: props.token ? '/user/data/change' : '/login'},
-        {title: 'Изменить пароль', path: props.token ? '/user/password/change' : '/login'},
-    ]
+    const allItems =
+        props.token ?
+            [
+                {title: 'Швейный цех', path: '/workshop'},
+                {title: 'Новости', path: '/news'},
+                {title: 'Оплата и доставка', path: '/deliveryandpayment'},
+                {title: 'Контакты', path: '/contact'},
+                {title: 'Мои заказы', path: '/user/order'},
+                {title: 'Изменить данные', path: '/user/data/change'},
+                {title: 'Изменить пароль', path: '/user/password/change'},
+            ]
+            :
+            [
+                {title: 'Швейный цех', path: '/workshop'},
+                {title: 'Новости', path: '/news'},
+                {title: 'Оплата и доставка', path: '/deliveryandpayment'},
+                {title: 'Контакты', path: '/contact'},
+            ]
 
     useEffect(() => {
         const ac = new AbortController();
@@ -403,7 +411,7 @@ const NavbarTop = (props) => {
                 >
                     {
                         isOpenCatalog ?
-                            <div className="nav-link h-100 mx-0 w-100 py-0 px-0"  id="navbarDropdown"
+                            <div className="nav-link h-100 mx-0 w-100 py-0 px-0" id="navbarDropdown"
                                  role="button"
                                  aria-haspopup="true" aria-expanded="false"
                             >
