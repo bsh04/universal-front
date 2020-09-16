@@ -8,8 +8,14 @@ const CatalogList = (props) => {
     const [list, setList] = useState([])
 
     useEffect(() => {
+<<<<<<< HEAD
+        getData();
+
+    }, [list])
+=======
         getData()
     }, [setList])
+>>>>>>> develop
 
     const getData = () => {
         request(

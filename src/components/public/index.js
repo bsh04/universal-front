@@ -52,17 +52,6 @@ class Index extends Component {
         
     }
 
-    itemView(item, type = null) {
-        return (
-            <div key={item.id} className="main-catalog-list__item">
-                <Link to={'/catalog/' + item.id}
-                      className="main-catalog-list__text">
-                    <span>{item.title}</span>
-                </Link>
-            </div>
-        );
-    }
-
     render() {
 
             return (

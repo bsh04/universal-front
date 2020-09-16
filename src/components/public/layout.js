@@ -109,8 +109,8 @@ class PublicLayout extends Component {
                 });
             }
 
-            showCategoryList = !!(!isMobile && categories);
-
+            showCategoryList = !!(!isMobile && categories && this.props.location.pathname !== '/catalog');
+            
             let background = null;
             let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
@@ -126,7 +126,7 @@ class PublicLayout extends Component {
                             {showCategoryList
                             ? <CategoryList categories={categories} onClick={() => null}/>
                             : null}
-                            <div className={`content-wrapper ${background ? 'image-background' : ''}`}>
+                            <div className={`content-wrapper ${background ? 'image-background' : ''} ${showCategoryList ? '' : 'mw-100 w-100'}`}>
                                 <Switch>
                                     <Route exact path={'/'} component={Index}/>
                                     <Route exact path={'/contact'} component={Contact}/>

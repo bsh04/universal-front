@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 class Footer extends Component {
     render() {
         return <CategoriesContext.Consumer>{contextValue => {
-            const categories = contextValue;
+            const categories = contextValue.categories;
             
             return (
                 <div className='footer'>

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+
 import request from "../../services/ajaxManager";
 
 import {CategoriesContext} from '../../services/contexts';
+import { MainCatalogItem } from './parts/main_catalog/MainCatalogItem';
+import { Carousel } from './parts/carousel/Carousel';
 
 class Catalog extends Component {
     constructor(props) {
@@ -13,21 +15,26 @@ class Catalog extends Component {
     render() {
         return <CategoriesContext.Consumer>{contextValue => {
             const {categories} = contextValue;
+
             return (
                 <div>
-                    <h1>Каталог</h1>
+                    <h3 className="page-title">Каталог</h3>
+                    
                     <div className="main-catalog-list">
-                        {categories.map((item, key) => {
+                        {categories.map(item => {
                             return (
-                                <div key={item.id} className="main-catalog-list__item">
-                                    <Link to={'/catalog/' + item.id}
-                                        className="main-catalog-list__text">
-                                        <span>{item.title}</span>
-                                    </Link>
-                                </div>
+                                <MainCatalogItem item={item} key={item.id}/>
                             );
                         })}
                     </div>
+
+                    <Carousel length={6} title={'Товары по акции'}>
+                        {categories.map(item => {
+                            return (
+                                <MainCatalogItem item={item} key={item.id}/>
+                            );
+                        })}
+                    </Carousel>
                 </div>
             );
         }}
