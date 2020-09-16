@@ -40,9 +40,9 @@ const NavbarTop = (props) => {
     ]
 
     const rightItems = [
-        {title: 'Мои заказы', path: '/user/order'},
-        {title: 'Изменить данные', path: '/user/data/change'},
-        {title: 'Изменить пароль', path: '/user/password/change'},
+        {title: 'Мои заказы', path: props.token ? '/user/order' : '/login'},
+        {title: 'Изменить данные', path: props.token ? '/user/data/change' : '/login'},
+        {title: 'Изменить пароль', path: props.token ? '/user/password/change' : '/login'},
     ]
 
     const allItems = [
@@ -50,24 +50,29 @@ const NavbarTop = (props) => {
         {title: 'Новости', path: '/news'},
         {title: 'Оплата и доставка', path: '/deliveryandpayment'},
         {title: 'Контакты', path: '/contact'},
-        {title: 'Мои заказы', path: '/user/order'},
-        {title: 'Изменить данные', path: '/user/data/change'},
-        {title: 'Изменить пароль', path: '/user/password/change'},
+        {title: 'Мои заказы', path: props.token ? '/user/order' : '/login'},
+        {title: 'Изменить данные', path: props.token ? '/user/data/change' : '/login'},
+        {title: 'Изменить пароль', path: props.token ? '/user/password/change' : '/login'},
     ]
 
     useEffect(() => {
+        const ac = new AbortController();
         openWindow(props.dropItem)
+        return () => ac.abort()
     }, [props.dropItem])
 
     useEffect(() => {
+        const ac = new AbortController();
         if (!props.reduceTopMenu) {
             setIsOpen(false)
             setIsOpenCatalog(false)
         }
         closeWindow()
+        return () => ac.abort()
     }, [props.reduceTopMenu])
 
     useEffect(() => {
+        const ac = new AbortController();
         if (props.basket) {
             if (props.basket.length > 0) {
                 props.basket.map((item, index) => {
@@ -81,6 +86,7 @@ const NavbarTop = (props) => {
                 setAmountBasket(null)
             }
         }
+        return () => ac.abort()
     }, [props])
 
     const handleLogout = () => {
@@ -214,10 +220,12 @@ const NavbarTop = (props) => {
                 style={props.reduceTopMenu ? {marginTop: 50, height: 55} : null}
             >
                 <div className="nav-item dropdown h-100">
-                    <div className="catalog nav-link text-light d-flex align-items-center h-100" href="#"
+                    <div className="catalog nav-link text-light d-flex align-items-center h-100"
                          id="navbarDropdown"
                          role="button"
-                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         aria-haspopup="true" aria-expanded="false"
+                         data-toggle="dropdown"
+                    >
                         <MenuIcon className='mr-2'/>
                         Каталог товаров
                         <ExpandLessIcon className='iconLess ml-2'/>
@@ -257,8 +265,9 @@ const NavbarTop = (props) => {
                             <div className='d-flex align-items-center dropdown icon-more-less'
                                  onClick={() => setOpenMore(!openMore)}>
                                 <div className="nav-link text-white pr-0"
-                                     type="button" data-toggle="dropdown" data-display="static" aria-haspopup="true"
+                                     type="button" data-display="static" aria-haspopup="true"
                                      aria-expanded="false"
+                                     data-toggle="dropdown"
                                 >Профиль
                                 </div>
                                 <div className="dropdown-menu dropdown-menu-lg-right">
@@ -309,10 +318,12 @@ const NavbarTop = (props) => {
                 style={props.reduceTopMenu ? {marginTop: 50, height: 55} : null}
             >
                 <div className="nav-item dropdown h-100">
-                    <div className="catalog nav-link text-light d-flex align-items-center h-100" href="#"
+                    <div className="catalog nav-link text-light d-flex align-items-center h-100"
                          id="navbarDropdown"
                          role="button"
-                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         aria-haspopup="true" aria-expanded="false"
+                         data-toggle="dropdown"
+                    >
                         <MenuIcon className='mr-2'/>
                         Каталог товаров
                         <ExpandLessIcon className='iconLess ml-2'/>
@@ -345,7 +356,7 @@ const NavbarTop = (props) => {
                 </form>
                 <div>
                     <div className="btn-group">
-                        <MoreVertIcon type="button" data-toggle="dropdown" data-display="static" aria-haspopup="true"
+                        <MoreVertIcon type="button" data-display="static" aria-haspopup="true" data-toggle="dropdown"
                                       aria-expanded="false" className='text-white mr-3'/>
                         <div className="dropdown-menu dropdown-menu-lg-right">
                             {
@@ -392,20 +403,17 @@ const NavbarTop = (props) => {
                 >
                     {
                         isOpenCatalog ?
-                            <div className="nav-link h-100 mx-0 w-100 py-0 px-0" href="#" id="navbarDropdown"
+                            <div className="nav-link h-100 mx-0 w-100 py-0 px-0"  id="navbarDropdown"
                                  role="button"
-                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                 aria-haspopup="true" aria-expanded="false"
                             >
                                 <div
                                     className="dropdown ml-0 pl-0 h-100 d-flex justify-content-between align-items-center mobile-catalog-open">
                                     <div className='d-flex align-items-center text-white w-100 mx-0 px-0'>
                                         <MenuIcon className='mx-2'/>
                                         <button
-                                            onClick={() => openWindow('catalog')}
                                             className="btn px-0 h-100 ml-0 text-white d-flex  d-flex mobile-catalog-open justify-content-center align-items-center"
-                                            type="button"
-                                            id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            type="button">
                                             КАТАЛОГ
                                         </button>
                                     </div>
@@ -421,9 +429,7 @@ const NavbarTop = (props) => {
                                     <button
                                         onClick={() => openWindow('catalog')}
                                         className="btn btn-secondary h-100 ml-0 mobile-catalog d-flex w-100 d-flex justify-content-center align-items-center"
-                                        type="button"
-                                        id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        type="button">
                                         <MenuIcon className='mr-2'/>
                                         КАТАЛОГ
                                         <ExpandLessIcon className='iconLess ml-2'/>
@@ -439,7 +445,7 @@ const NavbarTop = (props) => {
                                             className="btn ml-0 rounded-pill mobile-shopping d-flex text-white w-100 d-flex justify-content-center align-items-center h-100"
                                             type="button"
                                             id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            aria-haspopup="true" aria-expanded="false">
                                             <Link to='/user/basket'>
                                                 <ShoppingCartIcon className='text-white'/>
                                             </Link>
@@ -509,8 +515,8 @@ const NavbarTop = (props) => {
                     {
                         isOpenCatalog ?
                             <li className="nav-item dropdown w-100 ">
-                                <div className="nav-link h-100 py-0" href="#" id="navbarDropdown" role="button"
-                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                <div className="nav-link h-100 py-0" id="navbarDropdown" role="button"
+                                     aria-haspopup="true" aria-expanded="false"
                                 >
                                     <div
                                         className="dropdown h-100 d-flex justify-content-between align-items-center w-100 mobile-catalog-open">
@@ -521,7 +527,7 @@ const NavbarTop = (props) => {
                                                 className="btn px-0 h-100 ml-0 text-white d-flex w-100 d-flex mobile-catalog-open justify-content-center align-items-center"
                                                 type="button"
                                                 id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                aria-haspopup="true" aria-expanded="false">
                                                 КАТАЛОГ
                                             </button>
                                         </div>
@@ -544,7 +550,7 @@ const NavbarTop = (props) => {
                                 <>
                                     <li className="nav-item dropdown">
                                         <div className="nav-link" id="navbarDropdown" role="button"
-                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                             aria-haspopup="true" aria-expanded="false"
                                         >
                                             <div className="dropdown h-100">
                                                 <button
@@ -552,7 +558,7 @@ const NavbarTop = (props) => {
                                                     className="btn px-0 btn-secondary h-100 ml-0 mobile-catalog d-flex w-100 d-flex justify-content-center align-items-center"
                                                     type="button"
                                                     id="dropdownMenuButton"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    aria-haspopup="true" aria-expanded="false">
                                                     <MenuIcon className='mr-1'/>
                                                     КАТАЛОГ
                                                     <ExpandLessIcon className='iconLess ml-1'/>

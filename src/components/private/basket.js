@@ -130,7 +130,6 @@ class Basket extends Component {
                                                         <div className='product-image'>
                                                             <img className="fav-img"
                                                                  src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.product.photo}
-                                                                 alt="Card image cap"
                                                                 // style={{width: '80%', height: '80%'}}
                                                             />
                                                         </div>
@@ -188,7 +187,6 @@ class Basket extends Component {
                                                     <div className='product-image'>
                                                         <img className="fav-img"
                                                              src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.product.photo}
-                                                             alt="Card image cap"
                                                         />
                                                     </div>
                                                     <div className='product-title'>
@@ -210,7 +208,6 @@ class Basket extends Component {
                                                             readOnly={true}
                                                             required={true}
                                                             placeholder={"Количество:"}
-                                                            defaultValue={item.count}
                                                             value={item.count}
                                                         />
                                                         <AddIcon className='w-25 mr-1'

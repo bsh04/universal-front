@@ -7,7 +7,6 @@ import {
     EmailShareButton,
     VKShareButton,
     WhatsappShareButton,
-    WorkplaceShareButton,
   } from "react-share";
 
 
@@ -148,13 +147,13 @@ class Card extends Component {
         { !mainPage 
         ? <div className="dropleft dropdown-share">
             <button className="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i className="fa fa-share"></i>
+                <i className="fa fa-share"/>
             </button>
             <div className="dropdown-menu share" aria-labelledby="dropdownMenuButton">
                 <VKShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-vk"> Поделиться в VK</i>} />
                 <WhatsappShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-whatsapp"> Поделиться в Whatsapp</i>} />
                 <EmailShareButton className="dropdown-item" url={'https://universal.tom.ru/catalog/search?q=' + this.props.item.id} children={<i className="fa fa-envelope"> Отправить по E-mail</i>} />
-                <a className="dropdown-item" href="#" onClick={async () => {
+                <a className="dropdown-item"  onClick={async () => {
                     try {
                         // 1) Copy text
                         await navigator.clipboard.writeText('https://universal.tom.ru/catalog/search?q=' + this.props.item.id);

@@ -74,39 +74,38 @@ class ProductDetails extends Component {
         })
     }
 
-    // handleBasketAdd() {
-    //     if (!this.props.token) {
-    //         this.props.onError({
-    //             show: true,
-    //             title: 'Необходимо войти в личный кабинет',
-    //             content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в личный кабинет.',
-    //             btnText: 'OK'
-    //         });
-    //     }
-    //     else {
-    //         let data = {
-    //             product: this.props.item.id,
-    //             count: count,
-    //         };
-    //
-    //         let _this = this;
-    //
-    //         request(
-    //             'product/basket',
-    //             'POST',
-    //             data,
-    //             {},
-    //             function (response) {
-    //                 _this.setState({message: response.message, form: false});
-    //                 _this.props.onReloadMenu();
-    //             },
-    //             this.state.errorCallback
-    //         );
-    //     }
-    // }
+    handleBasketAdd = (count) => {
+        if (!this.props.token) {
+            this.props.onError({
+                show: true,
+                title: 'Необходимо войти в личный кабинет',
+                content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в личный кабинет.',
+                btnText: 'OK'
+            });
+        }
+        else {
+            let data = {
+                product: this.state.product.id,
+                count: count,
+            };
+
+            let _this = this;
+
+            request(
+                'product/basket',
+                'POST',
+                data,
+                {},
+                function (response) {
+                    _this.setState({message: response.message, form: false});
+                    _this.props.onReloadMenu();
+                },
+                this.state.errorCallback
+            );
+        }
+    }
 
     render() {
-        console.log(this.state.favorite)
         return (
             <div>
                 <Breadcrumbs
@@ -162,7 +161,7 @@ class ProductDetails extends Component {
                                 <div>
                                     <p>цена</p>
                                 </div>
-                                <ProductBasketAdd/>
+                                <ProductBasketAdd handleClick={this.handleBasketAdd}/>
                             </div>
                             <hr/>
                             <div>
