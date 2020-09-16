@@ -308,7 +308,7 @@ class ProductList extends Component {
                     : null}
 
                 {productPageTitle ?
-                <h3 className="product-page-title">{productPageTitle}</h3>
+                <h3 className="page-title">{productPageTitle}</h3>
                 : null}
 
                 {this.props.match.params.category !== 'new' && this.props.match.params.category !== 'stock'

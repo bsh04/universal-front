@@ -8,10 +8,9 @@ const CatalogList = (props) => {
     const [list, setList] = useState([])
 
     useEffect(() => {
+        getData();
 
-        getData()
-
-    }, [setList])
+    }, [list])
 
     const getData = () => {
         request(
