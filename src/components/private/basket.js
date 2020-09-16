@@ -36,7 +36,7 @@ class Basket extends Component {
     }
 
     getSizeWindow() {
-        if (window.innerWidth < 1000) this.setState({mobileMode: true})
+        if (window.innerWidth < 768) this.setState({mobileMode: true})
         else this.setState({mobileMode: false})
     }
 
@@ -265,7 +265,7 @@ class Basket extends Component {
                                     <div className='d-flex justify-content-center pt-4'>
                                         <Link to={'/user/order/add'}
                                               style={{textDecoration: 'none'}}
-                                              className='custom-btn w-75 d-flex align-items-center rounded-pill'>
+                                              className='custom-btn basket-btn d-flex align-items-center rounded-pill' >
                                             <CheckCircleOutlinedIcon className='mr-2'/>
                                             <p>Оформить заказ</p>
                                         </Link>

@@ -156,7 +156,7 @@ class Favorite extends Component {
                         this.state.numberItems > 0
                             ?
                             <Pagination handleRenderList={this.handleRenderList}
-                                        numberItems={this.state.numberItems - 1} offset={5}/>
+                                        numberItems={this.state.numberItems - 1} offset={15}/>
                             :
                             null
                     }

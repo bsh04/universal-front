@@ -8,9 +8,7 @@ const CatalogList = (props) => {
     const [list, setList] = useState([])
 
     useEffect(() => {
-
         getData()
-
     }, [setList])
 
     const getData = () => {
@@ -31,15 +29,12 @@ const CatalogList = (props) => {
     const renderList = (item, index) => {
         if (props.reduce) {
             return (
-                <>
-                    <a href={"/catalog/" + item.id} key={index} className='d-flex ml-4 mt-2 catalog-item'>
+                    <a href={"/catalog/" + item.id} key={index} className='d-flex ml-4 mt-2 catalog-item hr-bottom'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         <p className='text-break'>
                             {item.title}
                         </p>
                     </a>
-                    <hr className='py-0 my-0' width='85%'/>
-                </>
             )
         } else {
             if (props.mobile) {
