@@ -373,7 +373,7 @@ h3 > a {
   background-repeat: no-repeat;
   background-position: right;
   background-size: contain;
-  
+
   height: 100%;
   width: 100%;
 
@@ -490,7 +490,7 @@ h3 > a {
 .login {
   width: 50%;
   text-align: left;
-  
+
 
   & form {
     width: 100%;
@@ -2029,7 +2029,7 @@ h3 > a {
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  
+
 
 
   & .list {
@@ -2260,6 +2260,8 @@ div {
 
 .workshop-list-container {
 
+  padding-bottom: 50px;
+
   & h4 {
     color: $color_secondary;
     text-align: left;
@@ -2362,8 +2364,10 @@ div {
       color: $color_label
     }
 
-    @media screen and (max-width: 1000px) {
-      text-align: center;
+    @media screen and (max-width: 768px) {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
     }
   }
 
@@ -2397,6 +2401,7 @@ div {
       }
 
       & p {
+        text-align: left;
         color: $color_label;
         margin-bottom: 0;
       }
@@ -2474,7 +2479,6 @@ div {
         display: flex;
         align-items: center;
         margin: 20px 0 20px 0;
-        max-height: 200px;
 
         & .material-item-description {
           margin-left: 20px;
@@ -2582,12 +2586,11 @@ div {
       height: 100%;
       display: flex;
       justify-content: space-between;
-      align-items: center;
 
       & .size-list-item {
         display: flex;
-        align-items: center;
-        margin: 20px 0 20px 0;
+        align-items: flex-start;
+        margin: 20px 30px 20px 0;
 
         & .size-item-description {
           text-align: left;
@@ -2670,7 +2673,7 @@ div {
           align-items: center;
           justify-content: center;
           width: 100%;
-          border: 1px solid $color_lite;
+          border-top: 1px solid $color_lite;
           padding: 10px 0 10px 0;
           margin: 0;
 

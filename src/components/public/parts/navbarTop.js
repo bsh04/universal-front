@@ -214,7 +214,7 @@ const NavbarTop = (props) => {
                 style={props.reduceTopMenu ? {marginTop: 50, height: 55} : null}
             >
                 <div className="nav-item dropdown h-100">
-                    <a className="catalog nav-link text-light d-flex align-items-center h-100" href="#"
+                    <div className="catalog nav-link text-light d-flex align-items-center h-100" href="#"
                        id="navbarDropdown"
                        role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -222,7 +222,7 @@ const NavbarTop = (props) => {
                         Каталог товаров
                         <ExpandLessIcon className='iconLess ml-2'/>
                         <ExpandMoreIcon className='iconMore ml-2'/>
-                    </a>
+                    </div>
                     <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
                         <CatalogList mobile={mobile}/>
                     </div>
@@ -307,7 +307,7 @@ const NavbarTop = (props) => {
                 style={props.reduceTopMenu ? {marginTop: 50, height: 55} : null}
             >
                 <div className="nav-item dropdown h-100">
-                    <a className="catalog nav-link text-light d-flex align-items-center h-100" href="#"
+                    <div className="catalog nav-link text-light d-flex align-items-center h-100" href="#"
                        id="navbarDropdown"
                        role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -315,7 +315,7 @@ const NavbarTop = (props) => {
                         Каталог товаров
                         <ExpandLessIcon className='iconLess ml-2'/>
                         <ExpandMoreIcon className='iconMore ml-2'/>
-                    </a>
+                    </div>
                     <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
                         <CatalogList mobile={mobile}/>
                     </div>
@@ -390,7 +390,7 @@ const NavbarTop = (props) => {
                 >
                     {
                         isOpenCatalog ?
-                            <a className="nav-link h-100 mx-0 w-100 py-0 px-0" href="#" id="navbarDropdown"
+                            <div className="nav-link h-100 mx-0 w-100 py-0 px-0" href="#" id="navbarDropdown"
                                role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                             >
@@ -412,7 +412,7 @@ const NavbarTop = (props) => {
                                 <div className='mobile-catalog-dropdown shadow bg-light'>
                                     <CatalogList reduce={true}/>
                                 </div>
-                            </a>
+                            </div>
                             :
                             <>
                                 <div className="dropdown w-50 h-100 mr-2">
@@ -507,7 +507,7 @@ const NavbarTop = (props) => {
                     {
                         isOpenCatalog ?
                             <li className="nav-item dropdown w-100 ">
-                                <a className="nav-link h-100 py-0" href="#" id="navbarDropdown" role="button"
+                                <div className="nav-link h-100 py-0" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 >
                                     <div
@@ -528,7 +528,7 @@ const NavbarTop = (props) => {
                                     <div className='mobile-catalog-dropdown'>
                                         <CatalogList reduce={true}/>
                                     </div>
-                                </a>
+                                </div>
                             </li>
                             :
                             isOpen ?
@@ -541,7 +541,7 @@ const NavbarTop = (props) => {
                                 :
                                 <>
                                     <li className="nav-item dropdown">
-                                        <a className="nav-link" href="#" id="navbarDropdown" role="button"
+                                        <div className="nav-link" href="#" id="navbarDropdown" role="button"
                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                         >
                                             <div className="dropdown h-100">
@@ -557,26 +557,26 @@ const NavbarTop = (props) => {
                                                     <ExpandMoreIcon className='iconMore ml-1'/>
                                                 </button>
                                             </div>
-                                        </a>
+                                        </div>
                                     </li>
                                     <li className="nav-item dropdown">
-                                        <a className="nav-link" href="#" id="navbarDropdown" role="button"
+                                        <div className="nav-link" href="#" id="navbarDropdown" role="button"
                                            aria-haspopup="true" aria-expanded="false">
                                             <div className='basketMobile'>
                                                 <Link to='/user/basket'>
                                                     <ShoppingCartIcon className='text-white'/>
                                                 </Link>
                                             </div>
-                                        </a>
+                                        </div>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" id="navbarDropdown" href={'/user/favorite'}
+                                        <div className="nav-link" id="navbarDropdown" href={'/user/favorite'}
                                            role="button"
                                            aria-haspopup="true" aria-expanded="false">
                                             <div className='mobileFavoriteReduce'>
                                                 <FavoriteIcon className='text-white'/>
                                             </div>
-                                        </a>
+                                        </div>
                                     </li>
                                 </>
                     }

@@ -7,10 +7,10 @@ const DetailsMaterials = (props) => {
     const [showDetails, setShowDetails] = useState(false)
 
     return (
-        <React.Fragment key={props.index}>
+        <React.Fragment key={props.index + Math.random()}>
             <div className='material-list-item'
                  onClick={() => setShowDetails(!showDetails)}>
-                <img src={require('../../../images/workshop_list/material-mobile.png')}/>
+                <img src={props.item.imageMobile}/>
                 <h5>{props.item.title}</h5>
                 {
                     showDetails

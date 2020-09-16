@@ -21,43 +21,47 @@ class Workshop extends Component {
                 {
                     id: 1,
                     title: 'Сорк пошива - 2-3 рабочих дня',
-                    image: require('../../../images/workshop_list/advantages.png')
+                    image: require('../../../images/workshop_list/advantages/clock.png')
                 },
                 {
                     id: 2,
                     title: 'Фабричное качество пошива',
-                    image: require('../../../images/workshop_list/advantages.png')
+                    image: require('../../../images/workshop_list/advantages/advantages.png')
                 },
                 {
                     id: 3,
                     title: 'Только качественные ткани',
-                    image: require('../../../images/workshop_list/advantages.png')
+                    image: require('../../../images/workshop_list/advantages/quilt.png')
                 }
             ],
             listMaterials: [
                 {
                     id: 1,
                     title: 'Бязь',
-                    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque cupiditate hic praesentium reiciendis repellat. Alias aliquid aspernatur delectus dignissimos nemo perferendis sunt suscipit velit voluptatibus. Accusamus, adipisci aliquam architecto consequuntur corporis culpa cum dignissimos ducimus earum eius esse, excepturi explicabo facere facilis id incidunt ipsam iusto labore magni molestiae nam nisi nulla odit pariatur possimus quae qui quia quos ratione rerum suscipit tempora vel velit, veritatis voluptate voluptatibus voluptatum! A.',
-                    image: require('../../../images/workshop_list/material.png')
+                    body: '100% хлопок. Ткань не такая гладкая и мягкая, как сатин и поплин, изготавливается с помощью крестообразного плетения нескрученной пряжи. Главные свойства бязевого постельного белья: гигиеничность, экологическая чистота, лёгкость, низкая сминаемость и способность на долгие годы сохранять яркость рисунка. Бязь выдерживает огромное количество стирок, к тому же это недорогой материал',
+                    image: require('../../../images/workshop_list/materials/material-byaz.png'),
+                    imageMobile: require('../../../images/workshop_list/materials/material-byaz-mobile.png')
                 },
                 {
                     id: 2,
                     title: 'Сатин',
-                    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquam aliquid architecto blanditiis commodi cupiditate dicta dolor ducimus eaque eius facere impedit incidunt laborum nam nostrum odit officiis perferendis porro, quae quia sapiente totam ut, velit veritatis voluptate. Accusamus eligendi expedita labore laudantium non reiciendis repellat suscipit tempore! Aspernatur debitis dicta labore laborum libero non placeat repellat temporibus ullam unde? Expedita nemo quibusdam soluta totam! Ab accusantium dignissimos esse ex expedita fugit ipsa ipsum iste iusto laboriosam libero modi nam nemo, nihil nobis nulla possimus provident quaerat quam quas qui reiciendis reprehenderit repudiandae sed similique sint suscipit totam ullam voluptatem!',
-                    image: require('../../../images/workshop_list/material.png')
+                    body: '100% хлопок. Изготавливается из крученой нити двойного плетения. Отличительной особенностью сатина является его гладкая, шелковистая, блестящая лицевая поверхность, напоминающая шелк. Изнанка у материала слегка шероховатая, так что сатиновое постельное белье не сползет во время сна. Сатин является одним из немногих текстильных материалов, который удачно сочетает в себе нежность шелка и тепло хлопка. Такие постельные принадлежности почти не мнутся, не электризуются, хорошо пропускают воздух и долговечны. Кроме того, это удачный вариант постельного белья для любителей домашних животных — шелковистость и гладкость материала не дает возможность шерсти прилипать. Еще одно преимущество сатина — сохраняет свой изначальный внешний вид до 300 стирок. Так что постельное белье из этого материала абсолютно не капризно в использовании',
+                    image: require('../../../images/workshop_list/materials/material-satin.png'),
+                    imageMobile: require('../../../images/workshop_list/materials/material-satin-mobile.png')
                 },
                 {
                     id: 3,
                     title: 'Поплин',
-                    body: 'Lorem ipsum dolor sit amet, laboriosam minus necessitatibus possimus quasi, rem suscipit. A aliquam aliquid aspernatur at, cupiditate dolore fugiat id magni neque nisi nobis, nostrum pariatur provident qui quidem quisquam quod, temporibus tenetur velit veniam veritatis voluptas voluptatum! Ad architecto, consectetur corporis dolores, enim eveniet excepturi impedit inventore maxime numquam officiis quibusdam tempore voluptatibus? Aliquam animi assumenda, commodi cumque ex, exercitationem expedita iusto nostrum nulla obcaecati reiciendis tempora totam, voluptas voluptate voluptates? Ad aut consequuntur cupiditate delectus dignissimos dolorem ducimus ea eaque eligendi eos eveniet ex excepturi fugiat, hic incidunt ipsam labore molestias, mollitia natus officiis optio perspiciatis qui repellendus rerum tempora tempore ullam unde ut velit veritatis vero voluptatem!',
-                    image: require('../../../images/workshop_list/material.png')
+                    body: '100% хлопок. Ткань полотняного переплетения из хлопчатобумажных, вискозных, шелковых или синтетических волокон с мелким поперечным рубчиком (тонкие основные (продольные) нити полотна переплетаются с более толстыми уточными). Благодаря такому плетению тонкие нити будто изгибаются вокруг толстых и закрывают их таким образом, что более толстые и грубые располагаются внутри ткани, а тонкие и мягкие — снаружи. Именно поэтому поплин получается такой нежный и приятный на ощупь, но в то же время обладает высокой прочностью. Поплиновая ткань характерна своеобразным благородным блеском из-за чего ее и сравнивают с сатином. Так же этот материал отлично выглядит в любой цветовой гамме. Постельные принадлежности из поплина не нужно гладить. Они отличаются особой легкостью, отлично пропускают воздух и почти не мнутся',
+                    image: require('../../../images/workshop_list/materials/material-poplin.png'),
+                    imageMobile: require('../../../images/workshop_list/materials/material-poplin-mobile.png')
                 },
                 {
                     id: 4,
                     title: 'Полиэстер',
-                    body: 'Lorem ipsum dolor sit amet, Ad architecto, consectetur corporis dolores, enim eveniet excepturi impedit inventore maxime numquam officiis quibusdam tempore voluptatibus? Aliquam animi assumenda, commodi cumque ex, exercitationem expedita iusto nostrum nulla obcaecati reiciendis tempora totam, voluptas voluptate voluptates? Ad aut consequuntur cupiditate delectus dignissimos dolorem ducimus ea eaque eligendi eos eveniet ex excepturi fugiat, hic incidunt ipsam labore molestias, mollitia natus officiis optio perspiciatis qui repellendus rerum tempora tempore ullam unde ut velit veritatis vero voluptatem!',
-                    image: require('../../../images/workshop_list/material.png')
+                    body: 'По свойствам полиэстер похож на хлопок, а внешне схож с шерстяным изделием. К свойствам ткани можно отнести ее устойчивость к ультрафиолетовым излучениям. Такая структура сохраняет свои свойства при воздействии с химическими веществами, имеет высокую прочность. Постельное белье из такой ткани легко стирается и не мнется, имеет высокую прочность, легко и приятно к телу, быстро сохнет',
+                    image: require('../../../images/workshop_list/materials/material-poliester.png'),
+                    imageMobile: require('../../../images/workshop_list/materials/material-poliester-mobile.png')
                 }
             ],
             listExamples: [
@@ -69,15 +73,15 @@ class Workshop extends Component {
                 {image: require('../../../images/workshop_list/examples.png')},
             ],
             listSize: [
-                {id: 1, title: 'Полуторный', body: 'Это стандартный комплект, состоящий из одного пододеяльника 215'},
-                {id: 2, title: 'Двуспальный', body: 'В него входит один пододеяльник 215*175см, одна простыня 220*20'},
+                {id: 1, title: 'Полуторный', body: 'Это стандартный комплект, состоящий из одного пододеяльника 215*143см, одной простыни 215*145см, и двух наволочек 70*70см'},
+                {id: 2, title: 'Двуспальный', body: 'В него входит один пододеяльник 215*175см, одна простыня 220*200 см, две наволочки 70*70см'},
                 {
                     id: 3,
                     title: 'Двуспальный ЕВРО',
-                    body: 'Отличие этих комплектов от двуспальных в размере пододеяльника '
+                    body: 'Отличие этих комплектов от двуспальных в размере пододеяльника – здесь он 215*200см. Размеры простыни и наволочек те же, что и в двуспальном'
                 },
-                {id: 4, title: 'Семейный', body: 'Этот комплект постельного белья подразумевает наличие двух подо'},
-                {id: 5, title: 'Детский', body: 'Предназначен для малышей, которые спят в детских кроватках. Сос'},
+                {id: 4, title: 'Семейный', body: 'Этот комплект постельного белья подразумевает наличие двух пододеяльников 215*143см, одной простыни 240*220 см и двух наволочек 70*70 см'},
+                {id: 5, title: 'Детский', body: 'Предназначен для малышей, которые спят в детских кроватках. Состоит из одной пододеяльника 100*150см, одной простыни 100*150 см и одной наволочки 50*50 см'},
             ]
         };
     }
@@ -114,8 +118,7 @@ class Workshop extends Component {
             'GET',
             null,
             {},
-            function (response)
-            {
+            function (response) {
                 _this.setState({article: response});
             },
         );
@@ -148,7 +151,7 @@ class Workshop extends Component {
 
     renderExamples(item, index) {
         return (
-            <img src={item.image}/>
+            <img key={index} src={item.image}/>
         )
     }
 
@@ -163,7 +166,7 @@ class Workshop extends Component {
         )
     }
 
-    render() {
+    renderLinens() {
         return (
             <div className='workshop-item' itemScope itemType="http://schema.org/Article">
                 {this.state.article
@@ -176,22 +179,13 @@ class Workshop extends Component {
                     : null}
                 <h4 itemProp="headline">{this.state.article ? this.state.article.title : ''}</h4>
                 <div className='workshop-item-description'>
-                    <p>
                         {
-                            this.state.article ?
-                                parse(this.state.article.content).map((item, index) => {
+                            parse(this.state.article.content).map((item, index) => {
+                                if (index%2 === 0 && index < 4) {
                                     return item
-                                    // if (index === 0 || index === 2) {
-                                    //     console.log(item)
-                                    //     if (index === 2)item.props.children.map((li, index) => index%2 !== 0 ? li.props.children.props.style.color = 'gray'  : null)
-                                    //     else item.props.children.props.style.color = 'gray';
-                                    //     return item
-                                    // }
-                                })
-                                :
-                                null
+                                }
+                            })
                         }
-                    </p>
                 </div>
                 <div className='workshop-item-advantages'>
                     <p className='advantages'>наши преимущества</p>
@@ -267,7 +261,19 @@ class Workshop extends Component {
                     <p>Также мы можем изготовить постельное белье по вашим размерам</p>
                 </div>
             </div>
-        );
+        )
+    }
+
+    render() {
+        if (this.state.article) {
+            if (this.state.article.title === 'ПОСТЕЛЬНОЕ БЕЛЬЕ') {
+                return this.renderLinens()
+            } else {
+                return <div>{parse(this.state.article.content)}</div>
+            }
+        } else {
+            return null
+        }
     }
 }
 

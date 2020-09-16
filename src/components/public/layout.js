@@ -130,8 +130,6 @@ class PublicLayout extends Component {
             let background = null;
             let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
-            console.log(background);
-
 
             return (
                 <div>
