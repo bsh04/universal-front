@@ -30,7 +30,7 @@ class ArticleList extends Component {
 
 
     getSizeWindow() {
-        if (window.innerWidth < 1000) {
+        if (window.innerWidth < 768) {
             this.setState({mobileMode: true})
         } else {
             this.setState({mobileMode: false})

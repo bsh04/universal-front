@@ -8,9 +8,14 @@ const CatalogList = (props) => {
     const [list, setList] = useState([])
 
     useEffect(() => {
+<<<<<<< HEAD
         getData();
 
     }, [list])
+=======
+        getData()
+    }, [setList])
+>>>>>>> develop
 
     const getData = () => {
         request(
@@ -30,20 +35,17 @@ const CatalogList = (props) => {
     const renderList = (item, index) => {
         if (props.reduce) {
             return (
-                <>
-                    <a href={"/catalog/" + item.id} key={index} className='d-flex ml-4 mt-2 catalog-item'>
+                    <a href={`/catalog/${item.id}`} key={index} className='d-flex ml-4 mt-2 catalog-item hr-bottom'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         <p className='text-break'>
                             {item.title}
                         </p>
                     </a>
-                    <hr className='py-0 my-0' width='85%'/>
-                </>
             )
         } else {
             if (props.mobile) {
                 return (
-                    <a href={"/catalog/" + item.id} key={index}
+                    <a href={`/catalog/${item.id}`} key={index}
                        className='nav-link dropdown-item d-flex ml-4 mt-2 catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         {item.title}
@@ -51,7 +53,7 @@ const CatalogList = (props) => {
                 )
             } else {
                 return (
-                    <a href={"/catalog/" + item.id} key={index} className='nav-link d-flex ml-4 mt-2 catalog-item'>
+                    <a href={`/catalog/${item.id}`} key={index} className='nav-link d-flex ml-4 mt-2 catalog-item'>
                         <ExtensionIcon className='mr-2 text-black-50'/>
                         {item.title}
                     </a>

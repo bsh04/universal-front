@@ -10,7 +10,6 @@ const OrderRender = (props) => {
                             <div className='order-image'>
                                 <img
                                     src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.product.photo}
-                                    alt="Card image cap"
                                 />
                             </div>
                             <div className='order-title'>

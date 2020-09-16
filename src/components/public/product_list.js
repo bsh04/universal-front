@@ -8,7 +8,6 @@ import Breadcrumbs from '../breadcrumbs';
 import Loading from '../loading';
 import {CategoriesContext} from '../../services/contexts';
 
-import Card from './parts/card';
 import ProductCard from './parts/product/ProductCard';
 import { SubCategoriesRow } from './parts/SubCategoriesRow';
 import { ProductToolbar } from './parts/ProductToolbar';
@@ -97,14 +96,13 @@ class ProductList extends Component {
         }
         let str = "";
         for (let key in obj) {
-            if (str != "") {
+            if (str !== "") {
                 str += "&";
             }
             str += key + "=" + encodeURIComponent(obj[key]);
         }
 
         let _this = this;
-        let res;
         if (cat === 'search') {
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});

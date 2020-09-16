@@ -7,8 +7,6 @@ import {connect} from 'react-redux';
 
 import Breadcrumbs from '../breadcrumbs';
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import {Link} from "react-router-dom";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 class DataChange extends AbstractForm {
     constructor(props) {

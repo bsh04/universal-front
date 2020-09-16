@@ -26,6 +26,7 @@ class Orders extends Component {
             message: [],
             showDetails: false,
             pickPage: 1,
+            ready: false
         };
     }
 
@@ -41,12 +42,12 @@ class Orders extends Component {
             null,
             {},
             function (response) {
-                _this.setState({orders: response});
+                _this.setState({orders: response, ready: true});
                 let numberItems = 0
                 response.map(() => {
                     numberItems += 1
                 })
-                _this.setState({numberItems: numberItems-1})
+                _this.setState({numberItems: numberItems - 1})
             },
         );
     }
@@ -73,41 +74,53 @@ class Orders extends Component {
 
     render() {
         return (
-            <div>
+            <div className='orders'>
                 <Breadcrumbs
                     path={[
                         {title: 'Мои заказы'}
                     ]}/>
                 <h4 className='orders-label'>Мои заказы</h4>
-                <div className='orders-headers-container'>
-                    <div>
-                        <p className='orders-header-number'>Номер заказа</p>
-                        <p className='orders-header-date'>Дата</p>
-                        <p className='orders-header-sum'>Сумма</p>
-                    </div>
-                </div>
-                <div className='orders-body-container'>
-                    {this.state.orders.length > 0 ? this.state.orders.map((order, key) => {
-                        let sum = 0;
-                        order.items.map(item => {
-                            sum += item.count * item.product.price
-                        })
-                        let date = new Date(order.date);
+                {
+                    this.state.ready
+                        ?
+                        <>
+                            <div className='orders-headers-container'>
+                                <div>
+                                    <p className='orders-header-number'>Номер заказа</p>
+                                    <p className='orders-header-date'>Дата</p>
+                                    <p className='orders-header-sum'>Сумма</p>
+                                </div>
+                            </div>
+                            <div className='orders-body-container'>
+                                {this.state.orders.length > 0 ? this.state.orders.map((order, key) => {
+                                    let sum = 0;
+                                    order.items.map(item => {
+                                        sum += item.count * item.product.price
+                                    })
+                                    let date = new Date(order.date);
 
-                        if ((key >= this.state.start) && (key <= this.state.end)) {
-                            return (
-                                <React.Fragment key={key}>
-                                    <OrdersDetail index={key} date={date} sum={sum} order={order}/>
-                                </React.Fragment>
-                            )
-                        }
-                    }) : <div>
-                        <CircularProgress className='mt-5'/>
-                    </div>}
-                </div>
+                                    if ((key >= this.state.start) && (key <= this.state.end)) {
+                                        return (
+                                            <React.Fragment key={key}>
+                                                <OrdersDetail index={key} date={date} sum={sum} order={order}/>
+                                            </React.Fragment>
+                                        )
+                                    }
+                                }) : <div>
+                                    <p>У вас нет заказов</p>
+                                </div>}
+                            </div>
+                        </>
+                        :
+                        <div>
+                            <CircularProgress className='mt-5'/>
+                        </div>
+                }
+
                 {
                     this.state.numberItems ?
-                        <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.numberItems} offset={3}/>
+                        <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.numberItems}
+                                    offset={5}/>
                         : null
                 }
             </div>

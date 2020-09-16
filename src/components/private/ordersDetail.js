@@ -30,7 +30,7 @@ const OrdersDetail = (props) => {
                             <b>{props.date.getDate()}.{props.date.getMonth() + 1}.{props.date.getFullYear()}</b>
                     </p>
                     <p className='orders-item-sum'>
-                        <b>{(props.sum).toFixed(2)} Р</b>
+                        <b>{(props.sum).toFixed()} Р</b>
                     </p>
                 </div>
                 <div className='items'>

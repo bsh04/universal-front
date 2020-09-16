@@ -136,7 +136,7 @@ class ProductCard extends Component {
         let image = item.photo ? productImageUrl + item.photo : require('../../../../images/image-placeholder.png');
         
         return (
-            <div className={`product-card product-card_${this.state.cardView}`} onClick={() => this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}>
+            <div className={`product-card product-card_${this.state.cardView}`}>
                 {
                     this.props.page === 'favorite' ?
                         <DeleteOutlineIcon className='product-card__delete-icon' onClick={() => this.props.handleDelete(this.props.index)}/>
@@ -149,12 +149,12 @@ class ProductCard extends Component {
                 <div className="product-card__icons-row">
                     {this.renderIcons()}
                 </div>
-                <div className="product-card__image-wrapper">
+                <div className="product-card__image-wrapper"  onClick={() => this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}>
                     <img src={image} alt="" className="product-card__image"/>
                 </div>
 
 
-                <div className="product-card-inner">
+                <div className="product-card-inner" >
                     <div className="product-card__description">
                         <span className="product-card__description-id">Артикул {item.id}</span>
                         <span className="product-card__description-title">{item.title}</span>

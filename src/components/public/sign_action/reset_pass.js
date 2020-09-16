@@ -9,7 +9,6 @@ import AbstractForm from '../../abstract/form';
 import { resetUrl } from '../../../services/parameters';
 import {Link} from "react-router-dom";
 import Breadcrumbs from "../../breadcrumbs";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 
 class ResetForm extends AbstractForm {

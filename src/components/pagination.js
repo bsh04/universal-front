@@ -6,8 +6,8 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const Pagination = (props) => {
 
+    const offset = props.offset
     const [pickPage, setPickPage] = useState(1)
-    const [offset, setOffset] = useState(props.offset)
     const [numberPages, setNumberPages] = useState(props.numberItems)
     const [numberItems, setNumberItems] = useState(props.numberItems)
     const [smallBar, setSmallBar] = useState(true)
@@ -17,7 +17,6 @@ const Pagination = (props) => {
     })
 
     useEffect(() => {
-
         setNumberPages(Math.ceil(numberItems / offset))
 
 
@@ -143,7 +142,7 @@ const Pagination = (props) => {
                                 ? 1
                                 : pickPage - 1)}
                     />
-                    <div className={`number-pages-container ${numberPages === 2 ? 'w-25' : ''}`}>
+                    <div className={`number-pages-container ${numberPages === 2 ? 'w-25' : numberPages === 3 ? 'minimal' : ''}`}>
                         {renderNumberPages()}
                     </div>
                     <KeyboardArrowRightIcon

@@ -14,22 +14,11 @@ class PassChange extends AbstractForm {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
 
-        this.state = {
-            mobileMode: false
-        }
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.getSizeWindow.bind(this));
     }
 
-    getSizeWindow() {
-        if (window.innerWidth > 1000) {
-            this.setState({mobileMode: true})
-        } else {
-            this.setState({mobileMode: false})
-        }
-    }
 
     handleSubmit(e) {
         e.preventDefault();
