@@ -33,7 +33,6 @@ class UserLayout extends Component {
     }
 
     render() {
-        console.log(this.props.location.pathname)
         return <CategoriesContext.Consumer>{contextValue => {
             let categories = null;
             let showCategoryList = null;
@@ -72,7 +71,7 @@ class UserLayout extends Component {
                             {showCategoryList
                             ? <CategoryList categories={categories} onClick={() => null}/>
                             : null}
-                            <div className={`content-wrapper ${background ? 'image-background' : ''}`}>
+                            <div className={`content-wrapper w-100 ${background ? 'image-background' : ''}`}>
                                 <Switch>
                                     <Route exact path="/user/favorite" component={Favorite}/>
                                     <Route exact path="/user/order/add" component={OrderAdd}/>

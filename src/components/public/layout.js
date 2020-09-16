@@ -37,7 +37,7 @@ class PublicLayout extends Component {
             redirectUrl: '/',
             showMenu: true,
             location: this.props.location.pathname,
-            
+
             callbackModalVisible: false,
             questionModalVisible: false,
             requestFormModalVisible: false,
@@ -54,7 +54,7 @@ class PublicLayout extends Component {
         }
     }
 
-   
+
     toggleModal = (name) => {
         let target = null;
 
@@ -91,7 +91,7 @@ class PublicLayout extends Component {
             let categories = null;
             let showCategoryList = null;
             let isMobile = contextValue.isMobile;
-            
+
             if (contextValue.categories) {
                 categories = contextValue.categories.map(item => {
                     if (item.children.length > 1) {
@@ -114,7 +114,7 @@ class PublicLayout extends Component {
             let background = null;
             let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
-            
+
 
             return (
                 <div>

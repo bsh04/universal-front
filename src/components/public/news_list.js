@@ -84,7 +84,7 @@ class NewsList extends Component {
                     {
                         this.state.news
                             ?
-                            <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.news.length} offset={3}/>
+                            <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.news.length} offset={9}/>
                             :
                             null
                     }

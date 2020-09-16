@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import request from '../../services/ajaxManager';
 import {connect} from "react-redux";
@@ -122,47 +122,52 @@ class Favorite extends Component {
     }
 
     render() {
-        return (
-            <div className='favorite'>
-                <Breadcrumbs
-                    path={[
-                        {title: 'Избранные товары'}
-                    ]}/>
-                <h4>Избранное</h4>
-                <div className='favorite-body'>
-                    {this.state.favorites.length > 0 ? this.state.favorites.map((item, key) => {
-                        if ((key >= this.state.start) && (key <= this.state.end)) {
-                            return (
-                                <div className='favorite-item' id='favorite-item' key={key}>
-                                    <ProductCard item={item} index={key} update={this.updateFav}
-                                                 favorite={this.isFavorite(item)}
-                                                 cardView={this.state.cardView}
-                                                 page={'favorite'}
-                                                 handleDelete={this.handleDelete}
-                                    />
-                                </div>
-                            );
-                        }
-                    }) : this.state.ready ?
-                        <p>Список избранных пуст</p>
-                        :
-                        <CircularProgress/>
-                    }
-                </div>
-                <div>
-                    {
-                    }
-                    {
-                        this.state.numberItems > 0
-                            ?
-                            <Pagination handleRenderList={this.handleRenderList}
-                                        numberItems={this.state.numberItems - 1} offset={5}/>
+        if (!this.props.token) {
+            return <p>Для просмотра этой страницы <Link to='/login'>войдите</Link> в аккаунт
+                или <Link to='/register'>зарегистрируйте</Link> новый</p>
+        } else {
+            return (
+                <div className='favorite'>
+                    <Breadcrumbs
+                        path={[
+                            {title: 'Избранные товары'}
+                        ]}/>
+                    <h4>Избранное</h4>
+                    <div className='favorite-body'>
+                        {this.state.favorites.length > 0 ? this.state.favorites.map((item, key) => {
+                            if ((key >= this.state.start) && (key <= this.state.end)) {
+                                return (
+                                    <div className='favorite-item' id='favorite-item' key={key}>
+                                        <ProductCard item={item} index={key} update={this.updateFav}
+                                                     favorite={this.isFavorite(item)}
+                                                     cardView={this.state.cardView}
+                                                     page={'favorite'}
+                                                     handleDelete={this.handleDelete}
+                                        />
+                                    </div>
+                                );
+                            }
+                        }) : this.state.ready ?
+                            <p>Список избранных пуст</p>
                             :
-                            null
-                    }
+                            <CircularProgress/>
+                        }
+                    </div>
+                    <div>
+                        {
+                        }
+                        {
+                            this.state.numberItems > 0
+                                ?
+                                <Pagination handleRenderList={this.handleRenderList}
+                                            numberItems={this.state.numberItems - 1} offset={15}/>
+                                :
+                                null
+                        }
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 

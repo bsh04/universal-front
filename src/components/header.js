@@ -7,9 +7,9 @@ import {connect} from "react-redux";
 
 const Header = props => {
 
+    const token = props.token
     const [basket, setBasket] = useState([])
     const [like, setLike] = useState([])
-    const [token, setToken] = useState(props.token)
     const [reduceTopMenu, setReduceTopMenu] = useState(false)
     const [mobileMode, setMobileMode] = useState(false)
     const [dropItem, setDropItem] = useState('')
@@ -17,16 +17,15 @@ const Header = props => {
 
     useEffect(() => {
         handleGet()
-        checkWindowSizeMD()
         window.addEventListener("resize", checkWindowSizeMD);
         window.addEventListener("scroll", navbarFixed);
+        checkWindowSizeMD()
 
-        return function cleanup() {
+        return () => {
             window.removeEventListener("resize", checkWindowSizeMD);
             window.removeEventListener("scroll", navbarFixed);
         }
-    }, [])
-
+    })
 
     const navbarFixed = () => {
         if (window.pageYOffset > 50) {
@@ -35,7 +34,6 @@ const Header = props => {
             setReduceTopMenu(false)
         }
     }
-
 
     const handleGet = () => {
         if (props.token) {
