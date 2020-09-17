@@ -7,43 +7,73 @@ export class Carousel extends Component {
         this.state = {
             start: 0,
             length: this.props.length,
-            items: this.props.children ? this.props.children : [],
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.isMobile !== this.props.isMobile) {
+            this.setState({length: this.props.length})
+        }
+    }
+    
 
     handleControls = (to) => {
         let itemsLength = this.props.children.length;
         let start = this.state.start;
 
         if(to === 'prev') {
-            start = start === 0 ? ((itemsLength) - this.state.length) : start - 1;
+            start = start === 0 ? itemsLength - 1 : start - 1;
         } else if (to === 'next') {
-            start = start === ((itemsLength) - this.state.length) ? 0 : start + 1;
+            start = start === itemsLength ? 1 : start + 1;
         }
         
         this.setState({start: start})
     }
 
-    renderBody() {
+    renderChildrens() {
         let items = this.props.children;
         
         let start = this.state.start;
-        let end = this.state.start + this.state.length;
+        let end = (start + this.state.length >= items.length) ? items.length : start + this.state.length;
         
-        console.log('start:',start, 'end:', end)
-        return items.slice(start, end);
+        let result = items.slice(start, end);
+        
+        if(result.length < this.state.length) {
+            let range = this.state.length - result.length;
+
+            if(start > end - this.state.length) {
+                result = [  ...result, ...items.slice(0, range)]
+            } else if(start + this.state.length > items.length) {
+                result = [ ...result, ...items.slice(0, range) ]
+            }
+        }
+
+        
+        return result;
     }
 
-
-    render() {
+    renderIcons() {
+        //'stock', 'new', 'produced', 'season'
         
+        return <i className={`carousel__title-icon carousel__title-icon_${this.props.titleIcon}`}></i>
+        
+    }
+
+    
+
+    render() {        
+
         return <div className={'custom-carousel'}>
-            <div className="carousel__title">{this.props.title}</div>
-            <div className="carousel-body toSlide">
-                <span className="carousel__control_prev" onClick={() => this.handleControls('prev')}></span>
+            
+            <div className="carousel__title">
+                {this.props.titleIcon ? this.renderIcons() : null}
+                {this.props.title}
+            </div>
+            <span className="carousel__control_prev" onClick={() => this.handleControls('prev')}></span>
                 <span className="carousel__control_next" onClick={() => this.handleControls('next')}></span>
-                {this.renderBody()}
+            <div className="carousel-body">
+                
+                {this.renderChildrens()}
             </div>
         </div>
     }

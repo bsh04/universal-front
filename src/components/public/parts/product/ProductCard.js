@@ -26,7 +26,7 @@ class ProductCard extends Component {
     }
 
     renderIcons() {
-        let arr = ['stock', 'new', 'self', ]
+        let arr = ['stock', 'new', 'produced', 'season' ]
         return arr.map((item, key) => {
             return <i className={`product-card__icons-row-icon product-card__icons-row-icon_${item}`} key={key}/>
         })
