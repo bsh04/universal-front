@@ -25,7 +25,7 @@ const Header = props => {
             window.removeEventListener("resize", checkWindowSizeMD);
             window.removeEventListener("scroll", navbarFixed);
         }
-    })
+    }, [])
 
     const navbarFixed = () => {
         if (window.pageYOffset > 50) {
@@ -60,7 +60,7 @@ const Header = props => {
     }
 
     const checkWindowSizeMD = () => {
-        if (window.innerWidth > 1500) {
+        if (window.innerWidth >= 1500) {
             setMobileMode(false)
             setMinimalMode(false)
         } else if(window.innerWidth < 1500 && window.innerWidth > 900) {
@@ -106,7 +106,6 @@ export default withRouter(connect(
     (state) => ({
         token: state.token,
         user: state.user,
-        reload: state.reload,
     }),
     dispatch => ({
         onDeleteToken: (token) => {
@@ -114,9 +113,6 @@ export default withRouter(connect(
         },
         onDeleteUser: (user) => {
             dispatch({type: 'DELETE_USER', payload: user})
-        },
-        onReloadedMenu: () => {
-            dispatch({type: 'RELOADED', payload: true})
         },
     })
 )(Header));

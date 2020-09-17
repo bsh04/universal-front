@@ -119,7 +119,7 @@ class PublicLayout extends Component {
             return (
                 <div>
                     <Header/>
-                    <div className="content row">
+                    <div className="content row w-100">
                         <ScrollDownButton style={{zIndex: 50}}/>
                         
                         <div className="flex-nowrap row w-100">

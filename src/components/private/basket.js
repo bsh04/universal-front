@@ -199,39 +199,42 @@ class Basket extends Component {
                                                             <p>{item.product.title}</p>
                                                         </div>
 
-                                                        <div className='product-price'>
-                                                            <p className='default-price'>{item.product.price} Р</p>
-                                                        </div>
-                                                        <form className=" counter rounded-pill" onSubmit={(e) => {
-                                                            e.preventDefault()
-                                                        }}>
-                                                            <RemoveIcon className='w-25 ml-1'
-                                                                        onClick={() => this.handleUpdate(item, key, false)}/>
-                                                            <input
-                                                                name="desc"
-                                                                type="number"
-                                                                readOnly={true}
-                                                                required={true}
-                                                                placeholder={"Количество:"}
-                                                                value={item.count}
-                                                            />
-                                                            <AddIcon className='w-25 mr-1'
-                                                                     onClick={() => this.handleUpdate(item, key, true)}/>
-                                                        </form>
-                                                        <div className='product-price'>
-                                                            <p className="full-price">
-                                                                {item.new ?
-                                                                    <span
-                                                                        className="badge badge-success">Новинка!</span> : ''} {item.stock ?
-                                                                <span className="badge badge-danger">Акция!</span> : ''}
-                                                                {parseFloat((item.product.price * item.count).toFixed(2))} Р
-                                                                {item.product.balance === 0 ?
-                                                                    <div className="alert alert-danger" role="alert">
-                                                                        Этого товара нет в наличии. При оформлении заказа он
-                                                                        не
-                                                                        будет учтен.
-                                                                    </div> : ''}
-                                                            </p>
+                                                        <div className='counter-cont'>
+                                                            <div className='product-price'>
+                                                                <p className='default-price'>{item.product.price} Р</p>
+                                                            </div>
+                                                            <form className=" counter rounded-pill" onSubmit={(e) => {
+                                                                e.preventDefault()
+                                                            }}>
+                                                                <RemoveIcon className='w-25 ml-1'
+                                                                            onClick={() => this.handleUpdate(item, key, false)}/>
+                                                                <input
+                                                                    name="desc"
+                                                                    type="number"
+                                                                    readOnly={true}
+                                                                    required={true}
+                                                                    placeholder={"Количество:"}
+                                                                    value={item.count}
+                                                                />
+                                                                <AddIcon className='w-25 mr-1'
+                                                                         onClick={() => this.handleUpdate(item, key, true)}/>
+                                                            </form>
+                                                            <div className='product-price'>
+                                                                <p className="full-price">
+                                                                    {item.new ?
+                                                                        <span
+                                                                            className="badge badge-success">Новинка!</span> : ''} {item.stock ?
+                                                                    <span className="badge badge-danger">Акция!</span> : ''}
+                                                                    {parseFloat((item.product.price * item.count).toFixed(2))} Р
+                                                                    {item.product.balance === 0 ?
+                                                                        <div className="alert alert-danger" role="alert">
+                                                                            Этого товара нет в наличии. При оформлении
+                                                                            заказа он
+                                                                            не
+                                                                            будет учтен.
+                                                                        </div> : ''}
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                         <div className='product-delete'>
                                                             <i className={'fa fa-trash text-black-50'}

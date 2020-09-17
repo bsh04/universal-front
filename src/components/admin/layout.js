@@ -20,7 +20,6 @@ import CategoryList from "../public/parts/category_list";
 class PrivateLayout extends Component {
     componentDidMount() {
         if (this.props.token === false || this.props.user.roles === undefined || this.props.user.roles.indexOf('ROLE_ADMIN') === -1) {
-            this.props.history.replace('/login');
         }
     }
 

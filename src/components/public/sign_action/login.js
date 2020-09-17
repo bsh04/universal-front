@@ -103,7 +103,7 @@ class LoginForm extends AbstractForm {
                     <div className='login-submit-btns'>
                         <div className='second'>
                             <div className='login-form-button'>
-                                <button type="submit" className="custom-btn rounded-pill w-100">
+                                <button type="submit" className="custom-btn__login rounded-pill w-100">
                                     <ExitToAppIcon className='mr-2'/>
                                     <span>Войти</span>
                                 </button>

@@ -182,9 +182,9 @@ h3 > a {
 
 
   & .contacts-items {
-    width: 1000px;
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     margin: 10px 0 30px 0;
 
@@ -193,6 +193,7 @@ h3 > a {
       width: 33%;
       color: $color_label;
       text-align: left;
+      font-size: 14px;
 
       & .icon {
         color: #b0b0b0;
@@ -221,6 +222,17 @@ h3 > a {
 
     & .location {
     }
+
+    @media screen and (max-width: 1000px){
+      display: flex;
+      flex-direction: column;
+
+      & .phone, .mail, .location {
+        width: 100%;
+        padding-bottom: 10px;
+      }
+
+    }
   }
 
   @media screen and (max-width: 1024px) and (min-width: 700px) {
@@ -239,7 +251,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
 
     & .about-text {
@@ -320,7 +332,7 @@ h3 > a {
   margin-left: 0;
   background-color: #229dd2;
   border-radius: 0 20px 20px 0;
-  padding: 5px 10px 5px 15px;
+  padding: 5px 10px 5px 25px;
   cursor: pointer;
 
   &:hover {
@@ -333,7 +345,7 @@ h3 > a {
     margin-left: 0;
     background-color: #229dd2;
     border-radius: 0 20px 20px 0;
-    padding: 5px 10px 5px 15px;
+    padding: 5px 10px 5px 25px;
   }
 }
 
@@ -377,7 +389,7 @@ h3 > a {
   max-height: 700px;
   width: 100%;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     background: #ffffff;
   }
 }
@@ -390,7 +402,7 @@ h3 > a {
   font-weight: bold;
   color: $color_primary;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
     text-align: center;
     margin: 10px 0 10px 0;
@@ -441,7 +453,7 @@ h3 > a {
     padding-top: 15px;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -538,12 +550,18 @@ h3 > a {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+
+      @media screen and (max-width: 900px){
+        & a {
+          font-size: 12px;
+        }
+      }
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
-    max-width: 768px;
+    max-width: 767px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -592,6 +610,10 @@ h3 > a {
       max-width: 300px;
       display: flex;
       justify-content: center;
+
+      & .button {
+        min-width: 150px;
+      }
     }
   }
 }
@@ -648,7 +670,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -760,7 +782,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -860,7 +882,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -904,20 +926,25 @@ h3 > a {
   text-transform: uppercase;
   font-weight: bold;
 
-  & .basket-btn {
-    width: auto;
-    min-width: 100px;
-  }
-
-  & span {
-    font-size: 20px;
-    color: $color_secondary
-  }
-
   & p {
     margin-bottom: 0;
     font-size: 14px;
   }
+
+  & .basket-btn {
+    width: auto;
+    min-width: 100px;
+    @media screen and (max-width: 900px){
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  & span {
+    font-size: 18px;
+    color: $color_secondary
+  }
+
 }
 
 .basket-page {
@@ -966,39 +993,80 @@ h3 > a {
     }
   }
 
-  & .counter {
-    width: 15%;
-    max-width: 150px;
+  & .counter-cont {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    color: $color_label;
 
-    border: 1px solid $color_lite;
+    & .product-price {
+      width: 30%;
+      font-size: 18px;
+      padding: 0;
+      margin: 0;
 
-    & input {
+      & .default-price {
+        color: $color_label;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      & .full-price {
+        padding: 0;
+        margin: 0;
+        color: $color_secondary;
+        font-weight: bold;
+      }
+    }
+
+    & .counter {
+      width: 30%;
+      max-width: 150px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       color: $color_label;
-      text-align: center;
-      width: 50%;
-      margin: 0;
-      border: none;
-      outline: none;
-    }
 
-    & input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+      border: 1px solid $color_lite;
 
-    & input[type=number] {
-      -moz-appearance: textfield;
+      & input {
+        color: $color_label;
+        text-align: center;
+        width: 50%;
+        margin: 0;
+        border: none;
+        outline: none;
+      }
+
+      & input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      & input[type=number] {
+        -moz-appearance: textfield;
+      }
+
+    }
+    @media screen and (max-width: 1200px){
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+
+      & .product-price {
+        width: 80%;
+      }
+      & .counter {
+        margin: 10px 0;
+        width: 80%;
+      }
     }
   }
 
+
   & .product-title {
+    font-size: 14px;
     width: 30%;
     text-align: left;
-    margin-left: 30px;
+    margin-left: 50px;
 
     & small {
       color: $color_label;
@@ -1013,25 +1081,7 @@ h3 > a {
     }
   }
 
-  & .product-price {
-    width: 15%;
-    font-size: 18px;
-    padding: 0;
-    margin: 0;
 
-    & .default-price {
-      color: $color_label;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    & .full-price {
-      padding: 0;
-      margin: 0;
-      color: $color_secondary;
-      font-weight: bold;
-    }
-  }
 
   @media screen and (max-width: 1200px) {
     & .basket-amount {
@@ -1041,7 +1091,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
 
     & h4 {
       text-align: center;
@@ -1056,6 +1106,7 @@ h3 > a {
     }
 
     & .product-card {
+      font-size: 14px;
       display: flex;
       align-items: center;
       padding: 10px 10px 10px 2px;
@@ -1083,18 +1134,33 @@ h3 > a {
     }
 
     & .counter {
-      padding: 10px 5px 10px 5px;
-      margin-bottom: 10px;
-      width: 33%;
-      max-width: 120px;
+      width: 30%;
+      max-width: 150px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       color: $color_label;
 
+      border: 1px solid $color_lite;
+
       & input {
+        color: $color_label;
+        text-align: center;
         width: 50%;
+        margin: 0;
+        border: none;
+        outline: none;
       }
+
+      & input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      & input[type=number] {
+        -moz-appearance: textfield;
+      }
+
     }
 
 
@@ -1238,7 +1304,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
     max-width: 1000px;
     display: flex;
@@ -1330,7 +1396,7 @@ h3 > a {
 }
 
 .layout {
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     padding: 0;
   }
 }
@@ -1378,10 +1444,10 @@ h3 > a {
     & .orders-header-sum {
       width: 15%;
     }
-
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
+
 
     & .orders-label {
       text-align: center;
@@ -1440,7 +1506,7 @@ h3 > a {
   }
 
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     & h4 {
       text-align: center;
     }
@@ -1573,7 +1639,7 @@ h3 > a {
             }
           }
 
-          @media screen and (max-width: 768px) {
+          @media screen and (max-width: 767px) {
             max-height: 500px;
             display: flex;
             flex-direction: column;
@@ -1657,7 +1723,7 @@ h3 > a {
     width: 15%;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     & .orders-item-number {
       width: 33%;
     }
@@ -1716,7 +1782,7 @@ h3 > a {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1983,8 +2049,24 @@ h3 > a {
   vertical-align: middle;
   outline: none;
 
+  &__login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: $color_primary;
+    color: white;
+    padding: 10px 10px 10px 10px;
+    width: 40%;
+    text-transform: uppercase;
+    vertical-align: middle;
+    outline: none;
+    min-width: 150px;
+  }
+
   & p {
-    font-size: 10px;
+    font-size: 15px;
+    padding-right: 10px;
   }
 
   &:active {
@@ -2000,7 +2082,7 @@ h3 > a {
     vertical-align: middle;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     width: auto;
     display: flex;
     align-items: center;
@@ -2047,7 +2129,7 @@ h3 > a {
   }
 
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     & input {
       text-align: center;
     }
@@ -2119,6 +2201,10 @@ h3 > a {
 
   & .items {
     padding-left: 15px;
+
+    & .icons-left-menu {
+      filter: grayscale(10);
+    }
   }
 
   & .items:hover {
@@ -2145,8 +2231,6 @@ h3 > a {
       text-decoration: none;
       color: white
     }
-
-
   }
 
 
@@ -2158,6 +2242,26 @@ h3 > a {
   & .alert-success {
     min-width: 25rem;
     background-color: #ffffff;
+  }
+}
+
+.production-catalog {
+  cursor: pointer;
+  margin-left: 20px;
+  background-color: $color_primary;
+  padding: 10px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #b3a400;
+  }
+
+  & a {
+    text-decoration: none;
+    color: white
   }
 }
 
@@ -2232,7 +2336,7 @@ h3 > a {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .nav-link {
     font-size: 1rem;
   }
@@ -2301,7 +2405,7 @@ div {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .nav-link {
     font-size: 1rem;
   }
@@ -2322,6 +2426,7 @@ div {
 }
 
 .workshop-list-container {
+  width: 100%;
   & h4 {
     color: $color_secondary;
     text-align: left;
@@ -2331,9 +2436,11 @@ div {
   }
 
   .workshop-banner {
+    width: 100%;
 
-    &__image {
+    & img {
       width: 100%;
+      height: 100%;
     }
   }
 
@@ -2341,18 +2448,20 @@ div {
     margin-top: 30px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
 
     & .item-container {
       padding: 20px;
-      max-width: 220px;
-      max-height: 200px;
+      max-width: 240px;
+      max-height: 240px;
       background-color: white;
       border: 1px solid #f1f1f1;
       border-radius: 10px;
       display: flex;
       flex-direction: column;
       text-decoration: none;
+      margin: 10px;
 
       & .text {
         color: #000000;
@@ -2367,7 +2476,7 @@ div {
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
 
     & h4 {
       text-align: center;
@@ -2419,7 +2528,7 @@ div {
     margin-bottom: 20px;
 
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
       text-align: center;
     }
   }
@@ -2432,7 +2541,7 @@ div {
       color: $color_label
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
       display: flex;
       align-items: center;
       flex-direction: column;
@@ -2476,7 +2585,7 @@ div {
     }
 
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -2530,7 +2639,7 @@ div {
         object-fit: contain;
       }
 
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 767px) {
         text-align: center;
 
         & h4 {
@@ -2568,27 +2677,7 @@ div {
   }
 
 
-  @media screen and (max-width: 1000px) and (min-width: 768px) {
-    & .materials-body {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-
-      & .material-list-item {
-        display: flex;
-        justify-content: space-between;
-        width: 50%;
-        border: 1px solid $color_lite;
-        border-radius: 10px;
-      }
-
-      & div {
-        width: 50%;
-      }
-    }
-  }
-
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
 
     & .materials-body {
       display: flex;
@@ -2617,7 +2706,7 @@ div {
     & img {
       padding: 10px;
 
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 767px) {
         max-width: 90%;
       }
     }
@@ -2679,45 +2768,8 @@ div {
       }
     }
 
-    @media screen and (max-width: 1000px) and (min-width: 768px) {
 
-      & .size-header {
-        width: 100%;
-
-        & h4 {
-          width: 100%;
-          text-align: center;
-        }
-      }
-
-      & p {
-        text-align: center;
-      }
-
-      & .size-body {
-        display: flex;
-        flex-direction: column;
-
-        & .size-list-item {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 50%;
-          border-bottom: 1px solid $color_lite;
-          border-top: 1px solid $color_lite;
-          padding: 10px 0 10px 0;
-          margin: 0;
-
-          & h5 {
-            width: 100%;
-            text-align: center;
-            font-weight: bold;
-          }
-        }
-      }
-    }
-
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
 
       & h4 {
         width: 100%;
@@ -2995,6 +3047,12 @@ div {
   cursor: pointer;
   color: $color_label;
   font-weight: normal;
+  padding: 10px 0;
+
+  & img {
+    padding-right: 10px;
+    object-fit: contain;
+  }
 
   &:hover {
     color: #b3a501;
@@ -3059,7 +3117,7 @@ nav.navbar {
     font-weight: bold;
     color: $color_secondary;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
       text-align: center;
     }
   }
@@ -3316,7 +3374,7 @@ nav.navbar {
   }
 
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     justify-content: center;
   }
 }
@@ -3474,7 +3532,7 @@ nav.navbar {
       position: absolute;
       top: 20px;
       left: 25%;
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 767px) {
         top: 20px;
         left: 40%;
       }

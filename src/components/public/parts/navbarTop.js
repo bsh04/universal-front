@@ -30,6 +30,7 @@ const NavbarTop = (props) => {
     const [amountBasket, setAmountBasket] = useState(null)
     const [ready, setReady] = useState(false)
     const [openMore, setOpenMore] = useState(false)
+    const [list, setList] = useState([])
 
     const leftItems = [
         {title: 'Швейный цех', path: '/workshop'},
@@ -96,6 +97,26 @@ const NavbarTop = (props) => {
         }
         return () => ac.abort()
     }, [props])
+
+    useEffect(() => {
+        getData();
+
+    }, [])
+
+    const getData = () => {
+        request(
+            'product/categories',
+            'GET',
+            {},
+            {},
+            function (response) {
+                setList(response)
+            },
+            function (err) {
+                console.log(err)
+            }
+        )
+    }
 
     const handleLogout = () => {
         props.onDeleteUser();
@@ -240,7 +261,7 @@ const NavbarTop = (props) => {
                         <ExpandMoreIcon className='iconMore ml-2'/>
                     </div>
                     <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
-                        <CatalogList mobile={mobile}/>
+                        <CatalogList list={list} mobile={mobile}/>
                     </div>
                 </div>
                 {
@@ -338,7 +359,7 @@ const NavbarTop = (props) => {
                         <ExpandMoreIcon className='iconMore ml-2'/>
                     </div>
                     <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
-                        <CatalogList mobile={mobile}/>
+                        <CatalogList list={list} mobile={mobile}/>
                     </div>
                 </div>
 
@@ -428,7 +449,7 @@ const NavbarTop = (props) => {
                                     <CloseIcon className='exit-icon mr-2 text-white' onClick={() => closeWindow()}/>
                                 </div>
                                 <div className='mobile-catalog-dropdown shadow bg-light'>
-                                    <CatalogList reduce={true}/>
+                                    <CatalogList list={list} reduce={true}/>
                                 </div>
                             </div>
                             :
@@ -542,7 +563,7 @@ const NavbarTop = (props) => {
                                         <CloseIcon className='exit-icon mr-2 text-white' onClick={() => closeWindow()}/>
                                     </div>
                                     <div className='mobile-catalog-dropdown'>
-                                        <CatalogList reduce={true}/>
+                                        <CatalogList list={list} reduce={true}/>
                                     </div>
                                 </div>
                             </li>
