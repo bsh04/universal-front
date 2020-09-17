@@ -10,12 +10,12 @@
 // export let clientSecret = '1tg914i7xtc0408wggosgs4gk4o0k8oso88884w4kgo8kc8kso';
 
 //Prod
-export let serverUrl = 'https://api.universal.tom.ru/api/';
+export let serverUrl = 'http://ts3.vladimirov-mv.name/api/';
 // export let serverImages = 'https://api.compliance-expert.com/uploads/images/';
-export let regUrl = 'https://api.universal.tom.ru/security/register';
-export let resetUrl = 'https://api.universal.tom.ru/security/resetpassword/';
-export let loginUrl = 'https://api.universal.tom.ru/oauth/v2/token';
-export let clientId = '1_4ks7w5c3rmkgw00sckwow04c884w8wgw8kc48k8skw4g80s8k8';
-export let clientSecret = '104knitpf57kgk80kks0g80gow8s0csw0g8g8cs4s0ggwg4c0w';
+export let regUrl = 'http://ts3.vladimirov-mv.name/security/register';
+export let resetUrl = 'http://ts3.vladimirov-mv.name/security/resetpassword/';
+export let loginUrl = 'http://ts3.vladimirov-mv.name/oauth/v2/token';
+export let clientId = '1_1cmmb62qutgkskwkwws08040s0kgw84w4o0k4c4sg884gckgco';
+export let clientSecret = '3u2blfzmgs2s0wo84ks048gw0kwwkcg4ccokgwcko8g800s8wk';
 export let serverImages = 'https://api.universal.tom.ru/uploads/news/';
 export let productImageUrl = 'https://api.universal.tom.ru/uploads/products/';

@@ -1753,7 +1753,7 @@ h3 > a {
     margin: 20px;
     height: 450px;
     overflow: hidden;
-    max-width: 470px;
+    width: 470px;
     border-radius: 10px;
 
     &:hover {
@@ -1765,6 +1765,7 @@ h3 > a {
       border-radius: 30px;
       padding: 20px;
       width: 100%;
+      object-fit: contain;
     }
 
     & small {

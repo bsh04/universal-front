@@ -43,6 +43,8 @@ const NavbarTop = (props) => {
         {title: 'Мои заказы', path: '/user/order'},
         {title: 'Изменить данные', path: '/user/data/change'},
         {title: 'Изменить пароль', path: '/user/password/change'},
+        {title: 'Обновление товаров', path: '/admin/product/update'},
+        {title: 'Управление новостями', path: '/admin/news'},
     ]
 
     const allItems =

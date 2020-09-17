@@ -6,11 +6,15 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const Pagination = (props) => {
 
-    const offset = props.offset
+    const [offset, setOffset] = useState(Number(props.offset))
     const [pickPage, setPickPage] = useState(1)
-    const [numberPages, setNumberPages] = useState(props.numberItems)
-    const [numberItems, setNumberItems] = useState(props.numberItems)
+    const [numberPages, setNumberPages] = useState(Number(props.numberItems))
+    const [numberItems, setNumberItems] = useState(Number(props.numberItems))
     const [smallBar, setSmallBar] = useState(true)
+
+    useEffect(() => {
+        setOffset(Number(props.offset))
+    }, [props.offset])
 
     useEffect(() => {
         setNumberItems(props.numberItems)
@@ -19,11 +23,10 @@ const Pagination = (props) => {
     useEffect(() => {
         setNumberPages(Math.ceil(numberItems / offset))
 
-
         if (Math.ceil(numberItems / offset) > 5) setSmallBar(false)
         else setSmallBar(true)
 
-    }, [numberItems])
+    }, [numberItems, offset])
 
     useEffect(() => {
         if (pickPage === numberPages + 1) {
@@ -32,20 +35,24 @@ const Pagination = (props) => {
     }, [numberPages])
 
     useEffect(() => {
-        props.handleRenderList(1, offset)
+        if (props.handleRenderList) props.handleRenderList(1, offset)
     }, [props.handleRenderList])
 
     useEffect(() => {
-        let startRender, endRender
-        if (pickPage === 1) {
-            startRender = 1
-            endRender = offset
+        if (props.handleGet) {
+            props.handleGet(null, pickPage)
         } else {
-            startRender = pickPage * offset - offset + 1
-            endRender = pickPage * offset
-        }
+            let startRender, endRender
+            if (pickPage === 1) {
+                startRender = 1
+                endRender = offset
+            } else {
+                startRender = pickPage * offset - offset + 1
+                endRender = pickPage * offset
+            }
 
-        props.handleRenderList(startRender, endRender)
+            props.handleRenderList(startRender, endRender)
+        }
     }, [pickPage])
 
     const handlePicker = async (i) => {
