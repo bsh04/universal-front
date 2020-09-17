@@ -14,15 +14,15 @@ export class Carousel extends Component {
 
     handleControls = (to) => {
         let itemsLength = this.props.children.length;
-        let current = this.state.start;
+        let start = this.state.start;
 
         if(to === 'prev') {
-            current = current === 0 ? ((itemsLength) - this.state.length) : current - 1;
+            start = start === 0 ? ((itemsLength) - this.state.length) : start - 1;
         } else if (to === 'next') {
-            current = current === ((itemsLength - 1) - this.state.length) ? 0 : current + 1;
+            start = start === ((itemsLength) - this.state.length) ? 0 : start + 1;
         }
-
-        this.setState({start: current})
+        
+        this.setState({start: start})
     }
 
     renderBody() {
@@ -31,13 +31,13 @@ export class Carousel extends Component {
         let start = this.state.start;
         let end = this.state.start + this.state.length;
         
-        return items.slice(start, end);;
+        console.log('start:',start, 'end:', end)
+        return items.slice(start, end);
     }
 
 
     render() {
-        console.log(this.state.start, this.state.start + this.state.length)
-
+        
         return <div className={'custom-carousel'}>
             <div className="carousel__title">{this.props.title}</div>
             <div className="carousel-body toSlide">
