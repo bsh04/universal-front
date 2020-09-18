@@ -60,10 +60,10 @@ const Header = props => {
     }
 
     const checkWindowSizeMD = () => {
-        if (window.innerWidth >= 1500) {
+        if (window.innerWidth >= 1600) {
             setMobileMode(false)
             setMinimalMode(false)
-        } else if(window.innerWidth < 1500 && window.innerWidth > 900) {
+        } else if(window.innerWidth < 1600 && window.innerWidth > 900) {
             setMobileMode(false)
             setMinimalMode(true)
         }

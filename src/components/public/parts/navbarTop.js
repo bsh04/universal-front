@@ -39,12 +39,22 @@ const NavbarTop = (props) => {
         {title: 'Контакты', path: '/contact'},
     ]
 
-    const rightItems = [
-        {title: 'Мои заказы', path: '/user/order'},
-        {title: 'Изменить данные', path: '/user/data/change'},
-        {title: 'Изменить пароль', path: '/user/password/change'},
+    const rightItems =
+        [
+            {title: 'Мои заказы', path: '/user/order'},
+            {title: 'Изменить данные', path: '/user/data/change'},
+            {title: 'Изменить пароль', path: '/user/password/change'},
+        ]
+
+    const adminPanel = [
         {title: 'Обновление товаров', path: '/admin/product/update'},
+        {title: 'Список товаров без изображения', path: '/admin/product/image'},
+        {title: 'Управление швейным цехом', path: '/admin/workshop'},
+        {title: 'Оплата и доставка', path: '/admin/deliveryandpayment'},
         {title: 'Управление новостями', path: '/admin/news'},
+        {title: 'Управление акциями', path: '/admin/stocks'},
+        {title: 'Экспорт данных', path: '/admin/export'},
+        {title: 'Добавление типа товара', path: '/admin/product/type'},
     ]
 
     const allItems =
@@ -269,7 +279,7 @@ const NavbarTop = (props) => {
                 {
                     leftItems.map((item, index) => menuItemRender(item, index))
                 }
-                <form className="form-inline w-50">
+                <form className="form-inline search-input">
                     <div
                         className="input-group bg-light rounded-pill align-items-center justify-content-between w-100">
                         <div className='d-flex ml-2 align-items-center flex-grow-1'>
@@ -292,7 +302,23 @@ const NavbarTop = (props) => {
 
                 {
                     token ?
-                        <div className='d-flex align-items-center text-white ml-4' style={{width: 300}}>
+                        <div className='d-flex align-items-center text-white ml-4' style={{width: 390}}>
+                            <div className='d-flex align-items-center dropdown icon-more-less'
+                                 onClick={() => setOpenMore(!openMore)}>
+                                <div className="nav-link text-white pr-0"
+                                     type="button" data-display="static" aria-haspopup="true"
+                                     aria-expanded="false"
+                                     data-toggle="dropdown"
+                                >Админка
+                                </div>
+                                <div className="dropdown-menu dropdown-menu-lg-right">
+                                    {
+                                        adminPanel.map((item, index) => menuItemRenderProfile(item, index, true))
+                                    }
+                                </div>
+                                <ExpandLessIcon className='icon-less'/>
+                                <ExpandMoreIcon className='icon-more'/>
+                            </div>
                             <div className='d-flex align-items-center dropdown icon-more-less'
                                  onClick={() => setOpenMore(!openMore)}>
                                 <div className="nav-link text-white pr-0"
@@ -386,7 +412,23 @@ const NavbarTop = (props) => {
                     </div>
                 </form>
                 <div>
-                    <div className="btn-group">
+                    <div className="btn-group d-flex align-items-center">
+                        <div className='d-flex align-items-center dropdown icon-more-less pr-3'
+                             onClick={() => setOpenMore(!openMore)}>
+                            <div className="nav-link text-white pr-0"
+                                 type="button" data-display="static" aria-haspopup="true"
+                                 aria-expanded="false"
+                                 data-toggle="dropdown"
+                            >Админка
+                            </div>
+                            <div className="dropdown-menu dropdown-menu-lg-right">
+                                {
+                                    adminPanel.map((item, index) => menuItemRenderProfile(item, index, true))
+                                }
+                            </div>
+                            <ExpandLessIcon className='icon-less text-white'/>
+                            <ExpandMoreIcon className='icon-more text-white'/>
+                        </div>
                         <MoreVertIcon type="button" data-display="static" aria-haspopup="true" data-toggle="dropdown"
                                       aria-expanded="false" className='text-white mr-3'/>
                         <div className="dropdown-menu dropdown-menu-lg-right">

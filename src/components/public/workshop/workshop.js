@@ -73,15 +73,31 @@ class Workshop extends Component {
                 {image: require('../../../images/workshop_list/examples.png')},
             ],
             listSize: [
-                {id: 1, title: 'Полуторный', body: 'Это стандартный комплект, состоящий из одного пододеяльника 215*143см, одной простыни 215*145см, и двух наволочек 70*70см'},
-                {id: 2, title: 'Двуспальный', body: 'В него входит один пододеяльник 215*175см, одна простыня 220*200 см, две наволочки 70*70см'},
+                {
+                    id: 1,
+                    title: 'Полуторный',
+                    body: 'Это стандартный комплект, состоящий из одного пододеяльника 215*143см, одной простыни 215*145см, и двух наволочек 70*70см'
+                },
+                {
+                    id: 2,
+                    title: 'Двуспальный',
+                    body: 'В него входит один пододеяльник 215*175см, одна простыня 220*200 см, две наволочки 70*70см'
+                },
                 {
                     id: 3,
                     title: 'Двуспальный ЕВРО',
                     body: 'Отличие этих комплектов от двуспальных в размере пододеяльника – здесь он 215*200см. Размеры простыни и наволочек те же, что и в двуспальном'
                 },
-                {id: 4, title: 'Семейный', body: 'Этот комплект постельного белья подразумевает наличие двух пододеяльников 215*143см, одной простыни 240*220 см и двух наволочек 70*70 см'},
-                {id: 5, title: 'Детский', body: 'Предназначен для малышей, которые спят в детских кроватках. Состоит из одной пододеяльника 100*150см, одной простыни 100*150 см и одной наволочки 50*50 см'},
+                {
+                    id: 4,
+                    title: 'Семейный',
+                    body: 'Этот комплект постельного белья подразумевает наличие двух пододеяльников 215*143см, одной простыни 240*220 см и двух наволочек 70*70 см'
+                },
+                {
+                    id: 5,
+                    title: 'Детский',
+                    body: 'Предназначен для малышей, которые спят в детских кроватках. Состоит из одной пододеяльника 100*150см, одной простыни 100*150 см и одной наволочки 50*50 см'
+                },
             ]
         };
     }
@@ -179,13 +195,13 @@ class Workshop extends Component {
                     : null}
                 <h4 itemProp="headline">{this.state.article ? this.state.article.title : ''}</h4>
                 <div className='workshop-item-description'>
-                        {
-                            parse(this.state.article.content).map((item, index) => {
-                                if (index%2 === 0 && index < 4) {
-                                    return item
-                                }
-                            })
-                        }
+                    {
+                        parse(this.state.article.content).map((item, index) => {
+                            if (index % 2 === 0 && index < 4) {
+                                return item
+                            }
+                        })
+                    }
                 </div>
                 <div className='workshop-item-advantages'>
                     <p className='advantages'>наши преимущества</p>
@@ -265,11 +281,35 @@ class Workshop extends Component {
     }
 
     render() {
+        console.log(this.state.article)
         if (this.state.article) {
             if (this.state.article.title === 'ПОСТЕЛЬНОЕ БЕЛЬЕ') {
                 return this.renderLinens()
             } else {
-                return <div>{parse(this.state.article.content)}</div>
+                return (
+                    <div>
+                        <div>
+                            {parse(this.state.article.content)}
+                        </div>
+                        <div>
+                            {
+                                this.state.article.images.length > 0
+                                    ?
+                                    <>
+                                        <p>Примеры изделий</p>
+                                        {this.state.article.images.map((item, index) => {
+                                            return (
+                                                <img key={index} src={`http://ts3.vladimirov-mv.name/uploads/articles/${item}`}/>
+                                            )
+                                        })}
+                                    </>
+                                    :
+                                    null
+                            }
+                        </div>
+                    </div>
+
+                )
             }
         } else {
             return null
