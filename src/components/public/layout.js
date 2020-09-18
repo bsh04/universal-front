@@ -26,9 +26,17 @@ import {CategoriesContext} from "../../services/contexts";
 import CategoryList from "./parts/category_list";
 import {MapSection_} from './parts/mapSection_';
 import ContactForm from './parts/contactForm';
-import { ServiceBtn } from './parts/buttons/ServiceBtn';
-import { ModalGallery, ModalBasketAddAlert, ModalCallbackForm, ModalRequestForm, ModalQuestionForm, ModalThanks } from './parts/modal_blocks';
+import {ServiceBtn} from './parts/buttons/ServiceBtn';
+import {
+    ModalGallery,
+    ModalBasketAddAlert,
+    ModalCallbackForm,
+    ModalRequestForm,
+    ModalQuestionForm,
+    ModalThanks
+} from './parts/modal_blocks';
 import ProductDetails from "./parts/product/ProductDetails";
+import DeliveryAndPaymentIndexPage from "./parts/deliveryAndPayment";
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -45,6 +53,12 @@ class PublicLayout extends Component {
             basketAddModalVisible: false,
             galleryModalVisible: false,
             modalThanksVisible: false,
+            bottomItems: [
+                {id: 1, title: 'оформление заказа на сайте', image: 'laptop.png', content: ''},
+                {id: 2, title: 'подтверждение заказа', image: 'support.png', content: ''},
+                {id: 3, title: 'оплата', image: 'credit-card.png', content: ''},
+                {id: 4, title: 'получение товара', image: 'product.png', content: ''},
+            ]
         };
     }
 
@@ -110,7 +124,7 @@ class PublicLayout extends Component {
             }
 
             showCategoryList = !!(!isMobile && categories && this.props.location.pathname !== '/catalog');
-            
+
             let background = null;
             let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
@@ -121,12 +135,13 @@ class PublicLayout extends Component {
                     <Header/>
                     <div className="content row w-100">
                         <ScrollDownButton style={{zIndex: 50}}/>
-                        
+
                         <div className="flex-nowrap row w-100">
                             {showCategoryList
-                            ? <CategoryList categories={categories} onClick={() => null}/>
-                            : null}
-                            <div className={`content-wrapper ${background ? 'image-background' : ''} ${showCategoryList ? '' : 'mw-100 w-100'}`}>
+                                ? <CategoryList categories={categories} onClick={() => null}/>
+                                : null}
+                            <div
+                                className={`content-wrapper ${background ? 'image-background' : ''} ${showCategoryList ? '' : 'mw-100 w-100'}`}>
                                 <Switch>
                                     <Route exact path={'/'} component={Index}/>
                                     <Route exact path={'/contact'} component={Contact}/>
@@ -155,7 +170,21 @@ class PublicLayout extends Component {
                                     )}/>
                                 </Switch>
                             </div>
+
                         </div>
+                        {
+                            this.props.from === '/'
+                                ?
+                                <div className='delivery-and-payment'>
+                                    <h5>как купить?</h5>
+                                    <div className='container-items'>
+                                        {this.state.bottomItems.map((item, index) => <DeliveryAndPaymentIndexPage
+                                            item={item} index={index}/>)}
+                                    </div>
+                                </div>
+                                :
+                                null
+                        }
                         <div className={`service-btn-group ${isMobile ? '' : 'sticked'}`}>
                             <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
                             <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
@@ -167,11 +196,11 @@ class PublicLayout extends Component {
                         <ModalThanks visible={this.state.modalThanksVisible}/>
 
                         <ModalCallbackForm visible={this.state.callbackModalVisible}
-                                            handleToggle={() => this.toggleModal('callback')}/>
+                                           handleToggle={() => this.toggleModal('callback')}/>
                         <ModalRequestForm visible={this.state.requestFormModalVisible}
-                                            handleToggle={() => this.toggleModal('request')}/>
+                                          handleToggle={() => this.toggleModal('request')}/>
                         <ModalQuestionForm visible={this.state.questionModalVisible}
-                                            handleToggle={() => this.toggleModal('question')}/>
+                                           handleToggle={() => this.toggleModal('question')}/>
 
 
                         <ContactForm/>
@@ -182,7 +211,7 @@ class PublicLayout extends Component {
                     <Footer/>
                 </div>
             )
-            
+
         }}
         </CategoriesContext.Consumer>
     }

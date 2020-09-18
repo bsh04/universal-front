@@ -8,7 +8,7 @@ import CardCarousel from './parts/cards_carousel';
 import CategoryList from '../public/parts/category_list';
 import request from "../../services/ajaxManager";
 import { CategoriesContext } from '../../services/contexts';
-
+import DeliveryAndPaymentIndexPage from "./parts/deliveryAndPayment";
 
 class Index extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class Index extends Component {
         this.state = {
             news: [],
             stocks: [],
-            showCatalogOutMenu: true
+            showCatalogOutMenu: true,
         }
     }
 
@@ -55,7 +55,7 @@ class Index extends Component {
     render() {
 
             return (
-                <div>
+                <div className='w-100'>
                     <Helmet>
                         <meta charSet="utf-8"/>
                         <meta name="viewport" content="width=device-width, initial-scale=1"/>
