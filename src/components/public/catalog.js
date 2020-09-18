@@ -125,7 +125,13 @@ class Catalog extends Component {
                     </div>
 
                     { this.state.products.stock.length > 0 ?
-                    <Carousel length={isMobile ? 1 : 6} isMobile={isMobile} title={'Акционные товары'} titleIcon={'stock'}>
+                    <Carousel 
+                        length={isMobile ? 1 : 6} 
+                        isMobile={isMobile} 
+                        title={'Акционные товары'} 
+                        titleIcon={'stock'}
+                        interval={4000}
+                    >
                         {this.state.products.stock.map((item, key) => {
                             return (
                                 <ProductCard item={item} key={'stock' + item.id} update={this.updateFav}
@@ -137,7 +143,12 @@ class Catalog extends Component {
                     : null}
 
                     { this.state.products.new.length > 0 ?
-                    <Carousel length={isMobile ? 1 : 6} isMobile={isMobile} title={'Популярные товары'} titleIcon={'new'}>
+                    <Carousel 
+                        length={isMobile ? 1 : 6}
+                        isMobile={isMobile} 
+                        title={'Популярные товары'}
+                        titleIcon={'new'}
+                    >
                         {this.state.products.new.map((item, key) => {
                             return (
                                 <ProductCard item={item} key={('new' + item.id )} update={this.updateFav}
@@ -149,7 +160,12 @@ class Catalog extends Component {
                     : null}
 
                     { this.state.products.season.length > 0 ?
-                    <Carousel length={isMobile ? 1 : 6} isMobile={isMobile} title={'Сезонные товары'} titleIcon={'season'}>
+                    <Carousel 
+                        length={isMobile ? 1 : 6}
+                        isMobile={isMobile}
+                        title={'Сезонные товары'}
+                        titleIcon={'season'}
+                    >
                         {this.state.products.season.map((item, key) => {
                             return (
                                 <ProductCard item={item} key={'season' + item.id} update={this.updateFav}
@@ -161,7 +177,12 @@ class Catalog extends Component {
                     : null}
 
                     { this.state.products.produced.length > 0 ?
-                    <Carousel length={isMobile ? 1 : 6} isMobile={isMobile} title={'Товары собственного производства'} titleIcon={'produced'}>
+                    <Carousel 
+                        length={isMobile ? 1 : 6}
+                        isMobile={isMobile}
+                        title={'Товары собственного производства'}
+                        titleIcon={'produced'}
+                    >
                         {this.state.products.produced.map((item, key) => {
                             return (
                                 <ProductCard item={item} key={'produced' + item.id} update={this.updateFav}

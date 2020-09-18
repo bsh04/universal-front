@@ -150,13 +150,30 @@ $btn_default_color: #229DD2;
         padding: 10px 20px 10px 45px;
         overflow: hidden;
         
+        opacity: 1;
+        transition: 0.6s ease-in-out;
+        
         .product-card {
             height: 400px;
+            opacity: 1;
+            transition: .4s ease-in-out;
 
             &_tile {
                 min-width: 240px;
             }
         }
+
+        &.slide-prev, &.slide-next {
+            
+        
+            & .product-card {
+                transition: .35s ease-in-out;
+                opacity: .4;
+            }
+        }
+
+        
+
     }
 
     .carousel__control_prev, .carousel__control_next {
