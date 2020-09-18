@@ -14,7 +14,7 @@ export class Carousel extends Component {
     }
 
     componentDidMount() {
-        this.childrendLengthControl();
+        
         window.addEventListener('resize', this.childrendLengthControl);
         
         if(this.props.interval !== undefined) {
@@ -24,6 +24,7 @@ export class Carousel extends Component {
             
             this.setState({intervalId});
         }
+        this.childrendLengthControl();
     }
 
     componentWillUnmount() {
@@ -34,7 +35,7 @@ export class Carousel extends Component {
 
     childrendLengthControl = (event) => {
         if(this.carouselBodyRef && this.props.length !== 1) {
-            let length = Math.floor(this.carouselBodyRef.clientWidth / 260);
+            let length = Math.floor(this.carouselBodyRef.clientWidth / 262);
             
             this.setState({length}); 
         }        
