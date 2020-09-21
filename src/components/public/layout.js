@@ -54,10 +54,47 @@ class PublicLayout extends Component {
             galleryModalVisible: false,
             modalThanksVisible: false,
             bottomItems: [
-                {id: 1, title: 'оформление заказа на сайте', image: 'laptop.png', content: ''},
-                {id: 2, title: 'подтверждение заказа', image: 'support.png', content: ''},
-                {id: 3, title: 'оплата', image: 'credit-card.png', content: ''},
-                {id: 4, title: 'получение товара', image: 'product.png', content: ''},
+                {
+                    id: 1, title: 'оформление заказа на сайте', image: 'laptop.png', content:
+                        {
+                            body: 'Оформить заказ на сайте можно несколькими способами:',
+                            images: [
+                                {content: 'Корзина', src: 'basket.png'},
+                                {content: 'Звонок менеджеру', src: 'call.png'},
+                            ],
+                        }
+                },
+                {
+                    id: 2,
+                    title: 'подтверждение заказа',
+                    image: 'support.png',
+                    content:
+                        {
+                            body: 'В ближайшее время после отправки заявки с сайта с Вами свяжется менеджер для подтверждения заказа '
+                        }
+                },
+                {
+                    id: 3, title: 'оплата', image: 'credit-card.png', content:
+                        {
+                            body: 'Варианты оплаты:',
+                            images: [
+                                {content: 'Наличными при самовывозе', src: 'money.png'},
+                                {content: 'Расчет через терминал', src: 'withdraw.png'},
+                                {content: 'Оплата на расчетный счет для юридических лиц', src: 'receive-money.png'},
+                            ],
+                        }
+                },
+                {
+                    id: 4, title: 'получение товара', image: 'product.png', content:
+                        {
+                            images: [
+                                {title: 'Самовызов', content: 'со склада по адресу г. Томск, ул. Бердская, 31, магазин Универсал ', src: 'parcel.png'},
+                                {title: 'Бесплатная доставка в черте города', content: 'при заказе на сумму от 3000 Р Стоимость доставки в отдаленные районы и по области уточняйте у менеджеров', src: 'shipment.png'},
+                                {title: 'Бесплатная доставка до терминала', content: 'нужной вам транспортной компании при заказе на сумму от 3000 Р', src: 'delivery.png'},
+                            ],
+                            addition: 'Стоимость доставки в черте города при заказе на сумму от 700 Р до 2999 Рсоставит 150 Р',
+                        }
+                }
             ]
         };
     }
@@ -178,8 +215,10 @@ class PublicLayout extends Component {
                                 <div className='delivery-and-payment'>
                                     <h5>как купить?</h5>
                                     <div className='container-items'>
+
                                         {this.state.bottomItems.map((item, index) => <DeliveryAndPaymentIndexPage
-                                            item={item} index={index}/>)}
+                                            item={item} index={index}/>
+                                        )}
                                     </div>
                                 </div>
                                 :
