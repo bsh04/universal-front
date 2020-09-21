@@ -20,13 +20,14 @@ $btn_default_color: #229DD2;
 
 .banner {
     width: 95%;
-    height: 23vw;
-
+    min-height: 450px;
+    border-radius: 10px;
+    
     &.banner-bg {
-        background-size: contain;
+        background-size: auto 100% ;
         background-repeat: no-repeat;
-        background-position: 50% 50%;
-
+        background-position: right top;
+        min-height: 450px;
 
         &_promo1 {
             background-image: url('./images/banners/promo_1.png');
@@ -48,32 +49,55 @@ $btn_default_color: #229DD2;
     &-body {
         width: 100%;
         height: 100%;
-        padding-top: 12%;
-        padding-left: 8%;
+        font-size: calc(24px + 16 * ((100vw - 320px) / (1280 - 320)));
         
-        
-
         &__text-wrap {
-            
+            position: relative;
             display: flex;
             flex-flow: column nowrap;
             text-align: left;
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 65px;
+                height: 65px;
+                left: -75px;
+                top: 5px;
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+
+            .banner-bg_promo1 &::before {
+                background-image: url('./images/banners/icons/promo1.png');
+            }
         }
+
 
         &__text {
             &_small {
                 color: #ffffff;
-                font-size: 1.5em;
                 font-weight: bold;
 
             }
             &_big {
                 color: #ffffff;
-                font-size: 2.5em;
-                line-height: 40px;
                 font-weight: bold;
                 text-transform: uppercase;
             }
+        }
+        &-button {
+            cursor: pointer;
+            width: 150px;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffffff;
+            text-transform: uppercase;
+            color: #ffffff;
+            font-size: 12px;
         }
 
     }
@@ -1567,6 +1591,49 @@ $btn_default_color: #229DD2;
 
 @media screen and(max-width: 768px) {
 
+    .banner {
+        width: 95%;
+        height: 375px;
+        
+        &.banner-bg {
+            background-position: 100% 0;
+        }
+    
+        &-body {
+            
+
+            &__text-wrap {
+                
+    
+                &::before {
+                    
+                }
+    
+                .banner-bg_promo1 &::before {
+                    
+                }
+            }
+    
+    
+            &__text {
+                &_small {
+                   
+                }
+                &_big {
+                   
+                }
+            }
+    
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     .index-page {
         .custom-carousel {
             width: 100%;

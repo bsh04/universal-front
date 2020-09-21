@@ -20,7 +20,9 @@ export class MainBanner extends Component {
                         </span>
                     </div>
 
-                    <div className="banner-body-button" onClick={() => this.props.onLinkClick()}></div>
+                    <div className="banner-body-button" onClick={() => this.props.onLinkClick()}>
+                        Подробнее
+                    </div>
                 </div>
             </div>
         )
