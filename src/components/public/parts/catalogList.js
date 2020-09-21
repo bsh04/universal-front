@@ -51,7 +51,7 @@ const CatalogList = (props) => {
                             list.length > 0
                                 ?
                                 <div className='w-100'>
-                                    <a className='d-flex mt-2 catalog-first-item justify-content-between'>
+                                    <a className='d-flex mt-2 catalog-first-item justify-content-between' href='/workshop'>
                                         <div className='d-flex align-items-center'>
                                             <div className='d-flex align-items-center'>
                                                 <img className='icons-left-menu'
@@ -75,7 +75,7 @@ const CatalogList = (props) => {
                                 list.length > 0
                                     ?
                                     <>
-                                        <a className='nav-link d-flex mt-2 production-catalog'>
+                                        <a className='nav-link d-flex mt-2 production-catalog' href='/workshop'>
                                             <img className='icons-left-menu'
                                                  src={require(`../../../images/left_menu/factory.png`)}/>
                                             <div className='rounded-pill pl-2 pr-2 text-light'>
@@ -92,7 +92,7 @@ const CatalogList = (props) => {
                                 list.length > 0
                                     ?
                                     <>
-                                        <a className='nav-link d-flex mt-2 production-catalog'>
+                                        <a className='nav-link d-flex mt-2 production-catalog' href='/workshop'>
                                             <div className='d-flex align-items-center'>
                                                 <img className='icons-left-menu'
                                                      src={require(`../../../images/left_menu/factory.png`)}/>
