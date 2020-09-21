@@ -12,6 +12,7 @@ import { CategoriesContext } from '../../services/contexts';
 import { Carousel } from './parts/carousel/Carousel';
 import ProductCard from './parts/product/ProductCard';
 import { MainBanner } from './parts/banners/main_banner';
+import { bannersData } from '../../images/banners/bannersData';
 
 
 class Index extends Component {
@@ -114,6 +115,7 @@ class Index extends Component {
             return <CategoriesContext.Consumer>{contextValue => {
                 const {categories} = contextValue;
                 let {isMobile} = contextValue;
+
                 return (
                     <div className="w-100">
                         <Helmet>
@@ -129,14 +131,26 @@ class Index extends Component {
                         </Helmet>
                         
                         <div className="index-page w-100">
-                            <MainBanner 
-                                promoName={'promo1'}
-                                textSmall={'Успейте сделать покупку'}
-                                textBig={'Панели ПВХ скидка 15%'}
-                            />
+                            <Carousel
+                                banner
+                                length={1} 
+                                isMobile={isMobile} 
+                            >
+                                {bannersData.map((item, key) => {
+                                    return <MainBanner 
+                                        key={key}
+                                        promoName={item.promoName}
+                                        textSmall={item.textSmall}
+                                        textBig={item.textBig}
+                                        isMobile={isMobile}
+                                        onLinkClick={() => this.props.history.push(item.link)}
+                                    />
+                                })}
+                                 
+                            </Carousel>
 
                             { this.state.products.stock.length > 0 ?
-                            <Carousel 
+                            <Carousel
                                 length={isMobile ? 1 : 6} 
                                 isMobile={isMobile} 
                                 title={'Акционные товары'} 

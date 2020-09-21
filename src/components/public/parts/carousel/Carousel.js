@@ -49,6 +49,10 @@ export class Carousel extends Component {
 
     refreshInterval = () => {
         clearInterval(this.state.intervalId);
+        
+        if(this.props.interval === undefined) {
+            return null
+        }
 
         if(this.state.timeoutId) {
             while(this.state.timeoutId --) {
@@ -90,6 +94,10 @@ export class Carousel extends Component {
     renderChildrens() {
         let items = this.props.children;
         
+        if(this.props.banner) {
+            return items[this.state.start]
+        }
+
         let start = this.state.start;
         let end = (start + this.state.length >= items.length) ? items.length : start + this.state.length;
         
@@ -116,24 +124,49 @@ export class Carousel extends Component {
         
     }
 
+    handleBannerSlide = (key) => {
+        this.setState({start: key});
+    }
     
 
     render() {        
 
         return <div className={'custom-carousel'}>
             
+            {this.props.title ?
             <div className="carousel__title">
                 {this.props.titleIcon ? this.renderIcons() : null}
                 {this.props.title}
             </div>
+            : null}
+            
+            {this.props.banner ?
+            
+                <span className="banner-controls">
+                    {this.props.children.map((item, key) => {
+                        return (
+                            <span 
+                                className={`banner-controls__item ${key == this.state.start ? 'banner-controls__item_active' : ''}`}
+                                key={key}
+                                onClick={() => this.handleBannerSlide(key)}
+                            />
+                        )
+                    })}
+                </span>
+            
+            : null}
+            
+            {!this.props.banner ? 
             <span className="carousel__control_prev" onClick={() => {
                 this.refreshInterval();
                 this.handleControls('prev');
-            }}></span>
-                <span className="carousel__control_next" onClick={() => {
-                    this.refreshInterval();
-                    this.handleControls('next');
-                }}></span>
+            }}></span> : null}
+            {!this.props.banner ? 
+            <span className="carousel__control_next" onClick={() => {
+                this.refreshInterval();
+                this.handleControls('next');
+            }}></span> : null}
+
             <div className={`carousel-body ${'slide-' + this.state.slideTo}`} ref={ref => this.carouselBodyRef = ref}>
                 
                 {this.renderChildrens()}
