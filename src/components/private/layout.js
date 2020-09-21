@@ -22,7 +22,6 @@ class UserLayout extends Component {
 
     componentDidUpdate() {
         if (this.props.token === false) {
-            this.props.history.replace('/login');
         }
     }
 
