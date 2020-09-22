@@ -14,6 +14,7 @@ import ProductCard from './parts/product/ProductCard';
 import { MainBanner } from './parts/banners/main_banner';
 import { bannersData } from '../../images/banners/bannersData';
 
+import DeliveryAndPaymentIndexPage from "./parts/deliveryAndPayment";
 
 class Index extends Component {
     constructor(props) {
@@ -30,7 +31,8 @@ class Index extends Component {
                 produced: []
             },
             favorites: [],
-
+            news: [],
+            stocks: [],
             showCatalogOutMenu: true,
         }
     }

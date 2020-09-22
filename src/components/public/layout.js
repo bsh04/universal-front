@@ -26,9 +26,17 @@ import {CategoriesContext} from "../../services/contexts";
 import CategoryList from "./parts/category_list";
 import {MapSection_} from './parts/mapSection_';
 import ContactForm from './parts/contactForm';
-import { ServiceBtn } from './parts/buttons/ServiceBtn';
-import { ModalGallery, ModalBasketAddAlert, ModalCallbackForm, ModalRequestForm, ModalQuestionForm, ModalThanks } from './parts/modal_blocks';
+import {ServiceBtn} from './parts/buttons/ServiceBtn';
+import {
+    ModalGallery,
+    ModalBasketAddAlert,
+    ModalCallbackForm,
+    ModalRequestForm,
+    ModalQuestionForm,
+    ModalThanks
+} from './parts/modal_blocks';
 import ProductDetails from "./parts/product/ProductDetails";
+import DeliveryAndPaymentIndexPage from "./parts/deliveryAndPayment";
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -45,6 +53,49 @@ class PublicLayout extends Component {
             basketAddModalVisible: false,
             galleryModalVisible: false,
             modalThanksVisible: false,
+            bottomItems: [
+                {
+                    id: 1, title: 'оформление заказа на сайте', image: 'laptop.png', content:
+                        {
+                            body: 'Оформить заказ на сайте можно несколькими способами:',
+                            images: [
+                                {content: 'Корзина', src: 'basket.png'},
+                                {content: 'Звонок менеджеру', src: 'call.png'},
+                            ],
+                        }
+                },
+                {
+                    id: 2,
+                    title: 'подтверждение заказа',
+                    image: 'support.png',
+                    content:
+                        {
+                            body: 'В ближайшее время после отправки заявки с сайта с Вами свяжется менеджер для подтверждения заказа '
+                        }
+                },
+                {
+                    id: 3, title: 'оплата', image: 'credit-card.png', content:
+                        {
+                            body: 'Варианты оплаты:',
+                            images: [
+                                {content: 'Наличными при самовывозе', src: 'money.png'},
+                                {content: 'Расчет через терминал', src: 'withdraw.png'},
+                                {content: 'Оплата на расчетный счет для юридических лиц', src: 'receive-money.png'},
+                            ],
+                        }
+                },
+                {
+                    id: 4, title: 'получение товара', image: 'product.png', content:
+                        {
+                            images: [
+                                {title: 'Самовызов', content: 'со склада по адресу г. Томск, ул. Бердская, 31, магазин Универсал ', src: 'parcel.png'},
+                                {title: 'Бесплатная доставка в черте города', content: 'при заказе на сумму от 3000 Р Стоимость доставки в отдаленные районы и по области уточняйте у менеджеров', src: 'shipment.png'},
+                                {title: 'Бесплатная доставка до терминала', content: 'нужной вам транспортной компании при заказе на сумму от 3000 Р', src: 'delivery.png'},
+                            ],
+                            addition: 'Стоимость доставки в черте города при заказе на сумму от 700 Р до 2999 Рсоставит 150 Р',
+                        }
+                }
+            ]
         };
     }
 
@@ -110,7 +161,7 @@ class PublicLayout extends Component {
             }
 
             showCategoryList = !!(!isMobile && categories && this.props.location.pathname !== '/catalog');
-            
+
             let background = null;
             let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
@@ -119,9 +170,9 @@ class PublicLayout extends Component {
             return (
                 <div>
                     <Header/>
-                    <div className="content row">
+                    <div className="content row w-100">
                         <ScrollDownButton style={{zIndex: 50}}/>
-                        
+
                         <div className="flex-nowrap row w-100">
                             {showCategoryList
                             ? 
@@ -176,7 +227,23 @@ class PublicLayout extends Component {
                                     )}/>
                                 </Switch>
                             </div>
+
                         </div>
+                        {
+                            this.props.from === '/'
+                                ?
+                                <div className='delivery-and-payment'>
+                                    <h5>как купить?</h5>
+                                    <div className='container-items'>
+
+                                        {this.state.bottomItems.map((item, index) => <DeliveryAndPaymentIndexPage
+                                            item={item} index={index}/>
+                                        )}
+                                    </div>
+                                </div>
+                                :
+                                null
+                        }
                         <div className={`service-btn-group ${isMobile ? '' : 'sticked'}`}>
                             <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
                             <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
@@ -188,11 +255,11 @@ class PublicLayout extends Component {
                         <ModalThanks visible={this.state.modalThanksVisible}/>
 
                         <ModalCallbackForm visible={this.state.callbackModalVisible}
-                                            handleToggle={() => this.toggleModal('callback')}/>
+                                           handleToggle={() => this.toggleModal('callback')}/>
                         <ModalRequestForm visible={this.state.requestFormModalVisible}
-                                            handleToggle={() => this.toggleModal('request')}/>
+                                          handleToggle={() => this.toggleModal('request')}/>
                         <ModalQuestionForm visible={this.state.questionModalVisible}
-                                            handleToggle={() => this.toggleModal('question')}/>
+                                           handleToggle={() => this.toggleModal('question')}/>
 
                         {this.props.location.pathname === '/' ?
                             <div className="about-company">
@@ -222,7 +289,7 @@ class PublicLayout extends Component {
                     <Footer/>
                 </div>
             )
-            
+
         }}
         </CategoriesContext.Consumer>
     }

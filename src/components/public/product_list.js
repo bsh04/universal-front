@@ -9,8 +9,9 @@ import Loading from '../loading';
 import {CategoriesContext} from '../../services/contexts';
 
 import ProductCard from './parts/product/ProductCard';
-import { SubCategoriesRow } from './parts/SubCategoriesRow';
-import { ProductToolbar } from './parts/ProductToolbar';
+import {SubCategoriesRow} from './parts/SubCategoriesRow';
+import {ProductToolbar} from './parts/ProductToolbar';
+import Pagination from "../pagination";
 
 class ProductList extends Component {
     constructor(props) {
@@ -86,13 +87,15 @@ class ProductList extends Component {
         })
     }
 
-    handleGet(cat) {
+    handleGet = (cat, pickPage) => {
+
+
         let obj = {
             cat: cat,
             limit: this.state.limit,
             sort_field: `${this.state.sort[0]}`,
             sort: `${this.state.sort[1]}`,
-            offset: this.state.offset
+            offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset
         }
         let str = "";
         for (let key in obj) {
@@ -123,9 +126,36 @@ class ProductList extends Component {
                     },
                 );
             }
-        } else {
+        } else if (cat) {
             request(
                 'product/' + cat + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
+                'GET',
+                null,
+                {},
+                function (response) {
+                    let totalItems = response[response.length - 1].count;
+                    response.splice(-1, 1);
+                    let categories = [];
+                    response.map(item => {
+                        let tmp = {id: item.category.id, title: item.category.title}
+                        if (categories.find((element) => {
+                            return tmp.id === element.id
+                        }) === undefined) {
+                            categories.push(tmp);
+                        }
+                    });
+                    _this.setState({products: response}, () => {
+                        _this.setState({
+                            path: _this.setCategory(_this.props.match.params.category),
+                            totalItems: totalItems,
+                            loading: false,
+                        })
+                    });
+                }
+            );
+        } else {
+            request(
+                'product/' + this.props.match.params.category + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
                 'GET',
                 null,
                 {},
@@ -236,148 +266,161 @@ class ProductList extends Component {
         return (
             <CategoriesContext.Consumer>
                 {contextValue => {
-                
-                let catList = [];
-                let productPageTitle = null;
 
-                if(contextValue.categories && contextValue.categories.length > 0 && this.props.match.params.category !== 'new' 
-                    && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search'){
+                    let catList = [];
+                    let productPageTitle = null;
 
-                    let obj = contextValue.categories.find(item => item.id === this.props.match.params.category);
-                    
-                    if(obj && obj.title) {
-                        productPageTitle = obj.title;
-                        
-                    }
+                    if (contextValue.categories && contextValue.categories.length > 0 && this.props.match.params.category !== 'new'
+                        && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search') {
 
-                    if(obj && obj.children !== undefined){
-                        catList = obj.children;
+                        let obj = contextValue.categories.find(item => item.id === this.props.match.params.category);
+
+                        if (obj && obj.title) {
+                            productPageTitle = obj.title;
+
+                        }
+
+                        if (obj && obj.children !== undefined) {
+                            catList = obj.children;
+
+                        } else {
+                            let obj = contextValue.categories.find(item => {
+                                if (item.children !== undefined && item.children.length > 0
+                                    && item.children.find(item => item.id === this.props.match.params.category)) {
+                                    return item;
+                                }
+                            });
+                            catList = obj.children;
+                            productPageTitle = obj.title;
+                        }
 
                     } else {
-                        let obj = contextValue.categories.find(item => {
-                            if(item.children !== undefined && item.children.length > 0
-                                && item.children.find(item => item.id === this.props.match.params.category)) {
-                                    return item;
-                            }
-                        });
-                        catList = obj.children;
-                        productPageTitle = obj.title;
+                        catList = this.state.catList;
                     }
 
-                } else {
-                    catList = this.state.catList;
-                }
-                
-                    
-                return <div>
-                    <Helmet>
-                        <meta charSet="utf-8"/>
-                        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                        <meta name="theme-color" content="#000000"/>
-                        <title>Каталог - Универсал</title>
-                        <meta name="keywords"
-                            content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
-                        <meta name="description"
-                            content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
-                        <meta property="og:description"
-                            content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
-                        <meta property="og:title" content="Каталог"/>
-                        <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
-                    </Helmet>
 
-                {this.state.path && this.state.products.length > 0
-                    ?
-                    <Breadcrumbs
-                        path={[{title: 'Каталог', link: '/catalog'}].concat(
-                            this.props.match.params.category !== 'new'
-                            && this.props.match.params.category !== 'stock'
-                            && this.state.products[0].category.parent
-                            && this.state.products[0].category.parent.id !== this.props.match.params.category ?
-                                [{
-                                    title: this.state.products[0].category.parent.title,
-                                    link: ('/catalog/' + this.state.products[0].category.parent.id)
-                                }] : [],
-                            [
-                                this.state.products[0].category.parent
-                                && this.state.products[0].category.parent.id === this.props.match.params.category ?
-                                    {title: this.state.products[0].category.parent.title} :
-                                    {title: this.state.path}]
-                        )}/>
-                    : null}
+                    return <div>
+                        <Helmet>
+                            <meta charSet="utf-8"/>
+                            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                            <meta name="theme-color" content="#000000"/>
+                            <title>Каталог - Универсал</title>
+                            <meta name="keywords"
+                                  content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
+                            <meta name="description"
+                                  content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
+                            <meta property="og:description"
+                                  content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
+                            <meta property="og:title" content="Каталог"/>
+                            <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
+                        </Helmet>
 
-                {productPageTitle ?
-                <h3 className="page-title">{productPageTitle}</h3>
-                : null}
+                        {this.state.path && this.state.products.length > 0
+                            ?
+                            <Breadcrumbs
+                                path={[{title: 'Каталог', link: '/catalog'}].concat(
+                                    this.props.match.params.category !== 'new'
+                                    && this.props.match.params.category !== 'stock'
+                                    && this.state.products[0].category.parent
+                                    && this.state.products[0].category.parent.id !== this.props.match.params.category ?
+                                        [{
+                                            title: this.state.products[0].category.parent.title,
+                                            link: ('/catalog/' + this.state.products[0].category.parent.id)
+                                        }] : [],
+                                    [
+                                        this.state.products[0].category.parent
+                                        && this.state.products[0].category.parent.id === this.props.match.params.category ?
+                                            {title: this.state.products[0].category.parent.title} :
+                                            {title: this.state.path}]
+                                )}/>
+                            : null}
 
-                {this.props.match.params.category !== 'new' && this.props.match.params.category !== 'stock'
-                && this.props.match.params.category !== 'search' && catList.length > 0 ?
-                    <SubCategoriesRow catList={catList} location={this.props.location}/> 
-                : null}
+                        {productPageTitle ?
+                            <h3 className="page-title">{productPageTitle}</h3>
+                            : null}
 
-                <ProductToolbar 
-                    cardView={this.state.cardView}
-                    handleChangeCardView={(obj) => this.setState({cardView: obj.cardView})}
-                    sortSelectedLabel={this.sortSelectedLabel}
-                    setSort={this.setSort}
-                    setLimit={this.setLimit}
-                    limitAll={this.state.limitAll}
-                    limit={this.state.limit}
-                />
+                        {this.props.match.params.category !== 'new' && this.props.match.params.category !== 'stock'
+                        && this.props.match.params.category !== 'search' && catList.length > 0 ?
+                            <SubCategoriesRow catList={catList} location={this.props.location}/>
+                            : null}
 
-                <div className="row products-wrapper" ref={(target) => this.productListInnerContainer = target}>
-                    {this.state.products.length > 0 ? this.state.products.map((item, key) => {
-                        if (key < this.state.limit) {
-                            return (
-                                <ProductCard item={item} key={key} update={this.updateFav}
-                                    favorite={this.isFavorite(item) ? true : false}
-                                    cardView={this.state.cardView}
-                                />
-                            );
-                        } else {
-                            return null;
+                        <ProductToolbar
+                            cardView={this.state.cardView}
+                            handleChangeCardView={(obj) => this.setState({cardView: obj.cardView})}
+                            sortSelectedLabel={this.sortSelectedLabel}
+                            setSort={this.setSort}
+                            setLimit={this.setLimit}
+                            limitAll={this.state.limitAll}
+                            limit={this.state.limit}
+                        />
+
+                        <div className="row products-wrapper" ref={(target) => this.productListInnerContainer = target}>
+                            {this.state.products.length > 0 ? this.state.products.map((item, key) => {
+                                if (key < this.state.limit) {
+                                    return (
+                                        <ProductCard item={item} key={key} update={this.updateFav}
+                                                     favorite={this.isFavorite(item)}
+                                                     cardView={this.state.cardView}
+                                        />
+                                    );
+                                } else {
+                                    return null;
+                                }
+                            }) : <p className={'text-center'}>Товары не найдены</p>}
+                        </div>
+
+
+                        {!this.state.limitAll && parseInt(this.state.limit) < parseInt(this.state.totalItems)
+                            ? <nav aria-label="Page navigation example" className="row justify-content-center">
+                                <ul className="pagination">
+                                    <li className="page-item">
+                                        <a className="page-link" href="#" aria-label="Previous"
+                                           onClick={() => {
+                                               if (this.state.offset > 0) {
+                                                   this.setState({
+                                                       offset: (this.state.offset - this.state.limit)
+                                                   })
+                                               }
+                                           }}>
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span className="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+
+                                    {this.paginationItems()}
+
+                                    <li className="page-item">
+                                        <a className="page-link" href="#" aria-label="Next"
+                                           onClick={() => {
+                                               if (this.state.offset < this.state.totalItems) {
+                                                   this.setState({
+                                                       offset: (this.state.offset + this.state.limit)
+                                                   })
+                                               }
+                                           }}>
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span className="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            : null}
+                        {
+                            this.state.limit ?
+                                <div>
+                                    <Pagination
+                                        numberItems={this.state.totalItems}
+                                        limit={this.state.offset}
+                                        offset={this.state.limit}
+                                        handleGet={this.handleGet}
+                                    />
+                                </div>
+                                :
+                                null
                         }
-                    }) : <p className={'text-center'}>Товары не найдены</p>}
-                </div>
-
-                {!this.state.limitAll && parseInt(this.state.limit) < parseInt(this.state.totalItems)
-                    ? <nav aria-label="Page navigation example" className="row justify-content-center">
-                        <ul className="pagination">
-                            <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Previous"
-                                   onClick={() => {
-                                       if (this.state.offset > 0) {
-                                           this.setState({
-                                               offset: (this.state.offset - this.state.limit)
-                                           })
-                                       }
-                                   }}>
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span className="sr-only">Previous</span>
-                                </a>
-                            </li>
-
-                            {this.paginationItems()}
-
-                            <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Next"
-                                   onClick={() => {
-                                       if (this.state.offset < this.state.totalItems) {
-                                           this.setState({
-                                               offset: (this.state.offset + this.state.limit)
-                                           })
-                                       }
-                                   }}>
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span className="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    : null}
-
-                    
-                {this.state.loading ? <Loading/> : null}
-            </div>}}
+                        {this.state.loading ? <Loading/> : null}
+                    </div>
+                }}
             </CategoriesContext.Consumer>
         );
     }

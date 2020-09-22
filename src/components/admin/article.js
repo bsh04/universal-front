@@ -44,11 +44,55 @@ class ArticleList extends Component {
     }
 
     handleSubmit(e) {
+
         e.preventDefault();
+
+        let arr = []
+
+        for (let i = 0; i < this.fileInput.files.length; i ++) {
+            arr.push(this.fileInput.files[i])
+        }
 
         let data = new FormData();
         data.append('title', this.titleInput.value);
         data.append('content', draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())));
+        arr.map(item => {
+            data.append('images[]', item);
+        })
+
+        let _this = this;
+
+        request(
+            'article/',
+            'POST',
+            data,
+            {},
+            function (response) {
+                console.log(response)
+                let arr = _this.state.articles;
+                arr.push(response);
+                _this.setState({articles: arr, add: false});
+            },
+            this.state.errorCallback
+        );
+    }
+
+    handleEdit(key) {
+
+        let arr = []
+
+        for (let i = 0; i < this.fileInput.files.length; i ++) {
+            arr.push(this.fileInput.files[i])
+        }
+
+        let data = new FormData();
+
+        data.append("id", this.state.articles[key].id)
+        data.append("title", this.titleEditInput.value,)
+        data.append("content", draftToHtml(convertToRaw(this.state.editorStateE.getCurrentContent())))
+        arr.map(item => {
+            data.append('images[]', item);
+        })
 
         let _this = this;
 
@@ -59,31 +103,9 @@ class ArticleList extends Component {
             {},
             function (response) {
                 let arr = _this.state.articles;
-                arr.push(response);
-                _this.setState({articles: arr, add: false});
-            },
-            this.state.errorCallback
-        );
-    }
-
-    handleEdit(key) {
-        let data = {
-            id: this.state.articles[key].id,
-            title: this.titleEditInput.value,
-            content: draftToHtml(convertToRaw(this.state.editorStateE.getCurrentContent())),
-        };
-
-        let _this = this;
-
-        request(
-            'article/',
-            'PUT',
-            data,
-            {},
-            function (response) {
-                let arr = _this.state.articles;
                 arr[key] = response;
                 _this.setState({articles: arr, edit: null, editorStateE: EditorState.createEmpty()});
+                console.log(response)
             },
             this.state.errorCallback
         );
@@ -154,6 +176,24 @@ class ArticleList extends Component {
                                 }}
                             />
                             <br/>
+                            <form className='d-flex justify-content-center'>
+                                <input
+                                    name="file"
+                                    type="file"
+                                    required={true}
+                                    placeholder={"Файл с даными:*"}
+                                    className={'form-control w-50'}
+                                    ref={(input) => {this.fileInput = input}}
+                                    multiple
+                                    accept=".jpg, .jpeg, .png"
+                                />
+                                <br/>
+                                <p className="text-center">
+                                    <button type="submit" className="btn btn-success">
+                                        <i className={'fa fa-upload'}> <span>Загрузить файл</span></i>
+                                    </button>
+                                </p>
+                            </form>
                             <p className="text-center">
                                 <button type="submit" className="btn btn-success">
                                     <i className={'fa fa-plus'}> Добавить</i>
@@ -231,6 +271,20 @@ class ArticleList extends Component {
                                                     options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
                                                 }}
                                             />
+                                            <form className='d-flex justify-content-center mt-3'>
+                                                <input
+                                                    name="file"
+                                                    type="file"
+                                                    required={true}
+                                                    placeholder={"Файл с даными:*"}
+                                                    className={'form-control w-50'}
+                                                    ref={(input) => {this.fileInput = input}}
+                                                    multiple
+                                                    accept=".jpg, .jpeg, .png"
+                                                />
+                                                <br/>
+                                            </form>
+                                            <p className='pt-3'><strong>Внимание! </strong>При добавлении новых файлов, старые удалятся</p>
                                         </td>
                                         <td>
                                             <button className="btn btn-success"

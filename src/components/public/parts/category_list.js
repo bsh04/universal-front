@@ -22,7 +22,7 @@ class CategoryList extends Component {
             return (
                 <React.Fragment key={index}>
                     <div className="d-flex flex-row align-items-center items py-0 my-0">
-                        <ExtensionIcon className='item arrow-icon'/>
+                        <img className='icons-left-menu' src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
                         <a className="pl-2 text-left item" href={'/catalog/' + item.id}>{item.title}</a>
                     </div>
                     <hr/>
@@ -40,9 +40,9 @@ class CategoryList extends Component {
                 <div className='catalog_main'>
                     <div className={this.state.showAll ? 'list' : 'small-list'}>
                         <div className="row production">
-                            <div>
-                                <ExtensionIcon className='text-white'/>
-                                <a className="pl-2" href="#">НАШЕ ПРОИЗВОДСТВО</a>
+                            <div className='d-flex align-items-center'>
+                                <img className='icons-left-menu' src={require(`../../../images/left_menu/factory.png`)}/>
+                                <a className="pl-2" href="/workshop">НАШЕ ПРОИЗВОДСТВО</a>
                             </div>
                             <ArrowForwardIosIcon className='text-white'/>
                         </div>

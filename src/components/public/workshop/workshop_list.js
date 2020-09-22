@@ -87,12 +87,10 @@ class ArticleList extends Component {
                                         ?
                                         <img
                                             src={require("../../../images/workshop_list/workshop_main_image_mobile.png")}
-                                            alt="Швейное производство"
-                                            className="workshop-banner__image"/>
+                                            alt="Швейное производство"/>
                                         :
                                         <img src={require("../../../images/workshop_list/workshop_main_image.png")}
-                                             alt="Швейное производство"
-                                             className="workshop-banner__image"/>
+                                             alt="Швейное производство"/>
                                 }
                             </div>
                             <div className="workshop-list-body">

@@ -16,11 +16,11 @@ import ArticleList from './article';
 import DeliveryAndPayment from './delivery_and_payment';
 import {CategoriesContext} from "../../services/contexts";
 import CategoryList from "../public/parts/category_list";
+import ProductStatus from "./product_type/product_type";
 
 class PrivateLayout extends Component {
     componentDidMount() {
         if (this.props.token === false || this.props.user.roles === undefined || this.props.user.roles.indexOf('ROLE_ADMIN') === -1) {
-            this.props.history.replace('/login');
         }
     }
 
@@ -73,6 +73,7 @@ class PrivateLayout extends Component {
                                     <Route exact path="/admin/stocks" component={StocksList}/>
                                     <Route exact path="/admin/workshop" component={ArticleList}/>
                                     <Route exact path="/admin/deliveryandpayment" component={DeliveryAndPayment}/>
+                                    <Route exact path="/admin/product/type" component={ProductStatus}/>
                                 </Switch>
                             </div>
                         </div>
