@@ -1754,13 +1754,15 @@ h3 > a {
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
+  padding-right: 55px;
 
 
   .card-container {
     margin: 20px;
     height: 450px;
     overflow: hidden;
-    width: 470px;
+    max-width: 470px;
+    width: auto;
     border-radius: 10px;
 
     &:hover {
