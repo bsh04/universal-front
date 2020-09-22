@@ -10,7 +10,7 @@
 // export let clientSecret = '1tg914i7xtc0408wggosgs4gk4o0k8oso88884w4kgo8kc8kso';
 
 //Prod
-export let serverUrl = 'https://api.universal.tom.ru/api/'; //'http://ts3.vladimirov-mv.name/api/';
+export let serverUrl = 'http://ts3.vladimirov-mv.name/api/'; //'http://ts3.vladimirov-mv.name/api/';
 // export let serverImages = 'https://api.compliance-expert.com/uploads/images/';
 export let regUrl = 'http://ts3.vladimirov-mv.name/security/register';
 export let resetUrl = 'http://ts3.vladimirov-mv.name/security/resetpassword/';
