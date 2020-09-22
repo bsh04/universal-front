@@ -273,7 +273,7 @@ const NavbarTop = (props) => {
                         <ExpandMoreIcon className='iconMore ml-2'/>
                     </div>
                     <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
-                        <CatalogList list={list} mobile={mobile}/>
+                        <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} mobile={mobile}/>
                     </div>
                 </div>
                 {
@@ -394,7 +394,7 @@ const NavbarTop = (props) => {
                         <ExpandMoreIcon className='iconMore ml-2'/>
                     </div>
                     <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
-                        <CatalogList list={list} mobile={mobile}/>
+                        <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} mobile={mobile}/>
                     </div>
                 </div>
 
@@ -507,7 +507,7 @@ const NavbarTop = (props) => {
                                     <CloseIcon className='exit-icon mr-2 text-white' onClick={() => closeWindow()}/>
                                 </div>
                                 <div className='mobile-catalog-dropdown shadow bg-light'>
-                                    <CatalogList list={list} reduce={true}/>
+                                    <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} reduce={true}/>
                                 </div>
                             </div>
                             :
@@ -621,7 +621,7 @@ const NavbarTop = (props) => {
                                         <CloseIcon className='exit-icon mr-2 text-white' onClick={() => closeWindow()}/>
                                     </div>
                                     <div className='mobile-catalog-dropdown'>
-                                        <CatalogList list={list} reduce={true}/>
+                                        <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} reduce={true}/>
                                     </div>
                                 </div>
                             </li>

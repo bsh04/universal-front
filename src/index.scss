@@ -3549,6 +3549,24 @@ nav.navbar {
   }
 }
 
+.category-header {
+  display: flex;
+  border-bottom: 1px solid $color_lite;
+  padding: 25px 20px;
+
+  h5 {
+    width: 100%;
+    color: #1d7295;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .arrow {
+    color: #1d7295;
+  }
+}
+
 .custom-dropdown-item {
   width: 100%;
   padding: 10px 10px 20px;

@@ -39,6 +39,7 @@ const Pagination = (props) => {
     }, [props.handleRenderList])
 
     useEffect(() => {
+        document.documentElement.scrollTop = 0
         if (props.handleGet) {
             props.handleGet(null, pickPage)
         } else {
