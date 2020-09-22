@@ -11,7 +11,8 @@ export class MainCatalogItem extends Component {
         let { item } = this.props;
 
         return (
-            <Link to={'/catalog/' + item.id} className="main-catalog-list__item unselectable">
+            <Link to={this.props.to ? this.props.to : '/catalog/' + item.id} 
+                className="main-catalog-list__item unselectable">
                 <div className="main-catalog-list__item-img-wrapper">
                     <img src={require(`../../../../images/catalog/category_${item.id}.png`)} 
                         alt={item.title} 

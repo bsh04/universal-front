@@ -5,6 +5,27 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const CatalogList = (props) => {
 
+    const [list, setList] = useState([])
+
+    useEffect(() => {
+        getData();
+
+    }, [list])
+
+    const getData = () => {
+        request(
+            'product/categories',
+            'GET',
+            {},
+            {},
+            function (response) {
+                setList(response)
+            },
+            function (err) {
+                console.log(err)
+            }
+        )
+    }
     const list = props.list
 
     const renderList = (item, index) => {

@@ -175,10 +175,30 @@ class PublicLayout extends Component {
 
                         <div className="flex-nowrap row w-100">
                             {showCategoryList
-                                ? <CategoryList categories={categories} onClick={() => null}/>
-                                : null}
-                            <div
-                                className={`content-wrapper ${background ? 'image-background' : ''} ${showCategoryList ? '' : 'mw-100 w-100'}`}>
+                            ? 
+                            <div className="col">
+                                <CategoryList categories={categories} onClick={() => null}/>
+                                <div className="side-banner side-banner-promo1">
+                                    <div className="text-small">Выгодные цены на сезонный ассортимент</div>
+                                    <div className="text-big">скидка 15%</div>
+
+                                    <div className="side-banner-button">
+                                        Подробнее
+                                        <i className="side-banner-button__icon"> </i>
+                                    </div>
+                                </div>
+                                <div className="side-banner side-banner-promo1">
+                                    <div className="text-small">На парники и  комплектующие</div>
+                                    <div className="text-big">скидка 15%</div>
+
+                                    <div className="side-banner-button">
+                                        Подробнее
+                                        <i className="side-banner-button__icon"> </i>
+                                    </div>
+                                </div>
+                            </div>
+                            : null}
+                            <div className={`content-wrapper ${background ? 'image-background' : ''} ${showCategoryList ? '' : 'mw-100 w-100'}`}>
                                 <Switch>
                                     <Route exact path={'/'} component={Index}/>
                                     <Route exact path={'/contact'} component={Contact}/>
@@ -241,7 +261,26 @@ class PublicLayout extends Component {
                         <ModalQuestionForm visible={this.state.questionModalVisible}
                                            handleToggle={() => this.toggleModal('question')}/>
 
+                        {this.props.location.pathname === '/' ?
+                            <div className="about-company">
+                                <img src={require('../../images/about-company.png')}/>
+                                <div className="about-company-content">
+                                    <h4 className="page-title">О компании</h4>
+                                    <p className="about-company-content__text">
+                                    Основным направлением нашей деятельности является оптовая торговля товарами народного потребления: посуда, хозяйственные товары, инструменты. Наша цель - предоставление качественных товаров широкого ассортимента по разумным ценам.
+                                    </p>
+                                    <p className="about-company-content__text">
+                                    Большое количество товарных групп, низкие цены, взаимовыгодные условия работы, внимательное отношение к покупателям способствует росту и развитию компании. Мы не собираемся останавливаться на достигнутом, постоянно совершенствуем наши знания и опыт, расширяя ассортимент предлагаемых товаров.
+                                    </p>
+                                    <br/>
 
+                                    <b>Приглашаем к сотрудничеству!</b>
+                                    <div className="about-company-content__button unselectable" onClick={() => null}>
+                                        Подробнее
+                                    </div>
+                                </div>
+                            </div>
+                        : null}
                         <ContactForm/>
                         {this.state.location.indexOf('contact') === -1 ?
                             <MapSection_/> : null}

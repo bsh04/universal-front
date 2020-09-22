@@ -26,14 +26,17 @@ class ProductCard extends Component {
     }
 
     renderIcons() {
-        let arr = ['stock', 'new', 'self', ]
+        let arr = ['stock', 'new', 'produced', 'season' ];
+
+        arr = arr.filter(field => this.props.item[field]);
+
         return arr.map((item, key) => {
             return <i className={`product-card__icons-row-icon product-card__icons-row-icon_${item}`} key={key}/>
         })
     }
 
     handleFavoriteClick = () => {
-        console.log('token',this.props.token)
+        
         if (!this.props.favorite) {
             if (!this.props.token) {
                 this.props.onError({
