@@ -37,7 +37,9 @@ class ProductList extends Component {
     }
 
     loadMore() {
-        if (this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight && this.state.limitAll && this.state.products.length < this.state.totalItems) {
+        if (this.productListInnerContainer && 
+            this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight 
+            && this.state.limitAll && this.state.products.length < this.state.totalItems) {
 
             this.setState({
                 loading: true,
@@ -369,42 +371,6 @@ class ProductList extends Component {
                             }) : <p className={'text-center'}>Товары не найдены</p>}
                         </div>
 
-
-                        {!this.state.limitAll && parseInt(this.state.limit) < parseInt(this.state.totalItems)
-                            ? <nav aria-label="Page navigation example" className="row justify-content-center">
-                                <ul className="pagination">
-                                    <li className="page-item">
-                                        <a className="page-link" href="#" aria-label="Previous"
-                                           onClick={() => {
-                                               if (this.state.offset > 0) {
-                                                   this.setState({
-                                                       offset: (this.state.offset - this.state.limit)
-                                                   })
-                                               }
-                                           }}>
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span className="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-
-                                    {this.paginationItems()}
-
-                                    <li className="page-item">
-                                        <a className="page-link" href="#" aria-label="Next"
-                                           onClick={() => {
-                                               if (this.state.offset < this.state.totalItems) {
-                                                   this.setState({
-                                                       offset: (this.state.offset + this.state.limit)
-                                                   })
-                                               }
-                                           }}>
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span className="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            : null}
                         {
                             this.state.limit ?
                                 <div>

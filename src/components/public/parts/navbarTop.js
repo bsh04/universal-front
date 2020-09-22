@@ -304,7 +304,7 @@ const NavbarTop = (props) => {
                     token ?
                         <div className='d-flex align-items-center text-white ml-4' style={props.user.roles.includes("ROLE_ADMIN") ? {width: 390} : null}>
                             {
-                                props.user.roles.includes("ROLE_ADMIN")
+                                props.user && props.user.roles && props.user.roles.includes("ROLE_ADMIN")
                                     ?
                                     <div className='d-flex align-items-center dropdown icon-more-less'
                                          onClick={() => setOpenMore(!openMore)}>
@@ -421,7 +421,7 @@ const NavbarTop = (props) => {
                 <div>
                     <div className="btn-group d-flex align-items-center">
                         {
-                            props.user.roles.includes("ROLE_ADMIN")
+                            props.user && props.user.roles && props.user.roles.includes("ROLE_ADMIN")
                                 ?
                                 <div className='d-flex align-items-center dropdown icon-more-less pr-3'
                                      onClick={() => setOpenMore(!openMore)}>

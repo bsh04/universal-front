@@ -187,7 +187,7 @@ class PublicLayout extends Component {
                                         <i className="side-banner-button__icon"> </i>
                                     </div>
                                 </div>
-                                <div className="side-banner side-banner-promo1">
+                                <div className="side-banner side-banner-promo2">
                                     <div className="text-small">На парники и  комплектующие</div>
                                     <div className="text-big">скидка 15%</div>
 
@@ -275,7 +275,7 @@ class PublicLayout extends Component {
                                     <br/>
 
                                     <b>Приглашаем к сотрудничеству!</b>
-                                    <div className="about-company-content__button unselectable" onClick={() => null}>
+                                    <div className="about-company-content__button unselectable" onClick={() => this.props.history.push('/contact')}>
                                         Подробнее
                                     </div>
                                 </div>
