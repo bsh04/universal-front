@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import {Swipeable} from 'react-swipeable'
 
 export class Carousel extends Component {
     constructor(props) {
         super(props);
         
+        this.swipedControl = this.swiped.bind(this);
+
         this.state = {
             start: 0,
             length: this.props.length,
@@ -16,7 +19,7 @@ export class Carousel extends Component {
     componentDidMount() {
         
         window.addEventListener('resize', this.childrendLengthControl);
-        
+
         if(this.props.interval !== undefined) {
             let intervalId = setInterval(() => {
                 this.handleControls('next');
@@ -84,9 +87,10 @@ export class Carousel extends Component {
         }
         
         this.setState({start}, () => {
+            console.log(this.state.start)
             setTimeout(() => {
                 this.setState({slideTo: ''})
-            }, 400);
+            }, 300);
         });
         
     }
@@ -127,50 +131,86 @@ export class Carousel extends Component {
     handleBannerSlide = (key) => {
         this.setState({start: key});
     }
+
+
+    swiping(e, deltaX, deltaY, absX, absY, velocity) {
+       
+    }
+
+    swipingLeft(e, absX) {
+        
+    }
+
+    swiped(e, deltaX, deltaY, isFlick, velocity) {
+        
+        if(e && e.dir === 'Left') {
+            this.handleControls('next');
+
+        } else if(e && e.dir === 'Right') {
+            this.handleControls('prev');
+
+        }
+    }
+
+    swipedUp(e, deltaY, isFlick) {
+        
+    }
     
 
     render() {        
 
-        return <div className={'custom-carousel'}>
+        return (
             
-            {this.props.title ?
-            <div className="carousel__title">
-                {this.props.titleIcon ? this.renderIcons() : null}
-                {this.props.title}
-            </div>
-            : null}
+                <div className={'custom-carousel'}>
+                    {this.props.title ?
+                    <div className="carousel__title">
+                        {this.props.titleIcon ? this.renderIcons() : null}
+                        {this.props.title}
+                    </div>
+                    : null}
+                    
+                    {this.props.banner ?
+                    
+                        <span className="banner-controls">
+                            {this.props.children.map((item, key) => {
+                                return (
+                                    <span 
+                                        className={`banner-controls__item ${key == this.state.start ? 'banner-controls__item_active' : ''}`}
+                                        key={key}
+                                        onClick={() => this.handleBannerSlide(key)}
+                                    />
+                                )
+                            })}
+                        </span>
+                    
+                    : null}
+                    
+                    {!this.props.banner ? 
+                    <span className="carousel__control_prev" onClick={() => {
+                        this.refreshInterval();
+                        this.handleControls('prev');
+                    }}></span> : null}
+                    {!this.props.banner ? 
+                    <span className="carousel__control_next" onClick={() => {
+                        this.refreshInterval();
+                        this.handleControls('next');
+                    }}></span> : null}
+                    
+                    <div className={`carousel-body ${'slide-' + this.state.slideTo}`} ref={ref => this.carouselBodyRef = ref}>
+                        <Swipeable
+                        className={"carousel-body"}
+                            onSwipingLeft={this.swipingLeft}
+                            onSwiping={this.swiping}
+                            
+                            onSwiped={this.swipedControl}
+                            onSwipedUp={this.swipedUp}
+                        >
+                            {this.renderChildrens()}
+                        </Swipeable>
+                    </div>
+                    
+                </div>
             
-            {this.props.banner ?
-            
-                <span className="banner-controls">
-                    {this.props.children.map((item, key) => {
-                        return (
-                            <span 
-                                className={`banner-controls__item ${key == this.state.start ? 'banner-controls__item_active' : ''}`}
-                                key={key}
-                                onClick={() => this.handleBannerSlide(key)}
-                            />
-                        )
-                    })}
-                </span>
-            
-            : null}
-            
-            {!this.props.banner ? 
-            <span className="carousel__control_prev" onClick={() => {
-                this.refreshInterval();
-                this.handleControls('prev');
-            }}></span> : null}
-            {!this.props.banner ? 
-            <span className="carousel__control_next" onClick={() => {
-                this.refreshInterval();
-                this.handleControls('next');
-            }}></span> : null}
-
-            <div className={`carousel-body ${'slide-' + this.state.slideTo}`} ref={ref => this.carouselBodyRef = ref}>
-                
-                {this.renderChildrens()}
-            </div>
-        </div>
+        )
     }
 }

@@ -157,7 +157,7 @@ class Index extends Component {
                                 isMobile={isMobile} 
                                 title={'Акционные товары'} 
                                 titleIcon={'stock'}
-                                interval={4000}
+                                interval={100000}
                             >
                                 {this.state.products.stock.map((item, key) => {
                                     return (
@@ -175,6 +175,7 @@ class Index extends Component {
                                 isMobile={isMobile} 
                                 title={'Популярные товары'}
                                 titleIcon={'new'}
+                                interval={9000}
                             >
                                 {this.state.products.new.map((item, key) => {
                                     return (
