@@ -18,37 +18,42 @@ class CategoryList extends Component {
         };
     }
 
-    renderCategory() {
-        if (this.state.subCategory) {
-            return this.state.subCategory.children.map((category, index) => <p key={index}>{category.title}</p>)
-        }
+    openSubdomains(item, index) {
+        return <a key={index}>{item.title}</a>
     }
 
-
     itemView(item, index, type = null) {
-        console.log(123)
-        if (item.children.length > 0) {
-            return (
-                <React.Fragment key={index}>
-                    <div className="d-flex flex-row align-items-center items py-0 my-0 dropdown">
-                        <img className='icons-left-menu'
-                             src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
-                        <a
-                            className={`pl-2 text-left item `}
-                            href={'/catalog/' + item.id}>{item.title}</a>
-                        <div className="dropdown-menu">
-                        {/*    {*/}
-                        {/*        item.children.map((product, index) => {*/}
-                        {/*            return <a key={index} className="dropdown-item"*/}
-                        {/*                      href={'/catalog/' + product.id}>{product}</a>*/}
-                        {/*        })*/}
-                        {/*    }*/}
-                        </div>
-                    </div>
-                    <hr/>
-                </React.Fragment>
-            );
-        }
+        return (
+            <React.Fragment key={index}>
+                <div className="d-flex flex-row align-items-center items py-0 my-0">
+                    {
+                        item.children.length > 0
+                            ?
+                            <>
+                                <img className='icons-left-menu'
+                                     src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
+                                <a
+                                    className={`pl-2 text-left item `}
+                                >{item.title}</a>
+                                <div className='icons-left-menu__subcategories'>
+                                {
+                                    item.children.map((item, index) => this.openSubdomains(item, index))
+                                }
+                                </div>
+                            </>
+                            :
+                            <>
+                                <img className='icons-left-menu'
+                                     src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
+                                <a
+                                    className={`pl-2 text-left item `}
+                                    href={'/catalog/' + item.id}>{item.title}</a>
+                            </>
+                    }
+                </div>
+                <hr/>
+            </React.Fragment>
+        );
     }
 
     render() {
