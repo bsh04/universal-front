@@ -27,8 +27,8 @@ export default class ContactForm extends Component {
                 <ModalGallery visible={this.state.modalVisible} handleToggle={this.handleSubmit} images={images}/>
                 <div className="col">
                     <div className="contact-form__title-wrapper">
-                        <div className="contact-form-title">Есть вопросы — спрашивайте!</div>
-                        <div className="contact-form-subtitle">Вы можете задать вопрос по работе магазина или спросить о интересующем вас товаре. <br/>Наши специалисты вам помогут</div>
+                        <div className="contact-form-title">Есть вопросы? Спрашивайте!</div>
+                        <div className="contact-form-subtitle">Вы можете задать вопрос по работе магазина или спросить об интересующем вас товаре. <br/>Наши специалисты вам помогут</div>
                     </div>
                     <div className="row">
                         

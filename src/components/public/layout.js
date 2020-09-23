@@ -245,9 +245,9 @@ class PublicLayout extends Component {
                                 null
                         }
                         <div className={`service-btn-group ${isMobile ? '' : 'sticked'}`}>
-                            <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/>
+                            {/* <ServiceBtn icon={"mail"} onClick={() => this.toggleModal('request')}/> */}
                             <ServiceBtn icon={"question"} onClick={() => this.toggleModal('question')}/>
-                            <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/>
+                            {/* <ServiceBtn icon={"phone"} onClick={() => this.toggleModal('callback')}/> */}
                         </div>
 
                         <ModalGallery visible={this.state.galleryModalVisible}/>
