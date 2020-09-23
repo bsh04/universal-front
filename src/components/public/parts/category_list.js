@@ -32,7 +32,6 @@ class CategoryList extends Component {
     }
 
     render() {
-        console.log()
         let parts = window.location.pathname.split('/');
 
         return (

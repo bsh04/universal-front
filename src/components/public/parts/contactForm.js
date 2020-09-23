@@ -59,7 +59,7 @@ export default class ContactForm extends Component {
                              <ContactFormInput 
                                 type="text"
                                 placeholder=""
-                                label={"Что бы вас заинтересовало?"}
+                                label={"Что вас заинтересовало?"}
                                 onChange={(value) => console.log('value',value)}
                                 width={8}
                             />

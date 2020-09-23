@@ -19,7 +19,7 @@ class NewsList extends Component {
     }
 
     componentDidMount() {
-        this.handleGet(1);
+        this.handleGet();
     }
 
     renderItems(item, index) {
@@ -37,14 +37,15 @@ class NewsList extends Component {
         );
     }
 
-    handleGet(page) {
+    handleGet = (page) => {
         let _this = this;
         request(
-            `news/news?page=${page}`,
+            `news/news`,
             'GET',
             null,
             {},
             function (response) {
+                console.log(response)
                 _this.setState({news: response});
             },
         );
@@ -75,7 +76,10 @@ class NewsList extends Component {
                     {
                         this.state.news
                             ?
-                            this.state.news.data.map((item, key) => this.renderItems(item, key))
+                            this.state.news.data.length > 0
+                                ?
+                                this.state.news.data.map((item, key) => this.renderItems(item, key))
+                                : null
                             : null
                     }
                 </div>
@@ -83,13 +87,15 @@ class NewsList extends Component {
                     {
                         this.state.news
                             ?
-                            <Pagination handleRenderList={this.handleRenderList}
-                                        numberItems={this.state.news.count}
-                                        offset={Number(this.state.news.data.length)}
-                                        handleGet={this.handleGet}
-                            />
-                            :
-                            null
+                            this.state.news.data.length > 0
+                                ?
+                                <Pagination handleRenderList={this.handleRenderList}
+                                            numberItems={this.state.news.count}
+                                            offset={Number(this.state.news.data.length)}
+                                            handleGet={this.handleGet}
+                                />
+                                : null
+                            : null
                     }
                 </div>
             </div>
