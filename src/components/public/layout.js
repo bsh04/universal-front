@@ -254,8 +254,11 @@ class PublicLayout extends Component {
                         <ModalBasketAddAlert visible={this.state.basketAddModalVisible}/>
                         <ModalThanks visible={this.state.modalThanksVisible}/>
 
-                        <ModalCallbackForm visible={this.state.callbackModalVisible}
-                                           handleToggle={() => this.toggleModal('callback')}/>
+                        <ModalCallbackForm 
+                            visible={this.state.callbackModalVisible}
+                            handleToggle={() => this.toggleModal('callback')}
+                            token={this.props.token}
+                        />
                         <ModalRequestForm visible={this.state.requestFormModalVisible}
                                           handleToggle={() => this.toggleModal('request')}/>
                         <ModalQuestionForm visible={this.state.questionModalVisible}

@@ -21,7 +21,7 @@ const MenuTop = props => {
         props.onDeleteToken();
     }
 
-    const [amountBasket, setAmountBasket] = useState(null)
+    const [amountBasket, setAmountBasket] = useState(props.basket.length)
     const [ready, setReady] = useState(false)
 
     useEffect(() => {
@@ -100,7 +100,7 @@ const MenuTop = props => {
                     </p>
                 </div>
                 <div className='d-flex flex-row align-items-center'>
-                    <div>
+                    <div className="basket-test1">
                         <Link to={'/user/basket'}>
                             <div className="iconButtons">
                                 <ShoppingCartIcon/>
@@ -182,7 +182,7 @@ const MenuTop = props => {
                     </p>
                 </div>
                 <div className='d-flex flex-row align-items-center'>
-                    <div>
+                    <div className="basket-test2">
                         <Link to={'/user/basket'}>
                             <div className="iconButtonsReducer">
                                 <ShoppingCartIcon/>
@@ -319,7 +319,7 @@ const MenuTop = props => {
                 }
 
                 <div className='d-flex flex-row align-items-center'>
-                    <div>
+                    <div className="basket-test3">
                         <Link to={'/user/basket'}>
                             <div className={reduce ? "basketMobile text-white" : "iconButtons"}>
                                 <ShoppingCartIcon/>

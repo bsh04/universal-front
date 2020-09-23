@@ -43,7 +43,7 @@ const Header = props => {
                 null,
                 {},
                 function (response) {
-                    setBasket(response)
+                    setBasket(response);
                 },
             );
 

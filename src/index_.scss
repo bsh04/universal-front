@@ -326,6 +326,10 @@ $btn_default_color: #229DD2;
         opacity: 1;
         transition: 0.6s ease-in-out;
         
+        &-swipeable-container {
+            width: 100%;
+            height: 100%;
+        }
         .product-card {
             height: 400px;
             opacity: 1;
@@ -341,20 +345,6 @@ $btn_default_color: #229DD2;
             & .product-card {
                 transition: .35s ease-in-out;
                 opacity: .4;
-                transition: margin .25s;
-            }
-        }
-
-        &.slide-next {
-            
-            & .product-card {
-                margin-left: -200px;
-            }
-        }
-        &.slide-prev {
-            
-            & .product-card {
-                margin-left: 200px;
             }
         }
     }
@@ -1094,6 +1084,7 @@ $btn_default_color: #229DD2;
     
     &.active {
         display: flex;
+        z-index: 5000;
     }
     
     .modal-frame {
@@ -1275,6 +1266,32 @@ $btn_default_color: #229DD2;
     text-align: center;
     font-size: 16px;
     margin: 0 auto 20px;
+}
+
+.contact-form__err-text {
+    color: #db270f;
+    display: inline-block;
+    padding: 0 15px;
+    height: 22px;
+    margin-bottom: 15px;
+    background-color: #ffffffef;
+    border-radius: 11px;
+    box-shadow: 0 0 10px -4px #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.contact-form__success-text {
+    color: #28a745;
+    display: inline-block;
+    padding: 0 15px;
+    height: 22px;
+    margin-bottom: 15px;
+    background-color: #ffffffef;
+    border-radius: 11px;
+    box-shadow: 0 0 10px -4px #ffffff;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .contact-form__agree-link {

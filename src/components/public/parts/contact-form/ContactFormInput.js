@@ -8,14 +8,51 @@ export class ContactFormInput extends Component {
         this.state = {
             customPlaceholder: '',
             value: '',
-            err: false
+            err: false,
         }
     }
 
     handleChange = (e) => {
         e.preventDefault();
         let value = e.target.value;
-        this.setState({value}, () => this.props.onChange(value))
+        
+        if(this.props.type === 'tel') {
+            this.props.onChange(this.phoneNumberMask(value));
+        } else {
+            this.props.onChange(value);
+        }
+    }
+
+
+    phoneNumberMask = (value) => {
+        if(value.toString()[0] === '+') {
+            value = value.slice(1);
+        }
+        
+        let result = value.replace(/[^\d;]/g, '');
+        let transformed = '';
+
+        transformed = result.split('').map((char, index) => {
+
+            if(index === 1) {
+                return char = ' (' + char; 
+            } else if(index === 4) {
+                return ') ' + char 
+            } else if(index === 7) {
+                return ' - ' + char
+            } else if(index === 9) {
+                return ' - ' + char
+            }else if(index === 0 && char !== '+') {
+                char = '+7';
+                return char;
+            } else return char
+        
+        }).join('');
+
+        return {
+            telView: transformed.slice(0, 22),
+            tel: result.slice(0, 11)
+        };
     }
 
     render() {
@@ -29,7 +66,8 @@ export class ContactFormInput extends Component {
                 : null}
                 <input
                     required={this.props.required}
-                    defaultValue={this.state.value} 
+                    pattern={this.props.pattern ? this.props.pattern : null }
+                    value={this.props.value} 
                     type={this.props.type ? this.props.type : "text"}
                     className={"contact-form__input" + (this.state.err ? " error" : "")}
                     placeholder={this.props.placeholder ? this.props.placeholder : this.state.customPlaceholder}
