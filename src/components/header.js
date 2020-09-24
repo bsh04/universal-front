@@ -25,7 +25,11 @@ const Header = props => {
             window.removeEventListener("resize", checkWindowSizeMD);
             window.removeEventListener("scroll", navbarFixed);
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        handleGet();
+    }, [props.reload])
 
     const navbarFixed = () => {
         if (window.pageYOffset > 50) {
@@ -106,6 +110,7 @@ export default withRouter(connect(
     (state) => ({
         token: state.token,
         user: state.user,
+        reload: state.reload
     }),
     dispatch => ({
         onDeleteToken: (token) => {

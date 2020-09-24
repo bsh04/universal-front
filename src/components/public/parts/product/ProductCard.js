@@ -117,8 +117,6 @@ class ProductCard extends Component {
                 count: count,
             };
 
-            console.log('basket data:',data)
-
             let _this = this;
 
             request(

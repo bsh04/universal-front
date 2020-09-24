@@ -98,6 +98,7 @@ class Basket extends Component {
                 let arr = _this.state.products;
                 arr.splice(key, 1);
                 _this.setState({products: arr});
+                _this.props.onReloadMenu();
             },
             function (err) {
                 console.log(err)
@@ -297,6 +298,9 @@ export default withRouter(connect(
     dispatch => ({
         onAddToken: (token) => {
             dispatch({type: 'ADD_TOKEN', payload: token})
+        },
+        onReloadMenu: () => {
+            dispatch({ type: 'RELOAD', payload: true })
         },
     })
 )(Basket));
