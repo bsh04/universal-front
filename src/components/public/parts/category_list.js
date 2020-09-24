@@ -7,6 +7,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import SubcategoryList from "./subcategory_list";
+import Categories_render from "./categories_render";
 
 class CategoryList extends Component {
     constructor(props) {
@@ -18,42 +19,16 @@ class CategoryList extends Component {
         };
     }
 
-    openSubdomains(item, index) {
-        return <a key={index}>{item.title}</a>
+    componentDidMount() {
+        window.addEventListener("click", () => this.closCategory())
     }
 
-    itemView(item, index, type = null) {
-        return (
-            <React.Fragment key={index}>
-                <div className="d-flex flex-row align-items-center items py-0 my-0">
-                    {
-                        item.children.length > 0
-                            ?
-                            <>
-                                <img className='icons-left-menu'
-                                     src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
-                                <a
-                                    className={`pl-2 text-left item `}
-                                >{item.title}</a>
-                                <div className='icons-left-menu__subcategories'>
-                                {
-                                    item.children.map((item, index) => this.openSubdomains(item, index))
-                                }
-                                </div>
-                            </>
-                            :
-                            <>
-                                <img className='icons-left-menu'
-                                     src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
-                                <a
-                                    className={`pl-2 text-left item `}
-                                    href={'/catalog/' + item.id}>{item.title}</a>
-                            </>
-                    }
-                </div>
-                <hr/>
-            </React.Fragment>
-        );
+    closCategory() {
+        this.setState({openSubcategory: ''})
+    }
+
+    checkOpen = (id) => {
+        this.setState({openSubcategory: id})
     }
 
     render() {
@@ -73,7 +48,7 @@ class CategoryList extends Component {
 
                         {this.props.categories ? this.props.categories.map((item, index) => {
                             return (
-                                this.itemView(item, index)
+                                <Categories_render checkOpen={this.checkOpen} item={item} key={index} open={this.state.openSubcategory}/>
                             );
                         }) : null}
                     </div>

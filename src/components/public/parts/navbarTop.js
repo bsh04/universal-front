@@ -265,16 +265,25 @@ const NavbarTop = (props) => {
                          id="navbarDropdown"
                          role="button"
                          aria-haspopup="true" aria-expanded="false"
-                         data-toggle="dropdown"
+                         onClick={() => setIsOpenCatalog(!isOpenCatalog)}
                     >
                         <MenuIcon className='mr-2'/>
                         Каталог товаров
                         <ExpandLessIcon className='iconLess ml-2'/>
                         <ExpandMoreIcon className='iconMore ml-2'/>
                     </div>
-                    <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
-                        <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} mobile={mobile}/>
-                    </div>
+                    {
+                        isOpenCatalog
+                            ?
+                            <div className="my-dropdown">
+
+                                <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list}
+                                             mobile={mobile}/>
+                                <CloseIcon className='close-icon' onClick={() => setIsOpenCatalog(false)}/>
+                            </div>
+                            :
+                            null
+                    }
                 </div>
                 {
                     leftItems.map((item, index) => menuItemRender(item, index))
@@ -302,7 +311,8 @@ const NavbarTop = (props) => {
 
                 {
                     token ?
-                        <div className='d-flex align-items-center text-white ml-4' style={props.user.roles.includes("ROLE_ADMIN") ? {width: 390} : null}>
+                        <div className='d-flex align-items-center text-white ml-4'
+                             style={props.user.roles.includes("ROLE_ADMIN") ? {width: 390} : null}>
                             {
                                 props.user && props.user.roles && props.user.roles.includes("ROLE_ADMIN")
                                     ?
@@ -386,16 +396,25 @@ const NavbarTop = (props) => {
                          id="navbarDropdown"
                          role="button"
                          aria-haspopup="true" aria-expanded="false"
-                         data-toggle="dropdown"
+                         onClick={() => setIsOpenCatalog(!isOpenCatalog)}
                     >
                         <MenuIcon className='mr-2'/>
                         Каталог товаров
                         <ExpandLessIcon className='iconLess ml-2'/>
                         <ExpandMoreIcon className='iconMore ml-2'/>
                     </div>
-                    <div className="dropdown-menu shadow border-0 my-dropdown ml-4" aria-labelledby="navbarDropdown">
-                        <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} mobile={mobile}/>
-                    </div>
+                    {
+                        isOpenCatalog
+                            ?
+                            <div className="my-dropdown">
+                                <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list}
+                                             mobile={mobile}/>
+                                <CloseIcon className='close-icon' onClick={() => setIsOpenCatalog(false)}/>
+
+                            </div>
+                            :
+                            null
+                    }
                 </div>
 
                 <form className="form-inline w-50">
@@ -507,7 +526,8 @@ const NavbarTop = (props) => {
                                     <CloseIcon className='exit-icon mr-2 text-white' onClick={() => closeWindow()}/>
                                 </div>
                                 <div className='mobile-catalog-dropdown shadow bg-light'>
-                                    <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} reduce={true}/>
+                                    <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list}
+                                                 reduce={true}/>
                                 </div>
                             </div>
                             :
@@ -621,7 +641,8 @@ const NavbarTop = (props) => {
                                         <CloseIcon className='exit-icon mr-2 text-white' onClick={() => closeWindow()}/>
                                     </div>
                                     <div className='mobile-catalog-dropdown'>
-                                        <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history} list={list} reduce={true}/>
+                                        <CatalogList setIsOpenCatalog={setIsOpenCatalog} history={props.history}
+                                                     list={list} reduce={true}/>
                                     </div>
                                 </div>
                             </li>
