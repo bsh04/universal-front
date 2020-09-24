@@ -2595,6 +2595,11 @@ h3 > a {
     }
 
     & a {
+
+      &:hover {
+      color: #b3a501;
+        font-weight: bold;
+    }
       text-align: left;
     }
   }
