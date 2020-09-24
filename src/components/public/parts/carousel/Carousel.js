@@ -87,7 +87,6 @@ export class Carousel extends Component {
         }
         
         this.setState({start}, () => {
-            console.log(this.state.start)
             setTimeout(() => {
                 this.setState({slideTo: ''})
             }, 300);
@@ -195,19 +194,18 @@ export class Carousel extends Component {
                         this.refreshInterval();
                         this.handleControls('next');
                     }}></span> : null}
-                    
-                    <div className={`carousel-body ${'slide-' + this.state.slideTo}`} ref={ref => this.carouselBodyRef = ref}>
-                        <Swipeable
-                        className={"carousel-body"}
+                    <Swipeable
+                        className={"carousel-body-swipeable-container"}
                             onSwipingLeft={this.swipingLeft}
                             onSwiping={this.swiping}
                             
                             onSwiped={this.swipedControl}
                             onSwipedUp={this.swipedUp}
                         >
+                        <div className={`carousel-body ${'slide-' + this.state.slideTo}`} ref={ref => this.carouselBodyRef = ref} key={this.state.start.toString()}>
                             {this.renderChildrens()}
-                        </Swipeable>
-                    </div>
+                        </div>
+                    </Swipeable>
                     
                 </div>
             

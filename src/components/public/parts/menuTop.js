@@ -21,22 +21,21 @@ const MenuTop = props => {
         props.onDeleteToken();
     }
 
-    const [amountBasket, setAmountBasket] = useState(null)
-    const [ready, setReady] = useState(false)
+    const [amountBasket, setAmountBasket] = useState(null);
+    
+    const [ready, setReady] = useState(false);
 
     useEffect(() => {
-        if (props.basket.length > 0) {
-            props.basket.map((item, index) => {
-                setAmountBasket(prev => prev + item.product.price)
-                if (index === props.basket.length - 1) setReady(true)
-            })
-        } else {
-            setReady(true)
+        if(props.basket.length > 0) {
+            let sum = props.basket.reduce((acc, item) => acc + item.product.price, 0);
+            
+            setAmountBasket(sum);
+            
+            setReady(true);
         }
-        return () => {
-            setAmountBasket(null)
-        }
-    }, [props])
+        
+        
+    }, [props.reload, props.basket])
 
 
     const defaultMenu = () => {
@@ -389,6 +388,7 @@ export default withRouter(connect(
     (state) => ({
         token: state.token,
         user: state.user,
+        reload: state.reload
     }),
     dispatch => ({
         onDeleteToken: (token) => {

@@ -146,7 +146,7 @@ class ProductCard extends Component {
                         :
                         null
                 }
-                <i className={`product-card__favorite-icon${this.props.favorite ? "_active" : ""}`}
+                <i className={`product-card__favorite-icon product-card__favorite-icon${this.props.favorite ? "_active" : ""}`}
                     onClick={this.handleFavoriteClick}
                 />
                 <div className="product-card__icons-row">

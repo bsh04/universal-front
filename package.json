@@ -58,6 +58,7 @@
     ]
   },
   "devDependencies": {
-    "@material-ui/icons": "^4.9.1"
+    "@material-ui/icons": "^4.9.1",
+    "redux-devtools": "^3.7.0"
   }
 }

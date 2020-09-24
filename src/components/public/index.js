@@ -169,7 +169,7 @@ class Index extends Component {
                             </Carousel>
                             : null}
 
-                            { this.state.products.new.length > 0 ?
+                            { this.state.products.new.length > 1 ?
                             <Carousel 
                                 length={isMobile ? 1 : 6}
                                 isMobile={isMobile} 
@@ -179,7 +179,7 @@ class Index extends Component {
                             >
                                 {this.state.products.new.map((item, key) => {
                                     return (
-                                        <ProductCard item={item} key={('new' + item.id )} update={this.updateFav}
+                                        <ProductCard item={item} key={('new' + item.id + key).toString()} update={this.updateFav}
                                             favorite={this.isFavorite(item) ? true : false}
                                         />
                                     );
