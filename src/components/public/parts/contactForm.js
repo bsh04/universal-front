@@ -146,13 +146,8 @@ export default class ContactForm extends Component {
                              <ContactFormInput 
                                 type="text"
                                 placeholder=""
-<<<<<<< HEAD
                                 label={"Что бы вас заинтересовало?"}
                                 onChange={(value) => this.setState({message: value})}
-=======
-                                label={"Что вас заинтересовало?"}
-                                onChange={(value) => console.log('value',value)}
->>>>>>> develop
                                 width={8}
                             />
                             <ContactFormInput 
