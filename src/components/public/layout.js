@@ -106,6 +106,7 @@ class PublicLayout extends Component {
     }
 
 
+
     toggleModal = (name) => {
         let target = null;
 
@@ -165,7 +166,6 @@ class PublicLayout extends Component {
             let background = null;
             let arr = ['login', 'data/change', '/password/reset', '/order/add', 'register', '/data/change']
             arr.forEach(item => this.props.location.pathname.indexOf(item) !== -1 ? background = true : null);
-
 
             return (
                 <div>
@@ -230,7 +230,7 @@ class PublicLayout extends Component {
 
                         </div>
                         {
-                            this.props.from === '/'
+                            this.props.location.pathname === '/'
                                 ?
                                 <div className='delivery-and-payment'>
                                     <h5>как купить?</h5>
