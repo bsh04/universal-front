@@ -43,8 +43,8 @@ const MenuTop = props => {
             <div
                 className="d-flex justify-content-around text-left bg-white align-items-center fixed-top mainImage container-fluid defaultTopMenu">
                 <Link to="/">
-                    <div className={'d-flex flex-column'}>
-                        <h1 className={'pr-3'}>Универсал</h1>
+                    <div className={'d-flex flex-column text-center'}>
+                        <h1>Универсал</h1>
                         <h6>хозяйственные товары</h6>
                     </div>
                 </Link>
@@ -155,8 +155,8 @@ const MenuTop = props => {
                 className="d-flex flex-row justify-content-around text-left bg-light align-items-center container-fluid fixed-top mainImage minTopMenu"
             >
                 <Link to="/">
-                    <div className={'d-flex flex-row align-items-center'}>
-                        <h1 className={'pr-3'}>Универсал</h1>
+                    <div className={'d-flex flex-row align-items-center text-center'}>
+                        <h1>Универсал</h1>
                         <h6>хозяйственные товары</h6>
                     </div>
                 </Link>
@@ -238,8 +238,8 @@ const MenuTop = props => {
             <div
                 className="d-flex justify-content-around text-left bg-white align-items-center fixed-top mainImage container-fluid defaultTopMenu" style={reduce ? {height: 50} : null}>
                 <Link to="/">
-                    <div className={reduce ? 'd-flex flex-row align-items-center' : 'd-flex flex-column'}>
-                        <h1 className={'pr-3'}>Универсал</h1>
+                    <div className={reduce ? 'd-flex flex-row align-items-center text-center' : 'd-flex flex-column text-center'}>
+                        <h1>Универсал</h1>
                         <h6>хозяйственные товары</h6>
                     </div>
                 </Link>
@@ -347,7 +347,7 @@ const MenuTop = props => {
                 className="d-flex flex-row px-3 bg-light text-left align-items-center justify-content-center fixed-top mainImage"
                 style={{height: 70}}>
                 <div className='d-flex flex-column align-items-left w-50'>
-                    <Link to="/">
+                    <Link to="/" className="align-items-center text-center">
                         <h1>универсал</h1>
                         <h6>хозяйственные товары</h6>
                     </Link>

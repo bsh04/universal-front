@@ -97,7 +97,7 @@ $btn_default_color: #229DD2;
 }
 
 .banner {
-    width: 96%;
+    width: 100%;
     border-radius: 10px;
     //padding-top: 6%;
     //padding-left: 8%;
@@ -110,7 +110,7 @@ $btn_default_color: #229DD2;
         width: 100%;
         min-height: 75%;
         border-radius: 10px;
-        object-fit: cover;
+        object-fit: contain;
         right: 0;
         top: 0;
         z-index: -1;
@@ -141,7 +141,7 @@ $btn_default_color: #229DD2;
             }
 
             .banner-bg_promo1 &::before {
-                background-image: url('./images/banners/icons/promo1.png');
+                //background-image: url('./images/banners/icons/promo1.png');
             }
         }
 
@@ -185,11 +185,11 @@ $btn_default_color: #229DD2;
 }
 
 .content-wrapper {
-    padding: 0 3% 60px 30px;
+    padding: 0 0 60px 30px;
     width: 82%;
     display: flex;
     margin-left: 10px;
-    margin-right: 40px;
+    margin-right: 30px;
     
 }
 
@@ -377,6 +377,7 @@ $btn_default_color: #229DD2;
         margin-bottom: 0;
         padding-bottom: 0;
         width: 100%;
+        padding-left: 32px;
 
         .carousel__title {
             align-self: flex-start;
@@ -384,7 +385,7 @@ $btn_default_color: #229DD2;
         }
 
         .carousel-body {
-            width: 95%;
+            width: 98%;
             padding: 10px 0;
             justify-content: flex-start;
 
@@ -702,6 +703,7 @@ $btn_default_color: #229DD2;
 }
 
 .product-card {
+    cursor: pointer;
     position: relative;
     display: flex;
     min-width: 125px;
@@ -883,75 +885,79 @@ $btn_default_color: #229DD2;
             text-decoration: line-through;
         }
     }
+}
 
-    &__basket-add {
+.product-card__basket-add {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 80%;
+    height: 40px;
+    max-width: 200px;
+    padding: 3px;
+    margin: 10px 0;
+    background-color: $btn_default_color;
+    border-radius: 20px;
+    
+    
+    .product-card_tile & {
+        margin: 10px auto;
+        
+        &-counter {
+            width: 80px;
+        }
+    }
+    
+    &:hover {
+        background-color: $btn_active_color;
+    }
+
+    &-counter {
+        height: 100%;
+        max-width: 100px;
+        width: 40%;
+        
+        border-radius: 20px;
+        background-color: #ffffff;
         display: flex;
         flex-flow: row nowrap;
+        justify-content: space-around;
         align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-        width: 80%;
-        height: 40px;
-        max-width: 200px;
-        padding: 3px;
-        margin: 10px 0;
-        background-color: $btn_default_color;
-        border-radius: 20px;
-        
-        
-        .product-card_tile & {
-            margin: 10px auto;
-            
-            &-counter {
-                width: 80px;
-            }
-        }
-        
-        &:hover {
-            background-color: $btn_active_color;
-        }
 
-        &-counter {
+        & > span {
+            color: #707070;
+        }
+        & > &-control {
+            font-size: 20px;
+            width: 30%;
             height: 100%;
-            max-width: 100px;
-            width: 40%;
-            
-            border-radius: 20px;
-            background-color: #ffffff;
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: space-around;
-            align-items: center;
-
-            & > span {
-                color: #707070;
+            text-align: center;
+            &:last-child {
+                display: inline-block;
+                padding-top: 1px;
             }
-            & > &-control {
-                vertical-align: baseline;
-                font-size: 20px;
-                width: 30%;
-                height: 100%;
 
-            }
-            & > &-value {
-                font-size: 14px;
-            }
         }
+        & > &-value {
+            font-size: 14px;
+        }
+    }
 
-        &-text {
-            font-size: 12px;
-            color: #ffffff;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-right: 20px;
-        }
-        &-icon {
-            display: none;
-        }
-
+    &-text {
+        font-size: 12px;
+        color: #ffffff;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-right: 20px;
+    }
+    &-icon {
+        display: none;
     }
 
 }
+
 @media screen and(max-width: 767px) {
     
     .product-card__basket-add {
@@ -1722,7 +1728,7 @@ $btn_default_color: #229DD2;
     .index-page {
         .custom-carousel {
             width: 95%;
-
+            padding-left: 22px;
             .banner-controls {
                 top: 70%;
                 padding-right: 0;
@@ -1855,7 +1861,7 @@ $btn_default_color: #229DD2;
     .index-page {
         .custom-carousel {
             width: 100%;
-
+            padding-left: 0;
             .carousel__title {
                 align-self: center;
                 margin-left: 0;

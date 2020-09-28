@@ -139,20 +139,23 @@ class ProductCard extends Component {
         let image = item.photo ? productImageUrl + item.photo : require('../../../../images/image-placeholder.png');
         
         return (
-            <div className={`product-card product-card_${this.state.cardView}`}>
+            <div 
+                className={`product-card product-card_${this.state.cardView}`} 
+                onClick={(e) => {this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}}
+            >
                 {
                     this.props.page === 'favorite' ?
                         <DeleteOutlineIcon className='product-card__delete-icon' onClick={() => this.props.handleDelete(this.props.index)}/>
                         :
-                        null
+                        <i className={`product-card__favorite-icon product-card__favorite-icon${this.props.favorite ? "_active" : ""}`}
+                            onClick={this.handleFavoriteClick}
+                        />
                 }
-                <i className={`product-card__favorite-icon product-card__favorite-icon${this.props.favorite ? "_active" : ""}`}
-                    onClick={this.handleFavoriteClick}
-                />
+                
                 <div className="product-card__icons-row">
                     {this.renderIcons()}
                 </div>
-                <div className="product-card__image-wrapper"  onClick={() => this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}>
+                <div className="product-card__image-wrapper">
                     <img src={image} alt="" className="product-card__image"/>
                 </div>
 

@@ -46,6 +46,22 @@ class App extends Component {
         this.checkSizeWindow()
         window.addEventListener("resize", this.checkSizeWindow.bind(this));
 
+        let additionalData = [
+            {
+                title: 'Новые товары',
+                id: 'new',
+                children: []
+            }, {
+                title: 'Акционные товары',
+                id: 'stock',
+                children: []
+            }, {
+                title: 'Сезонные товары',
+                id: 'season',
+                children: []
+            },
+        ]
+
         let _this = this;
 
         request(
@@ -54,7 +70,7 @@ class App extends Component {
             null,
             {},
             (response) => {
-                _this.setState({categories: response})
+                _this.setState({categories: [...additionalData, ...response]},)
             },
             (err) => console.log(err)
         )

@@ -33,7 +33,11 @@ export class FooterContactsLink extends Component {
 
     renderLink () {
         if(!this.props.type) {
-            return <Link className={`footer__link footer__link_${this.props.link.slice(1)}`} to={this.props.link}>{this.props.title}</Link>
+            return <Link 
+                className={`footer__link footer__link_${this.props.link.slice(1)}`} 
+                to={this.props.link}
+                onClick={() => window.scrollTo(0, 0)}
+                >{this.props.title}</Link>
 
         } else if(this.props.type === 'shedule'){
             return <span className="footer__link footer__link_shedule">

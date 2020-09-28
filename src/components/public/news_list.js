@@ -26,8 +26,10 @@ class NewsList extends Component {
         let date = new Date(item.date);
         return (
             <div key={index} className="card card-container">
-                <img itemProp="image" className={'card-img-top'} alt={'image'}
-                     src={'http://ts3.vladimirov-mv.name/uploads/news/' + item.photo}/>
+                <div className="image-wrapper">
+                    <img itemProp="image" className={'card-img-top'} alt={'image'}
+                        src={'http://ts3.vladimirov-mv.name/uploads/news/' + item.photo}/>
+                </div>
                 <div className="card-body">
                     <small itemProp="dateline">{date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()}</small>
                     <h5 className='card-title' itemProp="headline">{item.title}</h5>

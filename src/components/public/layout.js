@@ -89,10 +89,10 @@ class PublicLayout extends Component {
                         {
                             images: [
                                 {title: 'Самовызов', content: 'со склада по адресу г. Томск, ул. Бердская, 31, магазин Универсал ', src: 'parcel.png'},
-                                {title: 'Бесплатная доставка в черте города', content: 'при заказе на сумму от 3000 Р Стоимость доставки в отдаленные районы и по области уточняйте у менеджеров', src: 'shipment.png'},
+                                {title: 'Бесплатная доставка в черте города', content: 'при заказе на сумму от 3000 Р. Стоимость доставки в отдаленные районы и по области уточняйте у менеджеров', src: 'shipment.png'},
                                 {title: 'Бесплатная доставка до терминала', content: 'нужной вам транспортной компании при заказе на сумму от 3000 Р', src: 'delivery.png'},
                             ],
-                            addition: 'Стоимость доставки в черте города при заказе на сумму от 700 Р до 2999 Рсоставит 150 Р',
+                            addition: 'Стоимость доставки в черте города при заказе на сумму от 700 Р до 2999 Р составит 150 Р',
                         }
                 }
             ]
@@ -109,7 +109,7 @@ class PublicLayout extends Component {
 
     toggleModal = (name) => {
         let target = null;
-
+        
         switch (name) {
             case 'basket':
                 target = 'basketAddModalVisible';
@@ -134,7 +134,8 @@ class PublicLayout extends Component {
         if (target) {
             this.setState({
                 [target]: !this.state[target]
-            })
+            });
+
         }
     }
 
@@ -191,7 +192,7 @@ class PublicLayout extends Component {
                                     <div className="text-small">На парники и  комплектующие</div>
                                     <div className="text-big">скидка 15%</div>
 
-                                    <div className="side-banner-button">
+                                    <div className="side-banner-button" onClick={() => this.props.history.push('catalog/season')}>
                                         Подробнее
                                         <i className="side-banner-button__icon"> </i>
                                     </div>
@@ -237,7 +238,7 @@ class PublicLayout extends Component {
                                     <div className='container-items'>
 
                                         {this.state.bottomItems.map((item, index) => <DeliveryAndPaymentIndexPage
-                                            item={item} index={index}/>
+                                            item={item} key={index}/>
                                         )}
                                     </div>
                                 </div>
@@ -252,7 +253,11 @@ class PublicLayout extends Component {
 
                         <ModalGallery visible={this.state.galleryModalVisible}/>
                         <ModalBasketAddAlert visible={this.state.basketAddModalVisible}/>
-                        <ModalThanks visible={this.state.modalThanksVisible}/>
+                        <ModalThanks 
+                            visible={this.state.modalThanksVisible}
+                            handleToggle={() => this.toggleModal('thanks')}
+                        
+                        />
 
                         <ModalCallbackForm 
                             visible={this.state.callbackModalVisible}
@@ -262,7 +267,9 @@ class PublicLayout extends Component {
                         <ModalRequestForm visible={this.state.requestFormModalVisible}
                                           handleToggle={() => this.toggleModal('request')}/>
                         <ModalQuestionForm visible={this.state.questionModalVisible}
-                                           handleToggle={() => this.toggleModal('question')}/>
+                                           handleToggle={() => {this.toggleModal('question')}}
+                                           handleThanks={() => this.setState({modalThanksVisible: true})}
+                                           />
 
                         {this.props.location.pathname === '/' ?
                             <div className="about-company">
@@ -284,7 +291,7 @@ class PublicLayout extends Component {
                                 </div>
                             </div>
                         : null}
-                        <ContactForm/>
+                        <ContactForm onSubmit={() => this.setState({modalThanksVisible: true})}/>
                         {this.state.location.indexOf('contact') === -1 ?
                             <MapSection_/> : null}
                     </div>

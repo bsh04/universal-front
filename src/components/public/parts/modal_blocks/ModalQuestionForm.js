@@ -83,7 +83,10 @@ export class ModalQuestionForm extends Component {
                         captcha: '',
                         captchaResult: '',
                         userInputCaptcha: ''
-                    }, () => _this.props.handleToggle())
+                    }, () => {
+                        _this.props.handleToggle();
+                        _this.props.handleThanks();
+                    })
                 },
                 function(err) {
                     

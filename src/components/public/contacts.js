@@ -45,7 +45,7 @@ class Contact extends Component {
                             <PhoneInTalkOutlinedIcon className='mr-2 icon'/>
                         </div>
                         <div className='second'>
-                            <a href={'tel:+7 (3822) 909291'} itemProp="telephone">+7 (3822) 90-92-91,</a>
+                            <a href={'tel:+7 (3822) 909291'} itemProp="telephone">+7 (3822) 90-92-91, </a>
                             <a href={'tel:+7 (3822) 90-44-32'} itemProp="telephone">+7 (3822) 90-44-32<br/></a>
                             <a href={'tel:+7 (3822) 902-668'} itemProp="telephone">+7 (3822) 90-26-68</a>
                         </div>

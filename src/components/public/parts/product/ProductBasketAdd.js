@@ -24,7 +24,13 @@ export class ProductBasketAdd extends Component {
 
     render() {
         return (
-            <div className="product-card__basket-add" onClick={() => this.props.handleClick(this.state.count)}>
+            <div 
+                className="product-card__basket-add"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    this.props.handleClick(this.state.count);
+
+                }}>
                 <div className="product-card__basket-add-counter">
                     <span className="product-card__basket-add-counter-control unselectable" onClick={(e) => this.handleCount(e, false)}>-</span>
                     <span className="product-card__basket-add-counter-value">{this.state.count}</span>

@@ -224,8 +224,15 @@ const NavbarTop = (props) => {
         setIsOpenCatalog(false)
     }
 
-    const handleSearch = () => {
-        console.log(search)
+    const handleSearch = (e) => {
+        e.preventDefault();
+        let parts = window.location.pathname.split('/');
+        
+        /* if (searchInCat) {
+            props.history.push('/' + parts[1] + '/' + parts[2] + '/' + search, {searchValue: search});
+        } */
+        
+        props.history.push('/catalog/search?q=' + search, {searchValue: search});
     }
 
     const renderWindow = () => {
@@ -296,12 +303,15 @@ const NavbarTop = (props) => {
                             <div className="input-group w-100">
                                 <input className='form-control shadow-none bg-light border-0' type="text"
                                        placeholder='Что Вы ищете?'
-                                       aria-label="Radio button for following text input"/>
+                                       aria-label="Radio button for following text input"
+                                       onChange={(e) => {setSearch(e.target.value)}}
+                                />
                             </div>
                         </div>
                         <div>
                             <CloseIcon/>
                             <button
+                                onClick={(e) => handleSearch(e)}
                                 className="btn btn-outline-success my-1 mr-1 border-0 rounded-pill text-white search"
                                 type="submit">найти
                             </button>
@@ -425,12 +435,15 @@ const NavbarTop = (props) => {
                             <div className="input-group w-100">
                                 <input className='form-control shadow-none bg-light border-0' type="text"
                                        placeholder='Что Вы ищете?'
-                                       aria-label="Radio button for following text input"/>
+                                       aria-label="Radio button for following text input"
+                                       onChange={(e) => {setSearch(e.target.value)}}
+                                />
                             </div>
                         </div>
                         <div>
                             <CloseIcon/>
                             <button
+                                onClick={(e) => handleSearch(e)}
                                 className="btn btn-outline-success my-1 mr-1 border-0 rounded-pill text-white search"
                                 type="submit">найти
                             </button>
