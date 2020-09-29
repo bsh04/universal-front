@@ -6,7 +6,7 @@ class SubcategoryList extends Component {
     }
 
     render() {
-        console.log(this.props)
+        
         return (
             <div>
                 <p>131231231312</p>

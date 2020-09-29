@@ -134,7 +134,7 @@ class Index extends Component {
                         
                         <div className="index-page w-100">
                             <Carousel
-                                banner
+                                banner={true}
                                 length={1} 
                                 isMobile={isMobile}
                                 interval={5000}

@@ -77,7 +77,7 @@ export class Carousel extends Component {
     handleControls = (to) => {
         let itemsLength = this.props.children.length;
         let start = this.state.start;
-
+        
         this.setState({slideTo: to})
 
         if(to === 'prev') {
@@ -94,16 +94,16 @@ export class Carousel extends Component {
         
     }
 
-    renderChildrens() {
+    renderChildrens = () => {
         let items = this.props.children;
         
         if(this.props.banner) {
-            return items[this.state.start]
+            return items[this.state.start] ? items[this.state.start] : items[0];
         }
 
         let start = this.state.start;
         let end = (start + this.state.length >= items.length) ? items.length : start + this.state.length;
-        
+
         let result = items.slice(start, end);
         
         if(result.length < this.state.length) {
@@ -116,7 +116,6 @@ export class Carousel extends Component {
             }
         }
 
-        
         return result;
     }
 
@@ -131,15 +130,6 @@ export class Carousel extends Component {
         this.setState({start: key});
     }
 
-
-    swiping(e, deltaX, deltaY, absX, absY, velocity) {
-       
-    }
-
-    swipingLeft(e, absX) {
-        
-    }
-
     swiped(e, deltaX, deltaY, isFlick, velocity) {
         
         if(e && e.dir === 'Left') {
@@ -150,11 +140,6 @@ export class Carousel extends Component {
 
         }
     }
-
-    swipedUp(e, deltaY, isFlick) {
-        
-    }
-    
 
     render() {        
 

@@ -157,7 +157,7 @@ const MenuTop = props => {
                 <Link to="/">
                     <div className={'d-flex flex-row align-items-center text-center'}>
                         <h1>Универсал</h1>
-                        <h6>хозяйственные товары</h6>
+                        {!reduce ? <h6>хозяйственные товары</h6> : null}
                     </div>
                 </Link>
                 <div className='d-flex align-items-center'>
@@ -173,8 +173,8 @@ const MenuTop = props => {
                             +7 (3822) 90-44-32
                         </a>
                     </p>
-                    <p>
-                        <PhoneInTalkOutlinedIcon className='menuItems pl-5'/>
+                    <p className="ml-5">
+                        <PhoneInTalkOutlinedIcon className='menuItems'/>
                         <a className='menuTextPhone' href={'tel:+7 (3822) 90-26-68'} itemProp="telephone">
                             +7 (3822) 90-26-68
                         </a>
@@ -240,7 +240,7 @@ const MenuTop = props => {
                 <Link to="/">
                     <div className={reduce ? 'd-flex flex-row align-items-center text-center' : 'd-flex flex-column text-center'}>
                         <h1>Универсал</h1>
-                        <h6>хозяйственные товары</h6>
+                        {!reduce ? <h6>хозяйственные товары</h6> : null}
                     </div>
                 </Link>
                 {

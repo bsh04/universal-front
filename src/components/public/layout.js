@@ -88,7 +88,7 @@ class PublicLayout extends Component {
                     id: 4, title: 'получение товара', image: 'product.png', content:
                         {
                             images: [
-                                {title: 'Самовызов', content: 'со склада по адресу г. Томск, ул. Бердская, 31, магазин Универсал ', src: 'parcel.png'},
+                                {title: 'Самовывоз', content: 'со склада по адресу г. Томск, ул. Бердская, 31, магазин Универсал ', src: 'parcel.png'},
                                 {title: 'Бесплатная доставка в черте города', content: 'при заказе на сумму от 3000 Р. Стоимость доставки в отдаленные районы и по области уточняйте у менеджеров', src: 'shipment.png'},
                                 {title: 'Бесплатная доставка до терминала', content: 'нужной вам транспортной компании при заказе на сумму от 3000 Р', src: 'delivery.png'},
                             ],
@@ -99,9 +99,14 @@ class PublicLayout extends Component {
         };
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+
     componentWillUpdate(nextProps, nextState, nextContext) {
         if (this.props.location.pathname !== nextProps.location.pathname) {
             this.props.updateFrom(this.props.location.pathname);
+            window.scrollTo(0, 0);
         }
     }
 

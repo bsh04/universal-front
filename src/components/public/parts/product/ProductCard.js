@@ -35,8 +35,8 @@ class ProductCard extends Component {
         })
     }
 
-    handleFavoriteClick = () => {
-        
+    handleFavoriteClick = (e) => {
+        e.stopPropagation();
         if (!this.props.favorite) {
             if (!this.props.token) {
                 this.props.onError({
@@ -141,11 +141,17 @@ class ProductCard extends Component {
         return (
             <div 
                 className={`product-card product-card_${this.state.cardView}`} 
-                onClick={(e) => {this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}}
+                onClick={(e) => this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}
             >
                 {
                     this.props.page === 'favorite' ?
-                        <DeleteOutlineIcon className='product-card__delete-icon' onClick={() => this.props.handleDelete(this.props.index)}/>
+                        <DeleteOutlineIcon 
+                            className='product-card__delete-icon' 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                this.props.handleDelete(this.props.index)}
+                            }
+                        />
                         :
                         <i className={`product-card__favorite-icon product-card__favorite-icon${this.props.favorite ? "_active" : ""}`}
                             onClick={this.handleFavoriteClick}

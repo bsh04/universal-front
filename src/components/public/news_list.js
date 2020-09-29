@@ -47,7 +47,7 @@ class NewsList extends Component {
             null,
             {},
             function (response) {
-                console.log(response)
+                
                 _this.setState({news: response});
             },
         );

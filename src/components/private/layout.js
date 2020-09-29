@@ -18,7 +18,9 @@ import {CategoriesContext} from "../../services/contexts";
 import CategoryList from "../public/parts/category_list";
 
 class UserLayout extends Component {
-    
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
 
     componentDidUpdate() {
         if (this.props.token === false) {
@@ -28,6 +30,7 @@ class UserLayout extends Component {
     componentWillUpdate(nextProps, nextState, nextContext) {
         if (this.props.location.pathname !== nextProps.location.pathname) {
             this.props.updateFrom(this.props.location.pathname);
+            window.scrollTo(0, 0);
         }
     }
 
