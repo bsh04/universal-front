@@ -18,7 +18,6 @@ const Pagination = (props) => {
     }, [props.offset])
 
     useEffect(() => {
-        console.log('123')
         setPickPage(1)
     }, [props.match])
 
