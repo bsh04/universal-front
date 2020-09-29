@@ -16,13 +16,30 @@ const CatalogList = (props) => {
 
 
     const getData = () => {
+        let additionalData = [
+            {
+                title: 'Новые товары',
+                id: 'new',
+                children: []
+            }, {
+                title: 'Акционные товары',
+                id: 'stock',
+                children: []
+            }, {
+                title: 'Сезонные товары',
+                id: 'season',
+                children: []
+            },
+        ]
+
+
         request(
             'product/categories',
             'GET',
             {},
             {},
             function (response) {
-                setList(response)
+                setList([...additionalData, ...response])
             },
             function (err) {
                 console.log(err)

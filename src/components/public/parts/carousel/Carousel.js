@@ -168,7 +168,7 @@ export class Carousel extends Component {
                     </div>
                     : null}
                     
-                    {this.props.banner ?
+                    {/* this.props.banner ?
                     
                         <span className="banner-controls">
                             {this.props.children.map((item, key) => {
@@ -182,7 +182,7 @@ export class Carousel extends Component {
                             })}
                         </span>
                     
-                    : null}
+                    : null */}
                     
                     {!this.props.banner ? 
                     <span className="carousel__control_prev" onClick={() => {

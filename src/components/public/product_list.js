@@ -58,21 +58,11 @@ class ProductList extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.handleGet(this.props.match.params.category);
 
         if (this.props.token !== false) {
-
-            let _this = this;
-            request(
-                'product/favorite',
-                'GET',
-                null,
-                {},
-                function (response) {
-                    _this.setState({favorites: response});
-                },
-            );
+            this.getFavorites();
         }
     }
 
@@ -89,9 +79,26 @@ class ProductList extends Component {
         })
     }
 
+    getFavorites() {
+        let _this = this;
+
+        request(
+            'product/favorite',
+            'GET',
+            null,
+            {},
+            function (response) {
+                _this.setState({favorites: response});
+            },
+        );
+    }
+
     handleGet = (cat, pickPage) => {
 
-
+        if(!cat) {
+            cat = 'search'
+        }
+        
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -100,19 +107,22 @@ class ProductList extends Component {
             offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset
         }
         let str = "";
+        
         for (let key in obj) {
             if (str !== "") {
                 str += "&";
             }
             str += key + "=" + encodeURIComponent(obj[key]);
         }
-
+        
         let _this = this;
+        
         if (cat === 'search') {
+            
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});
                 request(
-                    'product/search' + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
+                    'product/search' + '?' + str + (this.props.match.params.searchValue ? '&data=' + this.props.match.params.searchValue : ''),
                     'POST',
                     {
                         data: (/%[0-9a-f]{2}/i.test(this.props.location.search.substr(3)) ?
@@ -125,12 +135,17 @@ class ProductList extends Component {
 
                         response.splice(-1, 1);
                         _this.setState({products: response, catList: [], totalItems: totalItems, request: false});
+                        
                     },
+                    function(err) {
+                        alert('Ошибка запроса', 'Невозможно выполнить запрос')
+                    }
                 );
             }
         } else if (cat) {
+            
             request(
-                'product/' + cat + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
+                'product/' + cat + '?' + str + (this.props.match.params.searchValue ? '&data=' + this.props.match.params.searchValue : ''),
                 'GET',
                 null,
                 {},
@@ -156,8 +171,9 @@ class ProductList extends Component {
                 }
             );
         } else {
+            
             request(
-                'product/' + this.props.match.params.category + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
+                'product/' + this.props.match.params.category + '?' + str + (this.props.match.params.searchValue ? '&data=' + this.props.match.params.searchValue : ''),
                 'GET',
                 null,
                 {},

@@ -136,7 +136,8 @@ class Index extends Component {
                             <Carousel
                                 banner
                                 length={1} 
-                                isMobile={isMobile} 
+                                isMobile={isMobile}
+                                interval={5000}
                             >
                                 {bannersData.map((item, key) => {
                                     return <MainBanner 
@@ -157,7 +158,7 @@ class Index extends Component {
                                 isMobile={isMobile} 
                                 title={'Акционные товары'} 
                                 titleIcon={'stock'}
-                                interval={100000}
+                                interval={10000}
                             >
                                 {this.state.products.stock.map((item, key) => {
                                     return (
@@ -175,7 +176,7 @@ class Index extends Component {
                                 isMobile={isMobile} 
                                 title={'Популярные товары'}
                                 titleIcon={'new'}
-                                interval={9000}
+                                interval={7000}
                             >
                                 {this.state.products.new.map((item, key) => {
                                     return (

@@ -207,7 +207,13 @@ h3 > a {
 
     & .phone {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      max-width: 320px;
+
+      & .second {
+        display: flex;
+        flex-wrap: wrap;
+      }
 
       & a {
         color: black;
@@ -1782,26 +1788,31 @@ h3 > a {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  justify-content: center;
-  padding-right: 55px;
-
+  justify-content: flex-start;
+  
 
   .card-container {
-    margin: 20px;
+    margin: 0 20px 20px 0;
     height: 420px;
     overflow: hidden;
-    width: 300px;
+    width: 31%;
+    
+    
     border-radius: 10px;
 
     &:hover {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
 
-    & img {
+    & .image-wrapper {
+      min-width: 100%;
       height: 50%;
-      border-radius: 30px;
-      padding: 20px;
+      padding: 10px;
+    }
+    & img {
       width: 100%;
+      height: 100%;
+      border-radius: 30px;
       object-fit: contain;
     }
 
@@ -2877,6 +2888,12 @@ div {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   padding: 40px;
 
+  &::after {
+    content: '';
+    height: 100%;
+    width: 30px;
+  }
+
   & .close-icon {
     position: absolute;
     top: 1px;
@@ -2908,10 +2925,28 @@ div {
   }
 }
 
+@media screen and (max-width: 1400px) {
+  .news-container {
+      
+    & .card-container {
+      width: 45%;
+    }
+  }
+}
+
+
+
 @media screen and (max-width: 992px) {
   .catalog_link {
     padding-right: 0 !important;
     border-right: none;
+  }
+  
+  .news-container {
+      
+    & .card-container {
+      width: 100%;
+    }
   }
 }
 
@@ -2964,7 +2999,7 @@ div {
 
     & .item-container {
       padding: 20px;
-      max-width: 240px;
+      width: 240px;
       max-height: 240px;
       background-color: white;
       border: 1px solid #f1f1f1;

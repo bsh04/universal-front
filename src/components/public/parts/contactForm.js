@@ -85,7 +85,7 @@ export default class ContactForm extends Component {
 
                         errName: null,
                         isSuccess: true
-                    })        
+                    }, () => _this.props.onSubmit ? _this.props.onSubmit() : null) 
                 },
                 function(err) {}
             );
