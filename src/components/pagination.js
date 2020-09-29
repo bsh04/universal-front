@@ -11,6 +11,7 @@ const Pagination = (props) => {
     const [numberPages, setNumberPages] = useState(Number(props.numberItems))
     const [numberItems, setNumberItems] = useState(Number(props.numberItems))
     const [smallBar, setSmallBar] = useState(true)
+    const [currentCategory, setCurrentCategory] = useState(props.currentCategory)
 
     useEffect(() => {
         setOffset(Number(props.offset))
@@ -41,7 +42,7 @@ const Pagination = (props) => {
     useEffect(() => {
         document.documentElement.scrollTop = 0
         if (props.handleGet) {
-            props.handleGet(null, pickPage)
+            props.handleGet(currentCategory ? currentCategory : null, pickPage)
         } else {
             let startRender, endRender
             if (pickPage === 1) {

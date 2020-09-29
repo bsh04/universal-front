@@ -281,7 +281,7 @@ class Workshop extends Component {
     }
 
     render() {
-        console.log(this.state.article)
+        
         if (this.state.article) {
             if (this.state.article.title === 'ПОСТЕЛЬНОЕ БЕЛЬЕ') {
                 return this.renderLinens()

@@ -25,7 +25,7 @@ class DeliveryAndPayment extends Component {
             null,
             {},
             function (response) {
-                console.log(response)
+                
                 _this.setState({
                     article: response
                 })
@@ -35,7 +35,7 @@ class DeliveryAndPayment extends Component {
     }
 
     render() {
-        if(this.state.article) console.log(this.state.article)
+        
         return (
             <div>
                 <Breadcrumbs path={[{title: 'Оплата и доставка', link: '/deliveryandpayment'}]}/>

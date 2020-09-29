@@ -211,7 +211,7 @@ class ProductDetails extends Component {
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2' src={require("../../../../images/money.png")}
                                                          alt=""/>
-                                                    <p>Наличными при самовызове</p>
+                                                    <p>Наличными при самовывозе</p>
                                                 </div>
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2'
@@ -233,7 +233,7 @@ class ProductDetails extends Component {
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2' src={require('../../../../images/parcel.png')}
                                                          alt=""/>
-                                                    <p>Самовызов</p>
+                                                    <p>Самовывоз</p>
                                                 </div>
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2'
@@ -256,7 +256,7 @@ class ProductDetails extends Component {
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2' src={require("../../../../images/money.png")}
                                                          alt=""/>
-                                                    <p>Наличными при самовызове</p>
+                                                    <p>Наличными при самовывозе</p>
                                                 </div>
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2'
@@ -278,7 +278,7 @@ class ProductDetails extends Component {
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2' src={require('../../../../images/parcel.png')}
                                                          alt=""/>
-                                                    <p>Самовызов</p>
+                                                    <p>Самовывоз</p>
                                                 </div>
                                                 <div className='d-flex align-items-start pr-2'>
                                                     <img className='pr-2'

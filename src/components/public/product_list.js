@@ -94,9 +94,9 @@ class ProductList extends Component {
     }
 
     handleGet = (cat, pickPage) => {
-
+        
         if(!cat) {
-            cat = 'search'
+            return null;
         }
         
         let obj = {
@@ -394,6 +394,7 @@ class ProductList extends Component {
                                         numberItems={this.state.totalItems}
                                         limit={this.state.offset}
                                         offset={this.state.limit}
+                                        currentCategory={this.props.match.params.category}
                                         handleGet={this.handleGet}
                                     />
                                 </div>

@@ -22,11 +22,13 @@ class PrivateLayout extends Component {
     componentDidMount() {
         if (this.props.token === false || this.props.user.roles === undefined || this.props.user.roles.indexOf('ROLE_ADMIN') === -1) {
         }
+        window.scrollTo(0, 0);
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
         if (this.props.location.pathname !== nextProps.location.pathname) {
             this.props.updateFrom(this.props.location.pathname);
+            
         }
     }
 
