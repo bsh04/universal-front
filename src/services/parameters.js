@@ -19,3 +19,4 @@ export let clientId = '1_4ks7w5c3rmkgw00sckwow04c884w8wgw8kc48k8skw4g80s8k8';
 export let clientSecret = '104knitpf57kgk80kks0g80gow8s0csw0g8g8cs4s0ggwg4c0w';
 export let serverImages = 'https://api.universal.tom.ru/uploads/news/';
 export let productImageUrl = 'https://api.universal.tom.ru/uploads/products/';
+export let articleImages = 'https://api.universal.tom.ru/uploads/articles/';

@@ -8,6 +8,7 @@ import DetailsMaterials from "./detailsMaterials";
 import DetailsSize from "./detailsSize";
 import parse from 'html-react-parser'
 import login from "../sign_action/login";
+import {articleImages} from '../../../services/parameters'
 
 class Workshop extends Component {
     constructor(props) {
@@ -63,14 +64,6 @@ class Workshop extends Component {
                     image: require('../../../images/workshop_list/materials/material-poliester.png'),
                     imageMobile: require('../../../images/workshop_list/materials/material-poliester-mobile.png')
                 }
-            ],
-            listExamples: [
-                {image: require('../../../images/workshop_list/examples.png')},
-                {image: require('../../../images/workshop_list/examples.png')},
-                {image: require('../../../images/workshop_list/examples.png')},
-                {image: require('../../../images/workshop_list/examples.png')},
-                {image: require('../../../images/workshop_list/examples.png')},
-                {image: require('../../../images/workshop_list/examples.png')},
             ],
             listSize: [
                 {
@@ -167,7 +160,7 @@ class Workshop extends Component {
 
     renderExamples(item, index) {
         return (
-            <img key={index} src={item.image}/>
+            <img key={index} src={articleImages + item}/>
         )
     }
 
@@ -239,7 +232,7 @@ class Workshop extends Component {
                 }
                 <div className='workshop-item-examples'>
                     {
-                        this.state.listExamples.map((item, index) => this.renderExamples(item, index))
+                        this.state.article && this.state.article.images ? this.state.article.images.map((item, index) => this.renderExamples(item, index)) : null
                     }
                 </div>
                 {
