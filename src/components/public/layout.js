@@ -17,6 +17,7 @@ import Workshop from './workshop/workshop';
 import Catalog from './catalog';
 import Footer from './footer';
 import Header from '../header';
+import ConfIngo from "./confIngo";
 import LoginForm from './sign_action/login';
 import RegForm from './sign_action/register';
 import ResetForm from './sign_action/reset_pass';
@@ -212,6 +213,7 @@ class PublicLayout extends Component {
                                     <Route exact path={'/workshop'} component={ArticleList}/>
                                     <Route exact path={'/workshop/:id'} component={Workshop}/>
                                     <Route exact path={'/catalog'} component={Catalog}/>
+                                    <Route exact path={'/conf-info'} component={ConfIngo}/>
                                     <Route exact path={'/catalog/product/:id'} component={Product}/>
                                     <Route exact path={'/catalog/:category/:search'} component={ProductList}/>
                                     <Route exact path={'/catalog/:category'} component={ProductList}/>

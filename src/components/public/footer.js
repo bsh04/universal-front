@@ -41,7 +41,7 @@ class Footer extends Component {
                         <hr className="hr"/>
                         <div className="footer-copyright">
                             <p className="copyright__text">© 2020 ООО "Универсал Томск"</p>
-                            <Link to="" className="copyright__privacy-link">Политика конфидециальности</Link>
+                            <Link to="/conf-info" className="copyright__privacy-link">Политика конфидециальности</Link>
                             <div className="copyright__unknown-blocks">
                                 <span></span>
                                 <span></span>
