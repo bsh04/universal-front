@@ -12,9 +12,8 @@ import { CategoriesContext } from '../../services/contexts';
 import { Carousel } from './parts/carousel/Carousel';
 import ProductCard from './parts/product/ProductCard';
 import { MainBanner } from './parts/banners/main_banner';
-import { bannersData } from '../../images/banners/bannersData';
 
-import DeliveryAndPaymentIndexPage from "./parts/deliveryAndPayment";
+
 
 class Index extends Component {
     constructor(props) {
@@ -31,13 +30,31 @@ class Index extends Component {
                 produced: []
             },
             favorites: [],
-            news: [],
             stocks: [],
             showCatalogOutMenu: true,
         }
     }
 
+    getNews() {
+        let _this = this;
+        
+        request(
+            `news/stocks`,
+            'GET',
+            {},
+            {},
+            function(response) {
+                _this.setState({stocks: response.data});
+                
+            },
+            function(err){
+                alert('Ошибка запроса','Ошибка запроса списка акций')
+            }
+        )
+    }
+
     componentDidMount() {
+        this.getNews();
         this.getProducts('new');
         this.getProducts('stock');
     }
@@ -67,7 +84,6 @@ class Index extends Component {
         )
 
     }
-
 
     getFavorites() {
         if (this.props.token !== false) {
@@ -117,6 +133,8 @@ class Index extends Component {
             return <CategoriesContext.Consumer>{contextValue => {
                 const {categories} = contextValue;
                 let {isMobile} = contextValue;
+                
+                
 
                 return (
                     <div className="w-100">
@@ -133,24 +151,23 @@ class Index extends Component {
                         </Helmet>
                         
                         <div className="index-page w-100">
+                        {this.state.stocks.length > 0 ?
                             <Carousel
                                 banner={true}
                                 length={1} 
                                 isMobile={isMobile}
                                 interval={5000}
                             >
-                                {bannersData.map((item, key) => {
+                                {this.state.stocks.map((item, key) => {
                                     return <MainBanner 
                                         key={key}
-                                        promoName={item.promoName}
-                                        textSmall={item.textSmall}
-                                        textBig={item.textBig}
+                                        item={item}
                                         isMobile={isMobile}
                                         onLinkClick={() => this.props.history.push(item.link)}
                                     />
                                 })}
-                                 
                             </Carousel>
+                            : null}
 
                             { this.state.products.stock.length > 0 ?
                             <Carousel

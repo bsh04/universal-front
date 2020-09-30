@@ -101,18 +101,14 @@ $btn_default_color: #229DD2;
     border-radius: 10px;
     //padding-top: 6%;
     //padding-left: 8%;
-    position: relative;
     min-height: 390px;
     overflow: hidden;
     
     & .banner-bg {
-        position: absolute;
-        width: 100%;
-        min-height: 75%;
+        
+        min-height: 100%;
         border-radius: 10px;
         object-fit: contain;
-        right: 0;
-        top: 0;
         z-index: -1;
     }
 
