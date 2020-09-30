@@ -109,14 +109,14 @@ class ProductList extends Component {
             offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset
         }
         let str = "";
-
+        
         for (let key in obj) {
             if (str !== "") {
                 str += "&";
             }
             str += key + "=" + encodeURIComponent(obj[key]);
         }
-
+        
         let _this = this;
 
         if (cat === 'search') {

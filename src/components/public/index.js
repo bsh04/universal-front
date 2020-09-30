@@ -169,7 +169,7 @@ class Index extends Component {
                             </Carousel>
                             : null}
 
-                            { this.state.products.stock.length > 0 ?
+                            { this.state.products.stock.length > 1 ?
                             <Carousel
                                 length={isMobile ? 1 : 6} 
                                 isMobile={isMobile} 

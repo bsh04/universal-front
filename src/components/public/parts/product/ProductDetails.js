@@ -6,6 +6,7 @@ import {ProductBasketAdd} from "./ProductBasketAdd";
 import request from "../../../../services/ajaxManager";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
+import { productImageUrl } from '../../../../services/parameters';
 
 const placeholder = require('./pl.png')
 
@@ -15,7 +16,8 @@ class ProductDetails extends Component {
         super(props);
 
         this.state = {
-            product: this.props.location.state.item,
+            productId: this.props.match.params.id,
+            product: null,
             favorite: this.props.location,
             startImageCarousel: 1,
             endImageCarousel: 3
@@ -23,12 +25,29 @@ class ProductDetails extends Component {
     }
 
     componentDidMount() {
-
-        if (Array.isArray(this.state.product.photo)) {
+        console.log(this.props.match.params.id)
+        this.getProduct();
+        
+        /* if (Array.isArray(this.state.product.photo)) {
             this.setState({photoArray: this.state.product.photo.lenght})
         } else {
             this.setState({photoArray: null})
-        }
+        } */
+    }
+
+    getProduct() {
+        let _this = this;
+
+        request(
+            `product/item/${this.state.productId}`,
+            'GET',
+            {},
+            {},
+            function(res) {
+                _this.setState({product: res})
+            },
+            function(err) {}
+        )
     }
 
     renderImage(image) {
@@ -37,7 +56,7 @@ class ProductDetails extends Component {
             for (let i = this.state.startImageCarousel; i <= this.state.endImageCarousel; i++) {
                 arr.push(
                     <div className='image' key={i}>
-                        <img src={'https://api.universal.tom.ru/uploads/products/' + image[i]}/>
+                        <img src={productImageUrl + image[i]}/>
                     </div>
                 )
             }
@@ -47,7 +66,7 @@ class ProductDetails extends Component {
                 if (i === 0) {
                     arr.push(
                         <div className='image' key={i}>
-                            <img src={'https://api.universal.tom.ru/uploads/products/' + image}/>
+                            <img src={productImageUrl + image}/>
                         </div>
                     )
                 } else {
@@ -106,16 +125,20 @@ class ProductDetails extends Component {
     }
 
     render() {
-        let mobile = this.props.isMobile
+        let mobile = this.props.isMobile;
+
+        if(!this.state.product) {
+            return <div>Товар не найден</div>
+        }
         return (
             <div className='w-100'>
-                <Breadcrumbs
+                {/* <Breadcrumbs
                     path={[
                         {title: `${this.state.product.category.parent.title}`},
                         {title: `${this.state.product.category.title}`},
                         {title: `${this.state.product.title}`},
                     ]}
-                />
+                /> */}
                 <div className='product-details'>
                     <h4>{this.state.product.title}</h4>
                     <div className='product-details-items'>
@@ -143,7 +166,7 @@ class ProductDetails extends Component {
                             </div>
                             <div className='d-flex justify-content-center w-100 mr-4'>
                                 <div className='main_image'>
-                                    <img src={'https://api.universal.tom.ru/uploads/news/' + this.state.product.photo}/>
+                                    <img src={productImageUrl + this.state.product.photo}/>
                                 </div>
                             </div>
                         </div>
