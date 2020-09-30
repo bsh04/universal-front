@@ -41,7 +41,7 @@ class CategoryList extends Component {
                             <div className='d-flex align-items-center'>
                                 <img className='icons-left-menu'
                                      src={require(`../../../images/left_menu/factory.png`)}/>
-                                <a className="pl-2" href="/workshop">НАШЕ ПРОИЗВОДСТВО</a>
+                                <Link className="pl-2" to="/workshop">НАШЕ ПРОИЗВОДСТВО</Link>
                             </div>
                             <ArrowForwardIosIcon className='text-white'/>
                         </div>
