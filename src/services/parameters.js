@@ -17,5 +17,5 @@ export let resetUrl = 'https://ts3.vladimirov-mv.name/security/resetpassword/';
 export let loginUrl = 'https://ts3.vladimirov-mv.name/oauth/v2/token';
 export let clientId = '1_1cmmb62qutgkskwkwws08040s0kgw84w4o0k4c4sg884gckgco';
 export let clientSecret = '3u2blfzmgs2s0wo84ks048gw0kwwkcg4ccokgwcko8g800s8wk';
-export let serverImages = 'https://api.universal.tom.ru/uploads/news/';
+export let serverImages = 'https://ts3.vladimirov-mv.name/uploads/news/';
 export let productImageUrl = 'https://api.universal.tom.ru/uploads/products/';

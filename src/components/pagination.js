@@ -46,7 +46,7 @@ const Pagination = (props) => {
     useEffect(() => {
         document.documentElement.scrollTop = 0
         if (props.currentCategory) {
-            props.handleGet(props.match.params.category, pickPage)
+            props.handleGet(props.match ? props.match.params.category : null, pickPage)
         } else {
             let startRender, endRender
             if (pickPage === 1) {

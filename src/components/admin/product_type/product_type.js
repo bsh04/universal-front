@@ -84,7 +84,7 @@ class ProductStatus extends Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {this.state.data ? this.state.data.data.map((item, key) => <RenderProduct key={key} item={item} handleCHange={this.handleChange}/>) : null}
+                                {this.state.data ? this.state.data.data.map((item, key) => <RenderProduct key={key} item={item} handleChange={this.handleChange}/>) : null}
                                 </tbody>
                             </table>
                             {
@@ -94,6 +94,7 @@ class ProductStatus extends Component {
                                         numberItems={this.state.numberProducts}
                                         handleGet={this.getData}
                                         offset={50}
+                                        currentCategory={true}
                                     />
                                     :
                                     null

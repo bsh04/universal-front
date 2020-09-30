@@ -16,7 +16,7 @@ class StocksList extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.handleGet();
     }
 
@@ -26,11 +26,12 @@ class StocksList extends Component {
         request(
             'news/stocks',
             'GET',
-            null,
+            {},
             {},
             function (response)
             {
-                _this.setState({news: response});
+                console.log('news:', response.data);
+                _this.setState({news: response.data});
             },
         );
     }
@@ -41,12 +42,14 @@ class StocksList extends Component {
 
         let data = new FormData();
         data.append('photo', this.fileInput.files[0]);
-        data.append('title', this.titleInput.value);
+        data.append('mobile_photo', this.mobfileInput.files[0]);
+        data.append('title', "Акция"/* this.titleInput.value */);
+        data.append('link', this.linkInput.value);
         data.append('type', 'stocks');
-        data.append('short_content', this.contentInput.value);
+        data.append('short_content', "Описание акции"/* this.contentInput.value */);
 
         let _this = this;
-
+         
         request(
             'news/',
             'POST',
@@ -54,6 +57,7 @@ class StocksList extends Component {
             {},
             function (response)
             {
+                console.log('edit response:',response)
                 let arr = _this.state.news;
                 arr.push(response);
                 _this.setState({news: arr, add: false});
@@ -66,7 +70,7 @@ class StocksList extends Component {
     {
         let data = {
             id: this.state.news[key].id,
-            title: this.titleEditInput.value,
+            link: this.linkEditInput.value,
             short_content: this.contentEditInput.value,
         };
 
@@ -116,7 +120,7 @@ class StocksList extends Component {
                 <tr>
                     <td colSpan={4}>
                         <form onSubmit={this.handleSubmit}>
-                            <input
+                            {/* <input
                                 name="title"
                                 type="text"
                                 required={true}
@@ -124,24 +128,42 @@ class StocksList extends Component {
                                 className={'form-control '}
                                 ref={(input) => {this.titleInput = input}}
                             />
+                            */}
                             <input
-                                name="desc"
+                                name="link"
                                 type="text"
                                 required={true}
-                                placeholder={"Описание:*"}
+                                placeholder={"Категория:*"}
                                 className={'form-control '}
-                                ref={(input) => {this.contentInput = input}}
-                            />
+                                ref={(input) => {this.linkInput = input}}
+                            /> 
+                            <br/>
+                            <label htmlFor="fileInput">Баннер полноэкранный</label>
                             <input
+                                id="fileInput"
                                 name="file"
                                 type="file"
                                 required={true}
-                                placeholder={"Файл с даными:*"}
+                                placeholder={"Баннер полноэкранный:*"}
                                 className={'form-control '}
                                 accept="image/*"
                                 ref={(input) => {this.fileInput = input}}
                             />
                             <br/>
+                            <label htmlFor="fileInput">Баннер мобильный</label>
+                            <input
+                                id="mobFileInput"
+                                name="mobfile"
+                                type="file"
+                                required={true}
+                                placeholder={"Баннер мобильный:*"}
+                                className={'form-control '}
+                                accept="image/*"
+                                ref={(input) => {this.mobfileInput = input}}
+                            />
+                            <br/>
+
+
                             <p className="text-center">
                                 <button type="submit" className="btn btn-success">
                                     <i className={'fa fa-plus'}> Загрузить файл</i>
@@ -179,7 +201,7 @@ class StocksList extends Component {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Заголовок</th>
+                            <th>Категория</th>
                             <th>Описание</th>
                             <th>Управление</th>
                         </tr>
@@ -187,26 +209,28 @@ class StocksList extends Component {
                     <tbody>
                         { this.viewAdd() }
                         { this.state.news.length > 0 ? this.state.news.map((item, key) => {
+                            
                             if (this.state.edit === key) {
                                 return(
                                     <tr key={key}>
                                         <td>{key + 1}</td>
                                         <td><input
-                                            name="title"
+                                            name="link"
                                             type="text"
                                             required={true}
-                                            placeholder={"Заголовок:*"}
-                                            defaultValue={item.title}
+                                            placeholder={"Категория:*"}
+                                            defaultValue={item.link}
                                             className={'form-control '}
-                                            ref={(input) => {this.titleEditInput = input}}
-                                        /></td>
+                                            ref={(input) => {this.linkEditInput = input}}
+                                        /> 
+                                        <br/></td>
                                         <td>
                                             <input
                                                 name="desc"
                                                 type="text"
                                                 required={true}
                                                 placeholder={"Содержание:*"}
-                                                defaultValue={item.short_content}
+                                                
                                                 className={'form-control '}
                                                 ref={(input) => {this.contentEditInput = input}}
                                             />
@@ -228,7 +252,7 @@ class StocksList extends Component {
                             return (
                                 <tr key={key}>
                                     <td>{key + 1}</td>
-                                    <td>{item.title}</td>
+                                    <td>{item.link}</td>
                                     <td>{item.short_content}</td>
                                     <td>
                                         <button className={'btn btn-primary'}
