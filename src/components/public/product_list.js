@@ -32,13 +32,13 @@ class ProductList extends Component {
             catList: [],
             sort: ['title', 'asc'],
             request: false,
-            path: null
+            path: null,
         };
     }
 
     loadMore() {
-        if (this.productListInnerContainer && 
-            this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight 
+        if (this.productListInnerContainer &&
+            this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight
             && this.state.limitAll && this.state.products.length < this.state.totalItems) {
 
             this.setState({
@@ -71,11 +71,13 @@ class ProductList extends Component {
     }
 
     componentWillReceiveProps(props) {
+        this.setState({ready: false})
         this.handleGet(props.match.params.category);
 
         let path = this.setCategory(props.match.params.category)
         this.setState({
-            path: path
+            path: path,
+            cat: props.match.params.category
         })
     }
 
@@ -94,11 +96,11 @@ class ProductList extends Component {
     }
 
     handleGet = (cat, pickPage) => {
-        
-        if(!cat) {
+
+        if (!cat) {
             return null;
         }
-        
+
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -107,18 +109,18 @@ class ProductList extends Component {
             offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset
         }
         let str = "";
-        
+
         for (let key in obj) {
             if (str !== "") {
                 str += "&";
             }
             str += key + "=" + encodeURIComponent(obj[key]);
         }
-        
+
         let _this = this;
-        
+
         if (cat === 'search') {
-            
+
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});
                 request(
@@ -134,16 +136,21 @@ class ProductList extends Component {
                         let totalItems = response[response.length - 1].count;
 
                         response.splice(-1, 1);
-                        _this.setState({products: response, catList: [], totalItems: totalItems, request: false});
-                        
+                        _this.setState({
+                            products: response,
+                            catList: [],
+                            totalItems: totalItems,
+                            request: false,
+                            ready: true
+                        });
+
                     },
-                    function(err) {
+                    function (err) {
                         alert('Ошибка запроса', 'Невозможно выполнить запрос')
                     }
                 );
             }
-        } else if (cat) {
-            
+        } else {
             request(
                 'product/' + cat + '?' + str + (this.props.match.params.searchValue ? '&data=' + this.props.match.params.searchValue : ''),
                 'GET',
@@ -166,36 +173,7 @@ class ProductList extends Component {
                             path: _this.setCategory(_this.props.match.params.category),
                             totalItems: totalItems,
                             loading: false,
-                        })
-                    });
-                }
-            );
-        } else {
-            
-            request(
-                'product/' + this.props.match.params.category + '?' + str + (this.props.match.params.searchValue ? '&data=' + this.props.match.params.searchValue : ''),
-                'GET',
-                null,
-                {},
-                function (response) {
-
-                    let totalItems = response[response.length - 1].count;
-
-                    response.splice(-1, 1);
-                    let categories = [];
-                    response.map(item => {
-                        let tmp = {id: item.category.id, title: item.category.title}
-                        if (categories.find((element) => {
-                            return tmp.id === element.id
-                        }) === undefined) {
-                            categories.push(tmp);
-                        }
-                    });
-                    _this.setState({products: response}, () => {
-                        _this.setState({
-                            path: _this.setCategory(_this.props.match.params.category),
-                            totalItems: totalItems,
-                            loading: false,
+                            ready: true
                         })
                     });
                 }
@@ -272,7 +250,7 @@ class ProductList extends Component {
         return arr.map((item, key) => {
             return (
                 <li key={key} className="page-item">
-                    <a className="page-link" href="#" onClick={() => this.setState({offset: (this.state.limit * key)})}>
+                    <a className="page-link" onClick={() => this.setState({offset: (this.state.limit * key)})}>
                         {key + 1}
                     </a>
                 </li>
@@ -372,36 +350,44 @@ class ProductList extends Component {
                             limit={this.state.limit}
                         />
 
-                        <div className="row products-wrapper" ref={(target) => this.productListInnerContainer = target}>
-                            {this.state.products.length > 0 ? this.state.products.map((item, key) => {
-                                if (key < this.state.limit) {
-                                    return (
-                                        <ProductCard item={item} key={key} update={this.updateFav}
-                                                     favorite={this.isFavorite(item)}
-                                                     cardView={this.state.cardView}
-                                        />
-                                    );
-                                } else {
-                                    return null;
-                                }
-                            }) : <p className={'text-center'}>Товары не найдены</p>}
-                        </div>
-
                         {
-                            this.state.limit ?
-                                <div>
-                                    <Pagination
-                                        numberItems={this.state.totalItems}
-                                        limit={this.state.offset}
-                                        offset={this.state.limit}
-                                        currentCategory={this.props.match.params.category}
-                                        handleGet={this.handleGet}
-                                    />
-                                </div>
+                            this.state.ready
+                                ?
+                                <>
+                                    <div className="row products-wrapper"
+                                         ref={(target) => this.productListInnerContainer = target}>
+                                        {this.state.products.length > 0 ? this.state.products.map((item, key) => {
+                                            if (key < this.state.limit) {
+                                                return (
+                                                    <ProductCard item={item} key={key} update={this.updateFav}
+                                                                 favorite={this.isFavorite(item)}
+                                                                 cardView={this.state.cardView}
+                                                    />
+                                                );
+                                            } else {
+                                                return null;
+                                            }
+                                        }) : <p className={'text-center'}>Товары не найдены</p>}
+                                    </div>
+                                    {
+                                        this.state.limit ?
+                                            <div>
+                                                <Pagination
+                                                    numberItems={this.state.totalItems}
+                                                    limit={this.state.offset}
+                                                    offset={this.state.limit}
+                                                    currentCategory={this.props.match.params.category}
+                                                    handleGet={this.handleGet}
+                                                    match={this.props.match}
+                                                />
+                                            </div>
+                                            :
+                                            null
+                                    }
+                                </>
                                 :
-                                null
+                                <Loading/>
                         }
-                        {this.state.loading ? <Loading/> : null}
                     </div>
                 }}
             </CategoriesContext.Consumer>

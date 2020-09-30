@@ -18,6 +18,10 @@ const Pagination = (props) => {
     }, [props.offset])
 
     useEffect(() => {
+        setPickPage(1)
+    }, [props.match])
+
+    useEffect(() => {
         setNumberItems(props.numberItems)
     })
 
@@ -41,8 +45,8 @@ const Pagination = (props) => {
 
     useEffect(() => {
         document.documentElement.scrollTop = 0
-        if (props.handleGet) {
-            props.handleGet(currentCategory ? currentCategory : null, pickPage)
+        if (props.currentCategory) {
+            props.handleGet(props.match.params.category, pickPage)
         } else {
             let startRender, endRender
             if (pickPage === 1) {
@@ -133,46 +137,43 @@ const Pagination = (props) => {
         }
     }
 
-    if (numberPages === 1) {
-        return null
-    } else {
-        return (
+    return (
 
-            <div className='pagination-cont'>
-                <div className={smallBar ? 'pagination-body small' : 'pagination-body'}>
-                    <DoubleArrowIcon
-                        className='fa-rotate-180 item'
-                        onClick={() => setPickPage(1)}
-                    />
-                    <KeyboardArrowLeftIcon
-                        className='item'
-                        onClick={() =>
-                            setPickPage(pickPage === 1
-                                ? 1
-                                : pickPage - 1)}
-                    />
-                    <div className={`number-pages-container ${numberPages === 2 ? 'w-25' : numberPages === 3 ? 'minimal' : ''}`}>
-                        {renderNumberPages()}
-                    </div>
-                    <KeyboardArrowRightIcon
-                        className='item'
-                        onClick={() =>
-                            setPickPage(pickPage === numberPages
-                                ?
-                                numberPages
-                                :
-                                pickPage + 1)
-                        }
-                    />
-                    <DoubleArrowIcon
-                        className='item'
-                        onClick={() =>
-                            setPickPage(numberPages)}
-                    />
+        <div className='pagination-cont'>
+            <div className={smallBar ? 'pagination-body small' : 'pagination-body'}>
+                <DoubleArrowIcon
+                    className='fa-rotate-180 item'
+                    onClick={() => setPickPage(1)}
+                />
+                <KeyboardArrowLeftIcon
+                    className='item'
+                    onClick={() =>
+                        setPickPage(pickPage === 1
+                            ? 1
+                            : pickPage - 1)}
+                />
+                <div
+                    className={`number-pages-container ${numberPages === 1 ? 'one' : numberPages === 2 ? 'w-25' : numberPages === 3 ? 'minimal' : ''}`}>
+                    {renderNumberPages()}
                 </div>
+                <KeyboardArrowRightIcon
+                    className='item'
+                    onClick={() =>
+                        setPickPage(pickPage === numberPages
+                            ?
+                            numberPages
+                            :
+                            pickPage + 1)
+                    }
+                />
+                <DoubleArrowIcon
+                    className='item'
+                    onClick={() =>
+                        setPickPage(numberPages)}
+                />
             </div>
-        );
-    }
+        </div>
+    );
 };
 
 export default Pagination;
