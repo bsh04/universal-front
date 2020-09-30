@@ -37,7 +37,7 @@ export default function request(
             'Authorization': 'Bearer ' + window.store.store.getState().token,
         };
     }
-
+    //console.log('from ajax manager:', path)
     fetch(path, options)
         .then(processResponse)
         .then(res => {
