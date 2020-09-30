@@ -293,7 +293,7 @@ class Workshop extends Component {
                         </div>
                         <div>
                             {
-                                this.state.article.images.length > 0
+                                this.state.article.images && this.state.article.images.length > 0
                                     ?
                                     <>
                                         <p>Примеры изделий</p>
