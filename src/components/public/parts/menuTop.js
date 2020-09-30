@@ -21,22 +21,21 @@ const MenuTop = props => {
         props.onDeleteToken();
     }
 
-    const [amountBasket, setAmountBasket] = useState(null)
-    const [ready, setReady] = useState(false)
+    const [amountBasket, setAmountBasket] = useState(null);
+    
+    const [ready, setReady] = useState(false);
 
     useEffect(() => {
-        if (props.basket.length > 0) {
-            props.basket.map((item, index) => {
-                setAmountBasket(prev => prev + item.product.price)
-                if (index === props.basket.length - 1) setReady(true)
-            })
-        } else {
-            setReady(true)
+        if(props.basket.length > 0) {
+            let sum = props.basket.reduce((acc, item) => acc + item.product.price, 0);
+            
+            setAmountBasket(sum);
+            
+            setReady(true);
         }
-        return () => {
-            setAmountBasket(null)
-        }
-    }, [props])
+        
+        
+    }, [props.reload, props.basket])
 
 
     const defaultMenu = () => {
@@ -44,8 +43,8 @@ const MenuTop = props => {
             <div
                 className="d-flex justify-content-around text-left bg-white align-items-center fixed-top mainImage container-fluid defaultTopMenu">
                 <Link to="/">
-                    <div className={'d-flex flex-column'}>
-                        <h1 className={'pr-3'}>Универсал</h1>
+                    <div className={'d-flex flex-column text-center'}>
+                        <h1>Универсал</h1>
                         <h6>хозяйственные товары</h6>
                     </div>
                 </Link>
@@ -101,7 +100,7 @@ const MenuTop = props => {
                 </div>
                 <div className='d-flex flex-row align-items-center'>
                     <div>
-                        <Link to='/user/basket'>
+                        <Link to={'/user/basket'}>
                             <div className="iconButtons">
                                 <ShoppingCartIcon/>
                             </div>
@@ -112,7 +111,7 @@ const MenuTop = props => {
                             ?
                             <div className='d-flex flex-column basket'>
                                 <span>
-                                    {amountBasket + ' Р'}
+                                    {Number(amountBasket).toFixed() + ' Р'}
                                 </span>
                                 <p className='menuText'>
                                     {
@@ -140,7 +139,7 @@ const MenuTop = props => {
                         marginRight: 15
                     }}/>
                     <div className="flex-column align-items-center d-flex"  style={{width: 83}}>
-                        <Link to='/user/favorite'>
+                        <Link to={'/user/favorite'}>
                             <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
                         </Link>
                         <p className='menuText pl-0'>Избранное</p>
@@ -156,9 +155,9 @@ const MenuTop = props => {
                 className="d-flex flex-row justify-content-around text-left bg-light align-items-center container-fluid fixed-top mainImage minTopMenu"
             >
                 <Link to="/">
-                    <div className={'d-flex flex-row align-items-center'}>
-                        <h1 className={'pr-3'}>Универсал</h1>
-                        <h6>хозяйственные товары</h6>
+                    <div className={'d-flex flex-row align-items-center text-center'}>
+                        <h1>Универсал</h1>
+                        {!reduce ? <h6>хозяйственные товары</h6> : null}
                     </div>
                 </Link>
                 <div className='d-flex align-items-center'>
@@ -174,8 +173,8 @@ const MenuTop = props => {
                             +7 (3822) 90-44-32
                         </a>
                     </p>
-                    <p>
-                        <PhoneInTalkOutlinedIcon className='menuItems pl-5'/>
+                    <p className="ml-5">
+                        <PhoneInTalkOutlinedIcon className='menuItems'/>
                         <a className='menuTextPhone' href={'tel:+7 (3822) 90-26-68'} itemProp="telephone">
                             +7 (3822) 90-26-68
                         </a>
@@ -183,7 +182,7 @@ const MenuTop = props => {
                 </div>
                 <div className='d-flex flex-row align-items-center'>
                     <div>
-                        <Link to='/user/basket'>
+                        <Link to={'/user/basket'}>
                             <div className="iconButtonsReducer">
                                 <ShoppingCartIcon/>
                             </div>
@@ -194,7 +193,7 @@ const MenuTop = props => {
                             ?
                             <div className='d-flex flex-row basket'>
                                 <span>
-                                    {amountBasket + ' Р'}
+                                    {Number(amountBasket).toFixed() + ' Р'}
                                 </span>
                                 <p className='menuText'>
                                     {
@@ -223,7 +222,7 @@ const MenuTop = props => {
                     }}/>
 
                     <div className="flex-row align-items-center d-flex">
-                        <Link to='/user/favorite'>
+                        <Link to={'/user/favorite'}>
                             <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
                         </Link>
 
@@ -239,9 +238,9 @@ const MenuTop = props => {
             <div
                 className="d-flex justify-content-around text-left bg-white align-items-center fixed-top mainImage container-fluid defaultTopMenu" style={reduce ? {height: 50} : null}>
                 <Link to="/">
-                    <div className={reduce ? 'd-flex flex-row align-items-center' : 'd-flex flex-column'}>
-                        <h1 className={'pr-3'}>Универсал</h1>
-                        <h6>хозяйственные товары</h6>
+                    <div className={reduce ? 'd-flex flex-row align-items-center text-center' : 'd-flex flex-column text-center'}>
+                        <h1>Универсал</h1>
+                        {!reduce ? <h6>хозяйственные товары</h6> : null}
                     </div>
                 </Link>
                 {
@@ -320,7 +319,7 @@ const MenuTop = props => {
 
                 <div className='d-flex flex-row align-items-center'>
                     <div>
-                        <Link to='/user/basket'>
+                        <Link to={'/user/basket'}>
                             <div className={reduce ? "basketMobile text-white" : "iconButtons"}>
                                 <ShoppingCartIcon/>
                             </div>
@@ -333,7 +332,7 @@ const MenuTop = props => {
                             <div className='line'/>
                     }
                     <div className="flex-column align-items-center d-flex">
-                        <Link to='/user/favorite'>
+                        <Link to={'/user/favorite'}>
                             <FavoriteIcon style={{color: '#219ed1', width: 30, height: 30}}/>
                         </Link>
                     </div>
@@ -348,7 +347,7 @@ const MenuTop = props => {
                 className="d-flex flex-row px-3 bg-light text-left align-items-center justify-content-center fixed-top mainImage"
                 style={{height: 70}}>
                 <div className='d-flex flex-column align-items-left w-50'>
-                    <Link to="/">
+                    <Link to="/" className="align-items-center text-center">
                         <h1>универсал</h1>
                         <h6>хозяйственные товары</h6>
                     </Link>
@@ -389,7 +388,7 @@ export default withRouter(connect(
     (state) => ({
         token: state.token,
         user: state.user,
-        reload: state.reload,
+        reload: state.reload
     }),
     dispatch => ({
         onDeleteToken: (token) => {
@@ -397,9 +396,6 @@ export default withRouter(connect(
         },
         onDeleteUser: (user) => {
             dispatch({type: 'DELETE_USER', payload: user})
-        },
-        onReloadedMenu: () => {
-            dispatch({type: 'RELOADED', payload: true})
         },
     })
 )(MenuTop));

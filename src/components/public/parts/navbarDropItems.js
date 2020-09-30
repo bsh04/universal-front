@@ -181,7 +181,7 @@ export const ItemMenu = (props) => {
                 <p>Новости</p>
             </Link>
             <Link to={'/deliveryandpayment'}>
-                <p>Оптала и доставка</p>
+                <p>Оплата и доставка</p>
             </Link>
             <Link to={'/contact'}>
                 <p>Контакты</p>

@@ -6,6 +6,8 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import SubcategoryList from "./subcategory_list";
+import Categories_render from "./categories_render";
 
 class CategoryList extends Component {
     constructor(props) {
@@ -17,44 +19,41 @@ class CategoryList extends Component {
         };
     }
 
-    itemView(item,index, type = null) {
-        if (item.children.length > 0) {
-            return (
-                <React.Fragment key={index}>
-                    <div className="d-flex flex-row align-items-center items py-0 my-0">
-                        <ExtensionIcon className='item arrow-icon'/>
-                        <a className="pl-2 text-left item" href={'/catalog/' + item.id}>{item.title}</a>
-                    </div>
-                    <hr/>
-                </React.Fragment>
-            );
-        }
+    componentDidMount() {
+        window.addEventListener("click", () => this.closCategory())
+    }
+
+    closCategory() {
+        this.setState({openSubcategory: ''})
+    }
+
+    checkOpen = (id) => {
+        this.setState({openSubcategory: id})
     }
 
     render() {
-        console.log()
         let parts = window.location.pathname.split('/');
-
         return (
             <>
-                <div className='catalog_main pl-3'>
+                <div className='catalog_main'>
                     <div className={this.state.showAll ? 'list' : 'small-list'}>
                         <div className="row production">
-                            <div>
-                                <ExtensionIcon className='text-white'/>
-                                <a className="pl-2" href="#">НАШЕ ПРОИЗВОДСТВО</a>
+                            <div className='d-flex align-items-center'>
+                                <img className='icons-left-menu'
+                                     src={require(`../../../images/left_menu/factory.png`)}/>
+                                <Link className="pl-2" to="/workshop">НАШЕ ПРОИЗВОДСТВО</Link>
                             </div>
                             <ArrowForwardIosIcon className='text-white'/>
                         </div>
 
-                        {this.props.categories ? this.props.categories.map((item,index) => {
+                        {this.props.categories ? this.props.categories.map((item, index) => {
                             return (
-                                this.itemView(item,index)
+                                <Categories_render checkOpen={this.checkOpen} item={item} key={index} open={this.state.openSubcategory}/>
                             );
                         }) : null}
                     </div>
                     <div className='show-all'
-                            onClick={() => this.setState({showAll: !this.state.showAll})}
+                         onClick={() => this.setState({showAll: !this.state.showAll})}
                     >
                         {this.state.showAll ? 'СВЕРНУТЬ' : 'РАЗВЕРНУТЬ'}
                         {this.state.showAll ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}

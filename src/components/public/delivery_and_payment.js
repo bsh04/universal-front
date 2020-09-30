@@ -35,11 +35,11 @@ class DeliveryAndPayment extends Component {
     }
 
     render() {
-        if(this.state.article) console.log(this.state.article)
+        
         return (
             <div>
                 <Breadcrumbs path={[{title: 'Оплата и доставка', link: '/deliveryandpayment'}]}/>
-                <h1>Оплата и доставка</h1>
+                <h4 className="page-title">Оплата и доставка</h4>
                 {this.state.article ? <div dangerouslySetInnerHTML={{__html: this.state.article.content}}></div> : 'Информация отсутствует'}
             </div>
         )

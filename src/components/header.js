@@ -7,9 +7,9 @@ import {connect} from "react-redux";
 
 const Header = props => {
 
+    const token = props.token
     const [basket, setBasket] = useState([])
     const [like, setLike] = useState([])
-    const [token, setToken] = useState(props.token)
     const [reduceTopMenu, setReduceTopMenu] = useState(false)
     const [mobileMode, setMobileMode] = useState(false)
     const [dropItem, setDropItem] = useState('')
@@ -17,16 +17,19 @@ const Header = props => {
 
     useEffect(() => {
         handleGet()
-        checkWindowSizeMD()
         window.addEventListener("resize", checkWindowSizeMD);
         window.addEventListener("scroll", navbarFixed);
+        checkWindowSizeMD()
 
-        return function cleanup() {
+        return () => {
             window.removeEventListener("resize", checkWindowSizeMD);
             window.removeEventListener("scroll", navbarFixed);
         }
-    }, [])
+    }, []);
 
+    useEffect(() => {
+        handleGet();
+    }, [props.reload])
 
     const navbarFixed = () => {
         if (window.pageYOffset > 50) {
@@ -36,7 +39,6 @@ const Header = props => {
         }
     }
 
-
     const handleGet = () => {
         if (props.token) {
             request(
@@ -45,7 +47,7 @@ const Header = props => {
                 null,
                 {},
                 function (response) {
-                    setBasket(response)
+                    setBasket(response);
                 },
             );
 
@@ -62,10 +64,10 @@ const Header = props => {
     }
 
     const checkWindowSizeMD = () => {
-        if (window.innerWidth > 1500) {
+        if (window.innerWidth >= 1700) {
             setMobileMode(false)
             setMinimalMode(false)
-        } else if(window.innerWidth < 1500 && window.innerWidth > 900) {
+        } else if(window.innerWidth < 1700 && window.innerWidth > 920) {
             setMobileMode(false)
             setMinimalMode(true)
         }
@@ -108,7 +110,7 @@ export default withRouter(connect(
     (state) => ({
         token: state.token,
         user: state.user,
-        reload: state.reload,
+        reload: state.reload
     }),
     dispatch => ({
         onDeleteToken: (token) => {
@@ -116,9 +118,6 @@ export default withRouter(connect(
         },
         onDeleteUser: (user) => {
             dispatch({type: 'DELETE_USER', payload: user})
-        },
-        onReloadedMenu: () => {
-            dispatch({type: 'RELOADED', payload: true})
         },
     })
 )(Header));

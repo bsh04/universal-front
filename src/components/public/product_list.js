@@ -8,9 +8,10 @@ import Breadcrumbs from '../breadcrumbs';
 import Loading from '../loading';
 import {CategoriesContext} from '../../services/contexts';
 
-import Card from './parts/card';
 import ProductCard from './parts/product/ProductCard';
-import { SubCategoriesRow } from './parts/SubCategoriesRow';
+import {SubCategoriesRow} from './parts/SubCategoriesRow';
+import {ProductToolbar} from './parts/ProductToolbar';
+import Pagination from "../pagination";
 
 class ProductList extends Component {
     constructor(props) {
@@ -31,12 +32,14 @@ class ProductList extends Component {
             catList: [],
             sort: ['title', 'asc'],
             request: false,
-            path: null
+            path: null,
         };
     }
 
     loadMore() {
-        if (this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight && this.state.limitAll && this.state.products.length < this.state.totalItems) {
+        if (this.productListInnerContainer &&
+            this.productListInnerContainer.getBoundingClientRect().bottom + 50 < window.innerHeight
+            && this.state.limitAll && this.state.products.length < this.state.totalItems) {
 
             this.setState({
                 loading: true,
@@ -55,21 +58,11 @@ class ProductList extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.handleGet(this.props.match.params.category);
 
         if (this.props.token !== false) {
-
-            let _this = this;
-            request(
-                'product/favorite',
-                'GET',
-                null,
-                {},
-                function (response) {
-                    _this.setState({favorites: response});
-                },
-            );
+            this.getFavorites();
         }
     }
 
@@ -78,37 +71,60 @@ class ProductList extends Component {
     }
 
     componentWillReceiveProps(props) {
+        this.setState({ready: false})
         this.handleGet(props.match.params.category);
 
         let path = this.setCategory(props.match.params.category)
         this.setState({
-            path: path
+            path: path,
+            cat: props.match.params.category
         })
     }
 
-    handleGet(cat) {
+    getFavorites() {
+        let _this = this;
+
+        request(
+            'product/favorite',
+            'GET',
+            null,
+            {},
+            function (response) {
+                _this.setState({favorites: response});
+            },
+        );
+    }
+
+    handleGet = (cat, pickPage) => {
+
+        if (!cat) {
+            return null;
+        }
+
         let obj = {
             cat: cat,
             limit: this.state.limit,
             sort_field: `${this.state.sort[0]}`,
             sort: `${this.state.sort[1]}`,
-            offset: this.state.offset
+            offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset
         }
         let str = "";
+
         for (let key in obj) {
-            if (str != "") {
+            if (str !== "") {
                 str += "&";
             }
             str += key + "=" + encodeURIComponent(obj[key]);
         }
 
         let _this = this;
-        let res;
+
         if (cat === 'search') {
+
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});
                 request(
-                    'product/search' + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
+                    'product/search' + '?' + str + (this.props.match.params.searchValue ? '&data=' + this.props.match.params.searchValue : ''),
                     'POST',
                     {
                         data: (/%[0-9a-f]{2}/i.test(this.props.location.search.substr(3)) ?
@@ -120,20 +136,28 @@ class ProductList extends Component {
                         let totalItems = response[response.length - 1].count;
 
                         response.splice(-1, 1);
-                        _this.setState({products: response, catList: [], totalItems: totalItems, request: false});
+                        _this.setState({
+                            products: response,
+                            catList: [],
+                            totalItems: totalItems,
+                            request: false,
+                            ready: true
+                        });
+
                     },
+                    function (err) {
+                        alert('Ошибка запроса', 'Невозможно выполнить запрос')
+                    }
                 );
             }
         } else {
             request(
-                'product/' + cat + '?' + str + (this.props.match.params.search ? '&data=' + this.props.match.params.search : ''),
+                'product/' + cat + '?' + str + (this.props.match.params.searchValue ? '&data=' + this.props.match.params.searchValue : ''),
                 'GET',
                 null,
                 {},
                 function (response) {
-
                     let totalItems = response[response.length - 1].count;
-
                     response.splice(-1, 1);
                     let categories = [];
                     response.map(item => {
@@ -149,6 +173,7 @@ class ProductList extends Component {
                             path: _this.setCategory(_this.props.match.params.category),
                             totalItems: totalItems,
                             loading: false,
+                            ready: true
                         })
                     });
                 }
@@ -194,6 +219,7 @@ class ProductList extends Component {
         }
 
     }
+
     setSort = (e) => {
         let sort = e.target.getAttribute('data').split(',');
         this.setState({
@@ -203,7 +229,7 @@ class ProductList extends Component {
         })
     }
 
-    sortSelectedLabel() {
+    sortSelectedLabel = () => {
         let param = this.state.sort.join('-')
 
         switch (param) {
@@ -224,7 +250,7 @@ class ProductList extends Component {
         return arr.map((item, key) => {
             return (
                 <li key={key} className="page-item">
-                    <a className="page-link" href="#" onClick={() => this.setState({offset: (this.state.limit * key)})}>
+                    <a className="page-link" onClick={() => this.setState({offset: (this.state.limit * key)})}>
                         {key + 1}
                     </a>
                 </li>
@@ -236,205 +262,141 @@ class ProductList extends Component {
         return (
             <CategoriesContext.Consumer>
                 {contextValue => {
-                
-                let catList = [];
-                
-                if(contextValue && contextValue.length > 0 && this.props.match.params.category !== 'new' 
-                    && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search'){
 
-                    let obj = contextValue.find(item => item.id === this.props.match.params.category);
-                    
-                    if(obj && obj.children !== undefined){
-                        catList = obj.children;
+                    let catList = [];
+                    let productPageTitle = null;
+
+                    if (contextValue.categories && contextValue.categories.length > 0 && this.props.match.params.category !== 'new'
+                        && this.props.match.params.category !== 'stock' && this.props.match.params.category !== 'search') {
+
+                        let obj = contextValue.categories.find(item => item.id === this.props.match.params.category);
+
+                        if (obj && obj.title) {
+                            productPageTitle =  obj.title;
+                        } else {
+                            contextValue.categories.map(item => item.children ? item.children.map(item => item.id === this.props.match.params.category ? productPageTitle = item.title : null) : null)
+                        }
+
+                        if (obj && obj.children !== undefined) {
+                            catList = obj.children;
+                            if (catList !== undefined && catList.length > 0) {
+                                obj = catList.find(item => item.id === this.props.match.params.category)
+                            }
+
+                        } else {
+                            let obj = contextValue.categories.find(item => {
+                                if (item.children !== undefined && item.children.length > 0
+                                    && item.children.find(item => item.id === this.props.match.params.category)) {
+                                    return item;
+                                }
+                            });
+                            catList = obj.children;
+                        }
+
+
 
                     } else {
-                        let obj = contextValue.find(item => {
-                            if(item.children !== undefined && item.children.length > 0
-                                && item.children.find(item => item.id === this.props.match.params.category)) {
-                                    return item;
-                            }
-                        });
-                        catList = obj.children;
+                        catList = this.state.catList;
                     }
 
-                } else {
-                    catList = this.state.catList;
-                }
-                    
-                return <div>
-                <Helmet>
-                    <meta charSet="utf-8"/>
-                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                    <meta name="theme-color" content="#000000"/>
-                    <title>Каталог - Универсал</title>
-                    <meta name="keywords"
-                          content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
-                    <meta name="description"
-                          content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
-                    <meta property="og:description"
-                          content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
-                    <meta property="og:title" content="Каталог"/>
-                    <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
-                </Helmet>
 
-                {this.state.path && this.state.products.length > 0
-                    ?
-                    <Breadcrumbs
-                        path={[{title: 'Каталог', link: '/catalog'}].concat(
-                            this.props.match.params.category !== 'new'
-                            && this.props.match.params.category !== 'stock'
-                            && this.state.products[0].category.parent
-                            && this.state.products[0].category.parent.id !== this.props.match.params.category ?
-                                [{
-                                    title: this.state.products[0].category.parent.title,
-                                    link: ('/catalog/' + this.state.products[0].category.parent.id)
-                                }] : [],
-                            [
-                                this.state.products[0].category.parent
-                                && this.state.products[0].category.parent.id === this.props.match.params.category ?
-                                    {title: this.state.products[0].category.parent.title} :
-                                    {title: this.state.path}]
-                        )}/>
-                    : null}
+                    return <div>
+                        <Helmet>
+                            <meta charSet="utf-8"/>
+                            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                            <meta name="theme-color" content="#000000"/>
+                            <title>Каталог - Универсал</title>
+                            <meta name="keywords"
+                                  content="купить хозтовары, хозяйственные товары, бытовые товары, хозяйственно-бытовые товары, товары для дома"/>
+                            <meta name="description"
+                                  content="Товары для дома, хозяйственные товары, спец. одежда и многое другое!"/>
+                            <meta property="og:description"
+                                  content="Множество товаров для дома, хозяйства, авто и многого другого!"/>
+                            <meta property="og:title" content="Каталог"/>
+                            <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
+                        </Helmet>
 
-                {this.props.match.params.category !== 'new' && this.props.match.params.category !== 'stock'
-                && this.props.match.params.category !== 'search' && catList.length > 0 ?
-                    <SubCategoriesRow catList={catList} location={this.props.location}/> 
-                : null}
+                        {this.state.path && this.state.products.length > 0
+                            ?
+                            <Breadcrumbs
+                                path={[{title: 'Каталог', link: '/catalog'}].concat(
+                                    this.props.match.params.category !== 'new'
+                                    && this.props.match.params.category !== 'stock'
+                                    && this.state.products[0].category.parent
+                                    && this.state.products[0].category.parent.id !== this.props.match.params.category ?
+                                        [{
+                                            title: this.state.products[0].category.parent.title,
+                                            link: ('/catalog/' + this.state.products[0].category.parent.id)
+                                        }] : [],
+                                    [
+                                        this.state.products[0].category.parent
+                                        && this.state.products[0].category.parent.id === this.props.match.params.category ?
+                                            {title: this.state.products[0].category.parent.title} :
+                                            {title: this.state.path}]
+                                )}/>
+                            : null}
 
-                <div className="products-toolbar mb-2 col-12">
-                    <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
-                        <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
-                            <li className="products-toolbar-item mr-2">
-                                <a href="#"
-                                   className={this.state.cardView === 'tile' ? 'text-success' : 'text-secondary'}
-                                   onClick={() => {
-                                       this.setState({
-                                           cardView: 'tile'
-                                       })
-                                   }}>
-                                    <i className="fa fa-th"></i>
-                                </a>
-                            </li>
-                            <li className="products-toolbar-item">
-                                <a href="#"
-                                   className={this.state.cardView === 'list' ? 'text-success' : 'text-secondary'}
-                                   onClick={() => {
-                                       this.setState({
-                                           cardView: 'list'
-                                       })
-                                   }}>
-                                    <i className="fa fa-list"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        
-                        <ul className="row col-xl-8 col-lg-8 col-md-8 col-sm-12 justify-content-center">
-                            <li className="products-toolbar-item mr-1">
-                                <div className="dropdown">
-                                    <span className="products-toolbar-item__text">Товаров на странице: </span>
-                                    <a className="dropdown-toggle"
-                                       href="#"
-                                       role="button"
-                                       id="dropdownMenuLink"
-                                       data-toggle="dropdown"
-                                       aria-haspopup="true"
-                                       aria-expanded="false">
-                                        <span
-                                            className="products-toolbar-item__selected">{this.state.limitAll ? 'Все' : this.state.limit}</span>
-                                    </a>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a className="dropdown-item" href="#" data="50"
-                                           onClick={(e) => this.setLimit(e, false)}>50</a>
-                                        <a className="dropdown-item" href="#" data="100"
-                                           onClick={(e) => this.setLimit(e, false)}>100</a>
-                                        <a className="dropdown-item" href="#" data="50"
-                                           onClick={(e) => this.setLimit(e, true)}>Все</a>
+
+
+                        {productPageTitle ?
+                            <h3 className="page-title">{productPageTitle}</h3>
+                            : null}
+
+                        {this.props.match.params.category !== 'new' && this.props.match.params.category !== 'stock'
+                        && this.props.match.params.category !== 'search' && catList.length > 0 ?
+                            <SubCategoriesRow catList={catList} location={this.props.location}/>
+                            : null}
+
+                        <ProductToolbar
+                            cardView={this.state.cardView}
+                            handleChangeCardView={(obj) => this.setState({cardView: obj.cardView})}
+                            sortSelectedLabel={this.sortSelectedLabel}
+                            setSort={this.setSort}
+                            setLimit={this.setLimit}
+                            limitAll={this.state.limitAll}
+                            limit={this.state.limit}
+                        />
+
+                        {
+                            this.state.ready
+                                ?
+                                <>
+                                    <div className="row products-wrapper"
+                                         ref={(target) => this.productListInnerContainer = target}>
+                                        {this.state.products.length > 0 ? this.state.products.map((item, key) => {
+                                            if (key < this.state.limit) {
+                                                return (
+                                                    <ProductCard item={item} key={key} update={this.updateFav}
+                                                                 favorite={this.isFavorite(item)}
+                                                                 cardView={this.state.cardView}
+                                                    />
+                                                );
+                                            } else {
+                                                return null;
+                                            }
+                                        }) : <p className={'text-center'}>Товары не найдены</p>}
                                     </div>
-                                </div>
-
-                            </li>
-                            <li className="products-toolbar-item mr-1">
-                                <div className="dropdown">
-                                    <span className="products-toolbar-item__text">Сортировать по: </span>
-                                    <a className="dropdown-toggle products-toolbar-item__text"
-                                       href="#"
-                                       role="button"
-                                       id="dropdownMenuLink"
-                                       data-toggle="dropdown"
-                                       aria-haspopup="true"
-                                       aria-expanded="false">
-                                        <span
-                                            className="products-toolbar-item__selected">{this.sortSelectedLabel()}</span>
-                                    </a>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a className="dropdown-item" href="#" data="title,asc"
-                                           onClick={(e) => this.setSort(e)}>названию А-Я</a>
-                                        <a className="dropdown-item" href="#" data="title,desc"
-                                           onClick={(e) => this.setSort(e)}>названию Я-А</a>
-                                        <a className="dropdown-item" href="#" data="price,asc"
-                                           onClick={(e) => this.setSort(e)}>цене по возрастанию</a>
-                                        <a className="dropdown-item" href="#" data="price,desc"
-                                           onClick={(e) => this.setSort(e)}>цене по убыванию</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </ul>
-                </div>
-                
-                <div className="row" ref={(target) => this.productListInnerContainer = target}>
-                    {this.state.products.length > 0 ? this.state.products.map((item, key) => {
-                        if (key < this.state.limit) {
-                            return (
-                                <ProductCard item={item} key={key} update={this.updateFav}
-                                    favorite={this.isFavorite(item) ? true : false}
-                                    cardView={this.state.cardView}
-                                />
-                            );
-                        } else {
-                            return null;
+                                    {
+                                        this.state.limit ?
+                                            <div>
+                                                <Pagination
+                                                    numberItems={this.state.totalItems}
+                                                    limit={this.state.offset}
+                                                    offset={this.state.limit}
+                                                    currentCategory={this.props.match.params.category}
+                                                    handleGet={this.handleGet}
+                                                    match={this.props.match}
+                                                />
+                                            </div>
+                                            :
+                                            null
+                                    }
+                                </>
+                                :
+                                <Loading/>
                         }
-                    }) : <p className={'text-center'}>Товары не найдены</p>}
-                </div>
-
-                {!this.state.limitAll && parseInt(this.state.limit) < parseInt(this.state.totalItems)
-                    ? <nav aria-label="Page navigation example" className="row justify-content-center">
-                        <ul className="pagination">
-                            <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Previous"
-                                   onClick={() => {
-                                       if (this.state.offset > 0) {
-                                           this.setState({
-                                               offset: (this.state.offset - this.state.limit)
-                                           })
-                                       }
-                                   }}>
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span className="sr-only">Previous</span>
-                                </a>
-                            </li>
-
-                            {this.paginationItems()}
-
-                            <li className="page-item">
-                                <a className="page-link" href="#" aria-label="Next"
-                                   onClick={() => {
-                                       if (this.state.offset < this.state.totalItems) {
-                                           this.setState({
-                                               offset: (this.state.offset + this.state.limit)
-                                           })
-                                       }
-                                   }}>
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span className="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    : null}
-                {this.state.loading ? <Loading/> : null}
-            </div>}}
+                    </div>
+                }}
             </CategoriesContext.Consumer>
         );
     }

@@ -4,89 +4,136 @@ export class ProductToolbar extends Component {
     constructor(props) {
         super(props);
 
+        this.selectLimitRef = React.createRef();
+        this.selectSortRef = React.createRef();
+
+        this.state = {
+            dropdownList: [this.selectLimitRef, this.selectSortRef]
+        }
     }
+
+    componentDidMount() {
+        if(this.selectLimitRef && this.selectSortRef) {
+            this.selectLimitRef.current.addEventListener('click', this.handleDropdownClick);
+            this.selectSortRef.current.addEventListener('click', this.handleDropdownClick);
+        }
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        if(this.selectLimitRef && this.selectSortRef) {
+            this.selectLimitRef.current.removeEventListener('click', this.handleDropdownClick);
+            this.selectSortRef.current.removeEventListener('click', this.handleDropdownClick);
+        }
+        document.removeEventListener("mousedown", this.handleClickOutside);
+    }
+
+    handleClickOutside = (event) => {
+        if(!event.target) {
+            return null
+        }
+        if ((this.selectLimitRef && !this.selectLimitRef.current.contains(event.target)) 
+        && this.selectSortRef && !this.selectSortRef.current.contains(event.target)
+        && event.target.classList && !event.target.classList.contains('products-toolbar-dropdown__list-item') ) {
+            this.state.dropdownList.forEach(item => item.current.classList.remove('active'));
+        }
+    };
+
+    shouldComponentUpdate(prevProps) {
+        if(prevProps !== this.props) {
+            return true;
+        } else return false;
+
+    }
+
+    handleDropdownClick = (e) => {
+        this.state.dropdownList.forEach(item => {
+            item.current.classList.remove('active');
+            if(e.target === item.current) {
+                item.current.classList.toggle('active');
+            }
+        });
+    }
+
+    handlehandleSelectLimit = (e, all) => {
+        
+        this.props.setLimit(e, all ? true : false);
+        this.state.dropdownList.forEach(item => item.current.classList.remove('active'));
+    }
+
+    handleSelectSort = (e) => {
+        this.props.setSort(e);
+        this.state.dropdownList.forEach(item => item.current.classList.remove('active'));
+    }
+    
 
     render() {
         return (
-            <div className="products-toolbar mb-2 col-12">
-                <ul className="products-toolbar-group row justify-content-between" style={{paddingRight: 0}}>
-                    <ul className="row col-xl-3 col-lg-3 col-md-3 col-sm-12 justify-content-center">
-                        <li className="products-toolbar-item mr-2">
-                            <a href="#"
-                                className={this.state.cardView === 'tile' ? 'text-success' : 'text-secondary'}
-                                onClick={() => {
-                                    this.setState({
-                                        cardView: 'tile'
-                                    })
-                                }}>
-                                <i className="fa fa-th"></i>
-                            </a>
-                        </li>
-                        <li className="products-toolbar-item">
-                            <a href="#"
-                                className={this.state.cardView === 'list' ? 'text-success' : 'text-secondary'}
-                                onClick={() => {
-                                    this.setState({
-                                        cardView: 'list'
-                                    })
-                                }}>
-                                <i className="fa fa-list"></i>
-                            </a>
-                        </li>
-                    </ul>
+            <div className="products-toolbar row">
+                
+                <div className="products-toolbar-dropdown">
+                    <span className="products-toolbar-dropdown__title">Товаров на странице: </span>
                     
-                    <ul className="row col-xl-8 col-lg-8 col-md-8 col-sm-12 justify-content-center">
-                        <li className="products-toolbar-item mr-1">
-                            <div className="dropdown">
-                                <span className="products-toolbar-item__text">Товаров на странице: </span>
-                                <a className="dropdown-toggle"
-                                    href="#"
-                                    role="button"
-                                    id="dropdownMenuLink"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <span
-                                        className="products-toolbar-item__selected">{this.state.limitAll ? 'Все' : this.state.limit}</span>
-                                </a>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a className="dropdown-item" href="#" data="50"
-                                        onClick={(e) => this.setLimit(e, false)}>50</a>
-                                    <a className="dropdown-item" href="#" data="100"
-                                        onClick={(e) => this.setLimit(e, false)}>100</a>
-                                    <a className="dropdown-item" href="#" data="50"
-                                        onClick={(e) => this.setLimit(e, true)}>Все</a>
-                                </div>
-                            </div>
+                    <div className="products-toolbar-dropdown__toggle" ref={this.selectLimitRef}>
+                        <span className="products-toolbar-dropdown__toggle-text">
+                            {this.props.limitAll ? 'Все' : this.props.limit}
+                        </span>
+                        <span className="products-toolbar-dropdown__toggle-icon"></span>
 
-                        </li>
-                        <li className="products-toolbar-item mr-1">
-                            <div className="dropdown">
-                                <span className="products-toolbar-item__text">Сортировать по: </span>
-                                <a className="dropdown-toggle products-toolbar-item__text"
-                                    href="#"
-                                    role="button"
-                                    id="dropdownMenuLink"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <span
-                                        className="products-toolbar-item__selected">{this.sortSelectedLabel()}</span>
-                                </a>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a className="dropdown-item" href="#" data="title,asc"
-                                        onClick={(e) => this.setSort(e)}>названию А-Я</a>
-                                    <a className="dropdown-item" href="#" data="title,desc"
-                                        onClick={(e) => this.setSort(e)}>названию Я-А</a>
-                                    <a className="dropdown-item" href="#" data="price,asc"
-                                        onClick={(e) => this.setSort(e)}>цене по возрастанию</a>
-                                    <a className="dropdown-item" href="#" data="price,desc"
-                                        onClick={(e) => this.setSort(e)}>цене по убыванию</a>
-                                </div>
+                        <div className="products-toolbar-dropdown__list">
+                            <span className="products-toolbar-dropdown__list-item" data="50"
+                                onClick={(e) => this.handlehandleSelectLimit(e)}>50</span>
+                            <span className="products-toolbar-dropdown__list-item" data="100"
+                                onClick={(e) => this.handlehandleSelectLimit(e)}>100</span>
+                            <span className="products-toolbar-dropdown__list-item" data="50"
+                                onClick={(e) => this.handlehandleSelectLimit(e, true)}>Все</span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                
+                <div className="products-toolbar-dropdown">
+                    <span className="products-toolbar-dropdown__title">Сортировать по: </span>
+                    <div className="products-toolbar-dropdown__toggle products-toolbar-dropdown__toggle_second"
+                        ref={this.selectSortRef}
+                    >
+                        <span className="products-toolbar-dropdown__toggle-text">
+                            {this.props.sortSelectedLabel()}
+                        </span>
+                        <span className="products-toolbar-dropdown__toggle-icon"></span>
+
+                        <div className="products-toolbar-dropdown__list">
+                            <span className="products-toolbar-dropdown__list-item" data="title,asc"
+                                onClick={(e) => this.handleSelectSort(e)}>названию А-Я</span>
+                            <span className="products-toolbar-dropdown__list-item" data="title,desc"
+                                onClick={(e) => this.handleSelectSort(e)}>названию Я-А</span>
+                            <span className="products-toolbar-dropdown__list-item" data="price,asc"
+                                onClick={(e) => this.handleSelectSort(e)}>цене по возрастанию</span>
+                            <span className="products-toolbar-dropdown__list-item" data="price,desc"
+                                onClick={(e) => this.handleSelectSort(e)}>цене по убыванию</span>
                             </div>
-                        </li>
-                    </ul>
-                </ul>
+                    </div>
+                    
+                </div>
+                    
+                <div className="products-toolbar-view-control">
+                    <span className="products-toolbar-view-control__item">
+                        <span
+                            className={this.props.cardView === 'tile' ? 'active' : 'disabled'}
+                            onClick={() => this.props.handleChangeCardView({cardView: 'tile'})}>
+                            <i className="fa fa-th"></i>
+                        </span>
+                    </span>
+                    <span className="products-toolbar-view-control__item">
+                        <span
+                            className={this.props.cardView === 'list' ? 'active' : 'disabled'}
+                            onClick={() => this.props.handleChangeCardView({cardView: 'list'})}>
+                            <i className="fa fa-list-ul"></i>
+                        </span>
+                    </span>
+                </div>
+                
             </div>
         )
     }

@@ -11,7 +11,6 @@ import Modal from './components/modal';
 
 import {CategoriesContext} from './services/contexts';
 import request from './services/ajaxManager';
-import login from "./components/public/sign_action/login";
 
 class App extends Component {
     constructor(props) {
@@ -36,7 +35,7 @@ class App extends Component {
     }
 
     checkSizeWindow() {
-        if (window.innerWidth > 1200) {
+        if (window.innerWidth > 768) {
             this.setState({mobileMode: false})
         } else {
             this.setState({mobileMode: true})
@@ -47,6 +46,22 @@ class App extends Component {
         this.checkSizeWindow()
         window.addEventListener("resize", this.checkSizeWindow.bind(this));
 
+        let additionalData = [
+            {
+                title: 'Новые товары',
+                id: 'new',
+                children: []
+            }, {
+                title: 'Акционные товары',
+                id: 'stock',
+                children: []
+            }, {
+                title: 'Сезонные товары',
+                id: 'season',
+                children: []
+            },
+        ]
+
         let _this = this;
 
         request(
@@ -55,7 +70,7 @@ class App extends Component {
             null,
             {},
             (response) => {
-                _this.setState({categories: response})
+                _this.setState({categories: [...additionalData, ...response]},)
             },
             (err) => console.log(err)
         )
@@ -66,28 +81,16 @@ class App extends Component {
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        {
-                            this.state.mobileMode ?
-                                <Switch>
-                                    <Route path="/admin"
-                                           component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
-                                    <Route path="/user"
-                                           component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
-                                    <Route path="/" render={() => <PublicLayout from={this.state.from}
-                                                                                updateFrom={this.updateFrom}/>}/>
-                                </Switch>
-                                :
-                                <CategoriesContext.Provider value={this.state.categories}>
-                                    <Switch>
-                                        <Route path="/admin"
-                                               component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
-                                        <Route path="/user"
-                                               component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
-                                        <Route path="/" render={() => <PublicLayout from={this.state.from}
-                                                                                    updateFrom={this.updateFrom}/>}/>
-                                    </Switch>
-                                </CategoriesContext.Provider>
-                        }
+                        <CategoriesContext.Provider value={{categories: this.state.categories, isMobile: this.state.mobileMode}}>
+                            <Switch>
+                                <Route path="/admin"
+                                        component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
+                                <Route path="/user"
+                                        component={() => <UserLayout updateFrom={this.updateFrom}/>}/>
+                                <Route path="/" render={() => <PublicLayout from={this.state.from}
+                                                                            updateFrom={this.updateFrom}/>}/>
+                            </Switch>
+                        </CategoriesContext.Provider>
                     </Router>
                     <Modal/>
                 </ErrorBoundary>

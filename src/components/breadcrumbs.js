@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 class Breadcrumbs extends Component {
     constructor(props) {
@@ -38,12 +38,12 @@ class Breadcrumbs extends Component {
             let link = item.link;
             return (
                 key !== this.state.path.length -1 
-                ? <li className="breadcrumb-item" key={key}><a href="#" onClick={() => this.go(link)}>{item.title}</a></li>
+                ? <li className="breadcrumb-item" key={key}><Link onClick={() => this.go(link)}>{item.title}</Link></li>
                 : <li className="breadcrumb-item active" key={key} aria-current="page">{item.title}</li>
             )
         })
 
-        arr.unshift(<li className="breadcrumb-item" key={key}><a href="#" onClick={()=> this.go('/')}>{'Главная'}</a></li>)
+        arr.unshift(<li className="breadcrumb-item" key={key}><Link onClick={()=> this.go('/')}>{'Главная'}</Link></li>)
 
         return arr;
     }
@@ -51,7 +51,7 @@ class Breadcrumbs extends Component {
     render() {
         return (
             <nav aria-label="breadcrumb">
-                <ol className="breadcrumb bg-white">
+                <ol className="breadcrumb bg-white breadcrumb-custom-styles">
                     {this.bodyView()}
                 </ol>
             </nav>

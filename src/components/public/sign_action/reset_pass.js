@@ -9,7 +9,6 @@ import AbstractForm from '../../abstract/form';
 import { resetUrl } from '../../../services/parameters';
 import {Link} from "react-router-dom";
 import Breadcrumbs from "../../breadcrumbs";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 
 class ResetForm extends AbstractForm {
@@ -43,7 +42,6 @@ class ResetForm extends AbstractForm {
     viewForm() {
         if (!this.state.message) {
             return (
-                <div className='image-background'>
                 <div className="reset">
                     <Breadcrumbs
                         path={[
@@ -85,7 +83,6 @@ class ResetForm extends AbstractForm {
                             </div>
                         </div>
                     </form>
-                </div>
                 </div>
             );
         }

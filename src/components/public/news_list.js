@@ -11,6 +11,7 @@ class NewsList extends Component {
         super(props);
 
         this.handleRenderList = this.handleRenderList.bind(this)
+        this.handleGet = this.handleGet.bind(this)
 
         this.state = {
             news: null,
@@ -22,30 +23,31 @@ class NewsList extends Component {
     }
 
     renderItems(item, index) {
-        if ((index+1 >= this.state.start) && (index+1 <= this.state.end)) {
-            let date = new Date(item.date);
-            return (
-                <div key={index} className="card card-container">
+        let date = new Date(item.date);
+        return (
+            <div key={index} className="card card-container">
+                <div className="image-wrapper">
                     <img itemProp="image" className={'card-img-top'} alt={'image'}
-                         src={'https://api.universal.tom.ru/uploads/news/' + item.photo}/>
-                    <div className="card-body">
-                        <small itemProp="dateline">{date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()}</small>
-                        <h5 className='card-title' itemProp="headline">{item.title}</h5>
-                        <p className="card-text">{item.short_content}</p>
-                    </div>
+                        src={'http://ts3.vladimirov-mv.name/uploads/news/' + item.photo}/>
                 </div>
-            );
-        }
+                <div className="card-body">
+                    <small itemProp="dateline">{date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()}</small>
+                    <h5 className='card-title' itemProp="headline">{item.title}</h5>
+                    <p className="card-text">{item.short_content}</p>
+                </div>
+            </div>
+        );
     }
 
-    handleGet() {
+    handleGet = (page) => {
         let _this = this;
         request(
-            'news/news',
+            `news/news`,
             'GET',
             null,
             {},
             function (response) {
+                
                 _this.setState({news: response});
             },
         );
@@ -76,7 +78,10 @@ class NewsList extends Component {
                     {
                         this.state.news
                             ?
-                            this.state.news.map((item, key) => this.renderItems(item, key))
+                            this.state.news.data.length > 0
+                                ?
+                                this.state.news.data.map((item, key) => this.renderItems(item, key))
+                                : null
                             : null
                     }
                 </div>
@@ -84,9 +89,15 @@ class NewsList extends Component {
                     {
                         this.state.news
                             ?
-                            <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.news.length} offset={3}/>
-                            :
-                            null
+                            this.state.news.data.length > 0
+                                ?
+                                <Pagination handleRenderList={this.handleRenderList}
+                                            numberItems={this.state.news.count}
+                                            offset={Number(this.state.news.data.length)}
+                                            handleGet={this.handleGet}
+                                />
+                                : null
+                            : null
                     }
                 </div>
             </div>
