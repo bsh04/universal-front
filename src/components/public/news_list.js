@@ -10,7 +10,6 @@ class NewsList extends Component {
     constructor(props) {
         super(props);
 
-        this.handleRenderList = this.handleRenderList.bind(this)
         this.handleGet = this.handleGet.bind(this)
 
         this.state = {
@@ -28,7 +27,7 @@ class NewsList extends Component {
             <div key={index} className="card card-container">
                 <div className="image-wrapper">
                     <img itemProp="image" className={'card-img-top'} alt={'image'}
-                        src={'http://ts3.vladimirov-mv.name/uploads/news/' + item.photo}/>
+                        src={'https://api.universal.tom.ru/uploads/news/' + item.photo}/>
                 </div>
                 <div className="card-body">
                     <small itemProp="dateline">{date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()}</small>
@@ -39,22 +38,18 @@ class NewsList extends Component {
         );
     }
 
-    handleGet = (page) => {
+    handleGet = (_, page) => {
         let _this = this;
         request(
-            `news/news`,
+            `news/news?page=${page ? page : 1}`,
             'GET',
             null,
             {},
             function (response) {
-                
+                console.log(response)
                 _this.setState({news: response});
             },
         );
-    }
-
-    handleRenderList(start, end) {
-        this.setState({start, end})
     }
 
     render() {
@@ -91,10 +86,10 @@ class NewsList extends Component {
                             ?
                             this.state.news.data.length > 0
                                 ?
-                                <Pagination handleRenderList={this.handleRenderList}
-                                            numberItems={this.state.news.count}
+                                <Pagination numberItems={this.state.news.count}
                                             offset={Number(this.state.news.data.length)}
                                             handleGet={this.handleGet}
+                                            currentCategory
                                 />
                                 : null
                             : null

@@ -12,7 +12,6 @@ class ArticleList extends Component {
     constructor(props) {
         super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this);
 
         this.onEditorStateChange = this.onEditorStateChange.bind(this);
         this.onEditorStateChangeE = this.onEditorStateChangeE.bind(this);
@@ -43,7 +42,7 @@ class ArticleList extends Component {
         );
     }
 
-    handleSubmit(e) {
+    handleAdd(e) {
 
         e.preventDefault();
 
@@ -68,7 +67,6 @@ class ArticleList extends Component {
             data,
             {},
             function (response) {
-                console.log(response)
                 let arr = _this.state.articles;
                 arr.push(response);
                 _this.setState({articles: arr, add: false});
@@ -89,7 +87,7 @@ class ArticleList extends Component {
 
         data.append("id", this.state.articles[key].id)
         data.append("title", this.titleEditInput.value,)
-        data.append("content", draftToHtml(convertToRaw(this.state.editorStateE.getCurrentContent())))
+        data.append("content", draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())))
         arr.map(item => {
             data.append('images[]', item);
         })
@@ -105,7 +103,6 @@ class ArticleList extends Component {
                 let arr = _this.state.articles;
                 arr[key] = response;
                 _this.setState({articles: arr, edit: null, editorStateE: EditorState.createEmpty()});
-                console.log(response)
             },
             this.state.errorCallback
         );
@@ -151,7 +148,7 @@ class ArticleList extends Component {
             return (
                 <tr>
                     <td colSpan={3}>
-                        <form onSubmit={this.handleSubmit}>
+                        <form>
                             <input
                                 name="title"
                                 type="text"
@@ -195,7 +192,7 @@ class ArticleList extends Component {
                                 </p>
                             </form>
                             <p className="text-center">
-                                <button type="submit" className="btn btn-success">
+                                <button type="submit" className="btn btn-success" onClick={() => this.handleAdd()}>
                                     <i className={'fa fa-plus'}> Добавить</i>
                                 </button>
                                 <button className={'btn btn-warning'} onClick={() => {
@@ -217,6 +214,7 @@ class ArticleList extends Component {
                     <td>
                         <button className={'btn btn-success'} onClick={() => {
                             this.setState({add: true, editorState: EditorState.createEmpty()})
+                            this.handleAdd()
                         }}>
                             <i className={'fa fa-plus'}> Добавить</i>
                         </button>
@@ -228,7 +226,7 @@ class ArticleList extends Component {
 
     render() {
         return (
-            <div>
+            <div className='w-100'>
                 <h4 className="text-center">Управление швейным цехом</h4>
                 <table className={"table table-striped table-hover"}>
                     <thead>
