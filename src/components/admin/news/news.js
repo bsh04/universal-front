@@ -43,7 +43,6 @@ class NewsList extends Component {
         data.append('type', 'news');
         data.append('short_content', this.contentInput.value);
 
-        console.log(this.state.news)
 
         let _this = this;
         let arr = this.state.news.data;
@@ -208,8 +207,9 @@ class NewsList extends Component {
                     </thead>
                     <tbody>
                     {this.viewAdd()}
-                    {this.state.news.length > 0 ? this.state.news.map((item, key) => {
+                    {this.state.news.data ? this.state.news.data.length > 0 ? this.state.news.data.map((item, key) => {
                         if (this.state.edit === key) {
+                        }
                             return (
                                 <tr key={key}>
                                     <td>{key + 1}</td>
@@ -264,7 +264,6 @@ class NewsList extends Component {
                                     </td>
                                 </tr>
                             );
-                        }
 
                         return (
                             <tr key={key}>
@@ -288,7 +287,7 @@ class NewsList extends Component {
                         );
                     }) : <tr>
                         <td colSpan={4}>Список новостей пуст</td>
-                    </tr>}
+                    </tr> : null}
                     </tbody>
                 </table>
             </div>

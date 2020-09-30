@@ -297,11 +297,15 @@ class Workshop extends Component {
                                     ?
                                     <>
                                         <p>Примеры изделий</p>
-                                        {this.state.article.images.map((item, index) => {
-                                            return (
-                                                <img key={index} src={`http://ts3.vladimirov-mv.name/uploads/articles/${item}`}/>
-                                            )
-                                        })}
+                                        <div className='workshop-item-examples'>
+                                            {this.state.article.images.map((item, index) => {
+                                                return (
+                                                    <div className='workshop-item-examples__images'>
+                                                        <img className='workshop-item-examples__image' key={index} src={`http://ts3.vladimirov-mv.name/uploads/articles/${item}`}/>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
                                     </>
                                     :
                                     null
