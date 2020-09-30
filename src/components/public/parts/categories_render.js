@@ -26,6 +26,7 @@ class Categories_render extends Component {
                                      src={require(`../../../images/left_menu/category_icon_${this.props.item.id}.png`)}/>
                                 <a
                                     className={`pl-2 text-left item `}
+                                    href={'/catalog/' + this.props.item.id}
                                 >{this.props.item.title}</a>
                             </div>
                             {
