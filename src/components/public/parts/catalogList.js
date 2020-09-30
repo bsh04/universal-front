@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import request from "../../../services/ajaxManager";
 import ExtensionIcon from '@material-ui/icons/Extension';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import {Link} from "react-router-dom";
 
 const CatalogList = (props) => {
 
@@ -102,10 +103,10 @@ const CatalogList = (props) => {
                 )
             } else {
                 return (
-                    <a href={`/catalog/${item.id}`} key={index} className='nav-link d-flex ml-4 mt-2 catalog-item'>
+                    <Link to={`/catalog/${item.id}`} key={index} className='nav-link d-flex ml-4 mt-2 catalog-item'>
                         <img src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
                         {item.title}
-                    </a>
+                    </Link>
                 )
             }
         }
@@ -133,8 +134,8 @@ const CatalogList = (props) => {
                                                 <h5>{listCategory.title}</h5>
                                             </div>
                                             :
-                                            <a className='d-flex mt-2 catalog-first-item justify-content-between'
-                                               href='/workshop'>
+                                            <Link className='d-flex mt-2 catalog-first-item justify-content-between'
+                                               to='/workshop'>
                                                 <div className='d-flex align-items-center'>
                                                     <div className='d-flex align-items-center'>
                                                         <img className='icons-left-menu'
@@ -145,7 +146,7 @@ const CatalogList = (props) => {
                                                     </div>
                                                 </div>
                                                 <ArrowForwardIosIcon className='text-white'/>
-                                            </a>
+                                            </Link>
                                     }
                                     {
                                         showCategory
@@ -163,13 +164,13 @@ const CatalogList = (props) => {
                                 list.length > 0
                                     ?
                                     <>
-                                        <a className='nav-link d-flex mt-2 production-catalog' href='/workshop'>
+                                        <Link className='nav-link d-flex mt-2 production-catalog' to='/workshop'>
                                             <img className='icons-left-menu'
                                                  src={require(`../../../images/left_menu/factory.png`)}/>
                                             <div className='rounded-pill pl-2 pr-2 text-light'>
                                                 НАШЕ ПРОИЗВОДСТВО
                                             </div>
-                                        </a>
+                                        </Link>
                                         {
                                                 list.map((item, index) => renderList(item, index))
                                         }
@@ -180,7 +181,7 @@ const CatalogList = (props) => {
                                 list.length > 0
                                     ?
                                     <>
-                                        <a className='nav-link d-flex mt-2 production-catalog' href='/workshop'>
+                                        <Link className='nav-link d-flex mt-2 production-catalog' to='/workshop'>
                                             <div className='d-flex align-items-center'>
                                                 <img className='icons-left-menu'
                                                      src={require(`../../../images/left_menu/factory.png`)}/>
@@ -189,7 +190,7 @@ const CatalogList = (props) => {
                                                 </div>
                                             </div>
                                             <ArrowForwardIosIcon className='text-white'/>
-                                        </a>
+                                        </Link>
                                         {
                                             list.map((item, index) => renderList(item, index))
                                         }

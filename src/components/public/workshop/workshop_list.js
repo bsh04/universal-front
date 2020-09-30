@@ -52,10 +52,10 @@ class ArticleList extends Component {
 
     renderList(item, key) {
         return (
-            <a className='item-container' key={key} href={'/workshop/' + item.id}>
+            <Link className='item-container' key={key} to={'/workshop/' + item.id}>
                 <img src={require('../../../images/workshop_list/bel.png')}/>
                 <p className="text">{item.title}</p>
-            </a>
+            </Link>
         );
     }
 

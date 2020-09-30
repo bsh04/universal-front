@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 
 class Categories_render extends Component {
     constructor(props) {
@@ -24,19 +25,19 @@ class Categories_render extends Component {
                             <div className='d-flex align-items-center'>
                                 <img className='icons-left-menu'
                                      src={require(`../../../images/left_menu/category_icon_${this.props.item.id}.png`)}/>
-                                <a
+                                <Link
                                     className={`pl-2 text-left item `}
-                                    href={'/catalog/' + this.props.item.id}
-                                >{this.props.item.title}</a>
+                                    to={'/catalog/' + this.props.item.id}
+                                >{this.props.item.title}</Link>
                             </div>
                             {
                                 this.props.open === this.props.item.id
                                     ?
                                     <div className='subcategories'>
                                         {
-                                            this.props.item.children.map((item, index) => <a key={index}
-                                                                                             href={'/catalog/' + item.id}
-                                                                                             className='dropdown-item'>{item.title}</a>)
+                                            this.props.item.children.map((item, index) => <Link key={index}
+                                                                                             to={'/catalog/' + item.id}
+                                                                                             className='dropdown-item'>{item.title}</Link>)
                                         }
                                     </div>
                                     :
@@ -47,9 +48,9 @@ class Categories_render extends Component {
                         <>
                             <img className='icons-left-menu'
                                  src={require(`../../../images/left_menu/category_icon_${this.props.item.id}.png`)}/>
-                            <a
+                            <Link
                                 className={`pl-2 text-left item `}
-                                href={'/catalog/' + this.props.item.id}>{this.props.item.title}</a>
+                                to={'/catalog/' + this.props.item.id}>{this.props.item.title}</Link>
                         </>
                 }
             </div>

@@ -272,12 +272,16 @@ class ProductList extends Component {
                         let obj = contextValue.categories.find(item => item.id === this.props.match.params.category);
 
                         if (obj && obj.title) {
-                            productPageTitle = obj.title;
-
+                            productPageTitle =  obj.title;
+                        } else {
+                            contextValue.categories.map(item => item.children ? item.children.map(item => item.id === this.props.match.params.category ? productPageTitle = item.title : null) : null)
                         }
 
                         if (obj && obj.children !== undefined) {
                             catList = obj.children;
+                            if (catList !== undefined && catList.length > 0) {
+                                obj = catList.find(item => item.id === this.props.match.params.category)
+                            }
 
                         } else {
                             let obj = contextValue.categories.find(item => {
@@ -287,8 +291,9 @@ class ProductList extends Component {
                                 }
                             });
                             catList = obj.children;
-                            productPageTitle = obj.title;
                         }
+
+
 
                     } else {
                         catList = this.state.catList;
@@ -330,6 +335,8 @@ class ProductList extends Component {
                                             {title: this.state.path}]
                                 )}/>
                             : null}
+
+
 
                         {productPageTitle ?
                             <h3 className="page-title">{productPageTitle}</h3>

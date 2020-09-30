@@ -138,12 +138,12 @@ const NavbarTop = (props) => {
     const menuItemRenderProfile = (item, index) => {
         return (
             <button key={index} className="dropdown-item" type="button">
-                <a
+                <Link
                     className="rounded-0 m-0 d-flex align-items-center"
-                    href={item.path}
+                    to={item.path}
                 >
                     {item.title}
-                </a>
+                </Link>
             </button>
         )
     }
@@ -152,23 +152,23 @@ const NavbarTop = (props) => {
         if (dropdown) {
             return (
                 <button key={index} className="dropdown-item" type="button">
-                    <a
+                    <Link
                         className="rounded-0 m-0 d-flex align-items-center"
-                        href={item.path}
+                        to={item.path}
                     >
                         {item.title}
-                    </a>
+                    </Link>
                 </button>
             )
         } else {
             return (
                 <div className='nav-item' key={index}>
-                    <a
+                    <Link
                         className="rounded-0 nav-link m-0 text-light d-flex align-items-center"
-                        href={item.path}
+                        to={item.path}
                     >
                         {item.title}
-                    </a>
+                    </Link>
                 </div>
             )
         }
