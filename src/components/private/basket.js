@@ -132,13 +132,13 @@ class Basket extends Component {
                                                     ?
                                                     <div className='d-flex align-items-end h-100 flex-column w-100 p-0'>
                                                         <div className='product-card-top'>
-                                                            <div className='product-image'>
+                                                            <div className='product-image' onClick={() => this.props.history.push('/product/details/' + item.product.id)}>
                                                                 <img className="fav-img"
                                                                      src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.product.photo}
                                                                     // style={{width: '80%', height: '80%'}}
                                                                 />
                                                             </div>
-                                                            <div className='product-title'>
+                                                            <div className='product-title' onClick={() => this.props.history.push('/product/details/' + item.product.id)}>
                                                                 <small>Артикул {item.product.id} </small>
                                                                 <p>{item.product.title}</p>
                                                             </div>
@@ -190,12 +190,12 @@ class Basket extends Component {
                                                     </div>
                                                     :
                                                     <>
-                                                        <div className='product-image'>
+                                                        <div className='product-image' onClick={() => this.props.history.push('/product/details/' + item.product.id)}>
                                                             <img className="fav-img"
                                                                  src={item.product.photo === 'placeholder.jpg' ? require('../../images/image-placeholder.png') : 'https://api.universal.tom.ru/uploads/products/' + item.product.photo}
                                                             />
                                                         </div>
-                                                        <div className='product-title'>
+                                                        <div className='product-title' onClick={() => this.props.history.push('/product/details/' + item.product.id)}>
                                                             <small>Артикул {item.product.id} </small>
                                                             <p>{item.product.title}</p>
                                                         </div>

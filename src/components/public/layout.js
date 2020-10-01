@@ -183,7 +183,7 @@ class PublicLayout extends Component {
                         <div className="flex-nowrap row w-100">
                             {showCategoryList
                             ?
-                            <div className="col">
+                            <div className="col" style={{minWidth: 'auto'}}>
                                 <CategoryList categories={categories} onClick={() => null}/>
                                 <div className="side-banner side-banner-promo1">
                                     <div className="text-small">Выгодные цены на сезонный ассортимент</div>

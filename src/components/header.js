@@ -67,7 +67,7 @@ const Header = props => {
         if (window.innerWidth >= 1700) {
             setMobileMode(false)
             setMinimalMode(false)
-        } else if(window.innerWidth < 1700 && window.innerWidth > 920) {
+        } else if(window.innerWidth < 1700 && window.innerWidth > 950) {
             setMobileMode(false)
             setMinimalMode(true)
         }
