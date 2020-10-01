@@ -52,7 +52,7 @@ export class ModalQuestionForm extends Component {
             email: this.state.email
         }
 
-        let fieldsValited = data.name.length > 1 && data.message.length > 5 && data.tel.length > 4 && data.email.length > 4;
+        let fieldsValited = data.name.length > 1 && data.message.length > 1 && data.tel.length > 1 && data.email.length > 1;
         let captchaValited = parseInt(this.state.captchaResult) === parseInt(this.state.userInputCaptcha);
 
         if(!fieldsValited) {

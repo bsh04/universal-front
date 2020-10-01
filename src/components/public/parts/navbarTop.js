@@ -67,6 +67,7 @@ const NavbarTop = (props) => {
                 {title: 'Мои заказы', path: '/user/order'},
                 {title: 'Изменить данные', path: '/user/data/change'},
                 {title: 'Изменить пароль', path: '/user/password/change'},
+                {title: 'Выход', path: '/'},
             ]
             :
             [
@@ -74,6 +75,8 @@ const NavbarTop = (props) => {
                 {title: 'Новости', path: '/news'},
                 {title: 'Оплата и доставка', path: '/deliveryandpayment'},
                 {title: 'Контакты', path: '/contact'},
+                {title: 'Регистрация', path: '/register'},
+                {title: 'Вход', path: '/login'},
             ]
 
     useEffect(() => {
@@ -155,6 +158,7 @@ const NavbarTop = (props) => {
                     <Link
                         className="rounded-0 m-0 d-flex align-items-center"
                         to={item.path}
+                        onClick={() => item.title === 'Выход' ? handleLogout() : null}
                     >
                         {item.title}
                     </Link>
@@ -227,11 +231,11 @@ const NavbarTop = (props) => {
     const handleSearch = (e) => {
         e.preventDefault();
         let parts = window.location.pathname.split('/');
-        
+
         /* if (searchInCat) {
             props.history.push('/' + parts[1] + '/' + parts[2] + '/' + search, {searchValue: search});
         } */
-        
+
         props.history.push('/catalog/search?q=' + search, {searchValue: search});
     }
 
@@ -304,7 +308,9 @@ const NavbarTop = (props) => {
                                 <input className='form-control shadow-none bg-light border-0' type="text"
                                        placeholder='Что Вы ищете?'
                                        aria-label="Radio button for following text input"
-                                       onChange={(e) => {setSearch(e.target.value)}}
+                                       onChange={(e) => {
+                                           setSearch(e.target.value)
+                                       }}
                                 />
                             </div>
                         </div>
@@ -436,7 +442,9 @@ const NavbarTop = (props) => {
                                 <input className='form-control shadow-none bg-light border-0' type="text"
                                        placeholder='Что Вы ищете?'
                                        aria-label="Radio button for following text input"
-                                       onChange={(e) => {setSearch(e.target.value)}}
+                                       onChange={(e) => {
+                                           setSearch(e.target.value)
+                                       }}
                                 />
                             </div>
                         </div>
@@ -475,28 +483,15 @@ const NavbarTop = (props) => {
                                 null
                         }
 
-                        <MoreVertIcon type="button" data-display="static" aria-haspopup="true" data-toggle="dropdown"
-                                      aria-expanded="false" className='text-white mr-3'/>
-                        <div className="dropdown-menu dropdown-menu-lg-right">
-                            {
-                                allItems.map((item, index) => menuItemRender(item, index, true))
-                            }
-                            {
-                                token ?
-                                    <div>
-                                        <Link className="nav-link pl-4 py-1" onClick={() => handleLogout()}
-                                              to={''}>Выход</Link>
-                                    </div>
-                                    :
-                                    <div className='d-flex flex-column ml-2'>
-                                        <div>
-                                            <Link className="nav-link py-1" to={'/login'}>Вход</Link>
-                                        </div>
-                                        <div>
-                                            <Link className="nav-link py-1" to={'/register'}>Регистрация</Link>
-                                        </div>
-                                    </div>
-                            }
+                        <div className='dropdown'>
+                            <MoreVertIcon type="button" data-display="static" aria-haspopup="true"
+                                          data-toggle="dropdown"
+                                          aria-expanded="false" className='text-white mr-3'/>
+                            <div className="dropdown-menu dropdown-menu-lg-right">
+                                {
+                                    allItems.map((item, index) => menuItemRender(item, index, true))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
