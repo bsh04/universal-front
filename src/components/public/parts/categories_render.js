@@ -6,8 +6,32 @@ class Categories_render extends Component {
         super(props);
 
         this.state = {
-            open: false
+            open: false,
+            additionalData: [
+                {
+                    title: 'Новые товары',
+                    id: 'new',
+                    children: []
+                }, {
+                    title: 'Акционные товары',
+                    id: 'stock',
+                    children: []
+                }, {
+                    title: 'Сезонные товары',
+                    id: 'season',
+                    children: []
+                },
+            ],
         }
+    }
+
+    ;
+
+    addImageBackground = (id) => {
+        if(this.state.additionalData.find(item => item.id === id)) {
+            return 'icons-left-menu_' + id;
+        }
+        return '';
     }
 
     render() {
@@ -23,7 +47,7 @@ class Categories_render extends Component {
                         ?
                         <div className={`container-categories`}>
                             <div className='d-flex align-items-center'>
-                                <img className='icons-left-menu'
+                                <img className={`icons-left-menu ${this.addImageBackground(this.props.item.id)}`}
                                      src={require(`../../../images/left_menu/category_icon_${this.props.item.id}.png`)}/>
                                 <Link
                                     className={`pl-2 text-left item `}
@@ -46,7 +70,7 @@ class Categories_render extends Component {
                         </div>
                         :
                         <>
-                            <img className='icons-left-menu'
+                            <img className={`icons-left-menu ${this.addImageBackground(this.props.item.id)}`}
                                  src={require(`../../../images/left_menu/category_icon_${this.props.item.id}.png`)}/>
                             <Link
                                 className={`pl-2 text-left item `}

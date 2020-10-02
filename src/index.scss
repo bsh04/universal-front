@@ -2694,7 +2694,32 @@ h3 > a {
 
 
     & .icons-left-menu {
-      filter: grayscale(10);
+      object-fit: scale-down;
+      padding: 3px;
+      &_stock {
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        background-color: #E42D7F;
+      }
+      &_new {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #EFA44B;
+      }
+      &_produced {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #229DD2;
+      }
+      &_season {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background-color: #229DD2;
+      }
     }
   }
 
@@ -2736,6 +2761,7 @@ h3 > a {
     background-color: #ffffff;
   }
 }
+
 
 .production-catalog {
   cursor: pointer;
@@ -2926,6 +2952,38 @@ div {
 
   &::-webkit-scrollbar-thumb:hover {
     background: #25779b;
+  }
+
+  & .icons-left-menu {
+    object-fit: scale-down;
+    padding: 3px;
+    margin-right: 10px;
+
+    &_stock {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      background-color: #E42D7F;
+      background-position: center;
+    }
+    &_new {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #EFA44B;
+    }
+    &_produced {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #229DD2;
+    }
+    &_season {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #229DD2;
+    }
   }
 }
 

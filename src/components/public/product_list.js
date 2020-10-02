@@ -300,7 +300,7 @@ class ProductList extends Component {
                     }
 
 
-                    return <div>
+                    return <div className="w-100">
                         <Helmet>
                             <meta charSet="utf-8"/>
                             <meta name="viewport" content="width=device-width, initial-scale=1"/>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
 import request from '../../../services/ajaxManager';
+import Loading from '../../loading';
 
 class StocksList extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class StocksList extends Component {
             news: [],
             add: false,
             edit: null,
+            loading: false
         };
     }
 
@@ -38,6 +40,8 @@ class StocksList extends Component {
 
     handleSubmit(e)
     {
+        this.setState({loading: true});
+
         e.preventDefault();
 
         let data = new FormData();
@@ -46,7 +50,7 @@ class StocksList extends Component {
         data.append('title', "Акция"/* this.titleInput.value */);
         data.append('link', this.linkInput.value);
         data.append('type', 'stocks');
-        data.append('short_content', "Описание акции"/* this.contentInput.value */);
+        data.append('short_content', this.contentInput.value);
 
         let _this = this;
          
@@ -60,7 +64,7 @@ class StocksList extends Component {
                 console.log('edit response:',response)
                 let arr = _this.state.news;
                 arr.push(response);
-                _this.setState({news: arr, add: false});
+                _this.setState({news: arr, add: false, loading: false});
             },
             this.state.errorCallback
         );
@@ -78,7 +82,7 @@ class StocksList extends Component {
 
         request(
             'news/',
-            'PUT',
+            'POST',
             data,
             {},
             function (response)
@@ -87,7 +91,9 @@ class StocksList extends Component {
                 arr[key] = response;
                 _this.setState({news: arr, edit: null});
             },
-            this.state.errorCallback
+            function(err) {
+                console.log('edit error', err)
+            }
         );
     }
 
@@ -137,6 +143,16 @@ class StocksList extends Component {
                                 className={'form-control '}
                                 ref={(input) => {this.linkInput = input}}
                             /> 
+                            <br/>
+                            <input
+                                name="desc"
+                                type="text"
+                                required={true}
+                                placeholder={"Описание:*"}
+                                
+                                className={'form-control '}
+                                ref={(input) => {this.contentInput = input}}
+                            />
                             <br/>
                             <label htmlFor="fileInput">Баннер полноэкранный</label>
                             <input
@@ -195,7 +211,12 @@ class StocksList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="position-relative">
+                {this.state.loading ?
+                <div className="position-absolute" style={{top: '25%', left: '40%'}}><Loading /> </div>
+                 
+                : null}
+
                 <h4 className="text-center">Управление акциями</h4>
                 <table className={"table table-striped table-hover"}>
                     <thead>
@@ -230,7 +251,7 @@ class StocksList extends Component {
                                                 type="text"
                                                 required={true}
                                                 placeholder={"Содержание:*"}
-                                                
+                                                defaultValue={item.short_content}
                                                 className={'form-control '}
                                                 ref={(input) => {this.contentEditInput = input}}
                                             />
@@ -255,11 +276,11 @@ class StocksList extends Component {
                                     <td>{item.link}</td>
                                     <td>{item.short_content}</td>
                                     <td>
-                                        <button className={'btn btn-primary'}
+                                        {/* <button className={'btn btn-primary'}
                                                 onClick={() => {this.setState({edit: key})}}>
                                             <i className={'fa fa-edit'}> Изменить</i>
-                                        </button>
-                                        <button className={'btn btn-danger'}
+                                        </button> */}
+                                        <button className={'btn btn-danger btn-small'}
                                                 onClick={() => this.handleDelete(key)}>
                                             <i className={'fa fa-trash'}> Удалить</i>
                                         </button>

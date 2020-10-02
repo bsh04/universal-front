@@ -15,7 +15,7 @@ const Pagination = (props) => {
 
     useEffect(() => {
         setOffset(Number(props.offset))
-        console.log(offset)
+        
     }, [props.offset])
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const Pagination = (props) => {
 
     useEffect(() => {
         setNumberItems(props.numberItems)
-        console.log(numberItems)
+        
     })
 
     useEffect(() => {

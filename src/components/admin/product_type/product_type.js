@@ -35,7 +35,7 @@ class ProductStatus extends Component {
                 "Authorization": 'Bearer ' + this.props.token
             },
             function (response) {
-                console.log(response)
+                
                 _this.setState({data: response, numberProducts: response.count, ready: true})
             },
             function (err) {

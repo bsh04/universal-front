@@ -10,29 +10,30 @@ const CatalogList = (props) => {
     const [showCategory, setShowCategory] = useState(false)
     const [listCategory, setListCategory] = useState()
 
+    const additionalData = [
+        {
+            title: 'Новые товары',
+            id: 'new',
+            children: []
+        }, {
+            title: 'Акционные товары',
+            id: 'stock',
+            children: []
+        }, {
+            title: 'Сезонные товары',
+            id: 'season',
+            children: []
+        },
+    ]
+
+
     useEffect(() => {
         getData();
 
-    }, [list])
+    }, [])
 
 
     const getData = () => {
-        let additionalData = [
-            {
-                title: 'Новые товары',
-                id: 'new',
-                children: []
-            }, {
-                title: 'Акционные товары',
-                id: 'stock',
-                children: []
-            }, {
-                title: 'Сезонные товары',
-                id: 'season',
-                children: []
-            },
-        ]
-
 
         request(
             'product/categories',
@@ -40,7 +41,23 @@ const CatalogList = (props) => {
             {},
             {},
             function (response) {
-                setList([...additionalData, ...response])
+                
+                let arr = response.map(item => {
+                    if (item.children.length > 1) {
+                        item.children = item.children.sort((current, next) => {
+                            if (current.title < next.title) {
+                                return -1;
+                            }
+                            if (current.title > next.title) {
+                                return 1;
+                            }
+                            return 0
+                        })
+                    }
+                    return item;
+                });
+                
+                setList([...additionalData, ...arr]);
             },
             function (err) {
                 console.log(err)
@@ -63,6 +80,13 @@ const CatalogList = (props) => {
         )
     }
 
+    const addImageBackground = (id) => {
+        if(additionalData.find(item => item.id === id)) {
+            return 'icons-left-menu_' + id;
+        }
+        return '';
+    }
+
     const renderList = (item, index) => {
         if (props.reduce) {
             return (
@@ -76,7 +100,7 @@ const CatalogList = (props) => {
                     }
                 }} key={index}
                    className='d-flex ml-4 mt-2 catalog-item hr-bottom align-items-center'>
-                    <img className='icons-left-menu'
+                    <img className={`icons-left-menu ${addImageBackground(item.id)}`}
                          src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
                     <p className='text-break mb-0'>
                         {item.title}
@@ -96,7 +120,7 @@ const CatalogList = (props) => {
                         }
                     }} key={index}
                        className='nav-link dropdown-item d-flex ml-4 mt-2 catalog-item'>
-                        <img className='icons-left-menu'
+                        <img className={`icons-left-menu ${addImageBackground(item.id)}`}
                              src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
                         {item.title}
                     </a>
@@ -104,7 +128,8 @@ const CatalogList = (props) => {
             } else {
                 return (
                     <Link to={`/catalog/${item.id}`} key={index} className='nav-link d-flex ml-4 mt-2 catalog-item'>
-                        <img src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
+                        <img className={`icons-left-menu ${addImageBackground(item.id)}`}
+                        src={require(`../../../images/left_menu/category_icon_${item.id}.png`)}/>
                         {item.title}
                     </Link>
                 )

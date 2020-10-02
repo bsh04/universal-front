@@ -277,6 +277,10 @@ $btn_default_color: #229DD2;
         font-size: 30px;
         font-weight: bold;
         margin-bottom: 25px;
+        & a {
+            text-decoration: none;
+            color: #1d7595;
+        }
 
         &-icon {
             position: absolute;
@@ -357,6 +361,20 @@ $btn_default_color: #229DD2;
         background-position: 50% 50%;
         z-index: 50;
         
+        &.banner__slide-control {
+            background-color: #d6d6d68a;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px !important;
+            background-size: auto;
+
+            &_prev {
+                left: 3.5%;
+            }
+            &_next {
+                right: 5%;
+            }
+        }
     }
     .carousel__control_prev {
         left: 0;
@@ -376,7 +394,7 @@ $btn_default_color: #229DD2;
         margin-bottom: 0;
         padding-bottom: 0;
         width: 100%;
-        padding-left: 32px;
+        //padding-left: 32px;
 
         .carousel__title {
             align-self: flex-start;
@@ -1727,7 +1745,7 @@ $btn_default_color: #229DD2;
     .index-page {
         .custom-carousel {
             width: 95%;
-            padding-left: 22px;
+            //padding-left: 22px;
             .banner-controls {
                 top: 70%;
                 padding-right: 0;
@@ -1797,10 +1815,26 @@ $btn_default_color: #229DD2;
         }
     }
 }
+@media screen and(min-width: 768px) and(max-width: 840px) {
+    .content-wrapper {
+        padding: 0 0 10px 5px;
+    }
+    .product-card_list {
+        width: 80%;
+    }
+    .products-wrapper {
+        padding-right: 70px;
+    }
+    
+}
 
+@media screen and(max-width: 767px) {
+    .product-card {
+        &__image {
+            max-height: 100px;
+        }
+    }
 
-
-@media screen and(max-width: 768px) {
 
     .about-company {
         min-height: 450px;
