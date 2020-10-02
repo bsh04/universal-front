@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
+import {EditorState, convertToRaw, ContentState} from 'draft-js';
+import {Editor} from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -40,15 +40,23 @@ class ArticleList extends Component {
                 _this.setState({articles: response});
             },
         );
+
+        request(
+            'product/categories',
+            'GET',
+            null,
+            {},
+            function (response) {
+                _this.setState({categories: response})
+            }
+        )
     }
 
-    handleAdd(e) {
-
-        e.preventDefault();
+    handleAdd() {
 
         let arr = []
 
-        for (let i = 0; i < this.fileInput.files.length; i ++) {
+        for (let i = 0; i < this.fileInput.files.length; i++) {
             arr.push(this.fileInput.files[i])
         }
 
@@ -58,6 +66,8 @@ class ArticleList extends Component {
         arr.map(item => {
             data.append('images[]', item);
         })
+        data.append('icon', this.iconInput.files[0])
+        data.append('category', this.state.selectedCategory)
 
         let _this = this;
 
@@ -79,7 +89,7 @@ class ArticleList extends Component {
 
         let arr = []
 
-        for (let i = 0; i < this.fileInput.files.length; i ++) {
+        for (let i = 0; i < this.fileInput.files.length; i++) {
             arr.push(this.fileInput.files[i])
         }
 
@@ -91,6 +101,8 @@ class ArticleList extends Component {
         arr.map(item => {
             data.append('images[]', item);
         })
+        data.append('icon', this.iconInput.files[0])
+        data.append('category', this.state.selectedCategory)
 
         let _this = this;
 
@@ -129,19 +141,37 @@ class ArticleList extends Component {
         );
     }
 
-    onEditorStateChange(editorState)
-    {
+    onEditorStateChange(editorState) {
         this.setState({
             editorState,
         });
     };
 
-    onEditorStateChangeE(editorStateE)
-    {
+    onEditorStateChangeE(editorStateE) {
         this.setState({
             editorStateE,
         });
     };
+
+    renderSelectItems() {
+        if (this.state.categories) {
+            return this.state.categories.map((category, key) => {
+                    if (category.children.length > 0) {
+                        return category.children.map((subCategory, index) => {
+                            return <option  key={index + 'sub'}
+                                           value={subCategory.id}>{category.title} -- {subCategory.title}</option>
+                        })
+                    } else {
+                        return <option value={category.id} key={key}>{category.title}</option>
+                    }
+                }
+            )
+        }
+    }
+
+    handleSelectValue = (e) => {
+        this.setState({selectedCategory: e.target.value})
+    }
 
     viewAdd() {
         if (this.state.add) {
@@ -173,28 +203,56 @@ class ArticleList extends Component {
                                 }}
                             />
                             <br/>
-                            <form className='d-flex justify-content-center'>
-                                <input
-                                    name="file"
-                                    type="file"
-                                    required={true}
-                                    placeholder={"Файл с даными:*"}
-                                    className={'form-control w-50'}
-                                    ref={(input) => {this.fileInput = input}}
-                                    multiple
-                                    accept=".jpg, .jpeg, .png"
-                                />
-                                <br/>
-                                <p className="text-center">
-                                    <button type="submit" className="btn btn-success">
-                                        <i className={'fa fa-upload'}> <span>Загрузить файл</span></i>
-                                    </button>
-                                </p>
-                            </form>
+                            <div className='d-flex justify-content-between'>
+                                <div className='d-flex flex-column mt-3'>
+                                    <p>Файл превью швейного цеха</p>
+                                    <form className='d-flex justify-content-center'>
+                                        <input
+                                            name="file"
+                                            type="file"
+                                            required={true}
+                                            placeholder={"Файл с даными:*"}
+                                            className={'form-control w-50'}
+                                            ref={(input) => {
+                                                this.iconInput = input
+                                            }}
+                                            accept=".jpg, .jpeg, .png"
+                                        />
+                                        <br/>
+                                    </form>
+                                </div>
+                                <div className='d-flex flex-column mt-3'>
+                                    <p>Файлы примеров изделий</p>
+                                    <form className='d-flex justify-content-center'>
+                                        <input
+                                            name="file"
+                                            type="file"
+                                            required={true}
+                                            placeholder={"Файл с даными:*"}
+                                            className={'form-control w-50'}
+                                            ref={(input) => {
+                                                this.fileInput = input
+                                            }}
+                                            multiple
+                                            accept=".jpg, .jpeg, .png"
+                                        />
+                                        <br/>
+                                    </form>
+                                </div>
+                                <div className='d-flex flex-column mt-3 w-25'>
+                                    <p>Выбор категории</p>
+                                    <select className="custom-select" onChange={this.handleSelectValue} value={this.state.selectedCategory}>
+                                        <option onClick={() => this.setState({selectedCategory: null})} value={null}>Не выбрано</option>
+                                        {this.renderSelectItems()}
+                                    </select>
+                                </div>
+                            </div>
+                            <p className='pt-3 text-center'><strong>Внимание! </strong>При добавлении новых
+                                файлов, старые удалятся</p>
                             <p className="text-center">
-                                <button type="submit" className="btn btn-success" onClick={() => this.handleAdd()}>
+                                <div className="btn btn-success" onClick={() => this.handleAdd()}>
                                     <i className={'fa fa-plus'}> Добавить</i>
-                                </button>
+                                </div>
                                 <button className={'btn btn-warning'} onClick={() => {
                                     this.setState({add: false})
                                 }}>
@@ -205,8 +263,7 @@ class ArticleList extends Component {
                     </td>
                 </tr>
             );
-        }
-        else {
+        } else {
             return (
                 <tr>
                     <td></td>
@@ -214,7 +271,6 @@ class ArticleList extends Component {
                     <td>
                         <button className={'btn btn-success'} onClick={() => {
                             this.setState({add: true, editorState: EditorState.createEmpty()})
-                            this.handleAdd()
                         }}>
                             <i className={'fa fa-plus'}> Добавить</i>
                         </button>
@@ -237,98 +293,130 @@ class ArticleList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    { this.viewAdd() }
-                    { this.state.articles.length > 0 ? this.state.articles.map((item, key) => {
-                            if (this.state.edit === key) {
-                                return (
-                                    <tr key={key}>
-                                        <td>{key + 1}</td>
-                                        <td>
-                                            <input
-                                                name="title"
-                                                type="text"
-                                                required={true}
-                                                placeholder={"Заголовок:*"}
-                                                defaultValue={item.title}
-                                                className={'form-control '}
-                                                ref={(input) => {
-                                                    this.titleEditInput = input
-                                                }}
-                                            />
-                                            <br/>
-                                            <label>Текст статьи</label>
-                                            <Editor
-                                                editorState={this.state.editorStateE}
-                                                initialContentState={item.content ? item.content : ''}
-                                                toolbarClassName="toolbarClassName"
-                                                wrapperClassName="wrapperClassName"
-                                                editorClassName="editorClassName"
-                                                editorStyle={{border: '1px solid #ffffff', backgroundColor: '#ffffff',}}
-                                                onEditorStateChange={this.onEditorStateChangeE}
-                                                toolbar={{
-                                                    options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
-                                                }}
-                                            />
-                                            <form className='d-flex justify-content-center mt-3'>
-                                                <input
-                                                    name="file"
-                                                    type="file"
-                                                    required={true}
-                                                    placeholder={"Файл с даными:*"}
-                                                    className={'form-control w-50'}
-                                                    ref={(input) => {this.fileInput = input}}
-                                                    multiple
-                                                    accept=".jpg, .jpeg, .png"
-                                                />
-                                                <br/>
-                                            </form>
-                                            <p className='pt-3'><strong>Внимание! </strong>При добавлении новых файлов, старые удалятся</p>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-success"
-                                                    onClick={() => this.handleEdit(key)}>
-                                                <i className={'fa fa-save'}> Сохранить</i>
-                                            </button>
-                                            <button className={'btn btn-warning'}
-                                                    onClick={() => {
-                                                        this.setState({edit: null})
-                                                    }}>
-                                                <i className={'fa fa-times'}> Отмена</i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            }
-
+                    {this.viewAdd()}
+                    {this.state.articles.length > 0 ? this.state.articles.map((item, key) => {
+                        if (this.state.edit === key) {
                             return (
                                 <tr key={key}>
                                     <td>{key + 1}</td>
-                                    <td>{item.title}</td>
                                     <td>
-                                        <button className={'btn btn-primary'}
-                                                onClick={() => {
-                                                    let contentBlock = htmlToDraft(item.content);
-                                                    if (contentBlock) {
-                                                        let contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-                                                        let editorStateE = EditorState.createWithContent(contentState);
-                                                        this.setState({editorStateE: editorStateE, edit: key});
-                                                    }
-                                                    else {
-                                                        this.setState({edit: key});
-                                                    }
-                                                }}>
-                                            <i className={'fa fa-edit'}> Изменить</i>
+                                        <input
+                                            name="title"
+                                            type="text"
+                                            required={true}
+                                            placeholder={"Заголовок:*"}
+                                            defaultValue={item.title}
+                                            className={'form-control '}
+                                            ref={(input) => {
+                                                this.titleEditInput = input
+                                            }}
+                                        />
+                                        <br/>
+                                        <label>Текст статьи</label>
+                                        <Editor
+                                            editorState={this.state.editorStateE}
+                                            initialContentState={item.content ? item.content : ''}
+                                            toolbarClassName="toolbarClassName"
+                                            wrapperClassName="wrapperClassName"
+                                            editorClassName="editorClassName"
+                                            editorStyle={{border: '1px solid #ffffff', backgroundColor: '#ffffff',}}
+                                            onEditorStateChange={this.onEditorStateChangeE}
+                                            toolbar={{
+                                                options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
+                                            }}
+                                        />
+                                        <div className='d-flex justify-content-between'>
+                                            <div className='d-flex flex-column mt-3'>
+                                                <p>Файл превью швейного цеха</p>
+                                                <form className='d-flex justify-content-center'>
+                                                    <input
+                                                        name="file"
+                                                        type="file"
+                                                        required={true}
+                                                        placeholder={"Файл с даными:*"}
+                                                        className={'form-control w-50'}
+                                                        ref={(input) => {
+                                                            this.iconInput = input
+                                                        }}
+                                                        multiple
+                                                        accept=".jpg, .jpeg, .png"
+                                                    />
+                                                    <br/>
+                                                </form>
+                                            </div>
+                                            <div className='d-flex flex-column mt-3'>
+                                                <p>Файлы примеров изделий</p>
+                                                <form className='d-flex justify-content-center'>
+                                                    <input
+                                                        name="file"
+                                                        type="file"
+                                                        required={true}
+                                                        placeholder={"Файл с даными:*"}
+                                                        className={'form-control w-50'}
+                                                        ref={(input) => {
+                                                            this.fileInput = input
+                                                        }}
+                                                        multiple
+                                                        accept=".jpg, .jpeg, .png"
+                                                    />
+                                                    <br/>
+                                                </form>
+                                            </div>
+                                            <div className='d-flex flex-column mt-3 w-25'>
+                                                <p>Выбор категории</p>
+                                                <select className="custom-select" onChange={this.handleSelectValue} value={item.category && item.category.id ? item.category.id : null}>
+                                                    <option onClick={() => this.setState({selectedCategory: null})} value={null}>Не выбрано</option>
+                                                    {this.renderSelectItems()}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <p className='pt-3 text-center'><strong>Внимание! </strong>При добавлении новых
+                                            файлов, старые удалятся</p>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-success"
+                                                onClick={() => this.handleEdit(key)}>
+                                            <i className={'fa fa-save'}> Сохранить</i>
                                         </button>
-                                        <button className={'btn btn-danger'}
-                                                onClick={() => this.handleDelete(key)}>
-                                            <i className={'fa fa-trash'}> Удалить</i>
+                                        <button className={'btn btn-warning'}
+                                                onClick={() => {
+                                                    this.setState({edit: null})
+                                                }}>
+                                            <i className={'fa fa-times'}> Отмена</i>
                                         </button>
                                     </td>
                                 </tr>
                             );
-                        }) : <tr>
-                            <td colSpan={4}>Список услуг швейного цеха пуст</td>
-                        </tr> }
+                        }
+
+                        return (
+                            <tr key={key}>
+                                <td>{key + 1}</td>
+                                <td>{item.title}</td>
+                                <td>
+                                    <button className={'btn btn-primary'}
+                                            onClick={() => {
+                                                let contentBlock = htmlToDraft(item.content);
+                                                if (contentBlock) {
+                                                    let contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                                                    let editorStateE = EditorState.createWithContent(contentState);
+                                                    this.setState({editorStateE: editorStateE, edit: key});
+                                                } else {
+                                                    this.setState({edit: key});
+                                                }
+                                            }}>
+                                        <i className={'fa fa-edit'}> Изменить</i>
+                                    </button>
+                                    <button className={'btn btn-danger'}
+                                            onClick={() => this.handleDelete(key)}>
+                                        <i className={'fa fa-trash'}> Удалить</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        );
+                    }) : <tr>
+                        <td colSpan={4}>Список услуг швейного цеха пуст</td>
+                    </tr>}
                     </tbody>
                 </table>
             </div>
