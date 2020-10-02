@@ -57,9 +57,7 @@ class NewsList extends Component {
                 console.log(response)
                 let arr = [response, ..._this.state.news.data,];
                 let news = _this.state.news;
-                news.data = arr;
-
-                
+                news.data = arr;                
 
                 _this.setState({news: news, add: false});
             },
