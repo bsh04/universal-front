@@ -27,7 +27,8 @@ class Index extends Component {
                 new: [],
                 stock: [],
                 season: [],
-                produced: []
+                produced: [],
+                popular: []
             },
             favorites: [],
             stocks: [],
@@ -57,6 +58,7 @@ class Index extends Component {
         this.getNews();
         this.getProducts('new');
         this.getProducts('stock');
+        //this.getProducts('popular');
     }
 
     getProducts = (path) => {
@@ -173,7 +175,7 @@ class Index extends Component {
                             <Carousel
                                 length={isMobile ? 1 : 6} 
                                 isMobile={isMobile} 
-                                title={'Акционные товары'} 
+                                title={{text: 'Акционные товары', link: 'catalog/stock'}}
                                 titleIcon={'stock'}
                                 interval={10000}
                             >
@@ -187,15 +189,15 @@ class Index extends Component {
                             </Carousel>
                             : null}
 
-                            { this.state.products.new.length > 1 ?
+                            { this.state.products.popular.length > 1 ?
                             <Carousel 
                                 length={isMobile ? 1 : 6}
                                 isMobile={isMobile} 
-                                title={'Популярные товары'}
+                                title={{text: 'Популярные товары', link: 'catalog/popular'}}
                                 titleIcon={'new'}
                                 interval={7000}
                             >
-                                {this.state.products.new.map((item, key) => {
+                                {this.state.products.popular.map((item, key) => {
                                     return (
                                         <ProductCard item={item} key={('new' + item.id + key).toString()} update={this.updateFav}
                                             favorite={this.isFavorite(item) ? true : false}
@@ -209,7 +211,7 @@ class Index extends Component {
                             <Carousel 
                                 length={isMobile ? 1 : 6}
                                 isMobile={isMobile}
-                                title={'Сезонные товары'}
+                                title={{text: 'Сезонные товары', link: 'catalog/season'}}
                                 titleIcon={'season'}
                             >
                                 {this.state.products.season.map((item, key) => {
@@ -226,7 +228,7 @@ class Index extends Component {
                             <Carousel 
                                 length={isMobile ? 1 : 6}
                                 isMobile={isMobile}
-                                title={'Товары собственного производства'}
+                                title={{text: 'Товары собственного производства', link: 'catalog/produced'}} 
                                 titleIcon={'produced'}
                             >
                                 {this.state.products.produced.map((item, key) => {

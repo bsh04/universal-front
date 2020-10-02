@@ -11,7 +11,7 @@ class NewsList extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
-            news: [],
+            news: {},
             add: false,
             edit: null,
         };
@@ -54,8 +54,12 @@ class NewsList extends Component {
             data,
             {},
             function (response) {
-                arr.push(response);
-                _this.setState({news: arr, add: false});
+                console.log(response)
+                let arr = [response, ..._this.state.news.data,];
+                let news = _this.state.news;
+                news.data = arr;                
+
+                _this.setState({news: news, add: false});
             },
             this.state.errorCallback
         );
@@ -101,20 +105,22 @@ class NewsList extends Component {
 
     handleDelete(key) {
         let data = {
-            id: this.state.news[key].id,
-        };
-
+            id: this.state.news.data[key].id,
+        }; 
+        console.log(this.state.news.data[key], 'key: ', key)
         let _this = this;
-
+        
         request(
             'news/',
             'DELETE',
             data,
             {},
             function (response) {
-                let arr = _this.state.news;
+                let arr = _this.state.news.data;
                 arr.splice(key, 1)
-                _this.setState({news: arr});
+                let news = _this.state.news;
+                news.data = arr
+                _this.setState({news: news});
             },
             this.state.errorCallback
         );
@@ -209,7 +215,6 @@ class NewsList extends Component {
                     {this.viewAdd()}
                     {this.state.news.data ? this.state.news.data.length > 0 ? this.state.news.data.map((item, key) => {
                         if (this.state.edit === key) {
-                        }
                             return (
                                 <tr key={key}>
                                     <td>{key + 1}</td>
@@ -264,7 +269,7 @@ class NewsList extends Component {
                                     </td>
                                 </tr>
                             );
-
+                        }
                         return (
                             <tr key={key}>
                                 <td>{key + 1}</td>

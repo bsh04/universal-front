@@ -22,7 +22,7 @@ class Workshop extends Component {
             listAdvantages: [
                 {
                     id: 1,
-                    title: 'Сорк пошива - 2-3 рабочих дня',
+                    title: 'Срок пошива - 2-3 рабочих дня',
                     image: require('../../../images/workshop_list/advantages/clock.png')
                 },
                 {
@@ -294,7 +294,7 @@ class Workshop extends Component {
                             <div className='size-header'>
                                 <h4>Размеры</h4>
                             </div>
-                            <p>Постельное белье отличается не только размерами, но и комплектами</p>
+                            <p>Постельное белье отличается не только размерами, но и комплектацией. По виду КПБ разделяют на</p>
                             <div className='size-body'>
                                 {
                                     this.state.listSize.map((item, index) => <DetailsSize item={item} index={index}/>)
@@ -308,8 +308,7 @@ class Workshop extends Component {
                                 <h4>Размеры</h4>
                                 <hr/>
                             </div>
-                            <p>Постельное белье отличается не только размерами, но и комплектацией. По виду КПБ
-                                разделяют на</p>
+                            <p>Постельное белье отличается не только размерами, но и комплектацией. По виду КПБ разделяют на</p>
                             <div className='size-body'>
                                 {
                                     this.state.listSize.map((item, index) => this.renderSize(item, index))

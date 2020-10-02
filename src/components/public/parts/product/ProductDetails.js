@@ -25,7 +25,7 @@ class ProductDetails extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.match.params.id)
+        
         this.getProduct();
         
         /* if (Array.isArray(this.state.product.photo)) {

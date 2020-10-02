@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {Swipeable} from 'react-swipeable'
+
+
 
 export class Carousel extends Component {
     constructor(props) {
@@ -149,7 +152,7 @@ export class Carousel extends Component {
                     {this.props.title ?
                     <div className="carousel__title">
                         {this.props.titleIcon ? this.renderIcons() : null}
-                        {this.props.title}
+                        <Link to={this.props.title.link}>{this.props.title.text}</Link>
                     </div>
                     : null}
                     
@@ -169,16 +172,16 @@ export class Carousel extends Component {
                     
                     : null */}
                     
-                    {!this.props.banner ? 
-                    <span className="carousel__control_prev" onClick={() => {
+                    <span className={"carousel__control_prev " + (this.props.banner ? ' banner__slide-control banner__slide-control_prev' : '') } onClick={() => {
                         this.refreshInterval();
                         this.handleControls('prev');
-                    }}></span> : null}
-                    {!this.props.banner ? 
-                    <span className="carousel__control_next" onClick={() => {
+                    }}></span>
+                     
+                    <span className={"carousel__control_next " + (this.props.banner ? ' banner__slide-control banner__slide-control_next' : '') } onClick={() => {
                         this.refreshInterval();
                         this.handleControls('next');
-                    }}></span> : null}
+                    }}></span>
+
                     <Swipeable
                         className={"carousel-body-swipeable-container"}
                             onSwipingLeft={this.swipingLeft}

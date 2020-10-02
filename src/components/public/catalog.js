@@ -22,7 +22,8 @@ class Catalog extends Component {
                 new: [],
                 stock: [],
                 season: [],
-                produced: []
+                produced: [],
+                popular: []
             },
             favorites: []
         }
@@ -33,6 +34,7 @@ class Catalog extends Component {
         this.getProducts('stock');
         //this.getProducts('season');
         //this.getProducts('produced');
+        //this.getProducts('popular');
     }
     
     getProducts = (path) => {
@@ -108,8 +110,10 @@ class Catalog extends Component {
 
         
         return <CategoriesContext.Consumer>{contextValue => {
-            const {categories} = contextValue;
+            let {categories} = contextValue;
             let {isMobile} = contextValue;
+            
+            categories = categories.filter(item => !Object.keys(this.state.products).find(key => item.id === key));
             
             return (
                 <div className="w-100">
@@ -128,7 +132,7 @@ class Catalog extends Component {
                     <Carousel 
                         length={isMobile ? 1 : 6} 
                         isMobile={isMobile} 
-                        title={'Акционные товары'} 
+                        title={{text: 'Акционные товары', link: 'catalog/stock'}}
                         titleIcon={'stock'}
                         interval={4000}
                     >
@@ -142,12 +146,12 @@ class Catalog extends Component {
                     </Carousel>
                     : null}
 
-                    { this.state.products.new.length > 0 ?
+                    { this.state.products.popular.length > 0 ?
                     <Carousel 
                         length={isMobile ? 1 : 6}
                         isMobile={isMobile} 
-                        title={'Популярные товары'}
-                        titleIcon={'new'}
+                        title={{text: 'Популярные товары', link: 'catalog/popular'}}
+                        titleIcon={'popular'}
                     >
                         {this.state.products.new.map((item, key) => {
                             return (
@@ -163,7 +167,7 @@ class Catalog extends Component {
                     <Carousel 
                         length={isMobile ? 1 : 6}
                         isMobile={isMobile}
-                        title={'Сезонные товары'}
+                        title={{text: 'Сезонные товары', link: 'catalog/season'}}
                         titleIcon={'season'}
                     >
                         {this.state.products.season.map((item, key) => {
@@ -180,7 +184,7 @@ class Catalog extends Component {
                     <Carousel 
                         length={isMobile ? 1 : 6}
                         isMobile={isMobile}
-                        title={'Товары собственного производства'}
+                        title={{text: 'Товары собственного производства', link: 'catalog/produced'}} 
                         titleIcon={'produced'}
                     >
                         {this.state.products.produced.map((item, key) => {
