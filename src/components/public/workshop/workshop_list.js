@@ -4,6 +4,7 @@ import request from "../../../services/ajaxManager";
 import {Helmet} from "react-helmet";
 import Breadcrumbs from '../../breadcrumbs';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {articleImages} from '../../../services/parameters'
 
 class ArticleList extends Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class ArticleList extends Component {
     renderList(item, key) {
         return (
             <Link className='item-container' key={key} to={'/workshop/' + item.id}>
-                <img src={require('../../../images/workshop_list/bel.png')}/>
+                <img src={item.icon ? articleImages + item.icon : null}/>
                 <p className="text">{item.title}</p>
             </Link>
         );

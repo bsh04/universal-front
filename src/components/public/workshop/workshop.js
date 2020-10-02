@@ -9,6 +9,7 @@ import DetailsSize from "./detailsSize";
 import parse from 'html-react-parser'
 import login from "../sign_action/login";
 import {articleImages} from '../../../services/parameters'
+import ProductCard from "../parts/product/ProductCard";
 
 class Workshop extends Component {
     constructor(props) {
@@ -123,14 +124,41 @@ class Workshop extends Component {
     handleGet(cat) {
         let _this = this;
         request(
-            'article/' + cat,
+            `article/${cat}`,
             'GET',
             null,
             {},
             function (response) {
-                _this.setState({article: response});
+                _this.setState({article: response}, () => _this.getProducts());
             },
         );
+        request(
+            'product/favorite',
+            'GET',
+            null,
+            {},
+            function (response) {
+                _this.setState({favorites: response, ready: true, numberItems: response.length});
+            },
+        );
+    }
+
+    getProducts() {
+        let _this = this
+        if (this.state.article.category) {
+            request(
+                `product/${this.state.article.category.id}`,
+                'GET',
+                {},
+                {},
+                function (response) {
+                    _this.setState({products: response})
+                },
+                function (err) {
+                    console.log(err)
+                }
+            )
+        }
     }
 
     renderAdvantages(item, index) {
@@ -173,6 +201,30 @@ class Workshop extends Component {
                 </div>
             </div>
         )
+    }
+
+    isFavorite = (obj) => {
+        let result = this.state.favorites.filter(item => {
+            return obj.id === item.id;
+        });
+
+        return result.length > 0;
+    }
+
+    updateFav = (obj) => {
+        let arr = this.state.favorites;
+        let result;
+
+        if (this.isFavorite(obj)) {
+            result = this.state.favorites.filter(item => {
+                return obj.id !== item.id;
+            });
+        } else {
+            result = arr;
+            result.push(obj);
+        }
+
+        this.setState({favorites: result});
     }
 
     renderLinens() {
@@ -256,7 +308,8 @@ class Workshop extends Component {
                                 <h4>Размеры</h4>
                                 <hr/>
                             </div>
-                            <p>Постельное белье отличается не только размерами, но и комплекта</p>
+                            <p>Постельное белье отличается не только размерами, но и комплектацией. По виду КПБ
+                                разделяют на</p>
                             <div className='size-body'>
                                 {
                                     this.state.listSize.map((item, index) => this.renderSize(item, index))
@@ -266,15 +319,26 @@ class Workshop extends Component {
                 }
 
                 <div className='workshop-item-order'>
-                    <img src={require('../../../images/workshop_list/order.png')}/>
-                    <p>Также мы можем изготовить постельное белье по вашим размерам</p>
+                    <div className='workshop-item-order__header'>
+                        <img src={require('../../../images/workshop_list/order.png')}/>
+                        <p>Также мы можем изготовить постельное белье по вашим размерам</p>
+                    </div>
+                    <div className='workshop-item-order__body'>
+                        {
+                            this.state.products
+                                ?
+                                this.state.products.map((item, index) => <ProductCard favorite={this.isFavorite(item)} update={this.updateFav} item={item} key={index}/>)
+                                :
+                                null
+                        }
+                    </div>
                 </div>
             </div>
         )
     }
 
     render() {
-        
+
         if (this.state.article) {
             if (this.state.article.title === 'ПОСТЕЛЬНОЕ БЕЛЬЕ') {
                 return this.renderLinens()
@@ -291,13 +355,14 @@ class Workshop extends Component {
                                     <>
                                         <p>Примеры изделий</p>
                                         <div className='workshop-item-examples'>
-                                            {this.state.article.images.map((item, index) => {
+                                            {this.state.article.images && this.state.article.images.length !== 0 ? this.state.article.images.map((item, index) => {
                                                 return (
                                                     <div className='workshop-item-examples__images'>
-                                                        <img className='workshop-item-examples__image' key={index} src={`http://ts3.vladimirov-mv.name/uploads/articles/${item}`}/>
+                                                        <img className='workshop-item-examples__image' key={index}
+                                                             src={articleImages + item}/>
                                                     </div>
                                                 )
-                                            })}
+                                            }) : null}
                                         </div>
                                     </>
                                     :
