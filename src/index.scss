@@ -3071,7 +3071,14 @@ div {
       text-decoration: none;
       margin: 10px;
 
+      & img {
+        width: 100%;
+        height: 70%;
+        object-fit: contain;
+      }
+
       & .text {
+        padding-top: 10px;
         color: #000000;
         text-decoration: none;
         font-weight: bold;
@@ -3453,13 +3460,20 @@ div {
   }
 
   & .workshop-item-order {
-    margin: 50px 0 50px 0;
-    width: 100%;
-    border-radius: 10px;
-    background-color: #f8f7f6;
-    padding: 20px;
-    display: flex;
-    align-items: center;
+    &__header {
+      margin: 50px 0 50px 0;
+      width: 100%;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      background-color: #f8f7f6;
+    }
+
+    &__body {
+      display: flex;
+      flex-wrap: wrap;
+    }
 
     & p {
       margin-left: 20px;

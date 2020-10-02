@@ -27,7 +27,11 @@ class RenderProduct extends Component {
                     </div>
                     <div className='d-flex align-items-center'>
                         <input className='mr-2' type="checkbox" defaultChecked={this.props.item.produced} onClick={() => this.handleChange('produced')}/>
-                        <p className='mb-0'>Собственное производство</p>
+                        <p className='mb-0 text-left'>Собственное производство</p>
+                    </div>
+                    <div className='d-flex align-items-center'>
+                        <input className='mr-2' type="checkbox" defaultChecked={this.props.item.popular} onClick={() => this.handleChange('popular')}/>
+                        <p className='mb-0'>Популярные</p>
                     </div>
                 </td>
             </tr>
