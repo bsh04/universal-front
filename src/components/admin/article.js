@@ -97,14 +97,14 @@ class ArticleList extends Component {
 
         data.append("id", this.state.articles[key].id)
         data.append("title", this.titleEditInput.value,)
-        data.append("content", draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())))
+        data.append("content", draftToHtml(convertToRaw(this.state.editorStateE.getCurrentContent())))
         arr.map(item => {
             data.append('images[]', item);
         })
         data.append('icon', this.iconInput.files[0])
         data.append('category', this.state.selectedCategory)
 
-        let _this = this;
+        let _this = this; console.log(draftToHtml(convertToRaw(this.state.editorStateE.getCurrentContent())))
 
         request(
             'article/',
