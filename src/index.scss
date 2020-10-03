@@ -2244,7 +2244,7 @@ h3 > a {
         background-color: #E42D7F;
       }
 
-      &_new {
+      &_popular {
         background-image: url('./images/icons/product_card/product-card__icon-star.png');
         background-color: #EFA44B;
       }
@@ -2702,7 +2702,7 @@ h3 > a {
         height: 20px;
         background-color: #E42D7F;
       }
-      &_new {
+      &_popular {
         width: 20px;
         height: 20px;
         border-radius: 50%;
@@ -2713,6 +2713,12 @@ h3 > a {
         height: 20px;
         border-radius: 50%;
         background-color: #229DD2;
+      }
+      &_new {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #ffffff;
       }
       &_season {
           width: 20px;
@@ -2966,11 +2972,17 @@ div {
       background-color: #E42D7F;
       background-position: center;
     }
-    &_new {
+    &_popular {
       width: 20px;
       height: 20px;
       border-radius: 50%;
       background-color: #EFA44B;
+    }
+    &_new {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #ffffff;
     }
     &_produced {
       width: 20px;

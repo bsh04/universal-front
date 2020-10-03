@@ -155,12 +155,28 @@ class ArticleList extends Component {
 
     renderSelectItems() {
         if (this.state.categories) {
-            return this.state.categories.map((category, key) => {
+            return this.state.categories.sort(function(a,b) {
+                if (a.title > b.title) {
+                    return 1;
+                }
+                else if (a.title < b.title) return -1;
+                else return 0;
+            }).map((category, key) => {
                     if (category.children.length > 0) {
-                        return category.children.map((subCategory, index) => {
-                            return <option  key={index + 'sub'}
-                                           value={subCategory.id}>{category.title} -- {subCategory.title}</option>
+                        let arr = [
+                            <option value={category.id} key={key}>{category.title}</option>,
+                        ];
+                        category.children.sort(function(a,b) {
+                            if (a.title > b.title) {
+                                return 1;
+                            }
+                            else if (a.title < b.title) return -1;
+                            else return 0;
+                        }).map((subCategory, index) => {
+                            arr.push(<option  key={index + 'sub'}
+                                           value={subCategory.id}>{category.title} -- {subCategory.title}</option>);
                         })
+                        return arr;
                     } else {
                         return <option value={category.id} key={key}>{category.title}</option>
                     }

@@ -84,12 +84,30 @@ class ProductStatus extends Component {
 
     renderSelectItems() {
         if (this.state.categories) {
-            return this.state.categories.map((category, key) => {
+            return this.state.categories.sort(function(a,b) {
+                if (a.title > b.title) {
+                    return 1;
+                }
+                else if (a.title < b.title) return -1;
+                else return 0;
+            }).map((category, key) => {
                     if (category.children.length > 0) {
-                        return category.children.map((subCategory, index) => {
-                            return <option  key={index + 'sub'}
-                                            value={subCategory.id}>{category.title} -- {subCategory.title}</option>
+                        let arr = [
+                            <option value={category.id} key={key}>{category.title}</option>,
+                        ];
+                        category.children.sort(function(a,b) {
+                            if (a.title > b.title) {
+                                return 1;
+                            }
+                            else if (a.title < b.title) return -1;
+                            else return 0;
+                        }).map((subCategory, index) => {
+                            arr.push(<option key={index + 'sub'}
+                                             value={subCategory.id}>
+                                {category.title} -- {subCategory.title}
+                            </option>);
                         })
+                        return arr;
                     } else {
                         return <option value={category.id} key={key}>{category.title}</option>
                     }
@@ -145,8 +163,11 @@ class ProductStatus extends Component {
                             </div>
                             <div className='d-flex py-3 align-items-center'>
                                 <strong className='pr-3'>Фильтр по категории:</strong>
-                                <select className="custom-select w-75" onChange={this.handleSelectValue} value={this.state.selectedCategory}>
-                                    <option onClick={() => this.setState({selectedCategory: null})} value={null}>Не выбрано</option>
+                                <select className="custom-select w-75" onChange={this.handleSelectValue}
+                                        value={this.state.selectedCategory}>
+                                    <option onClick={() => this.setState({selectedCategory: null})} value={null}>Не
+                                        выбрано
+                                    </option>
                                     {this.renderSelectItems()}
                                 </select>
                             </div>
@@ -160,14 +181,15 @@ class ProductStatus extends Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {this.state.data && this.state.data.count !== 0 ? this.state.data.data.map((item, key) => <RenderProduct key={key}
-                                                                                                          item={item}
-                                                                                                          handleChange={this.handleChange}
-                                />) : <p className='text-center w-75 pt-5 position-absolute'>Товаров нет</p>}
+                                {this.state.data && this.state.data.count !== 0 ? this.state.data.data.map((item, key) =>
+                                    <RenderProduct key={key}
+                                                   item={item}
+                                                   handleChange={this.handleChange}
+                                    />) : <p className='text-center w-75 pt-5 position-absolute'>Товаров нет</p>}
                                 </tbody>
                             </table>
                             {
-                                this.state.data && this.state.data.count !==0
+                                this.state.data && this.state.data.count !== 0
                                     ?
                                     <Pagination
                                         numberItems={this.state.numberProducts}

@@ -58,7 +58,9 @@ class Index extends Component {
         this.getNews();
         this.getProducts('new');
         this.getProducts('stock');
-        //this.getProducts('popular');
+        this.getProducts('produced');
+        this.getProducts('season');
+        this.getProducts('popular');
     }
 
     getProducts = (path) => {
@@ -69,7 +71,7 @@ class Index extends Component {
             'GET',
             {},
             {},
-            function(response) {
+            function(response) { console.log(path, response)
                 /* if(!response.data) {
                     return null
                 } */
@@ -135,8 +137,6 @@ class Index extends Component {
             return <CategoriesContext.Consumer>{contextValue => {
                 const {categories} = contextValue;
                 let {isMobile} = contextValue;
-                
-                
 
                 return (
                     <div className="w-100">
@@ -240,6 +240,23 @@ class Index extends Component {
                                 })}
                             </Carousel>
                             : null}
+
+                            { this.state.products.new.length > 0 ?
+                                <Carousel
+                                    length={isMobile ? 1 : 6}
+                                    isMobile={isMobile}
+                                    title={{text: 'Новинки', link: 'catalog/new'}}
+                                    titleIcon={'new'}
+                                >
+                                    {this.state.products.new.map((item, key) => {
+                                        return (
+                                            <ProductCard item={item} key={'new' + item.id} update={this.updateFav}
+                                                         favorite={this.isFavorite(item) ? true : false}
+                                            />
+                                        );
+                                    })}
+                                </Carousel>
+                                : null}
                         </div>
                     </div>
                 )

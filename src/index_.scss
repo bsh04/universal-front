@@ -298,9 +298,8 @@ $btn_default_color: #229DD2;
                 background-image: url('./images/icons/carousel/carousel__title-icon-stock.png');
                 
             }
-            &_new {
+            &_popular {
                 background-image: url('./images/icons/carousel/carousel__title-icon-star.png');
-            
             }
             &_produced {
                 background-image: url('./images/icons/carousel/carousel__title-icon-factory.png');
@@ -800,7 +799,7 @@ $btn_default_color: #229DD2;
                 background-image: url('./images/icons/product_card/product-card__icon-stock.png');
                 background-color: #E42D7F;
             }
-            &_new {
+            &_popular {
                 background-image: url('./images/icons/product_card/product-card__icon-star.png');
                 background-color: #EFA44B;
             }

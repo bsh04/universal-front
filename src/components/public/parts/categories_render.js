@@ -13,6 +13,10 @@ class Categories_render extends Component {
                     id: 'new',
                     children: []
                 }, {
+                    title: 'Популярные товары',
+                    id: 'popular',
+                    children: []
+                }, {
                     title: 'Акционные товары',
                     id: 'stock',
                     children: []
