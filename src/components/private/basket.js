@@ -54,6 +54,29 @@ class Basket extends Component {
         );
     }
 
+    handleCountEdit(key, countValue) {
+        let data = {
+            id: this.state.products[key].id,
+            count: countValue
+        };
+
+
+        let _this = this;
+
+        request(
+            'product/basket',
+            'PUT',
+            data,
+            {},
+            function (response) {
+                let arr = _this.state.products;
+                arr[key] = response;
+                _this.setState({products: arr});
+            },
+            this.state.errorCallback
+        );
+    }
+
     handleUpdate(item, key, value) {
         if (value) {
             item.count += 1
@@ -161,7 +184,7 @@ class Basket extends Component {
                                                                 <input
                                                                     name="desc"
                                                                     type="number"
-                                                                    readOnly={true}
+                                                                    onChange={(e) => this.handleCountEdit(key, e.target.value)}
                                                                     required={true}
                                                                     placeholder={"Количество:"}
                                                                     defaultValue={item.count}
@@ -212,7 +235,7 @@ class Basket extends Component {
                                                                 <input
                                                                     name="desc"
                                                                     type="number"
-                                                                    readOnly={true}
+                                                                    onChange={(e) => this.handleCountEdit(key, e.target.value)}
                                                                     required={true}
                                                                     placeholder={"Количество:"}
                                                                     value={item.count}

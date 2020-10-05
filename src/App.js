@@ -17,12 +17,13 @@ class App extends Component {
         super(props);
 
         this.updateFrom = this.updateFrom.bind(this);
-        this.checkSizeWindow = this.checkSizeWindow.bind(this)
+        this.checkSizeWindow = this.checkSizeWindow.bind(this);
 
         this.state = {
             from: props.location.pathname,
             categories: [],
-            mobileMode: false
+            mobileMode: false,
+            basket: []
         };
     }
 
@@ -67,6 +68,8 @@ class App extends Component {
         ]
 
         let _this = this;
+        
+        this.getBasket();
 
         request(
             'product/categories',
@@ -77,15 +80,31 @@ class App extends Component {
                 _this.setState({categories: [...additionalData, ...response]},)
             },
             (err) => console.log(err)
-        )
+        );
     }
+
+    getBasket = () => {
+        let _this = this;
+
+        request(
+            'product/basket',
+            'GET',
+            null,
+            {},
+            function (response) {
+                _this.props.basketUpdate(response);
+            },
+        );
+    }
+
+
 
     render() {
         return (
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        <CategoriesContext.Provider value={{categories: this.state.categories, isMobile: this.state.mobileMode}}>
+                        <CategoriesContext.Provider value={{categories: this.state.categories, isMobile: this.state.mobileMode, onBasketUpdate: this.getBasket}}>
                             <Switch>
                                 <Route path="/admin"
                                         component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>
@@ -107,5 +126,9 @@ export default withRouter(connect(
     (state) => ({
         loc: state.location
     }),
-    dispatch => ({})
+    dispatch => ({
+        basketUpdate: (basket) => {
+            dispatch({type: 'BASKET_ADD', payload: basket});
+        }
+    })
 )(App));

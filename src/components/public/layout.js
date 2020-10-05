@@ -219,7 +219,7 @@ class PublicLayout extends Component {
                                     <Route exact path={'/catalog/:category'} component={ProductList}/>
                                     <Route exact path={'/deliveryandpayment'} component={DeliveryAndPayment}/>
                                     <Route exact path={'/about'} component={About}/>
-                                    <Route exact path={'/product/details/:id'}   render={() => <ProductDetails {...this.props} isMobile={isMobile}/>}/>
+                                    <Route exact path={'/product/details/:id'}   render={() => <ProductDetails {...this.props} isMobile={isMobile} categories={categories}/>}/>
                                     <Route exact path="/register" render={() => (this.props.token !== false ?
                                             (<Redirect to={'/login'}/>) :
                                             (<RegForm/>)

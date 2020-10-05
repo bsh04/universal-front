@@ -26,8 +26,9 @@ const MenuTop = props => {
     const [ready, setReady] = useState(false);
 
     useEffect(() => {
+        
         if(props.basket.length > 0) {
-            let sum = props.basket.reduce((acc, item) => acc + item.product.price, 0);
+            let sum = props.basket.reduce((acc, item) => acc + (item.product.price * item.count), 0);
             
             setAmountBasket(sum);
             

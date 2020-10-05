@@ -44,7 +44,7 @@ class ProductDetails extends Component {
             {},
             {},
             function(res) {
-                _this.setState({product: res})
+                _this.setState({product: res});
             },
             function(err) {}
         )
@@ -124,21 +124,34 @@ class ProductDetails extends Component {
         }
     }
 
+    findCategoriesPath(product) {
+        let result = [];
+
+        if(product.category.parent) {
+            result.unshift({
+                title: product.category.parent.title,
+                link: `/catalog/${product.category.parent.id}`,
+            });
+        }
+        
+        return [...result, {title: product.category.title, link: product.category.id}]
+        
+    }
+
     render() {
         let mobile = this.props.isMobile;
-
+        
         if(!this.state.product) {
             return <div>Товар не найден</div>
         }
         return (
             <div className='w-100'>
-                {/* <Breadcrumbs
-                    path={[
-                        {title: `${this.state.product.category.parent.title}`},
-                        {title: `${this.state.product.category.title}`},
-                        {title: `${this.state.product.title}`},
-                    ]}
-                /> */}
+                {this.props.categories && this.props.categories.length > 1 && this.state.product ?
+                <Breadcrumbs
+                    path={[{title: 'Каталог', link: '/catalog'}].concat(
+                        this.findCategoriesPath(this.state.product)
+                    )}
+                /> : null}
                 <div className='product-details'>
                     <h4>{this.state.product.title}</h4>
                     <div className='product-details-items'>
