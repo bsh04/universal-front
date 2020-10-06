@@ -401,15 +401,19 @@ $btn_default_color: #229DD2;
         }
 
         .carousel-body {
-            width: 98%;
-            padding: 10px 0;
+            width: 100%;
+            padding: 10px 35px;
             justify-content: flex-start;
-
+            
             .product-card_tile {
                 margin-right: 17px;
             }
         }
     }
+}
+
+.custom-carousel_banner .carousel-body {
+    padding: 10px 0 !important;
 }
 
 .about-company {
@@ -1083,7 +1087,7 @@ $btn_default_color: #229DD2;
     & .gallery__image {
         width: 100%;
         height: 90%;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 10px;
     }
 
@@ -1765,7 +1769,7 @@ $btn_default_color: #229DD2;
 
             .carousel-body {
                 justify-content: center;
-                padding-left: 10px;
+                
             }           
         }
     }
@@ -1912,6 +1916,7 @@ $btn_default_color: #229DD2;
                 margin-left: 0;
             }
             .carousel-body {
+                justify-content: center;
                 .product-card_tile {
                     margin-right: 0;
                 }

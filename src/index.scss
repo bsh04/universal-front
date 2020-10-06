@@ -2283,6 +2283,7 @@ h3 > a {
 
 
       & .main_image {
+        cursor: pointer;
         margin-left: 20px;
         width: 80%;
         border-radius: 10px;
@@ -2357,6 +2358,7 @@ h3 > a {
             }
 
             & .image {
+              cursor: pointer;
               margin: 5px 0 5px 0;
               border-radius: 10px;
               border: 1px solid $color_lite;

@@ -42,7 +42,9 @@ export class Carousel extends Component {
     childrendLengthControl = (event) => {
         if(this.carouselBodyRef && this.props.length !== 1) {
             let length = Math.floor(this.carouselBodyRef.clientWidth / 300);
-            
+            if(this.carouselBodyRef.clientWidth > 1444) {
+                length += 1;
+            }
             this.setState({length}); 
         }        
     }
@@ -148,7 +150,7 @@ export class Carousel extends Component {
 
         return (
             
-                <div className={'custom-carousel'}>
+                <div className={'custom-carousel' + (this.props.banner ? ' custom-carousel_banner' : '')}>
                     {this.props.title ?
                     <div className="carousel__title">
                         {this.props.titleIcon ? this.renderIcons() : null}
@@ -190,7 +192,7 @@ export class Carousel extends Component {
                             onSwiped={this.swipedControl}
                             onSwipedUp={this.swipedUp}
                         >
-                        <div className={`carousel-body ${'slide-' + this.state.slideTo}`} ref={ref => this.carouselBodyRef = ref} key={this.state.start.toString()}>
+                        <div className={`carousel-body ${this.state.slideTo ? ('slide-' + this.state.slideTo) : ''}`} ref={ref => this.carouselBodyRef = ref} key={this.state.start.toString()}>
                             {this.renderChildrens()}
                         </div>
                     </Swipeable>

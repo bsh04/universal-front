@@ -374,7 +374,6 @@ class ProductList extends Component {
                                                         update={this.updateFav}
                                                         favorite={this.isFavorite(item)}
                                                         cardView={this.state.cardView}
-                                                        onBasketAdd={() => contextValue.onBasketUpdate()}
                                                     />
                                                 );
                                             } else {

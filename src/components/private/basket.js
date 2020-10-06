@@ -119,9 +119,13 @@ class Basket extends Component {
             {},
             await function (response) {
                 let arr = _this.state.products;
+                let id = arr[key].product.id;
+
                 arr.splice(key, 1);
                 _this.setState({products: arr});
                 _this.props.onReloadMenu();
+
+                _this.props.onBasketDelete(id);
             },
             function (err) {
                 console.log(err)
@@ -317,6 +321,7 @@ class Basket extends Component {
 export default withRouter(connect(
     (state) => ({
         token: state.token,
+        basket: state.basket
     }),
     dispatch => ({
         onAddToken: (token) => {
@@ -325,5 +330,8 @@ export default withRouter(connect(
         onReloadMenu: () => {
             dispatch({ type: 'RELOAD', payload: true })
         },
+        onBasketDelete: (id) => {
+            dispatch({ type: 'BASKET_DELETE', id })
+        }
     })
 )(Basket));

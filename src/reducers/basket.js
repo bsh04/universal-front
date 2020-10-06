@@ -7,7 +7,8 @@ export default function basket(state = [], action) {
         case 'BASKET_ADD':
             return action.payload;
         case 'BASKET_DELETE':
-            return action.payload;
+            let arr = state.filter(item => item.product.id !== action.id)
+            return arr;
         
         default:
             return state;

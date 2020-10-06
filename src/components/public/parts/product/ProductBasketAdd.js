@@ -22,7 +22,14 @@ export class ProductBasketAdd extends Component {
         this.setState({count})
     }
 
+    shouldComponentUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevProps) !== JSON.stringify(this.props) || JSON.stringify(prevState) !== JSON.stringify(this.state)) {
+            return true;
+        }
+    }
+
     render() {
+        
         return (
             <div 
                 className={`product-card__basket-add ${this.props.inBasket ? 'inBasket' : ''}`}

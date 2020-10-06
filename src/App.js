@@ -85,7 +85,7 @@ class App extends Component {
 
     getBasket = () => {
         let _this = this;
-
+        
         request(
             'product/basket',
             'GET',
@@ -104,7 +104,7 @@ class App extends Component {
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        <CategoriesContext.Provider value={{categories: this.state.categories, isMobile: this.state.mobileMode, onBasketUpdate: this.getBasket}}>
+                        <CategoriesContext.Provider value={{categories: this.state.categories, isMobile: this.state.mobileMode}}>
                             <Switch>
                                 <Route path="/admin"
                                         component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>

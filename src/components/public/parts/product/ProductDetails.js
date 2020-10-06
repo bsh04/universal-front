@@ -7,6 +7,7 @@ import request from "../../../../services/ajaxManager";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import { productImageUrl } from '../../../../services/parameters';
+import { ModalGallery } from '../modal_blocks/ModalGallery';
 
 const placeholder = require('./pl.png')
 
@@ -20,19 +21,25 @@ class ProductDetails extends Component {
             product: null,
             favorite: this.props.location,
             startImageCarousel: 1,
-            endImageCarousel: 3
+            endImageCarousel: 3,
+            modalGalleryShow: false,
+            mainImageIndex: 0
+            
         }
     }
 
     componentDidMount() {
-        
         this.getProduct();
-        
-        /* if (Array.isArray(this.state.product.photo)) {
-            this.setState({photoArray: this.state.product.photo.lenght})
-        } else {
-            this.setState({photoArray: null})
-        } */
+    }
+
+    checkBasket() {
+        return this.props.basket.find(basketItem => {
+                                                    
+            if(basketItem.product.id === this.state.product.id) {
+                return basketItem.product;
+            }
+            
+        });
     }
 
     getProduct() {
@@ -51,7 +58,9 @@ class ProductDetails extends Component {
     }
 
     renderImage(image) {
-        let arr = []
+        let arr = [];
+
+
         if (this.state.photoArray) {
             for (let i = this.state.startImageCarousel; i <= this.state.endImageCarousel; i++) {
                 arr.push(
@@ -61,12 +70,12 @@ class ProductDetails extends Component {
                 )
             }
         } else {
-
+            
             for (let i = 0; i < 3; i++) {
-                if (i === 0) {
+                if (this.state.product.images[i]) {
                     arr.push(
-                        <div className='image' key={i}>
-                            <img src={productImageUrl + image}/>
+                        <div className='image' key={i} onClick={() => this.setState({mainImageIndex: i})}>
+                            <img src={productImageUrl + this.state.product.images[i]}/>
                         </div>
                     )
                 } else {
@@ -146,6 +155,12 @@ class ProductDetails extends Component {
         }
         return (
             <div className='w-100'>
+                <ModalGallery 
+                    visible={this.state.modalGalleryShow} 
+                    handleToggle={() => this.setState({modalGalleryShow: !this.state.modalGalleryShow})}
+                    images={this.state.product.images}
+                    currentImage={this.state.mainImageIndex}
+                />
                 {this.props.categories && this.props.categories.length > 1 && this.state.product ?
                 <Breadcrumbs
                     path={[{title: 'Каталог', link: '/catalog'}].concat(
@@ -165,8 +180,9 @@ class ProductDetails extends Component {
                                         }
                                     }
                                 }}/>
+                                
                                 <div className='product-carousel'>
-                                    {this.renderImage(this.state.product.photo)}
+                                    {this.renderImage(this.state.product.images)}
                                 </div>
                                 <ExpandLessIcon className='fa-rotate-180 carousel-arrow-2' onClick={() => {
                                     if (this.state.photoArray) {
@@ -178,8 +194,8 @@ class ProductDetails extends Component {
                                 }}/>
                             </div>
                             <div className='d-flex justify-content-center w-100 mr-4'>
-                                <div className='main_image'>
-                                    <img src={productImageUrl + this.state.product.photo}/>
+                                <div className='main_image' onClick={() => this.setState({modalGalleryShow: true})}>
+                                    <img src={productImageUrl + this.state.product.images[this.state.mainImageIndex]}/>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +240,11 @@ class ProductDetails extends Component {
                                                 <p>Цена: </p>
                                                 <span>{this.state.product.price}</span>
                                             </div>
-                                            <ProductBasketAdd handleClick={this.handleBasketAdd}/>
+                                            <ProductBasketAdd 
+                                                handleClick={this.handleBasketAdd}
+                                                inBasket={this.checkBasket()}
+                                                basketCount={this.checkBasket() ? this.checkBasket().count : 1}
+                                            />
                                         </div>
                                         :
                                         <>
@@ -232,7 +252,11 @@ class ProductDetails extends Component {
                                                 <p>Цена: </p>
                                                 <span>{this.state.product.price}</span>
                                             </div>
-                                            <ProductBasketAdd handleClick={this.handleBasketAdd}/>
+                                            <ProductBasketAdd 
+                                                handleClick={this.handleBasketAdd}
+                                                inBasket={this.checkBasket()}
+                                                basketCount={this.checkBasket() ? this.checkBasket().count : 1}
+                                            />
                                         </>
                                 }
                             </div>
@@ -341,6 +365,7 @@ class ProductDetails extends Component {
 export default withRouter(connect(
     (state, ownProps) => ({
         token: state.token,
+        basket: state.basket
     }),
     dispatch => ({
         onAddFav: (id) => {

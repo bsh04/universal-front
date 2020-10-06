@@ -19,26 +19,30 @@ class ProductCard extends Component {
         }
     }
 
-    componentDidMount() {
-        let inBasket = this.props.basket.find(basketItem => {
+    componentWillMount() {
+        this.checkBasket();
+    }
+
+    checkBasket() {
+        return this.props.basket.find(basketItem => {
                                                     
             if(basketItem.product.id === this.props.item.id) {
                 return basketItem.product;
             }
+            
         });
-        this.setState({inBasket: inBasket})
     }
 
-    shouldComponentUpdate(prevProps) {
-        if(prevProps.basket !== this.props.basket) {
+    shouldComponentUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevProps) !== JSON.stringify(this.props) || JSON.stringify(prevState) !== JSON.stringify(this.state)){
             return true;
         }
     }
-    
+
 
     componentDidUpdate(prevProps) {
         if(prevProps.cardView !== this.props.cardView) {
-            this.setState({cardView: this.props.cardView})
+            this.setState({cardView: this.props.cardView});
         }
     }
 
@@ -144,7 +148,6 @@ class ProductCard extends Component {
                 function (response) {
                     _this.setState({message: response.message, form: false});
                     _this.props.onReloadMenu();
-                    _this.props.onBasketAdd();
                 },
                 this.state.errorCallback
             );
@@ -197,8 +200,8 @@ class ProductCard extends Component {
 
                     <ProductBasketAdd 
                         handleClick={this.handleBasketAdd} 
-                        inBasket={this.state.inBasket} 
-                        basketCount={this.state.inBasket ? this.state.inBasket.count : 1}
+                        inBasket={this.checkBasket()} 
+                        basketCount={this.checkBasket() ? this.checkBasket().count : 1}
                     />
                 </div>
             </div>
