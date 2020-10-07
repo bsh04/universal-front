@@ -54,6 +54,29 @@ class Basket extends Component {
         );
     }
 
+    handleCountEdit(key, countValue) {
+        let data = {
+            id: this.state.products[key].id,
+            count: countValue
+        };
+
+
+        let _this = this;
+
+        request(
+            'product/basket',
+            'PUT',
+            data,
+            {},
+            function (response) {
+                let arr = _this.state.products;
+                arr[key] = response;
+                _this.setState({products: arr});
+            },
+            this.state.errorCallback
+        );
+    }
+
     handleUpdate(item, key, value) {
         if (value) {
             item.count += 1
@@ -96,9 +119,13 @@ class Basket extends Component {
             {},
             await function (response) {
                 let arr = _this.state.products;
+                let id = arr[key].product.id;
+
                 arr.splice(key, 1);
                 _this.setState({products: arr});
                 _this.props.onReloadMenu();
+
+                _this.props.onBasketDelete(id);
             },
             function (err) {
                 console.log(err)
@@ -161,7 +188,7 @@ class Basket extends Component {
                                                                 <input
                                                                     name="desc"
                                                                     type="number"
-                                                                    readOnly={true}
+                                                                    onChange={(e) => this.handleCountEdit(key, e.target.value)}
                                                                     required={true}
                                                                     placeholder={"Количество:"}
                                                                     defaultValue={item.count}
@@ -212,7 +239,7 @@ class Basket extends Component {
                                                                 <input
                                                                     name="desc"
                                                                     type="number"
-                                                                    readOnly={true}
+                                                                    onChange={(e) => this.handleCountEdit(key, e.target.value)}
                                                                     required={true}
                                                                     placeholder={"Количество:"}
                                                                     value={item.count}
@@ -294,6 +321,7 @@ class Basket extends Component {
 export default withRouter(connect(
     (state) => ({
         token: state.token,
+        basket: state.basket
     }),
     dispatch => ({
         onAddToken: (token) => {
@@ -302,5 +330,8 @@ export default withRouter(connect(
         onReloadMenu: () => {
             dispatch({ type: 'RELOAD', payload: true })
         },
+        onBasketDelete: (id) => {
+            dispatch({ type: 'BASKET_DELETE', id })
+        }
     })
 )(Basket));

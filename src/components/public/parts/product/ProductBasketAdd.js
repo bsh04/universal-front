@@ -5,7 +5,7 @@ export class ProductBasketAdd extends Component {
         super(props);
 
         this.state = {
-            count: 1
+            count: this.props.inBasket ? this.props.basketCount : 1
         }
     }
 
@@ -22,10 +22,17 @@ export class ProductBasketAdd extends Component {
         this.setState({count})
     }
 
+    shouldComponentUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevProps) !== JSON.stringify(this.props) || JSON.stringify(prevState) !== JSON.stringify(this.state)) {
+            return true;
+        }
+    }
+
     render() {
+        
         return (
             <div 
-                className="product-card__basket-add"
+                className={`product-card__basket-add ${this.props.inBasket ? 'inBasket' : ''}`}
                 onClick={(e) => {
                     e.stopPropagation();
                     this.props.handleClick(this.state.count);
@@ -33,7 +40,7 @@ export class ProductBasketAdd extends Component {
                 }}>
                 <div className="product-card__basket-add-counter">
                     <span className="product-card__basket-add-counter-control unselectable" onClick={(e) => this.handleCount(e, false)}>-</span>
-                    <span className="product-card__basket-add-counter-value">{this.state.count}</span>
+                    <input type="text" className="product-card__basket-add-counter-value" value={this.state.count} onChange={(e) => this.setState({count: e.target.value}) }/>
                     <span className="product-card__basket-add-counter-control unselectable" onClick={(e) => this.handleCount(e, true)}>+</span>
                 </div>
                 <span className="product-card__basket-add-text">В корзину</span>

@@ -258,11 +258,12 @@ class ProductList extends Component {
         });
     }
 
+    
     render() {
         return (
             <CategoriesContext.Consumer>
                 {contextValue => {
-
+                    
                     let catList = [];
                     let productPageTitle = null;
 
@@ -365,10 +366,14 @@ class ProductList extends Component {
                                          ref={(target) => this.productListInnerContainer = target}>
                                         {this.state.products.length > 0 ? this.state.products.map((item, key) => {
                                             if (key < this.state.limit) {
+                                                
                                                 return (
-                                                    <ProductCard item={item} key={key} update={this.updateFav}
-                                                                 favorite={this.isFavorite(item)}
-                                                                 cardView={this.state.cardView}
+                                                    <ProductCard 
+                                                        key={key}    
+                                                        item={item}
+                                                        update={this.updateFav}
+                                                        favorite={this.isFavorite(item)}
+                                                        cardView={this.state.cardView}
                                                     />
                                                 );
                                             } else {

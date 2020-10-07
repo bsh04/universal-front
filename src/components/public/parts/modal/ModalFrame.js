@@ -4,6 +4,9 @@ export class ModalFrame extends Component {
     constructor(props) {
         super(props);
 
+        this.frameRef = React.createRef();
+        this.wrapperRef = React.createRef();
+
         this.state = {
             scrollY: 0,
         }
@@ -12,9 +15,11 @@ export class ModalFrame extends Component {
     
     componentDidMount(){
         document.addEventListener("keydown", this.onEscKeyPress, false);
+        document.addEventListener("mousedown", this.handleClickOutside, false)
     }
     componentWillUnmount(){
         document.removeEventListener("keydown", this.onEscKeyPress, false);
+        document.removeEventListener("mousedown", this.handleClickOutside, false);
     }
 
     componentDidUpdate(prevProps) {
@@ -44,10 +49,19 @@ export class ModalFrame extends Component {
         }
     }
 
+    handleClickOutside = (e) => {
+        e.stopPropagation(); 
+        
+        
+        if(this.wrapperRef && this.wrapperRef.current.contains(e.target) && (this.frameRef && !this.frameRef.current.contains(e.target))) {
+            this.props.handleToggle();
+        }
+    }
+
     render() {
         return (
-            <div className={`modal-wrapper ${this.props.visible? 'active' : ''}`}>
-                <div className={`modal-frame modal-frame_bg ${this.props.className ? this.props.className : ''}`}>
+            <div className={`modal-wrapper ${this.props.visible? 'active' : ''}`} ref={this.wrapperRef}>
+                <div className={`modal-frame modal-frame_bg ${this.props.className ? this.props.className : ''}`} ref={this.frameRef}>
 
                     <i className="fa fa-close" onClick={() => this.props.handleToggle()}></i>
                     <div className="modal-frame-inner">{this.props.children}</div>

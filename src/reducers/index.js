@@ -8,6 +8,7 @@ import token from './token';
 import user from './user';
 import modal from './modal';
 import reload from './menu_reload';
+import basket from './basket';
 
 export default combineReducers({
     routing: routerReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
     user,
     modal,
     reload,
+    basket
 });

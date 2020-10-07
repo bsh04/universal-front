@@ -71,7 +71,7 @@ class Index extends Component {
             'GET',
             {},
             {},
-            function(response) { console.log(path, response)
+            function(response) {
                 /* if(!response.data) {
                     return null
                 } */

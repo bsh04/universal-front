@@ -48,6 +48,7 @@ const Header = props => {
                 {},
                 function (response) {
                     setBasket(response);
+                    props.onBasketAdd(response);
                 },
             );
 
@@ -119,5 +120,8 @@ export default withRouter(connect(
         onDeleteUser: (user) => {
             dispatch({type: 'DELETE_USER', payload: user})
         },
+        onBasketAdd: (basket) => {
+            dispatch({type: 'BASKET_ADD', payload: basket})
+        }
     })
 )(Header));

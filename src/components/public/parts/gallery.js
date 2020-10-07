@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { productImageUrl } from '../../../services/parameters';
 
 
 export class Gallery extends Component {
@@ -6,13 +7,19 @@ export class Gallery extends Component {
         super(props);
         this.state = {
             images: this.props.images ? this.props.images : [],
-            selected: 0 
+            selected: this.props.currentImage ? this.props.currentImage : 0  
         }
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.images !== this.props.images) {
-            this.setState({images: this.props.images})
+        if(JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+            this.setState({images: this.props.images, selected: this.props.currentImage})
+        }
+    }
+
+    shouldComponentUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevProps) !== JSON.stringify(this.props) || JSON.stringify(prevState) !== JSON.stringify(this.state)) {
+            return true
         }
     }
     
@@ -33,7 +40,7 @@ export class Gallery extends Component {
     render() {
         return (
             <div className="gallery">
-                <img src={this.state.images[this.state.selected]} alt="" className="gallery__image"/>
+                <img src={productImageUrl + this.state.images[this.state.selected]} alt="" className="gallery__image"/>
                 
                 <div className="row justify-content-between gallery-controls">
                     
