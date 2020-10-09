@@ -36,63 +36,6 @@ class Workshop extends Component {
                     image: require('../../../images/workshop_list/advantages/quilt.png')
                 }
             ],
-            listMaterials: [
-                {
-                    id: 1,
-                    title: 'Бязь',
-                    body: '100% хлопок. Ткань не такая гладкая и мягкая, как сатин и поплин, изготавливается с помощью крестообразного плетения нескрученной пряжи. Главные свойства бязевого постельного белья: гигиеничность, экологическая чистота, лёгкость, низкая сминаемость и способность на долгие годы сохранять яркость рисунка. Бязь выдерживает огромное количество стирок, к тому же это недорогой материал',
-                    image: require('../../../images/workshop_list/materials/material-byaz.png'),
-                    imageMobile: require('../../../images/workshop_list/materials/material-byaz-mobile.png')
-                },
-                {
-                    id: 2,
-                    title: 'Сатин',
-                    body: '100% хлопок. Изготавливается из крученой нити двойного плетения. Отличительной особенностью сатина является его гладкая, шелковистая, блестящая лицевая поверхность, напоминающая шелк. Изнанка у материала слегка шероховатая, так что сатиновое постельное белье не сползет во время сна. Сатин является одним из немногих текстильных материалов, который удачно сочетает в себе нежность шелка и тепло хлопка. Такие постельные принадлежности почти не мнутся, не электризуются, хорошо пропускают воздух и долговечны. Кроме того, это удачный вариант постельного белья для любителей домашних животных — шелковистость и гладкость материала не дает возможность шерсти прилипать. Еще одно преимущество сатина — сохраняет свой изначальный внешний вид до 300 стирок. Так что постельное белье из этого материала абсолютно не капризно в использовании',
-                    image: require('../../../images/workshop_list/materials/material-satin.png'),
-                    imageMobile: require('../../../images/workshop_list/materials/material-satin-mobile.png')
-                },
-                {
-                    id: 3,
-                    title: 'Поплин',
-                    body: '100% хлопок. Ткань полотняного переплетения из хлопчатобумажных, вискозных, шелковых или синтетических волокон с мелким поперечным рубчиком (тонкие основные (продольные) нити полотна переплетаются с более толстыми уточными). Благодаря такому плетению тонкие нити будто изгибаются вокруг толстых и закрывают их таким образом, что более толстые и грубые располагаются внутри ткани, а тонкие и мягкие — снаружи. Именно поэтому поплин получается такой нежный и приятный на ощупь, но в то же время обладает высокой прочностью. Поплиновая ткань характерна своеобразным благородным блеском из-за чего ее и сравнивают с сатином. Так же этот материал отлично выглядит в любой цветовой гамме. Постельные принадлежности из поплина не нужно гладить. Они отличаются особой легкостью, отлично пропускают воздух и почти не мнутся',
-                    image: require('../../../images/workshop_list/materials/material-poplin.png'),
-                    imageMobile: require('../../../images/workshop_list/materials/material-poplin-mobile.png')
-                },
-                {
-                    id: 4,
-                    title: 'Полиэстер',
-                    body: 'По свойствам полиэстер похож на хлопок, а внешне схож с шерстяным изделием. К свойствам ткани можно отнести ее устойчивость к ультрафиолетовым излучениям. Такая структура сохраняет свои свойства при воздействии с химическими веществами, имеет высокую прочность. Постельное белье из такой ткани легко стирается и не мнется, имеет высокую прочность, легко и приятно к телу, быстро сохнет',
-                    image: require('../../../images/workshop_list/materials/material-poliester.png'),
-                    imageMobile: require('../../../images/workshop_list/materials/material-poliester-mobile.png')
-                }
-            ],
-            listSize: [
-                {
-                    id: 1,
-                    title: 'Полуторный',
-                    body: 'Это стандартный комплект, состоящий из одного пододеяльника 215*143см, одной простыни 215*145см, и двух наволочек 70*70см'
-                },
-                {
-                    id: 2,
-                    title: 'Двуспальный',
-                    body: 'В него входит один пододеяльник 215*175см, одна простыня 220*200 см, две наволочки 70*70см'
-                },
-                {
-                    id: 3,
-                    title: 'Двуспальный ЕВРО',
-                    body: 'Отличие этих комплектов от двуспальных в размере пододеяльника – здесь он 215*200см. Размеры простыни и наволочек те же, что и в двуспальном'
-                },
-                {
-                    id: 4,
-                    title: 'Семейный',
-                    body: 'Этот комплект постельного белья подразумевает наличие двух пододеяльников 215*143см, одной простыни 240*220 см и двух наволочек 70*70 см'
-                },
-                {
-                    id: 5,
-                    title: 'Детский',
-                    body: 'Предназначен для малышей, которые спят в детских кроватках. Состоит из одной пододеяльника 100*150см, одной простыни 100*150 см и одной наволочки 50*50 см'
-                },
-            ]
         };
     }
 
@@ -129,6 +72,7 @@ class Workshop extends Component {
             null,
             {},
             function (response) {
+                console.log(response)
                 _this.setState({article: response}, () => _this.getProducts());
             },
         );
@@ -176,11 +120,19 @@ class Workshop extends Component {
         return (
             <div className='material-list-item' key={index}>
                 <div className='material-item-image'>
-                    <img src={item.image}/>
+                    {
+                        item.image
+                            ?
+                            <img src={articleImages + item.image}/>
+                            :
+                            <div className='material-item-image__splash'>
+                                <p>Нет фото</p>
+                            </div>
+                    }
                 </div>
                 <div className='material-item-description'>
                     <h5>{item.title}</h5>
-                    <p>{item.body}</p>
+                    <p>{item.content}</p>
                 </div>
             </div>
         )
@@ -188,7 +140,9 @@ class Workshop extends Component {
 
     renderExamples(item, index) {
         return (
-            <img key={index} src={articleImages + item}/>
+            <div className='workshop-item-examples__images'>
+                <img className='workshop-item-examples__image' key={index} src={articleImages + item}/>
+            </div>
         )
     }
 
@@ -197,7 +151,7 @@ class Workshop extends Component {
             <div className='size-list-item' key={index}>
                 <div className='size-item-description'>
                     <h5>{item.title}</h5>
-                    <p>{item.body}</p>
+                    <p>{item.content}</p>
                 </div>
             </div>
         )
@@ -227,7 +181,8 @@ class Workshop extends Component {
         this.setState({favorites: result});
     }
 
-    renderLinens() {
+
+    renderAll() {
         return (
             <div className='workshop-item' itemScope itemType="http://schema.org/Article">
                 {this.state.article
@@ -241,92 +196,111 @@ class Workshop extends Component {
                 <h4 itemProp="headline">{this.state.article ? this.state.article.title : ''}</h4>
                 <div className='workshop-item-description'>
                     {
-                        parse(this.state.article.content).map((item, index) => {
-                            if (index % 2 === 0 && index < 4) {
-                                return item
-                            }
-                        })
-                    }
-                </div>
-                <div className='workshop-item-advantages'>
-                    <p className='advantages'>наши преимущества</p>
-                    {
-                        this.state.listAdvantages.map((item, index) => this.renderAdvantages(item, index))
+                        this.state.article && this.state.article.content ? parse(this.state.article.content) : null
                     }
                 </div>
                 {
-                    this.state.mobileMode
+                    this.state.article && this.state.article.materials.length !== 0
                         ?
-                        <div className='workshop-item-materials'>
-                            <div className='materials-header'>
-                                <h4>Материалы</h4>
+                        this.state.mobileMode
+                            ?
+                            <div className='workshop-item-materials'>
+                                <div className='materials-header'>
+                                    <h4>Материалы</h4>
+                                </div>
+                                <div className='materials-body'>
+                                    {
+                                        this.state.article.materials.map((item, index) =>
+                                            <DetailsMaterials item={item} index={index}/>)
+                                    }
+                                </div>
                             </div>
-                            <div className='materials-body'>
-                                {
-                                    this.state.listMaterials.map((item, index) => <DetailsMaterials item={item}
-                                                                                                    index={index}/>)
-                                }
+                            :
+                            <div className='workshop-item-materials'>
+                                <div className='materials-header'>
+                                    <img src={require('../../../images/workshop_list/material-title.png')} alt=""/>
+                                    <h4>Материалы</h4>
+                                    <hr/>
+                                </div>
+                                <div className='materials-body'>
+                                    {
+                                        this.state.article.materials.map((item, index) => this.renderMaterials(item, index))
+                                    }
+                                </div>
                             </div>
-                        </div>
                         :
-                        <div className='workshop-item-materials'>
-                            <div className='materials-header'>
-                                <img src={require('../../../images/workshop_list/material-title.png')} alt=""/>
-                                <h4>Материалы</h4>
-                                <hr/>
-                            </div>
-                            <div className='materials-body'>
-                                {
-                                    this.state.listMaterials.map((item, index) => this.renderMaterials(item, index))
-                                }
-                            </div>
-                        </div>
+                        null
                 }
-                <div className='workshop-item-examples'>
-                    {
-                        this.state.article && this.state.article.images ? this.state.article.images.map((item, index) => this.renderExamples(item, index)) : null
-                    }
-                </div>
                 {
-                    this.state.mobileMode
-                        ?
-                        <div className='workshop-item-size'>
-                            <div className='size-header'>
-                                <h4>Размеры</h4>
-                            </div>
-                            <p>Постельное белье отличается не только размерами, но и комплектацией. По виду КПБ разделяют на</p>
-                            <div className='size-body'>
-                                {
-                                    this.state.listSize.map((item, index) => <DetailsSize item={item} index={index}/>)
-                                }
-                            </div>
+                    this.state.article && this.state.article.images ?
+
+                        <div className='workshop-item-examples'>
+                            {
+                                this.state.article.images.map((item, index) => this.renderExamples(item, index))
+                            }
                         </div>
                         :
-                        <div className='workshop-item-size'>
-                            <div className='size-header'>
-                                <img src={require('../../../images/workshop_list/size.png')} alt=""/>
-                                <h4>Размеры</h4>
-                                <hr/>
+                        null
+                }
+                {
+                    this.state.article && this.state.article.sizes
+                        ?
+                        this.state.mobileMode
+                            ?
+                            <div className='workshop-item-size'>
+                                <div className='size-header'>
+                                    <h4>Размеры</h4>
+                                </div>
+                                <p>Постельное белье отличается не только размерами, но и комплектацией. По виду КПБ
+                                    разделяют на</p>
+                                <div className='size-body'>
+                                    {
+                                        this.state.article.sizes.map((item, index) =>
+                                            <DetailsSize item={item} index={index}/>)
+                                    }
+                                </div>
                             </div>
-                            <p>Постельное белье отличается не только размерами, но и комплектацией. По виду КПБ разделяют на</p>
-                            <div className='size-body'>
-                                {
-                                    this.state.listSize.map((item, index) => this.renderSize(item, index))
-                                }
+                            :
+                            <div className='workshop-item-size'>
+                                <div className='size-header'>
+                                    <img src={require('../../../images/workshop_list/size.png')} alt=""/>
+                                    <h4>Размеры</h4>
+                                    <hr/>
+                                </div>
+                                <div className='size-body'>
+                                    {
+                                        this.state.article && this.state.article.sizes && this.state.article.sizes.map((item, index) => this.renderSize(item, index))
+                                    }
+                                </div>
                             </div>
-                        </div>
+                        :
+                        null
                 }
 
                 <div className='workshop-item-order'>
-                    <div className='workshop-item-order__header'>
-                        <img src={require('../../../images/workshop_list/order.png')}/>
-                        <p>Также мы можем изготовить постельное белье по вашим размерам</p>
+                    {
+                        this.state.article && this.state.article.utp
+                            ?
+                            <div className='workshop-item-order__header'>
+                                <img src={require('../../../images/workshop_list/order.png')}/>
+                                <p>{this.state.article.utp}</p>
+                            </div>
+                            :
+                            null
+                    }
+                    <div className='workshop-item-advantages'>
+                        <p className='advantages'>наши преимущества</p>
+                        {
+                            this.state.listAdvantages.map((item, index) => this.renderAdvantages(item, index))
+                        }
                     </div>
                     <div className='workshop-item-order__body'>
                         {
                             this.state.products
                                 ?
-                                this.state.products.map((item, index) => <ProductCard favorite={this.isFavorite(item)} update={this.updateFav} item={item} key={index}/>)
+                                this.state.products.map((item, index) => <ProductCard favorite={this.isFavorite(item)}
+                                                                                      update={this.updateFav}
+                                                                                      item={item} key={index}/>)
                                 :
                                 null
                         }
@@ -337,44 +311,7 @@ class Workshop extends Component {
     }
 
     render() {
-
-        if (this.state.article) {
-            if (this.state.article.title === 'ПОСТЕЛЬНОЕ БЕЛЬЕ') {
-                return this.renderLinens()
-            } else {
-                return (
-                    <div>
-                        <div>
-                            {parse(this.state.article.content)}
-                        </div>
-                        <div>
-                            {
-                                this.state.article.images && this.state.article.images.length > 0
-                                    ?
-                                    <>
-                                        <p>Примеры изделий</p>
-                                        <div className='workshop-item-examples'>
-                                            {this.state.article.images && this.state.article.images.length !== 0 ? this.state.article.images.map((item, index) => {
-                                                return (
-                                                    <div className='workshop-item-examples__images'>
-                                                        <img className='workshop-item-examples__image' key={index}
-                                                             src={articleImages + item}/>
-                                                    </div>
-                                                )
-                                            }) : null}
-                                        </div>
-                                    </>
-                                    :
-                                    null
-                            }
-                        </div>
-                    </div>
-
-                )
-            }
-        } else {
-            return null
-        }
+        return this.renderAll()
     }
 }
 

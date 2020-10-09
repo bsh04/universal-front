@@ -25,7 +25,7 @@ const DetailsSize = (props) => {
                 showDetails ?
 
                     <div>
-                        <p>{props.item.body}</p>
+                        <p>{props.item.content}</p>
                     </div>
                     : null
             }
