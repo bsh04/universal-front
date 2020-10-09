@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import {articleImages} from '../../../services/parameters'
 
 const DetailsMaterials = (props) => {
 
@@ -10,7 +11,14 @@ const DetailsMaterials = (props) => {
         <React.Fragment key={props.index + Math.random()}>
             <div className='material-list-item'
                  onClick={() => setShowDetails(!showDetails)}>
-                <img src={props.item.imageMobile}/>
+                {
+                    props.item.image
+?
+                        <img src={articleImages + props.item.image}/>
+                        :
+                        <div className='material-list-item__splash-mobile'><p>Нет фото</p></div>
+
+                }
                 <h5>{props.item.title}</h5>
                 {
                     showDetails
@@ -25,7 +33,7 @@ const DetailsMaterials = (props) => {
                 showDetails ?
 
                     <div>
-                        <p>{props.item.body}</p>
+                        <p>{props.item.content}</p>
                     </div>
                     : null
             }
