@@ -12,6 +12,7 @@ import ProductCard from './parts/product/ProductCard';
 import {SubCategoriesRow} from './parts/SubCategoriesRow';
 import {ProductToolbar} from './parts/ProductToolbar';
 import Pagination from "../pagination";
+import { TruePagination } from '../truePagination';
 
 class ProductList extends Component {
     constructor(props) {
@@ -60,7 +61,7 @@ class ProductList extends Component {
 
     componentDidMount() {
         this.handleGet(this.props.match.params.category);
-        console.log('didMount')
+
         if (this.props.token !== false) {
             this.getFavorites();
         }
@@ -83,7 +84,6 @@ class ProductList extends Component {
                 path: path,
                 cat: this.props.match.params.category,
             });
-            console.log('check lcoation:', this.props)
         }
         
         
@@ -113,7 +113,7 @@ class ProductList extends Component {
         }
 
         let pickPage = this.props.location.search ? this.props.location.search.split('=')[1] : null;
-        console.log('pickPage:', pickPage)
+
         let obj = {
             cat: cat,
             limit: this.state.limit,
@@ -170,7 +170,9 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
+                    console.log(response)
                     let totalItems = response[response.length - 1].count;
+                    
                     response.splice(-1, 1);
                     let categories = [];
                     response.map(item => {
@@ -402,8 +404,12 @@ class ProductList extends Component {
                                                     limit={this.state.offset}
                                                     offset={this.state.limit}
                                                     currentCategory={this.props.match.params.category}
-                                                    handleGet={(pickPage) => this.props.history.push(`?page=${pickPage}`)}
+                                                    handleGet={(pickPage) => null}
                                                     match={this.props.match}
+                                                />
+                                                <TruePagination 
+                                                    numberOfPages={10}
+                                                    onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
                                                 />
                                             </div>
                                             :

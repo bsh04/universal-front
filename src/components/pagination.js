@@ -41,32 +41,27 @@ const Pagination = (props) => {
 
     useEffect(() => {
         if (props.handleRenderList) props.handleRenderList(1, offset)
-    }, [props])
+    }, [props.handleRenderList])
 
     useEffect(() => {
-        console.log('window.location: ', window.location, pickPage)
-
-        if(window.location.search.split('=')[1] !== 1) {
-            document.documentElement.scrollTop = 0;
-
-            if (props.currentCategory) {
-                props.handleGet(pickPage)
+        document.documentElement.scrollTop = 0
+        if (props.currentCategory) {
+            props.handleGet(props.match ? props.match.params.category : null, pickPage)
+        } else {
+            let startRender, endRender
+            if (pickPage === 1) {
+                startRender = 1
+                endRender = offset
             } else {
-                let startRender, endRender
-                if (pickPage === 1) {
-                    startRender = 1
-                    endRender = offset
-                } else {
-                    startRender = pickPage * offset - offset + 1
-                    endRender = pickPage * offset
-                }
-
-                props.handleRenderList(startRender, endRender)
+                startRender = pickPage * offset - offset + 1
+                endRender = pickPage * offset
             }
+
+            props.handleRenderList(startRender, endRender)
         }
     }, [pickPage])
 
-    const handlePicker = (i) => {
+    const handlePicker = async (i) => {
         setPickPage(i)
     }
 

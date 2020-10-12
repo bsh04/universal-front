@@ -19,7 +19,9 @@ export class Gallery extends Component {
 
     shouldComponentUpdate(prevProps, prevState) {
         if(JSON.stringify(prevProps) !== JSON.stringify(this.props) || JSON.stringify(prevState) !== JSON.stringify(this.state)) {
-            return true
+            return true;
+        } else {
+            return false
         }
     }
     

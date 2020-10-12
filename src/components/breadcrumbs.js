@@ -38,12 +38,12 @@ class Breadcrumbs extends Component {
             let link = item.link;
             return (
                 key !== this.state.path.length -1 
-                ? <li className="breadcrumb-item" key={key}><Link onClick={() => this.go(link)}>{item.title}</Link></li>
+                ? <li className="breadcrumb-item" key={key}><Link to='' onClick={() => this.go(link)}>{item.title}</Link></li>
                 : <li className="breadcrumb-item active" key={key} aria-current="page">{item.title}</li>
             )
         })
 
-        arr.unshift(<li className="breadcrumb-item" key={key}><Link onClick={()=> this.go('/')}>{'Главная'}</Link></li>)
+        arr.unshift(<li className="breadcrumb-item" key={key}><Link to='' onClick={()=> this.go('/')}>{'Главная'}</Link></li>)
 
         return arr;
     }
