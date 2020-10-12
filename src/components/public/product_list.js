@@ -60,7 +60,7 @@ class ProductList extends Component {
 
     componentDidMount() {
         this.handleGet(this.props.match.params.category);
-
+        console.log('didMount')
         if (this.props.token !== false) {
             this.getFavorites();
         }
@@ -70,15 +70,24 @@ class ProductList extends Component {
         window.removeEventListener("scroll", this.loadMore.bind(this));
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ready: false})
-        this.handleGet(props.match.params.category);
+    componentDidUpdate(prevProps, prevState) {
 
-        let path = this.setCategory(props.match.params.category)
-        this.setState({
-            path: path,
-            cat: props.match.params.category
-        })
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
+            
+            this.handleGet(this.props.match.params.category);
+            
+            let path = this.setCategory(this.props.match.params.category) // название категории по русски
+            
+            this.setState({
+                path: path,
+                cat: this.props.match.params.category,
+            });
+            console.log('check lcoation:', this.props)
+        }
+        
+        
+
     }
 
     getFavorites() {
@@ -95,18 +104,22 @@ class ProductList extends Component {
         );
     }
 
-    handleGet = (cat, pickPage) => {
+    handleGet = (cat) => {
+        this.setState({ready: false})
+
 
         if (!cat) {
             return null;
         }
 
+        let pickPage = this.props.location.search ? this.props.location.search.split('=')[1] : null;
+        console.log('pickPage:', pickPage)
         let obj = {
             cat: cat,
             limit: this.state.limit,
             sort_field: `${this.state.sort[0]}`,
             sort: `${this.state.sort[1]}`,
-            offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset
+            offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset,
         }
         let str = "";
         
@@ -389,7 +402,7 @@ class ProductList extends Component {
                                                     limit={this.state.offset}
                                                     offset={this.state.limit}
                                                     currentCategory={this.props.match.params.category}
-                                                    handleGet={this.handleGet}
+                                                    handleGet={(pickPage) => this.props.history.push(`?page=${pickPage}`)}
                                                     match={this.props.match}
                                                 />
                                             </div>
