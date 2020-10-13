@@ -5,13 +5,11 @@ import Breadcrumbs from '../breadcrumbs';
 
 import request from '../../services/ajaxManager';
 import OrdersDetail from "./ordersDetail";
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import Pagination from "../pagination";
-import login from "../public/sign_action/login";
+
+import { TruePagination } from '../truePagination';
+import { parsePage } from '../../services/parsePage';
 
 class Orders extends Component {
     constructor(props) {
@@ -32,6 +30,16 @@ class Orders extends Component {
 
     componentDidMount() {
         this.handleGet();
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
+           
+            this.handleGet(parsePage());
+        }
     }
 
     handleGet() {
@@ -119,8 +127,10 @@ class Orders extends Component {
 
                 {
                     this.state.numberItems ?
-                        <Pagination handleRenderList={this.handleRenderList} numberItems={this.state.numberItems}
-                                    offset={5}/>
+                        <TruePagination 
+                            numberOfPages={Math.ceil(this.state.numberItems + 2)}
+                            onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                        />
                         : null
                 }
             </div>

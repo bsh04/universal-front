@@ -36,14 +36,41 @@ export class ProductBasketAdd extends Component {
             <div 
                 className={`product-card__basket-add ${this.props.inBasket ? 'inBasket' : ''}`}
                 onClick={(e) => {
-                    e.stopPropagation();
+                   
                     this.props.handleClick(this.state.count);
 
                 }}>
                 <div className="product-card__basket-add-counter">
-                    <span className="product-card__basket-add-counter-control unselectable" onClick={(e) => this.handleCount(e, false)}>-</span>
-                    <input type="text" className="product-card__basket-add-counter-value" value={this.state.count} onChange={(e) => this.setState({count: e.target.value}) }/>
-                    <span className="product-card__basket-add-counter-control unselectable" onClick={(e) => this.handleCount(e, true)}>+</span>
+                    <span 
+                        className="product-card__basket-add-counter-control unselectable" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+
+                            this.handleCount(e, false)
+                        }
+                        
+                    }>-</span>
+                    <input 
+                        type="text"
+                        className="product-card__basket-add-counter-value"
+                        value={this.state.count} 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }}
+                        onChange={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            this.setState({count: e.target.value})} 
+                    }/>
+                    <span 
+                        className="product-card__basket-add-counter-control unselectable" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            this.handleCount(e, true)
+                        }}>+</span>
                 </div>
                 <span className="product-card__basket-add-text">В корзину</span>
                 <i className="product-card__basket-add-icon"></i>

@@ -96,6 +96,7 @@ class Workshop extends Component {
                 {},
                 {},
                 function (response) {
+                    response.splice(-1, 1);
                     _this.setState({products: response})
                 },
                 function (err) {

@@ -1,8 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
+import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-export const TruePagination = ({numberOfPages = 1, onPageSelect}) => {
-    const [currentPage, setCurrentPage] = useState(1);
 
+export const TruePagination = ({numberOfPages = 1, initialPage = parsePage(), onPageSelect}) => {
+    const [currentPage, setCurrentPage] = useState(initialPage);
+    const [isMounted, setMounted] = useState(false);
+    
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if(isMounted) {
+            onPageSelect(currentPage);
+        }        
+    }, [currentPage])
+    
 
     function makePagesArray() {
         let arr = new Array(numberOfPages)
@@ -27,33 +43,48 @@ export const TruePagination = ({numberOfPages = 1, onPageSelect}) => {
 
     }
     
-
     return (
-        <div>
-            <span>{'<<'}</span>
-            <span>{'<'}</span>
-                {
-                    makePagesArray().map((item, index) => {
+        <div className="true-pagination">
+            <DoubleArrowIcon
+                className='fa-rotate-180 pagination__item'
+                onClick={() => setCurrentPage(1)}
+            />
+            <KeyboardArrowLeftIcon
+                className='pagination__item'
+                onClick={() => setCurrentPage((currentPage - 1 > 1 ? currentPage - 1 : 1))}
+            />
+                {makePagesArray().map((item, index) => {
                         if(item === 'dotted') {
-                            return <span className={'pagination__item' + ' pagination__item_' + item} key={item + index}/>
+                            return <MoreHorizIcon key={item + index} className={'pagination__item' + ' pagination__item_' + item}/>
                         } else {
                             return (
-                                <span 
-                                    key={item.toString()}
-                                    className="pagination__item"
-                                    onClick={() => {
-                                        setCurrentPage(item);
-                                        onPageSelect(item);
+                                <span key={item.toString()}
+                                    className={"pagination__item" + (currentPage === item ? ' pagination__item_active' : '')}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setCurrentPage(item)
                                     }}
-                                >
-                                    {item}
-                                </span>
+                                >{item}</span>
                             )
                         }
-                    })
-                }
-            <span>{'>'}</span>
-            <span>{'>>'}</span>
+                    })}
+            <KeyboardArrowRightIcon
+                className='pagination__item'
+                onClick={() => setCurrentPage((currentPage + 1 < numberOfPages ? currentPage + 1 : numberOfPages)) }
+            />
+            <DoubleArrowIcon
+                className='pagination__item'
+                onClick={() => setCurrentPage(numberOfPages)}
+            />
         </div>
     )
+}
+
+function parsePage() {
+    let result = window.location.href.split('page=')[1];
+    if(result) {
+        result = result.split('&')[0];
+    }
+    
+    return parseInt(result) || 1;
 }

@@ -11,7 +11,7 @@ import {CategoriesContext} from '../../services/contexts';
 import ProductCard from './parts/product/ProductCard';
 import {SubCategoriesRow} from './parts/SubCategoriesRow';
 import {ProductToolbar} from './parts/ProductToolbar';
-import Pagination from "../pagination";
+
 import { TruePagination } from '../truePagination';
 
 class ProductList extends Component {
@@ -170,11 +170,12 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
-                    console.log(response)
-                    let totalItems = response[response.length - 1].count;
-                    
+                    let totalItems = response.pop().count;
+
                     response.splice(-1, 1);
+
                     let categories = [];
+                    
                     response.map(item => {
                         let tmp = {id: item.category.id, title: item.category.title}
                         if (categories.find((element) => {
@@ -331,7 +332,6 @@ class ProductList extends Component {
                             <meta property="og:title" content="Каталог"/>
                             <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                         </Helmet>
-
                         {this.state.path && this.state.products.length > 0
                             ?
                             <Breadcrumbs
@@ -396,25 +396,10 @@ class ProductList extends Component {
                                             }
                                         }) : <p className={'text-center'}>Товары не найдены</p>}
                                     </div>
-                                    {
-                                        this.state.limit ?
-                                            <div>
-                                                <Pagination
-                                                    numberItems={this.state.totalItems}
-                                                    limit={this.state.offset}
-                                                    offset={this.state.limit}
-                                                    currentCategory={this.props.match.params.category}
-                                                    handleGet={(pickPage) => null}
-                                                    match={this.props.match}
-                                                />
-                                                <TruePagination 
-                                                    numberOfPages={10}
-                                                    onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
-                                                />
-                                            </div>
-                                            :
-                                            null
-                                    }
+                                    <TruePagination 
+                                        numberOfPages={Math.ceil(this.state.totalItems / this.state.limit)}
+                                        onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                                    />
                                 </>
                                 :
                                 <Loading/>

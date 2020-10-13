@@ -3,8 +3,9 @@ import request from "../../../services/ajaxManager";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import RenderProduct from "./render_product";
-import Pagination from "../../pagination";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { parsePage } from '../../../services/parsePage';
+import { TruePagination } from '../../truePagination';
 
 
 class ProductStatus extends Component {
@@ -25,6 +26,15 @@ class ProductStatus extends Component {
     async componentDidMount() {
         if (this.state.numberProducts < 50) {
             await this.getData()
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
+        
+            this.getData({}, parsePage());
         }
     }
 
@@ -191,11 +201,9 @@ class ProductStatus extends Component {
                             {
                                 this.state.data && this.state.data.count !== 0
                                     ?
-                                    <Pagination
-                                        numberItems={this.state.numberProducts}
-                                        handleGet={this.getData}
-                                        offset={50}
-                                        currentCategory={true}
+                                    <TruePagination 
+                                        numberOfPages={Math.ceil(this.state.numberProducts / 50)}
+                                        onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
                                     />
                                     :
                                     null

@@ -7,7 +7,9 @@ import {connect} from "react-redux";
 import Breadcrumbs from '../breadcrumbs'
 import ProductCard from "../public/parts/product/ProductCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Pagination from "../pagination";
+
+import { parsePage } from '../../services/parsePage';
+import { TruePagination } from '../truePagination';
 
 class Favorite extends Component {
     constructor(props) {
@@ -34,6 +36,17 @@ class Favorite extends Component {
     componentDidMount() {
         this.handleGet();
     }
+
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
+        
+            this.handleGet(parsePage());
+        }
+    }
+
 
     handleGet() {
         let _this = this;
@@ -159,8 +172,10 @@ class Favorite extends Component {
                         {
                             this.state.numberItems > 0
                                 ?
-                                <Pagination handleRenderList={this.handleRenderList}
-                                            numberItems={this.state.numberItems - 1} offset={15}/>
+                                <TruePagination 
+                                    numberOfPages={Math.ceil(this.state.numberItems / 15)}
+                                    onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                                />
                                 :
                                 null
                         }
