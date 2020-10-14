@@ -11,7 +11,8 @@ import {CategoriesContext} from '../../services/contexts';
 import ProductCard from './parts/product/ProductCard';
 import {SubCategoriesRow} from './parts/SubCategoriesRow';
 import {ProductToolbar} from './parts/ProductToolbar';
-import Pagination from "../pagination";
+
+import { TruePagination } from '../truePagination';
 
 class ProductList extends Component {
     constructor(props) {
@@ -70,15 +71,23 @@ class ProductList extends Component {
         window.removeEventListener("scroll", this.loadMore.bind(this));
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ready: false})
-        this.handleGet(props.match.params.category);
+    componentDidUpdate(prevProps, prevState) {
 
-        let path = this.setCategory(props.match.params.category)
-        this.setState({
-            path: path,
-            cat: props.match.params.category
-        })
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
+            
+            this.handleGet(this.props.match.params.category);
+            
+            let path = this.setCategory(this.props.match.params.category) // название категории по русски
+            
+            this.setState({
+                path: path,
+                cat: this.props.match.params.category,
+            });
+        }
+        
+        
+
     }
 
     getFavorites() {
@@ -95,18 +104,22 @@ class ProductList extends Component {
         );
     }
 
-    handleGet = (cat, pickPage) => {
+    handleGet = (cat) => {
+        this.setState({ready: false})
+
 
         if (!cat) {
             return null;
         }
+
+        let pickPage = this.props.location.search ? this.props.location.search.split('=')[1] : null;
 
         let obj = {
             cat: cat,
             limit: this.state.limit,
             sort_field: `${this.state.sort[0]}`,
             sort: `${this.state.sort[1]}`,
-            offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset
+            offset: pickPage ? this.state.limit * (pickPage - 1) : this.state.offset,
         }
         let str = "";
         
@@ -157,9 +170,12 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
-                    let totalItems = response[response.length - 1].count;
+                    let totalItems = response.pop().count;
+
                     response.splice(-1, 1);
+
                     let categories = [];
+                    
                     response.map(item => {
                         let tmp = {id: item.category.id, title: item.category.title}
                         if (categories.find((element) => {
@@ -316,7 +332,6 @@ class ProductList extends Component {
                             <meta property="og:title" content="Каталог"/>
                             <meta property="og:url" content="https://universal.tom.ru/catalog/*"/>
                         </Helmet>
-
                         {this.state.path && this.state.products.length > 0
                             ?
                             <Breadcrumbs
@@ -381,21 +396,10 @@ class ProductList extends Component {
                                             }
                                         }) : <p className={'text-center'}>Товары не найдены</p>}
                                     </div>
-                                    {
-                                        this.state.limit ?
-                                            <div>
-                                                <Pagination
-                                                    numberItems={this.state.totalItems}
-                                                    limit={this.state.offset}
-                                                    offset={this.state.limit}
-                                                    currentCategory={this.props.match.params.category}
-                                                    handleGet={this.handleGet}
-                                                    match={this.props.match}
-                                                />
-                                            </div>
-                                            :
-                                            null
-                                    }
+                                    <TruePagination 
+                                        numberOfPages={Math.ceil(this.state.totalItems / this.state.limit)}
+                                        onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                                    />
                                 </>
                                 :
                                 <Loading/>

@@ -7,11 +7,14 @@ import { productImageUrl } from '../../../../services/parameters';
 import request from '../../../../services/ajaxManager';
 import { ProductBasketAdd } from './ProductBasketAdd';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { Link } from 'react-router-dom';
 
 
 class ProductCard extends Component {
     constructor(props) {
         super(props);
+
+        this.cardRef = React.createRef();
 
         this.state = {
             cardView: this.props.cardView ? this.props.cardView : 'tile', // tile || list
@@ -22,6 +25,11 @@ class ProductCard extends Component {
     componentWillMount() {
         this.checkBasket();
     }
+
+    componentDidMount() {
+        console.log('ref:', this.cardRef)
+    }
+    
 
     checkBasket() {
         return this.props.basket.find(basketItem => {
@@ -36,6 +44,8 @@ class ProductCard extends Component {
     shouldComponentUpdate(prevProps, prevState) {
         if(JSON.stringify(prevProps) !== JSON.stringify(this.props) || JSON.stringify(prevState) !== JSON.stringify(this.state)){
             return true;
+        } else {
+            return false
         }
     }
 
@@ -58,6 +68,8 @@ class ProductCard extends Component {
 
     handleFavoriteClick = (e) => {
         e.stopPropagation();
+        e.preventDefault();
+        
         if (!this.props.favorite) {
             if (!this.props.token) {
                 this.props.onError({
@@ -161,9 +173,17 @@ class ProductCard extends Component {
 
 
         return (
-            <div 
-                className={`product-card product-card_${this.state.cardView}`} 
-                onClick={(e) => this.props.history.push('/product/details/' + item.id, {item: item, favorite: this.props.favorite})}
+            <Link 
+                ref={(ref) => this.cardRef = ref}
+                className={`product-card product-card_${this.state.cardView}` } 
+                onClick={(e) => {
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                }}
+                to={{
+                    pathname: '/product/details/' + item.id,
+                    state: {item: item, favorite: this.props.favorite} // не работает
+                }} 
             >
                 {
                     this.props.page === 'favorite' ?
@@ -204,7 +224,7 @@ class ProductCard extends Component {
                         basketCount={this.checkBasket() ? this.checkBasket().count : 1}
                     />
                 </div>
-            </div>
+            </Link>
         )
     }
 }

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+
 import request from "../../services/ajaxManager";
 import {Helmet} from "react-helmet";
 import Breadcrumbs from '../breadcrumbs';
-import Pagination from "../pagination";
+
+import { TruePagination } from '../truePagination';
+import { parsePage } from '../../services/parsePage';
 
 
 class NewsList extends Component {
@@ -19,6 +21,15 @@ class NewsList extends Component {
 
     componentDidMount() {
         this.handleGet();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
+            
+            this.handleGet({}, parsePage());
+        }
     }
 
     renderItems(item, index) {
@@ -86,10 +97,9 @@ class NewsList extends Component {
                             ?
                             this.state.news.data.length > 0
                                 ?
-                                <Pagination numberItems={this.state.news.count}
-                                            offset={Number(this.state.news.data.length)}
-                                            handleGet={this.handleGet}
-                                            currentCategory
+                                <TruePagination 
+                                    numberOfPages={Math.ceil(this.state.news.count / this.state.news.data.length)}
+                                    onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
                                 />
                                 : null
                             : null

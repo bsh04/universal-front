@@ -23,7 +23,8 @@ class App extends Component {
             from: props.location.pathname,
             categories: [],
             mobileMode: false,
-            basket: []
+            basket: [],
+            favorites: []
         };
     }
 
@@ -70,6 +71,7 @@ class App extends Component {
         let _this = this;
         
         this.getBasket();
+        this.getFavorites();
 
         request(
             'product/categories',
@@ -97,6 +99,20 @@ class App extends Component {
         );
     }
 
+    getFavorites() {
+        let _this = this;
+
+        request(
+            'product/favorite',
+            'GET',
+            null,
+            {},
+            function (response) {
+                _this.setState({favorites: response});
+            },
+        );
+    }
+
 
 
     render() {
@@ -104,7 +120,12 @@ class App extends Component {
             <div className="App">
                 <ErrorBoundary>
                     <Router>
-                        <CategoriesContext.Provider value={{categories: this.state.categories, isMobile: this.state.mobileMode}}>
+                        <CategoriesContext.Provider value={
+                            {
+                                categories: this.state.categories,
+                                isMobile: this.state.mobileMode
+                            }
+                        }>
                             <Switch>
                                 <Route path="/admin"
                                         component={() => <PrivateLayout updateFrom={this.updateFrom}/>}/>

@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import { productImageUrl } from '../../../../services/parameters';
 import { ModalGallery } from '../modal_blocks/ModalGallery';
+import favorite from '../../../private/favorite';
 
 const placeholder = require('./pl.png')
 
@@ -19,7 +20,7 @@ class ProductDetails extends Component {
         this.state = {
             productId: this.props.match.params.id,
             product: null,
-            favorite: this.props.location,
+            favorite: false,
             startImageCarousel: 1,
             endImageCarousel: 3,
             modalGalleryShow: false,
@@ -30,6 +31,13 @@ class ProductDetails extends Component {
 
     componentDidMount() {
         this.getProduct();
+        
+    }
+
+    componentDidUpdate(_, prevState) {
+        if(prevState.product !== this.state.product) {
+            this.getFavorites();
+        }
     }
 
     checkBasket() {
@@ -40,6 +48,92 @@ class ProductDetails extends Component {
             }
             
         });
+    }
+
+    getFavorites() {
+        let _this = this;
+
+        request(
+            'product/favorite',
+            'GET',
+            null,
+            {},
+            function (response) {
+                
+                if(response.find(item => item.id === _this.state.product.id)) {
+                    _this.setState({favorite: true})
+                }
+            },
+        );
+    }
+
+    handleFavoriteClick = (e) => {
+        e.stopPropagation();
+        if (!this.state.favorite) {
+            if (!this.props.token) {
+                this.props.onError({
+                    show: true,
+                    title: 'Необходимо войти в личный кабинет',
+                    content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в личный кабинет.',
+                    btnText: 'OK'
+                });
+            }
+            else {
+                let data = {
+                    id: this.state.product.id,
+                };
+
+                let _this = this;
+
+                request(
+                    'product/favorite',
+                    'POST',
+                    data,
+                    {},
+                    function (response)
+                    {
+                        _this.setState({favorite: true});
+                        _this.props.onAddFav(_this.props.item);
+                        //_this.props.update(_this.props.item);
+                        _this.props.onReloadMenu();
+                    },
+                    this.state.errorCallback
+                );
+            }
+
+        }
+        else {
+            if (!this.props.token) {
+                this.props.onError({
+                    show: true,
+                    title: 'Необходимо войти в личный кабинет',
+                    content: 'Для добавления товара в избранное или корзину необходимо зарегистрироваться и войти в личный кабинет.',
+                    btnText: 'OK'
+                });
+            }
+            else {
+                let data = {
+                    id: this.state.product.id,
+                };
+
+                let _this = this;
+
+                request(
+                    'product/favorite',
+                    'DELETE',
+                    data,
+                    {},
+                    function (response)
+                    {   
+                        _this.setState({favorite: false});
+                        _this.props.onRemoveFav(_this.props.item);
+                        //_this.props.update(_this.props.item);
+                        _this.props.onReloadMenu();
+                    },
+                    this.state.errorCallback
+                );
+            }
+        }
     }
 
     getProduct() {
@@ -210,7 +304,7 @@ class ProductDetails extends Component {
                                         <p>
                                             Артикул {this.state.product.id}
                                         </p>
-                                        <i className={`product-details__favorite-icon${this.props.favorite ? "_active" : ""}`}
+                                        <i className={`product-details__favorite-icon ${this.state.favorite ? "product-details__favorite-icon_active" : ""}`}
                                            onClick={this.handleFavoriteClick}
                                         />
                                     </div>
@@ -220,7 +314,7 @@ class ProductDetails extends Component {
                                             <div className='product-details__icons-row'>
                                                 {this.renderIcons()}
                                             </div>
-                                            <i className={`product-details__favorite-icon${this.props.favorite ? "_active" : ""}`}
+                                            <i className={`product-details__favorite-icon ${this.state.favorite ? "product-details__favorite-icon_active" : ""}`}
                                                onClick={this.handleFavoriteClick}
                                             />
                                         </div>
