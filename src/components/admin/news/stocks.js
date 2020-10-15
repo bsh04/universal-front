@@ -32,7 +32,7 @@ class StocksList extends Component {
             {},
             function (response)
             {
-                console.log('news:', response.data);
+                
                 _this.setState({news: response.data});
             },
         );
@@ -61,7 +61,7 @@ class StocksList extends Component {
             {},
             function (response)
             {
-                console.log('edit response:',response)
+                
                 let arr = _this.state.news;
                 arr.push(response);
                 _this.setState({news: arr, add: false, loading: false});

@@ -54,7 +54,7 @@ class NewsList extends Component {
             data,
             {},
             function (response) {
-                console.log(response)
+                
                 let arr = [response, ..._this.state.news.data,];
                 let news = _this.state.news;
                 news.data = arr;                
@@ -107,7 +107,7 @@ class NewsList extends Component {
         let data = {
             id: this.state.news.data[key].id,
         }; 
-        console.log(this.state.news.data[key], 'key: ', key)
+        
         let _this = this;
         
         request(
