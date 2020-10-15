@@ -14,15 +14,12 @@ class ArticleList extends Component {
     constructor(props) {
         super(props);
 
-        this.onEditorStateChange = this.onEditorStateChange.bind(this);
-        this.onEditorStateChangeE = this.onEditorStateChangeE.bind(this);
-
         this.state = {
             articles: [],
             add: false,
             edit: null,
-            editorState: EditorState.createEmpty(),
-            editorStateE: EditorState.createEmpty(),
+            editorState: '',
+            editorStateE: '',
             sizes: [],
             materials: [],
             material_images: [],
@@ -69,7 +66,7 @@ class ArticleList extends Component {
             }
 
             data.append('title', this.state.titleInput);
-            data.append('content', draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())));
+            data.append('content', this.state.editorState);
             data.append('icon', this.iconInput.files[0])
             data.append('category', this.state.selectedCategory)
             data.append('utp', this.state.utp)
@@ -105,7 +102,7 @@ class ArticleList extends Component {
 
         data.append("id", item.id)
         data.append('title', this.state.titleInput)
-        data.append('content', draftToHtml(convertToRaw(this.state.editorStateE.getCurrentContent())))
+        data.append('content', this.state.editorStateE)
         if (this.iconInput.files[0]) {
             data.append('icon', this.iconInput.files[0] ? this.iconInput.files[0] : item.icon)
         }
@@ -121,7 +118,7 @@ class ArticleList extends Component {
 
         data.append(`sizes`, JSON.stringify(this.state.sizes))
         data.append(`materials`, JSON.stringify(this.state.materials))
-        console.log(this.state.material_images)
+        
         this.state.material_images.map((item, index) => data.append(`material_images[${index}]`, item.image))
 
         let _this = this;
@@ -133,10 +130,11 @@ class ArticleList extends Component {
             {},
             function (response) {
                 let arr = _this.state.articles;
+
                 _this.setState({
                     articles: arr,
                     edit: null,
-                    editorStateE: EditorState.createEmpty()
+                    editorStateE: ''
                 }, () => _this.handleGet());
             },
             this.state.errorCallback
@@ -186,7 +184,7 @@ class ArticleList extends Component {
                 content: this.state.materialContent,
             })
 
-            console.log(materialData, materialDataImages)
+            
 
             this.setState({
                 material_images: materialDataImages,
@@ -212,15 +210,15 @@ class ArticleList extends Component {
     }
 
 
-    onEditorStateChange(editorState) {
+    onEditorStateChange = (e) => {
         this.setState({
-            editorState,
+            editorState: e.target.value,
         });
     };
 
-    onEditorStateChangeE(editorStateE) {
+    onEditorStateChangeE = (e) => {
         this.setState({
-            editorStateE,
+            editorStateE: e.target.value,
         });
     };
 
@@ -378,7 +376,7 @@ class ArticleList extends Component {
 
         let item = this.state.articles[key]
 
-        console.log(item)
+        
 
         let materialsImages = []
         if (item.materials && item.materials.length !== 0) {
@@ -433,18 +431,18 @@ class ArticleList extends Component {
                                 onChange={(e) => this.setState({titleInput: e.target.value})}
                             />
                             <br/>
-                            <label>Текст статьи</label>
-                            <Editor
-                                editorState={this.state.editorState}
-                                toolbarClassName="toolbarClassName"
-                                wrapperClassName="wrapperClassName"
-                                editorClassName="editorClassName"
-                                editorStyle={{border: '1px solid #ffffff', backgroundColor: '#ffffff',}}
-                                onEditorStateChange={this.onEditorStateChange}
-                                toolbar={{
-                                    options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
-                                }}
-                            />
+                            <div className='d-flex flex-row mt-3'>
+                                <label>Текст статьи</label>
+                                <textarea
+                                    className="mx-3 w-75 form-control input-group"
+                                    defaultValue={this.state.editorState}
+                                    value={this.state.editorState}
+                                    onChange={this.onEditorStateChange}
+                                >
+
+                                </textarea>
+                            </div>
+                            
                             <br/>
                             <div className='d-flex justify-content-between flex-column'>
                                 <div className='d-flex flex-row mt-3'>
@@ -616,7 +614,7 @@ class ArticleList extends Component {
                             this.setState({
                                 add: true,
                                 edit: false,
-                                editorState: EditorState.createEmpty()
+                                editorState: ''
                               }, () => this.setState({
                                 material_images: [],
                                 sizes: [],
@@ -666,18 +664,19 @@ class ArticleList extends Component {
                                                 onChange={(e) => this.setState({titleInput: e.target.value})}
                                             />
                                             <br/>
-                                            <label>Текст статьи</label>
-                                            <Editor
-                                                editorState={this.state.editorStateE}
-                                                toolbarClassName="toolbarClassName"
-                                                wrapperClassName="wrapperClassName"
-                                                editorClassName="editorClassName"
-                                                editorStyle={{border: '1px solid #ffffff', backgroundColor: '#ffffff',}}
-                                                onEditorStateChange={this.onEditorStateChangeE}
-                                                toolbar={{
-                                                    options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
-                                                }}
-                                            />
+                                            <div className='d-flex flex-row mt-3'>
+                                                <label>Текст статьи (Редактирование)</label>
+                                                <textarea
+                                                    className="mx-3 w-75 form-control input-group"
+                                                    defaultValue={this.state.editorStateE}
+                                                    value={this.state.editorStateE}
+                                                    onChange={this.onEditorStateChangeE}
+                                                    rows={10}
+                                                >
+
+                                                </textarea>
+                                            </div>
+
                                             <br/>
                                             <div className='d-flex justify-content-between flex-column'>
                                                 <div className='d-flex flex-row mt-3'>
@@ -862,13 +861,15 @@ class ArticleList extends Component {
                                             onClick={() => {
                                                 let contentBlock = htmlToDraft(item.content);
                                                 if (contentBlock) {
-                                                    let contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-                                                    let editorStateE = EditorState.createWithContent(contentState);
+                                                    let contentState = '';
+                                                    let editorStateE = item.content;
+
                                                     this.setState({
                                                         editorStateE: editorStateE,
                                                         edit: key,
                                                         add: false
                                                     }, () => this.handleAddElement(key));
+
                                                 } else {
                                                     this.setState({
                                                         edit: key,

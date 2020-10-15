@@ -27,7 +27,7 @@ class ProductCard extends Component {
     }
 
     componentDidMount() {
-        console.log('ref:', this.cardRef)
+        
     }
     
 
@@ -176,10 +176,6 @@ class ProductCard extends Component {
             <Link 
                 ref={(ref) => this.cardRef = ref}
                 className={`product-card product-card_${this.state.cardView}` } 
-                onClick={(e) => {
-                    e.preventDefault(); 
-                    e.stopPropagation();
-                }}
                 to={{
                     pathname: '/product/details/' + item.id,
                     state: {item: item, favorite: this.props.favorite} // не работает

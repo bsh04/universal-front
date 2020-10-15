@@ -10,6 +10,10 @@ import parse from 'html-react-parser'
 import login from "../sign_action/login";
 import {articleImages} from '../../../services/parameters'
 import ProductCard from "../parts/product/ProductCard";
+import { parsePage } from '../../../services/parsePage';
+import { TruePagination } from '../../truePagination';
+
+
 
 class Workshop extends Component {
     constructor(props) {
@@ -19,6 +23,7 @@ class Workshop extends Component {
             article: null,
             mobileMode: false,
             showDetails: false,
+            totalProductItems: 1,
             listAdvantages: [
                 {
                     id: 1,
@@ -64,6 +69,15 @@ class Workshop extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
+            
+            this.getProducts(parsePage());
+        }
+    }
+
     handleGet(cat) {
         let _this = this;
         request(
@@ -72,8 +86,8 @@ class Workshop extends Component {
             null,
             {},
             function (response) {
-                console.log(response)
-                _this.setState({article: response}, () => _this.getProducts());
+                
+                _this.setState({article: response}, () => _this.getProducts(parsePage()));
             },
         );
         request(
@@ -87,17 +101,22 @@ class Workshop extends Component {
         );
     }
 
-    getProducts() {
-        let _this = this
+    getProducts(page) {
+        let _this = this;
+        let offset = page ? '?offset=' + (50 * (page - 1)) : '';
+        
         if (this.state.article.category) {
             request(
-                `product/${this.state.article.category.id}`,
+                `product/${this.state.article.category.id + offset}`,
                 'GET',
                 {},
                 {},
                 function (response) {
-                    response.splice(-1, 1);
-                    _this.setState({products: response})
+                    let total = response[response.length - 1].count;
+
+                response.splice(-1, 1);
+
+                    _this.setState({products: response, totalProductItems: total})
                 },
                 function (err) {
                     console.log(err)
@@ -305,7 +324,12 @@ class Workshop extends Component {
                                 :
                                 null
                         }
+                        
                     </div>
+                    <TruePagination 
+                        numberOfPages={Math.ceil(this.state.totalProductItems / 50)}
+                        onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                    />
                 </div>
             </div>
         )
