@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import request from '../../../services/ajaxManager';
 
 import BannersEditRow from './bannersEditRow';
+import SideBannersTableItem from './sideBannersTableItem';
 
 class SideBannersControl extends Component {
     constructor(props) {
@@ -19,6 +21,9 @@ class SideBannersControl extends Component {
         }
     }
     
+    componentDidMount() {
+        this.handleGet();
+    }
 
     handleGet() {
         let _this = this;
@@ -38,88 +43,108 @@ class SideBannersControl extends Component {
         this.setState({loading: true});
 
         let data = new FormData();
-        data.append('short_content', payload.shortContent);
+        data.append('title', payload.shortContent);
+        data.append('short_content', 'empty');
         data.append('photo', payload.file);
         data.append('link', payload.link);
         data.append('type', 'sidebanners');
         
         let _this = this;
-         
+        
         request(
-            'news/sidebanners',
+            'news/',
             'POST',
             data,
-            {},
-            function (response) {
-                let arr = _this.state.bannersList;
-                arr.push(response);
-                _this.setState({bannersList: arr, loading: false, showCreateRow: false});
+            {
+                "Authorization": 'Bearer ' + this.props.token
             },
-            this.state.errorCallback
+            function (response) {
+                let arr = [..._this.state.bannersList, response];
+
+                _this.setState({
+                    bannersList: arr,
+                    loading: false,
+                    showCreateRow: false
+                });
+            },
+            function(err) {
+                
+            }
         );
     }
 
 
-    handleDelete(key) {
+    handleDelete(id) {
         
         let data = {
-            id: this.state.bannersList[key].id,
+            id: id,
         };
 
         let _this = this;
 
         request(
-            'news/sidebanners',
+            'news/',
             'DELETE',
             data,
             {},
-            function (response)
-            {
-                let arr = _this.state.bannersList;
-                arr.splice(key, 1)
+            function (response) {
+                let arr = _this.state.bannersList.filter(item => item.id !== id);
+                
                 _this.setState({bannersList: arr});
             },
             this.state.errorCallback
         );
     }
-
     
 
     render() {
         return (
             <div className='w-100'>
-                <h4 className="text-center">Управление швейным цехом</h4>
+                <h4 className="text-center">Управление мини-баннерами</h4>
                 <table className={"table table-striped table-hover"}>
-                    <tr>
-                        <th>№</th>
-                        <th>Название</th>
-                        <th>Файл</th>
-                        <th>Ссылка</th>
-                        <th>
-                            <button 
-                                className="btn btn-success"
-                                onClick={() => this.setState({showCreateRow: true})}
-                            >
-                                Добавить
-                            </button>
-                        </th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Файл</th>
+                            <th>Ссылка</th>
+                            <th>
+                                <button 
+                                    type="button"
+                                    className="btn btn-outline-success btn-sm"
+                                    onClick={() => this.setState({showCreateRow: true})}
+                                >
+                                    Добавить
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.showCreateRow ?
+                        <BannersEditRow
+                            onSave={(data) => this.handleCreate(data)}
+                            onCancel={() => this.setState({showCreateRow: false})}
+                        /> : null}
 
-                    {this.state.showCreateRow ?
-                    <BannersEditRow
-                        onSave={(data) => this.handleCreate(data)}
-                        onCancel={() => this.setState({showCreateRow: false})}
-                    /> : null}
-
-                    {this.state.bannersList.map(item => {
-                        return (
-                            'a'
-                        )
-                    })}
+                        {this.state.bannersList.map((item, index) => {
+                            return (
+                                <SideBannersTableItem 
+                                    key={item.id.toString()}    
+                                    item={item} 
+                                    index={index + 1} 
+                                    onPressDelete={() => this.handleDelete(item.id)}
+                                />
+                            )
+                        })}
+                    </tbody>
                 </table>
             </div>
         )
     }
 }
 
-export default withRouter(SideBannersControl);
+export default withRouter(connect(
+    (state, ownProps) => ({
+        token: state.token
+    }),
+    dispatch => ({}))(SideBannersControl));

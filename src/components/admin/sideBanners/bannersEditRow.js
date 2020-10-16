@@ -40,15 +40,13 @@ export default class BannersEditRow extends Component {
                         onChange={(e) => this.setState({shortContent: e.target.value})}    
                     />
                 </td>
-                <td className="text-center">
+                <td className="d-flex align-items-center justify-content-center">
                     <input
                         name="file"
                         type="file"
                         required={true}
-                        className={'form-control input-group w-2'}
-                        ref={(input) => {
-                            this.fileInput = input
-                        }}
+                        className={'form-control input-group w-75'}
+                        ref={(ref) => this.fileInput = ref}
                         accept=".jpg, .jpeg, .png"
                     />
                 </td>
@@ -61,8 +59,8 @@ export default class BannersEditRow extends Component {
                     />
                 </td>
                 <td className="text-center">
-                    <button className="btn btn-primary" onClick={this.onSave}>Сохранить</button>
-                    <button className="btn btn-secondary" onClick={this.onCancel}>Отменить</button>
+                    <button type="button" className="btn btn-primary btn-sm" onClick={this.onSave}>Сохранить</button>
+                    <button type="button" className="btn btn-secondary btn-sm" onClick={this.onCancel}>Отменить</button>
                 </td>
             </tr>
         )

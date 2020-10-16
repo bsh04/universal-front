@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { serverImages } from '../../../services/parameters';
 
 
 export default class SideBannersTableItem extends Component {
@@ -9,16 +10,16 @@ export default class SideBannersTableItem extends Component {
     render() {
         return (
             <tr>
-                <td>№</td>
-                <td>Название</td>
-                <td>Файл</td>
-                <td>Ссылка</td>
+                <td>{this.props.index}</td>
+                <td>{this.props.item.title}</td>
+                <td><img src={serverImages + this.props.item.photo} alt="Фото баннера" width={50} height={30}/></td>
+                <td>{this.props.item.link}</td>
                 <td>
                     <button 
-                        className="btn btn-success"
-                        onClick={() => this.setState({showCreateRow: true})}
+                        className="btn btn-outline-danger btn-sm"
+                        onClick={this.props.onPressDelete}
                     >
-                        Добавить
+                        Удалить
                     </button>
                 </td>
             </tr>
