@@ -17,6 +17,7 @@ import DeliveryAndPayment from './delivery_and_payment';
 import {CategoriesContext} from "../../services/contexts";
 import CategoryList from "../public/parts/category_list";
 import ProductStatus from "./product_type/product_type";
+import SideBannersControl from './sideBanners/sideBannersControl';
 
 class PrivateLayout extends Component {
     componentDidMount() {
@@ -71,6 +72,7 @@ class PrivateLayout extends Component {
                                     <Route exact path="/admin/product/update" component={ProductUpdate}/>
                                     <Route exact path="/admin/product/image" component={NoImageList}/>
                                     <Route exact path="/admin/news" component={NewsList}/>
+                                    <Route exact path="/admin/sidebanners" component={SideBannersControl}/>
                                     <Route exact path="/admin/export" component={ExportCategoryList}/>
                                     <Route exact path="/admin/stocks" component={StocksList}/>
                                     <Route exact path="/admin/workshop" component={ArticleList}/>
