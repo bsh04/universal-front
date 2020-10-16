@@ -58,23 +58,24 @@ $btn_default_color: #229DD2;
     
 }
 
-.side-banner {
+.side-banner-wrapper {
     width: 260px;
     height: 370px;
     margin: 0 auto;
-    background-size: contain;
-    background-repeat: no-repeat;
-    position: relative;
-    padding-left: 50px;
-    padding-top: 35px;
+    
     margin-bottom: 50px;
+    display: inline-block;
 
-    &-promo1 {
+    & .side-banner__img {
+        object-fit: contain;
+    }
+
+    /* &-promo1 {
         background-image: url('./images/banners/side-banners/promo_1.png');
     }
     &-promo2 {
         background-image: url('./images/banners/side-banners/promo_2.png');
-    }
+    } */
 
     & .text-small {
         width: 70%;

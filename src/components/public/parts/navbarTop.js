@@ -53,6 +53,7 @@ const NavbarTop = (props) => {
         {title: 'Оплата и доставка', path: '/admin/deliveryandpayment'},
         {title: 'Управление новостями', path: '/admin/news'},
         {title: 'Управление акциями', path: '/admin/stocks'},
+        {title: 'Управление боковыми баннерами', path: '/admin/sidebanners'},
         {title: 'Экспорт данных', path: '/admin/export'},
         {title: 'Добавление типа товара', path: '/admin/product/type'},
     ]

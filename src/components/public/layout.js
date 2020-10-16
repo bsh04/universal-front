@@ -38,6 +38,8 @@ import {
 } from './parts/modal_blocks';
 import ProductDetails from "./parts/product/ProductDetails";
 import DeliveryAndPaymentIndexPage from "./parts/deliveryAndPayment";
+import SideBanner from './parts/banners/sideBanner';
+import request from '../../services/ajaxManager';
 
 class PublicLayout extends Component {
     constructor(props) {
@@ -96,12 +98,14 @@ class PublicLayout extends Component {
                             addition: 'Стоимость доставки в черте города при заказе на сумму от 700 Р до 2999 Р составит 150 Р',
                         }
                 }
-            ]
+            ],
+            sideBannersList: []
         };
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
+        this.getSideBanners();
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
@@ -111,6 +115,19 @@ class PublicLayout extends Component {
         }
     }
 
+    getSideBanners() {
+        let _this = this;
+        
+        request(
+            'news/sidebanners',
+            'GET',
+            {},
+            {},
+            function (response) {
+                _this.setState({sideBannersList: response.data});
+            },
+        );
+    }
 
 
     toggleModal = (name) => {
@@ -185,7 +202,8 @@ class PublicLayout extends Component {
                             ?
                             <div className="col" style={{minWidth: 'auto'}}>
                                 <CategoryList categories={categories} onClick={() => null}/>
-                                <div className="side-banner side-banner-promo1">
+                                
+                                {/* <div className="side-banner side-banner-promo1">
                                     <div className="text-small">Выгодные цены на сезонный ассортимент</div>
                                     <div className="text-big">скидка 15%</div>
 
@@ -202,7 +220,15 @@ class PublicLayout extends Component {
                                         Подробнее
                                         <i className="side-banner-button__icon"> </i>
                                     </div>
-                                </div>
+                                </div> */}
+                                
+                                {this.state.sideBannersList.length > 0 ?
+                                    <SideBanner item={this.state.sideBannersList[0]}/> : null
+                                }
+                                {this.state.sideBannersList.length > 1 ?
+                                    <SideBanner item={this.state.sideBannersList[1]}/> : null
+                                }
+
                             </div>
                             : null}
                             <div className={`content-wrapper ${background ? 'image-background' : ''} ${showCategoryList ? '' : 'mw-100 w-100'}`}>
