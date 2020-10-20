@@ -25,7 +25,9 @@ class Favorite extends Component {
             form: [],
             cardView: 'tile',
             ready: false,
-            numberItems: null
+            numberItems: null,
+            start: 0,
+            end: 15
         };
     }
 
@@ -40,9 +42,9 @@ class Favorite extends Component {
 
     componentDidUpdate(prevProps, prevState) {
 
-        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname) 
+        if(JSON.stringify(this.props.location.pathname) !== JSON.stringify(prevProps.location.pathname)
         || JSON.stringify(this.props.location.search) !== JSON.stringify(prevProps.location.search)) {
-        
+
             this.handleGet(parsePage());
         }
     }
@@ -130,7 +132,9 @@ class Favorite extends Component {
         );
     }
 
-    handleRenderList = (start, end) => {
+    handleRenderList = (page) => {
+        let start = (page - 1) * 15
+        let end = page * 15
         this.setState({start, end})
     }
 
@@ -148,7 +152,7 @@ class Favorite extends Component {
                     <h4>Избранное</h4>
                     <div className='favorite-body'>
                         {this.state.favorites.length > 0 ? this.state.favorites.map((item, key) => {
-                            if ((key >= this.state.start) && (key <= this.state.end)) {
+                            if ((key >= this.state.start) && (key < this.state.end)) {
                                 return (
                                     <div className='favorite-item' id='favorite-item' key={key}>
                                         <ProductCard item={item} index={key} update={this.updateFav}
@@ -168,13 +172,14 @@ class Favorite extends Component {
                     </div>
                     <div>
                         {
-                        }
-                        {
                             this.state.numberItems > 0
                                 ?
-                                <TruePagination 
+                                <TruePagination
                                     numberOfPages={Math.ceil(this.state.numberItems / 15)}
-                                    onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                                    onPageSelect={(page) => {
+                                        this.props.history.push(`?page=${page}`)
+                                        this.handleRenderList(page)
+                                    }}
                                 />
                                 :
                                 null

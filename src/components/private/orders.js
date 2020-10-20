@@ -24,7 +24,9 @@ class Orders extends Component {
             message: [],
             showDetails: false,
             pickPage: 1,
-            ready: false
+            ready: false,
+            start: 0,
+            end: 15
         };
     }
 
@@ -60,7 +62,9 @@ class Orders extends Component {
         );
     }
 
-    handleRenderList(start, end) {
+    handleRenderList = (page) => {
+        let start = (page - 1) * 15
+        let end = page * 15
         this.setState({start, end})
     }
 
@@ -78,6 +82,8 @@ class Orders extends Component {
             },
         );
     }
+
+
 
 
     render() {
@@ -107,7 +113,7 @@ class Orders extends Component {
                                     })
                                     let date = new Date(order.date);
 
-                                    if ((key >= this.state.start) && (key <= this.state.end)) {
+                                    if ((key >= this.state.start) && (key < this.state.end)) {
                                         return (
                                             <React.Fragment key={key}>
                                                 <OrdersDetail index={key} date={date} sum={sum} order={order}/>
@@ -128,8 +134,11 @@ class Orders extends Component {
                 {
                     this.state.numberItems ?
                         <TruePagination 
-                            numberOfPages={Math.ceil(this.state.numberItems + 2)}
-                            onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                            numberOfPages={Math.ceil((this.state.numberItems + 1) / 15)}
+                            onPageSelect={(page) => {
+                                this.props.history.push(`?page=${page}`)
+                                this.handleRenderList(page)
+                            }}
                         />
                         : null
                 }

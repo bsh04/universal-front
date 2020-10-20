@@ -146,7 +146,7 @@ class ProductList extends Component {
                     },
                     {},
                     function (response) {
-                        let totalItems = response[response.length - 1].count;
+                        let totalItems = response.length - 1;
 
                         response.splice(-1, 1);
                         _this.setState({
@@ -170,7 +170,7 @@ class ProductList extends Component {
                 null,
                 {},
                 function (response) {
-                    let totalItems = response.pop().count;
+                    let totalItems = response.pop().count - 1;
 
                     response.splice(-1, 1);
 
