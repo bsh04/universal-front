@@ -875,7 +875,7 @@ $btn_default_color: #229DD2;
         }
         .product-card_tile & {
             max-height: 200px;
-            height: 60%;
+            //height: 60%;
         }
     }
     
@@ -1890,7 +1890,7 @@ $btn_default_color: #229DD2;
 @media screen and(max-width: 767px) {
     .product-card {
         &__image {
-            max-height: 100px;
+            height: 100px;
         }
     }
 
