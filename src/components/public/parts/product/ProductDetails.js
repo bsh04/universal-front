@@ -145,7 +145,7 @@ class ProductDetails extends Component {
             {},
             {},
             function(res) {
-                _this.setState({product: res});
+                _this.setState({product: res}, () => console.log('PRODUCT', _this.state.product));
             },
             function(err) {}
         )
@@ -191,7 +191,11 @@ class ProductDetails extends Component {
     }
 
     renderIcons() {
-        let arr = ['stock', 'new', 'produced']
+        let arr = ['stock', 'new', 'produced', 'season', 'popular' ];
+
+        arr = arr.filter(field => this.state.product[field]);
+
+
         return arr.map((item, key) => {
             return <i className={`product-card__icons-row-icon product-card__icons-row-icon_${item}`} key={key}/>
         })
