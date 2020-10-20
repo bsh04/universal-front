@@ -17,7 +17,7 @@ class ProductStatus extends Component {
             numberProducts: 0,
             ready: false,
             enterType: [],
-            selectedCategory: null,
+            selectedCategory: undefined,
             categories: []
         }
     }
@@ -73,7 +73,7 @@ class ProductStatus extends Component {
     }
 
     handleChange = (type, typeValue, id) => {
-        let data = new FormData
+        let data = new FormData();
         data.append('id', id)
         data.append(type, typeValue === true ? 1 : 0)
 
@@ -175,7 +175,7 @@ class ProductStatus extends Component {
                                 <strong className='pr-3'>Фильтр по категории:</strong>
                                 <select className="custom-select w-75" onChange={this.handleSelectValue}
                                         value={this.state.selectedCategory}>
-                                    <option onClick={() => this.setState({selectedCategory: null})} value={null}>Не
+                                    <option onClick={() => this.setState({selectedCategory: null})} value={undefined}>Не
                                         выбрано
                                     </option>
                                     {this.renderSelectItems()}

@@ -38,8 +38,7 @@ class StocksList extends Component {
         );
     }
 
-    handleSubmit(e)
-    {
+    handleSubmit(e) {
         this.setState({loading: true});
 
         e.preventDefault();
@@ -59,19 +58,20 @@ class StocksList extends Component {
             'POST',
             data,
             {},
-            function (response)
-            {
+            function (response) {
                 
                 let arr = _this.state.news;
                 arr.push(response);
                 _this.setState({news: arr, add: false, loading: false});
             },
-            this.state.errorCallback
+            function(err) {
+                console.log('error:', err)
+            },
+            
         );
     }
 
-    handleEdit(key)
-    {
+    handleEdit(key) {
         let data = {
             id: this.state.news[key].id,
             link: this.linkEditInput.value,
@@ -85,20 +85,17 @@ class StocksList extends Component {
             'POST',
             data,
             {},
-            function (response)
-            {
+            function (response) {
                 let arr = _this.state.news;
                 arr[key] = response;
                 _this.setState({news: arr, edit: null});
             },
             function(err) {
-                console.log('edit error', err)
             }
         );
     }
 
-    handleDelete(key)
-    {
+    handleDelete(key) {
         let data = {
             id: this.state.news[key].id,
         };
@@ -200,7 +197,7 @@ class StocksList extends Component {
                     <td></td>
                     <td></td>
                     <td>
-                        <button className={'btn btn-success'} onClick={() => {this.setState({add: true})}}>
+                        <button className={'btn btn-outline-success btn-sm'} onClick={() => {this.setState({add: true})}}>
                             <i className={'fa fa-plus'}> Добавить акцию</i>
                         </button>
                     </td>
@@ -280,7 +277,7 @@ class StocksList extends Component {
                                                 onClick={() => {this.setState({edit: key})}}>
                                             <i className={'fa fa-edit'}> Изменить</i>
                                         </button> */}
-                                        <button className={'btn btn-danger btn-small'}
+                                        <button className={'btn btn-outline-danger btn-sm'}
                                                 onClick={() => this.handleDelete(key)}>
                                             <i className={'fa fa-trash'}> Удалить</i>
                                         </button>

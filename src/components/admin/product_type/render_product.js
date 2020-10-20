@@ -8,7 +8,7 @@ class RenderProduct extends Component {
     }
 
     async handleChange(type) {
-        this.props.handleChange(type, type === 'season' ? !this.props.item.season : !this.props.item.produced, this.props.item.id)
+        this.props.handleChange(type, !this.props.item[type], this.props.item.id);
     }
 
     render() {

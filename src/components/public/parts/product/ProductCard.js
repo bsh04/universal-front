@@ -57,7 +57,7 @@ class ProductCard extends Component {
     }
 
     renderIcons() {
-        let arr = ['stock', 'new', 'produced', 'season' ];
+        let arr = ['stock', 'new', 'produced', 'season', 'popular' ];
 
         arr = arr.filter(field => this.props.item[field]);
 

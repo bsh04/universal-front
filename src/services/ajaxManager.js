@@ -9,7 +9,8 @@ export default function request(
     data = {},
     headers = {},
     callback = null,
-    errorCallback = null
+    errorCallback = null,
+    mode = 'cors'
 ) {
     if (path.indexOf('http') === -1) {
         path = serverUrl + path;
@@ -18,7 +19,7 @@ export default function request(
 
     headers["Content-Type"] = data instanceof FormData ? "multipart/form-data" : "application/json";
     headers["Access-Control-Request-Headers"] = "*";
-    headers["Access-Control-Request-Method"] = "*";
+    headers["Access-Control-Request-Methods"] = "*";
     headers["Access-Control-Allow-Origin"] = "*";
     if (window.store.store.getState().token !== false) {
         headers["Authorization"] = 'Bearer ' + window.store.store.getState().token;
@@ -26,7 +27,7 @@ export default function request(
 
     let options = {
         method: method,
-        mode: 'cors',
+        mode: mode,
         headers: headers,
     };
     if (method !== 'GET') options.body = data instanceof FormData ? data : JSON.stringify(data);
@@ -75,7 +76,7 @@ export default function request(
                     console.log("statusCode",statusCode);
                     console.log("data",data);
             }
-        });
+        }).catch(e => console.log('err from fetch:',e));
 }
 
 function processResponse(response) {
