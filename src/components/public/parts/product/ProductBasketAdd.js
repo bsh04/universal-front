@@ -36,7 +36,7 @@ export class ProductBasketAdd extends Component {
             <div 
                 className={`product-card__basket-add ${this.props.inBasket ? 'inBasket' : ''}`}
                 onClick={(e) => {
-                   
+                    e.preventDefault()
                     this.props.handleClick(this.state.count);
 
                 }}>

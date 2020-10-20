@@ -173,9 +173,9 @@ class ProductCard extends Component {
 
 
         return (
-            <Link 
+            <Link
                 ref={(ref) => this.cardRef = ref}
-                className={`product-card product-card_${this.state.cardView}` } 
+                className={`product-card product-card_${this.state.cardView}` }
                 to={{
                     pathname: '/product/details/' + item.id,
                     state: {item: item, favorite: this.props.favorite} // не работает
@@ -183,9 +183,10 @@ class ProductCard extends Component {
             >
                 {
                     this.props.page === 'favorite' ?
-                        <DeleteOutlineIcon 
-                            className='product-card__delete-icon' 
+                        <DeleteOutlineIcon
+                            className='product-card__delete-icon'
                             onClick={(e) => {
+                                e.preventDefault()
                                 e.stopPropagation();
                                 this.props.handleDelete(this.props.index)}
                             }
@@ -215,7 +216,7 @@ class ProductCard extends Component {
                     </div>
 
                     <ProductBasketAdd 
-                        handleClick={this.handleBasketAdd} 
+                        handleClick={this.handleBasketAdd}
                         inBasket={this.checkBasket()} 
                         basketCount={this.checkBasket() ? this.checkBasket().count : 1}
                     />
