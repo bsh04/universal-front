@@ -5,7 +5,7 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 
-export const TruePagination = ({numberOfPages = 1, initialPage = parsePage(), onPageSelect}) => {
+export const TruePagination = ({numberOfPages = 0, initialPage = parsePage(), onPageSelect = 1}) => {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [isMounted, setMounted] = useState(false);
     
@@ -15,6 +15,7 @@ export const TruePagination = ({numberOfPages = 1, initialPage = parsePage(), on
 
     useEffect(() => {
         if(isMounted) {
+            window.scrollTo(0, 0)
             onPageSelect(currentPage);
         }        
     }, [currentPage])
@@ -42,42 +43,46 @@ export const TruePagination = ({numberOfPages = 1, initialPage = parsePage(), on
             .flat(1);
 
     }
-    
-    return (
-        <div className="true-pagination">
-            <DoubleArrowIcon
-                className='fa-rotate-180 pagination__item'
-                onClick={() => setCurrentPage(1)}
-            />
-            <KeyboardArrowLeftIcon
-                className='pagination__item'
-                onClick={() => setCurrentPage((currentPage - 1 > 1 ? currentPage - 1 : 1))}
-            />
+
+    if (numberOfPages !== 0) {
+        return (
+            <div className="true-pagination">
+                <DoubleArrowIcon
+                    className='fa-rotate-180 pagination__item'
+                    onClick={() => setCurrentPage(1)}
+                />
+                <KeyboardArrowLeftIcon
+                    className='pagination__item'
+                    onClick={() => setCurrentPage((currentPage - 1 > 1 ? currentPage - 1 : 1))}
+                />
                 {makePagesArray().map((item, index) => {
-                        if(item === 'dotted') {
-                            return <MoreHorizIcon key={item + index} className={'pagination__item' + ' pagination__item_' + item}/>
-                        } else {
-                            return (
-                                <span key={item.toString()}
-                                    className={"pagination__item" + (currentPage === item ? ' pagination__item_active' : '')}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setCurrentPage(item)
-                                    }}
-                                >{item}</span>
-                            )
-                        }
-                    })}
-            <KeyboardArrowRightIcon
-                className='pagination__item'
-                onClick={() => setCurrentPage((currentPage + 1 < numberOfPages ? currentPage + 1 : numberOfPages)) }
-            />
-            <DoubleArrowIcon
-                className='pagination__item'
-                onClick={() => setCurrentPage(numberOfPages)}
-            />
-        </div>
-    )
+                    if(item === 'dotted') {
+                        return <MoreHorizIcon key={item + index} className={'pagination__item' + ' pagination__item_' + item}/>
+                    } else {
+                        return (
+                            <span key={item.toString()}
+                                  className={"pagination__item" + (currentPage === item ? ' pagination__item_active' : '')}
+                                  onClick={(e) => {
+                                      e.preventDefault();
+                                      setCurrentPage(item)
+                                  }}
+                            >{item}</span>
+                        )
+                    }
+                })}
+                <KeyboardArrowRightIcon
+                    className='pagination__item'
+                    onClick={() => setCurrentPage((currentPage + 1 < numberOfPages ? currentPage + 1 : numberOfPages)) }
+                />
+                <DoubleArrowIcon
+                    className='pagination__item'
+                    onClick={() => setCurrentPage(numberOfPages)}
+                />
+            </div>
+        )
+    } else {
+        return null
+    }
 }
 
 function parsePage() {
