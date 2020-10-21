@@ -177,7 +177,7 @@ class Index extends Component {
                                 isMobile={isMobile} 
                                 title={{text: 'Акционные товары', link: 'catalog/stock'}}
                                 titleIcon={'stock'}
-                                interval={100000}
+                                interval={10000}
                             >
                                 {this.state.products.stock.map((item, key) => {
                                     return (
