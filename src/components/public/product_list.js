@@ -107,12 +107,11 @@ class ProductList extends Component {
     handleGet = (cat) => {
         this.setState({ready: false})
 
-
         if (!cat) {
             return null;
         }
 
-        let pickPage = this.props.location.search ? this.props.location.search.split('=')[1] : null;
+        let pickPage = this.props.location.search ? this.props.location.search.split('page=')[1] : null;
 
         let obj = {
             cat: cat,
@@ -133,7 +132,7 @@ class ProductList extends Component {
         let _this = this;
 
         if (cat === 'search') {
-
+            
             if (!this.state.request && this.props.location.search.length > 0) {
                 this.setState({request: true});
                 request(
@@ -141,14 +140,14 @@ class ProductList extends Component {
                     'POST',
                     {
                         data: (/%[0-9a-f]{2}/i.test(this.props.location.search.substr(3)) ?
-                            decodeURI(this.props.location.search.substr(3)) :
-                            this.props.location.search.substr(3))
+                            decodeURI(this.props.location.search.substr(3).split('&page=')[0]) :
+                            this.props.location.search.substr(3).split('&page=')[0])
                     },
                     {},
                     function (response) {
-                        let totalItems = response.length - 1;
-
-                        response.splice(-1, 1);
+                        let totalItems = response.pop().count - 1;
+                        
+                        //response.splice(-1, 1);
                         _this.setState({
                             products: response,
                             catList: [],
@@ -398,7 +397,17 @@ class ProductList extends Component {
                                     </div>
                                     <TruePagination 
                                         numberOfPages={Math.ceil(this.state.totalItems / this.state.limit)}
-                                        onPageSelect={(page) => this.props.history.push(`?page=${page}`)}
+                                        onPageSelect={(page) => {
+                                            let path = '?';
+
+                                            if(this.props.history.location.search.length > 0) {
+                                                path += 'q=' + decodeURI(this.props.history.location.search.split('?q=')[1]).split('&')[0];
+                                            }
+
+                                            path.length > 1 ? path += (`&page=${page}`) : path += `page=${page}`;
+
+                                            this.props.history.push(path);
+                                        }}
                                     />
                                 </>
                                 :

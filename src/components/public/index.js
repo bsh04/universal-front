@@ -213,6 +213,7 @@ class Index extends Component {
                                 isMobile={isMobile}
                                 title={{text: 'Сезонные товары', link: 'catalog/season'}}
                                 titleIcon={'season'}
+                                interval={8500}
                             >
                                 {this.state.products.season.map((item, key) => {
                                     return (
@@ -230,6 +231,7 @@ class Index extends Component {
                                 isMobile={isMobile}
                                 title={{text: 'Товары собственного производства', link: 'catalog/produced'}} 
                                 titleIcon={'produced'}
+                                interval={6000}
                             >
                                 {this.state.products.produced.map((item, key) => {
                                     return (
@@ -247,6 +249,7 @@ class Index extends Component {
                                     isMobile={isMobile}
                                     title={{text: 'Новинки', link: 'catalog/new'}}
                                     titleIcon={'new'}
+                                    interval={7500}
                                 >
                                     {this.state.products.new.map((item, key) => {
                                         return (

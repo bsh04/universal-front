@@ -917,6 +917,12 @@ $btn_default_color: #229DD2;
             color: #434343;
             height: 80px;
             overflow: hidden;
+
+            /* cursor: auto;
+            -webkit-user-select: text;
+            -moz-select: text;
+            -ms-select: text;
+            user-select: text; */
         }
         &-prices-wrap {
             display: flex;
