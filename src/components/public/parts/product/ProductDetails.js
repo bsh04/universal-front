@@ -145,7 +145,7 @@ class ProductDetails extends Component {
             {},
             {},
             function(res) {
-                _this.setState({product: res}, () => console.log('PRODUCT', _this.state.product));
+                _this.setState({product: res});
             },
             function(err) {}
         )

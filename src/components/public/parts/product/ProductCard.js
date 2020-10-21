@@ -179,7 +179,8 @@ class ProductCard extends Component {
                 to={{
                     pathname: '/product/details/' + item.id,
                     state: {item: item, favorite: this.props.favorite} // не работает
-                }} 
+                }}
+                draggable={false}
             >
                 {
                     this.props.page === 'favorite' ?
