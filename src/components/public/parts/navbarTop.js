@@ -230,7 +230,10 @@ const NavbarTop = (props) => {
     }
 
     const handleSearch = (e) => {
-        e.preventDefault();
+        if (!mobile) {
+            e.preventDefault();
+        }
+
         let parts = window.location.pathname.split('/');
 
         /* if (searchInCat) {
