@@ -80,7 +80,7 @@ export class Carousel extends Component {
     }
 
     handleControls = (to) => {
-        let itemsLength = this.props.children.length;
+        let itemsLength = this.props.children.length - 1;
         let start = this.state.start;
         
         this.setState({slideTo: to})
@@ -101,16 +101,16 @@ export class Carousel extends Component {
 
     renderChildrens = () => {
         let items = this.props.children;
-        
+
         if(this.props.banner) {
             return items[this.state.start] ? items[this.state.start] : items[0];
         }
 
         let start = this.state.start;
-        let end = (start + this.state.length >= items.length) ? items.length : start + this.state.length;
+        let end = (start + this.state.length >= items.length) ? items.length - 1 : start + this.state.length;
 
         let result = items.slice(start, end);
-        
+
         if(result.length < this.state.length) {
             let range = this.state.length - result.length;
 
