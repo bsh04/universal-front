@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {Component} from "react";
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
+import {EditorState, convertToRaw, ContentState} from 'draft-js';
+
+// import {Editor} from 'react-draft-wysiwyg'
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import htmlToDraft from 'html-to-draftjs';
 
 import request from '../../services/ajaxManager';
 
 class DeliveryAndPayment extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             article: null,
             editorState: EditorState.createEmpty(),
@@ -25,7 +25,6 @@ class DeliveryAndPayment extends Component {
     }
 
     componentDidMount() {
-        
     }
 
     handleGet() {
@@ -37,14 +36,14 @@ class DeliveryAndPayment extends Component {
             {},
             function (response) {
                 let article = null;
-                if(!Array.isArray(response)) {
+                if (!Array.isArray(response)) {
                     article = response;
-                    let contentBlock = htmlToDraft(article.content);
-                    if (contentBlock) {
-                        let contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-                        let editorState = EditorState.createWithContent(contentState);
-                        _this.setState({editorState: editorState, article: article});
-                    }
+                    // let contentBlock = htmlToDraft(article.content);
+                    // if (contentBlock) {
+                    //     let contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                    //     let editorState = EditorState.createWithContent(contentState);
+                    //     _this.setState({editorState: editorState, article: article});
+                    // }
                 }
             },
         );
@@ -101,38 +100,46 @@ class DeliveryAndPayment extends Component {
     };
 
     render() {
-        
+
         return (
             <div>
                 <table className={"table table-striped table-hover"}>
                     <thead>
-                        <tr>
-                            <th>{this.state.article ? this.state.article.title : ''}</th>
-                        </tr>
+                    <tr>
+                        <th>{this.state.article ? this.state.article.title : ''}</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <Editor
-                                    editorState={this.state.editorState}
-                                    initialContentState={this.state.article ? this.state.article.content : ''}
-                                    toolbarClassName="toolbarClassName"
-                                    wrapperClassName="wrapperClassName"
-                                    editorClassName="editorClassName"
-                                    editorStyle={{border: '1px solid #ffffff', backgroundColor: '#ffffff', minHeight: '50vh'}}
-                                    onEditorStateChange={(editorState) => this.onEditorStateChange(editorState)}
-                                    toolbar={{
-                                        options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
-                                    }}
-                                />
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            {
+                                // window
+                                // &&
+                                // <Editor
+                                //     editorState={this.state.editorState}
+                                //     initialContentState={this.state.article ? this.state.article.content : ''}
+                                //     toolbarClassName="toolbarClassName"
+                                //     wrapperClassName="wrapperClassName"
+                                //     editorClassName="editorClassName"
+                                //     editorStyle={{
+                                //         border: '1px solid #ffffff',
+                                //         backgroundColor: '#ffffff',
+                                //         minHeight: '50vh'
+                                //     }}
+                                //     onEditorStateChange={(editorState) => this.onEditorStateChange(editorState)}
+                                //     toolbar={{
+                                //         options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
+                                //     }}
+                                // />
+                            }
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
                 <button className={'btn btn-primary'}
                         onClick={() => {
-                            
-                            if(this.state.article) {
+
+                            if (this.state.article) {
                                 this.handleEdit();
                             } else {
                                 this.handleCreate();

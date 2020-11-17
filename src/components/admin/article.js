@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import {EditorState, convertToRaw, ContentState} from 'draft-js';
-import {Editor} from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import htmlToDraft from 'html-to-draftjs';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 import request from '../../services/ajaxManager';
@@ -859,7 +854,8 @@ class ArticleList extends Component {
                                 <td>
                                     <button className={'btn btn-primary'}
                                             onClick={() => {
-                                                let contentBlock = htmlToDraft(item.content);
+                                                // let contentBlock = htmlToDraft(item.content);
+                                                let contentBlock = null;
                                                 if (contentBlock) {
                                                     let contentState = '';
                                                     let editorStateE = item.content;

@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import $ from 'jquery';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
 import './index_.scss';
 import 'font-awesome/css/font-awesome.min.css';
-import { default as store } from './reducers/store';
+import {default as store} from './reducers/store';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -21,7 +21,7 @@ require('bootstrap/dist/js/bootstrap.min.js');
 let str = store();
 window.store = str;
 
-ReactDOM.render(
+ReactDOM.hydrate(
     <Provider store={str.store}>
         <PersistGate loading={null} persistor={str.persistor}>
             <Router>
